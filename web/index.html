@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>央采电子询价 · 佳业采购雷达</title>
+  <link rel="icon" href="/jiaye_logo.jpg">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/extra.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <div class="brand">
+      <img class="logo" src="/jiaye_logo.jpg" alt="佳业科技">
+      <div>
+        <h1>央采电子询价 · 佳业采购雷达</h1>
+        <p class="sub">中央政府采购网 · 电子询价「需求公告」实时监测</p>
+      </div>
+    </div>
+    <div class="statusbox">
+      <div class="stat">
+        <span class="num" id="st-total">-</span><span class="lab" id="st-total-lab">公告总数</span>
+      </div>
+      <div class="stat">
+        <span class="num" id="st-active">-</span><span class="lab" id="st-active-lab">进行中</span>
+      </div>
+      <div class="stat">
+        <span class="num" id="st-latest">-</span><span class="lab" id="st-latest-lab">最新日期</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <nav class="plats" id="plats">
+    <button class="plat on" data-plat="zycg">央采电子询价<span class="badge-n" id="n-zycg">-</span></button>
+    <button class="plat" data-plat="poly">保利集团招标<span class="badge-n" id="n-poly">-</span></button>
+    <button class="plat" data-plat="picker">选型助手<span class="badge-n" id="n-picker">-</span></button>
+    <span class="plat-hint" id="plat-hint"></span>
+  </nav>
+
+  <section class="filterbar" id="filterbar">
+    <input type="search" id="f-keyword" placeholder="搜索标题 / 采购公司 / 品牌…" class="f-key">
+    <select id="f-category"><option value="">全部品类</option></select>
+    <input type="text" id="f-brand" placeholder="品牌(如 华为/海光)" class="f-brand">
+    <select id="f-status">
+      <option value="">全部状态</option>
+      <option value="进行中">进行中</option>
+      <option value="已截止">已截止</option>
+    </select>
+    <label class="itchk" id="f-it-wrap"><input type="checkbox" id="f-it"> 只看 IT 相关</label>
+    <input type="date" id="f-date" title="按发标日期选某一天，选中即筛选">
+    <button id="f-search" class="btn primary">查询</button>
+    <button id="f-reset" class="btn ghost">重置</button>
+    <button id="f-refresh" class="btn ghost" title="立即抓取最新公告">↻ 刷新数据</button>
+  </section>
+
+  <div class="batchbar" id="batchbar">
+    <label class="selall"><input type="checkbox" id="sel-all"> 全选本页</label>
+    <button id="btn-zip" class="btn primary" disabled>⬇ 打包下载选中 PDF</button>
+    <span class="muted" id="sel-info">已选 0 项</span>
+    <span class="muted" id="zip-progress"></span>
+  </div>
+
+  <div class="meta-line">
+    <span id="result-count"></span>
+    <span id="upd-time" class="muted"></span>
+  </div>
+
+  <!-- 选型助手（第三板块：基于央采卖场真实成交记录建库，独立于央采/保利公告列表） -->
+  <section id="pickerbox" class="pickerbox hide">
+    <div class="pick-tabs">
+      <button class="ptab on" data-pane="text">粘贴需求文本</button>
+      <button class="ptab" data-pane="notice">央采项目选择</button>
+      <button class="ptab" data-pane="browse">浏览机型库</button>
+    </div>
+
+    <div class="pick-pane" id="ppane-text">
+      <textarea id="pick-text" rows="7" placeholder="把询价通知书 / 招标文件里的需求文字粘贴到这里，例如：&#10;采购信创台式计算机 100 台，要求：海光 C86-4G 处理器 / 16G 内存 / 512G 固态硬盘 + 1T 机械硬盘 / 麒麟操作系统 / 品牌限联想、华为&#10;预算：850 万元"></textarea>
+      <div class="pick-actions">
+        <button id="pick-run" class="btn primary">开始选型</button>
+        <span id="pick-summary" class="muted"></span>
+      </div>
+    </div>
+
+    <div class="pick-pane hide" id="ppane-notice">
+      <div class="notice-row">
+        <select id="pick-notice-cat" class="pick-select br-cat" title="按项目类型筛选"></select>
+        <select id="pick-notice" class="pick-select"></select>
+        <button id="pick-notice-run" class="btn primary">按此公告品目选型</button>
+      </div>
+      <span id="pick-notice-summary" class="muted">先选项目类型（服务器 / 网络设备 / 会议设备…），再挑一条公告（推荐进行中的），按品目逐条匹配机型库。</span>
+    </div>
+
+    <div class="pick-pane hide" id="ppane-browse">
+      <div class="notice-row">
+        <select id="br-cat"></select>
+        <select id="br-brand"></select>
+        <input type="search" id="br-key" placeholder="搜索型号 / 规格 / 供应商…">
+        <button id="br-run" class="btn primary">查询</button>
+        <span id="br-info" class="muted"></span>
+      </div>
+      <div id="br-table"></div>
+    </div>
+
+    <div id="pick-results"></div>
+  </section>
+
+  <main id="list" class="list"></main>
+
+  <div class="pager" id="pager">
+    <button id="pg-prev" class="btn ghost">上一页</button>
+    <span id="pg-info"></span>
+    <button id="pg-next" class="btn ghost">下一页</button>
+  </div>
+</div>
+
+<!-- 详情弹层 -->
+<div class="overlay" id="overlay">
+  <div class="detail" id="detail">
+    <button class="close" id="d-close">✕</button>
+    <div id="d-body"></div>
+  </div>
+</div>
+
+<footer class="foot">
+  <div class="wrap muted" id="foot-note">数据来源：中央政府采购网电子询价接口 · 每 30 分钟自动更新</div>
+</footer>
+
+<script src="/app.js"></script>
+</body>
+</html>

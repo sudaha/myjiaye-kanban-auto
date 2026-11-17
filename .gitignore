@@ -1,0 +1,23 @@
+# æ„å»ºäº§ç‰©
+dist/
+__pycache__/
+*.pyc
+
+# æ—¥å¿—ä¸é¡µé¢å¿«ç…§
+*.log
+ccgp_page1.html
+ccgp_kw_1.html
+ccgp_kw_2.html
+cggg_page.html
+
+# æ‹›æ ‡å…¬å‘ŠÂ·æ–°æºï¼ˆæ¨¡å—æš‚æ—¶ä¸‹çº¿ï¼ŒæŠ“å–å™¨ä»£ç ä¿ç•™ï¼‰
+data/ccgp_items.json
+data/zycgmain_items.json
+data/zycgmain_cursor.json
+data/mall_deals.json
+
+# ±¾µØÇ¶ÈëÊ½½âÊÍÆ÷£¨CI ×Ô´ø Python£©
+python/
+
+# °¢ÀïÔÆ OSS Æ¾Ö¤£¨ÑÏ½ûÈë¿â£©
+oss_config.json
