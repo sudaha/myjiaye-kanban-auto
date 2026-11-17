@@ -237,12 +237,38 @@ def export_poly(out):
     cats = sorted({x["category"] for x in items if x["category"]})
     active = len([x for x in items if x["is_end"] == 0])
     latest = max([x["publish_date"] for x in items if x["publish_date"]] or [""])
+
+    # 「新」标注：与央采同机制（data/last_seen_poly.json；首次运行最新发布日期视为新增）
+    def pday(it):
+        return (it["publish_date"] or "")[:10]
+
+    seen_poly = os.path.join(BASE, "data", "last_seen_poly.json")
+    prev_poly = None
+    if os.path.isfile(seen_poly):
+        try:
+            prev_poly = set(json.load(open(seen_poly, encoding="utf-8")).get("ids", []))
+        except Exception:
+            prev_poly = None
+    if prev_poly is None:
+        top_p = max((pday(it) for it in items), default="")
+        new_poly = {it["id"] for it in items if pday(it) == top_p}
+    else:
+        new_poly = {it["id"] for it in items if it["id"] not in prev_poly}
+    for it in items:
+        it["is_new"] = it["id"] in new_poly
+    new_days_p = sorted({pday(it) for it in items if it["id"] in new_poly}, reverse=True)
+    with open(seen_poly, "w", encoding="utf-8") as f:
+        json.dump({"at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                   "ids": [it["id"] for it in items]}, f, ensure_ascii=False)
+
     write_json(os.path.join(out, "data", "poly", "list.json"),
                {"total": len(items), "items": items})
     write_json(os.path.join(out, "data", "poly", "categories.json"), {"categories": cats})
     write_json(os.path.join(out, "data", "poly", "status.json"), {
         "platform": "poly", "total": len(items), "active": active,
-        "latest_date": latest, "last_fetch": data.get("updated_at") or "",
+        "latest_date": latest,
+        "new_count": len(new_poly), "new_days": new_days_p,
+        "last_fetch": data.get("updated_at") or "",
         "refresh_seconds": 3600,
     })
 
