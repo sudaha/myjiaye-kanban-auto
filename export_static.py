@@ -116,29 +116,16 @@ def export_zycg(out):
     items = [it for it in items
              if (it["pub_date"] or it["publish_date"] or "")[:10] in keep_days]
 
-    # 「新」标注：与上一次导出的 id 集合对比（data/last_seen_zycg.json）；
-    # 首次运行（无基线）时，最新发布日期视为新增。
+    # 「新」标注：发布日期 = 今天（北京时间）的条目整天标新，次日导出自动取消
+    today_bj = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=8)).strftime("%Y-%m-%d")
+
     def day_of(it):
         return (it["pub_date"] or it["publish_date"] or "")[:10]
 
-    seen_file = os.path.join(BASE, "data", "last_seen_zycg.json")
-    prev_ids = None
-    if os.path.isfile(seen_file):
-        try:
-            prev_ids = set(json.load(open(seen_file, encoding="utf-8")).get("ids", []))
-        except Exception:
-            prev_ids = None
-    if prev_ids is None:
-        top = max((day_of(it) for it in items), default="")
-        new_ids = {it["id"] for it in items if day_of(it) == top}
-    else:
-        new_ids = {it["id"] for it in items if it["id"] not in prev_ids}
+    new_ids = {it["id"] for it in items if day_of(it) == today_bj}
     for it in items:
         it["is_new"] = it["id"] in new_ids
     new_days = sorted({day_of(it) for it in items if it["id"] in new_ids}, reverse=True)
-    with open(seen_file, "w", encoding="utf-8") as f:
-        json.dump({"at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                   "ids": [it["id"] for it in items]}, f, ensure_ascii=False)
 
     for it in items:
         rr = raw[it["id"]]
@@ -238,28 +225,16 @@ def export_poly(out):
     active = len([x for x in items if x["is_end"] == 0])
     latest = max([x["publish_date"] for x in items if x["publish_date"]] or [""])
 
-    # 「新」标注：与央采同机制（data/last_seen_poly.json；首次运行最新发布日期视为新增）
+    # 「新」标注：与央采同规则（发布日期 = 今天北京时间 整天标新）
+    today_bj_p = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=8)).strftime("%Y-%m-%d")
+
     def pday(it):
         return (it["publish_date"] or "")[:10]
 
-    seen_poly = os.path.join(BASE, "data", "last_seen_poly.json")
-    prev_poly = None
-    if os.path.isfile(seen_poly):
-        try:
-            prev_poly = set(json.load(open(seen_poly, encoding="utf-8")).get("ids", []))
-        except Exception:
-            prev_poly = None
-    if prev_poly is None:
-        top_p = max((pday(it) for it in items), default="")
-        new_poly = {it["id"] for it in items if pday(it) == top_p}
-    else:
-        new_poly = {it["id"] for it in items if it["id"] not in prev_poly}
+    new_poly = {it["id"] for it in items if pday(it) == today_bj_p}
     for it in items:
         it["is_new"] = it["id"] in new_poly
     new_days_p = sorted({pday(it) for it in items if it["id"] in new_poly}, reverse=True)
-    with open(seen_poly, "w", encoding="utf-8") as f:
-        json.dump({"at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                   "ids": [it["id"] for it in items]}, f, ensure_ascii=False)
 
     write_json(os.path.join(out, "data", "poly", "list.json"),
                {"total": len(items), "items": items})
