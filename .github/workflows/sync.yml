@@ -1,9 +1,11 @@
 name: sync-kanban
+timezone: Asia/Shanghai
 
-# 佳业采购雷达自动同步：每 30 分钟增量抓央采电子询价 → 导出静态站 → 部署 Cloudflare Pages
+# 佳业采购雷达自动同步：北京时间 8:00-22:00 每小时增量抓央采电子询价 → 导出静态站 → 部署 Cloudflare Pages
+# 另有 workflow_dispatch 可手动立即触发
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "0 8-22 * * *"
   workflow_dispatch: {}
 
 jobs:
