@@ -8,6 +8,8 @@ on:
 
 jobs:
   sync:
+    permissions:
+      contents: write  # 允许把新 PDF/数据库/基线回写仓库
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
