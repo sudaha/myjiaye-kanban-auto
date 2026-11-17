@@ -101,7 +101,7 @@
       $("st-latest").textContent = (s.latest_date || "-").slice(5);
       var snap = s.last_fetch || s.updated_at || "-";
       var nt = "";
-      if (plat === "zycg" && s.new_count > 0) {
+      if ((plat === "zycg" || plat === "poly") && s.new_count > 0) {
         nt = " · 新增 " + s.new_count + " 条（" + (s.new_days || []).join("、") + "）";
       }
       $("upd-time").textContent = snap !== "-" ? "数据快照 " + snap + nt : "";
@@ -217,7 +217,7 @@
       (pickable ? '<input type="checkbox" class="pick" data-id="' + it.id + '"' + (checked ? " checked" : "") + ">" : "") +
       '<div class="row1">' +
          '<div class="title">' + esc(it.title || it.enquiry_name) +
-           (plat === "zycg" && it.is_new ? '<span class="newtag">新</span>' : "") + "</div>" +
+           ((plat === "zycg" || plat === "poly") && it.is_new ? '<span class="newtag">新</span>' : "") + "</div>" +
         (isBid ? "" : '<div class="budget">' + budgetText(it) + "</div>") +
       "</div>" +
       '<div class="row2">' +
