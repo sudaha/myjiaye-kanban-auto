@@ -797,6 +797,42 @@
     a.click();
     setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
   }
+  function clearLastFile() {
+    if (state.last && state.last.url) {
+      try { URL.revokeObjectURL(state.last.url); } catch (e) { }
+    }
+    state.last = null;
+  }
+  function mimeOf(kind) {
+    return kind === "quote"
+      ? "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      : "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+  }
+  function hexOf(buf) {
+    if (!window.crypto || !window.crypto.subtle) return Promise.resolve("");
+    return window.crypto.subtle.digest("SHA-256", buf).then(function (hash) {
+      return Array.from(new Uint8Array(hash)).map(function (b) { return b.toString(16).padStart(2, "0"); }).join("");
+    }).catch(function () { return ""; });
+  }
+  async function commitFormalFile(buf, name, kind) {
+    clearLastFile();
+    var blob = new Blob([buf], { type: mimeOf(kind) });
+    var hash = await hexOf(buf);
+    var url = URL.createObjectURL(blob);
+    state.last = { buf: buf, blob: blob, url: url, name: name, kind: kind, hash: hash };
+    return state.last;
+  }
+  function formalFilePanel(file) {
+    var shortHash = file.hash ? file.hash.slice(0, 16) + "…" : "当前浏览器不支持计算";
+    return '<div class="formal-file-panel" data-file-hash="' + escH(file.hash || "") + '">' +
+      '<div class="formal-file-title">正式文件已生成</div>' +
+      '<div class="formal-file-note">此处不再使用 HTML 模拟 Office 排版。请点下方「打开正式文件预览」，您查看的就是稍后下载的同一份文件。</div>' +
+      '<div class="formal-file-meta"><b>文件：</b>' + escH(file.name) +
+      '　<b>大小：</b>' + (file.blob.size / 1024).toFixed(1) + ' KB' +
+      '　<b>SHA-256：</b><code>' + escH(shortHash) + '</code></div>' +
+      '<div class="formal-file-rule">打开预览与正式下载共用同一 Blob、同一对象地址，不会二次生成。</div>' +
+      '</div>';
+  }
 
   /* ---------- 读取 zip 三段 ---------- */
   function readParts(zip, xlsx) {
@@ -883,16 +919,15 @@
     for (;;) {
       try {
         var buf = kind === "quote" ? await buildQuote(p, attempt > 0) : await buildReceipt(p, attempt > 0);
-        var pr = previewOf(kind, p);
         var name = kind === "quote"
           ? "报价单_" + (p.fields.customer || "客户") + "_" + (p.fields.date || "") + ".xlsx"
           : "签收单_" + (p.fields.contract || p.fields.customer || "客户") + ".docx";
-        state.last = { buf: buf, name: name, html: pr.html, landscape: pr.landscape, kind: kind };
-        if (pv) { pv.innerHTML = pr.html; pv.classList.remove("hide"); }
+        var file = await commitFormalFile(buf, name, kind);
+        if (pv) { pv.innerHTML = formalFilePanel(file); pv.classList.remove("hide"); }
         var act = $("docs-actions");
         if (act) act.classList.remove("hide");
         showMainAction();
-        msg("预览已生成，核对后下载");
+        msg("正式文件已生成；打开预览与下载使用同一份文件（指纹 " + (file.hash ? file.hash.slice(0, 12) : "不可用") + "…）");
         break;
       } catch (e) {
         if (attempt === 0 && /模板/.test(e.message) && /产品行|占位符|表格/.test(e.message)) { attempt = 1; continue; }
@@ -981,20 +1016,20 @@
 
   /* ---------- 标签切换 ---------- */
   var HINTS = {
-    quote: "整块粘贴即可（客户信息 + 产品行混排，产品行无需符号，如：联想开天X5h LK-X5h 海光C86/16G 10台 8300），也可点「图片识别」拍照提取。生成预览核对后下载 Excel。",
-    receipt: "整块粘贴即可（发货日期/联系人/合同编号/送货方式/收货地址 + 产品行，产品行无需符号）。生成预览核对后下载 Word。",
+    quote: "整块粘贴即可（客户信息 + 产品行混排，产品行无需符号）。点「生成正式文件」后，可打开正式 Excel 预览或下载；两者使用同一份文件，不再使用 HTML 模拟排版。",
+    receipt: "整块粘贴即可（发货日期/联系人/合同编号/送货方式/收货地址 + 产品行）。点「生成正式文件」后，可打开正式 Word 预览或下载；两者使用同一份文件。", 
     pdf: "整块粘贴信息，自动识别是报价单还是签收单，一键打印导出 PDF（打印对话框里选「另存为 PDF」）。",
     table: "快速制表工具：整块粘贴信息，一键生成 Word / Excel / PDF 表格。支持上传自己的模板：先「下载空白模板」改好版式再上传（产品行需含 {名称}{数量} 占位符）。"
   };
   function setTab(kind) {
     state.kind = kind;
-    state.last = null;
+    clearLastFile();
     var pv = $("docs-preview"); if (pv) { pv.innerHTML = ""; pv.classList.add("hide"); }
     var act = $("docs-actions"); if (act) act.classList.add("hide");
     var tb = $("docs-tplbar"); if (tb) tb.classList.toggle("hide", kind !== "table");
     var hint = $("docs-hint"); if (hint) hint.textContent = HINTS[kind];
     var gen = $("docs-gen");
-    if (gen) gen.textContent = kind === "pdf" ? "🖨 一键导出 PDF" : (kind === "table" ? "👀 预览内容" : "👀 生成预览");
+    if (gen) gen.textContent = kind === "pdf" ? "🖨 一键导出 PDF" : (kind === "table" ? "👀 预览内容" : "📄 生成正式文件");
     if (kind === "table") tplChip();
     msg("");
   }
@@ -1015,14 +1050,27 @@
   function showMainAction() {
     var kind = state.kind;
     if (kind === "quote" || kind === "receipt") {
-      setActionBtn("docs-dl-1", kind === "quote" ? "⬇ 下载 Excel" : "⬇ 下载 Word", true, dlNative);
-      setActionBtn("docs-dl-2", "", false, null);
+      setActionBtn("docs-dl-1", "↗ 用 WPS/Office 打开正式文件", true, openFormalFile);
+      setActionBtn("docs-dl-2", kind === "quote" ? "⬇ 下载正式 Excel" : "⬇ 下载正式 Word", true, dlNative);
       setActionBtn("docs-dl-3", "", false, null);
     }
   }
+  function openFormalFile() {
+    if (!state.last || !state.last.url) return msg("请先生成正式文件", true);
+    // Office 文件在不同浏览器中的直接打开能力不同；使用同一对象地址导航，
+    // 若浏览器不支持内嵌预览，会直接下载，用户用 WPS/Office 打开即为正式版式。
+    var win = window.open(state.last.url, "_blank", "noopener");
+    if (!win) msg("浏览器阻止了新窗口，请允许弹窗；如果浏览器直接下载，请用 WPS/Office 打开该文件预览", true);
+    else msg("已打开同一份正式文件；浏览器若不支持 Office 内嵌预览，会自动下载，请用 WPS/Office 打开", false);
+  }
   function dlNative() {
-    if (!state.last || !state.last.buf) return msg("请先生成预览", true);
-    download(state.last.buf, state.last.name);
+    if (!state.last || !state.last.url) return msg("请先生成正式文件", true);
+    var a = document.createElement("a");
+    a.href = state.last.url;
+    a.download = state.last.name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
   }
 
   /* ---------- 装配 ---------- */
@@ -1040,11 +1088,25 @@
         "#docs-actions .btn:hover{border-color:#0f7b5f;color:#0f7b5f}" +
         ".docs-tplbar{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap;font-size:12px}" +
         ".docs-tplbar button{padding:5px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:12px}" +
-        ".docs-tplbar button:hover{border-color:#0f7b5f;color:#0f7b5f}";
+        ".docs-tplbar button:hover{border-color:#0f7b5f;color:#0f7b5f}" +
+        ".formal-file-panel{background:#fff;border:2px solid #0f7b5f;border-radius:10px;padding:20px;max-width:760px;margin:0 auto;font-family:宋体,SimSun,serif}" +
+        ".formal-file-title{font-size:20px;font-weight:700;color:#0f7b5f;margin-bottom:10px}" +
+        ".formal-file-note{font-size:14px;line-height:1.8;margin-bottom:12px}" +
+        ".formal-file-meta{font-size:12px;background:#f4f7f6;padding:10px;border-radius:6px;word-break:break-all}" +
+        ".formal-file-meta code{font-family:Consolas,monospace}" +
+        ".formal-file-rule{margin-top:10px;font-size:12px;color:#566}";
       document.head.appendChild(st);
     }
     document.querySelectorAll(".docs-tab").forEach(function (b) {
       b.addEventListener("click", function () { setTab(b.dataset.doc || "quote"); });
+    });
+    var input = $("docs-input");
+    if (input) input.addEventListener("input", function () {
+      if (!state.last) return;
+      clearLastFile();
+      var pv0 = $("docs-preview"); if (pv0) { pv0.innerHTML = ""; pv0.classList.add("hide"); }
+      var act0 = $("docs-actions"); if (act0) act0.classList.add("hide");
+      msg("内容已修改，请重新生成正式文件");
     });
     var gen = $("docs-gen");
     if (gen) gen.addEventListener("click", function () {
