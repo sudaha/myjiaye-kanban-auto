@@ -208,3 +208,18 @@
   border-radius: 9px; background: #e5484d; color: #fff; font-size: 11px; font-weight: 600;
   vertical-align: 2px; flex: none;
 }
+
+/* 商务单证 */
+.docsbox { display: block; }
+.docsbox.hide { display: none; }
+.docs-tab {
+  padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
+  background: #fff; color: var(--muted); font-size: 13px; cursor: pointer;
+}
+.docs-tab.on { background: #0f7b5f; border-color: #0f7b5f; color: #fff; }
+.docs-hint { font-size: 12px; margin: 0 0 8px; line-height: 1.6; }
+.docsbox textarea {
+  width: 100%; box-sizing: border-box; padding: 12px; border: 1px solid var(--line);
+  border-radius: 10px; font-size: 13px; line-height: 1.7; font-family: Consolas, "Courier New", monospace;
+  resize: vertical; background: #fff;
+}
