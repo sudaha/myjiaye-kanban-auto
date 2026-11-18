@@ -976,6 +976,8 @@
         "#docs-preview .doc-paper{margin:0 auto;box-shadow:0 2px 10px rgba(0,0,0,.18)}" +
         "#docs-actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}" +
         "#docs-actions .btn{padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:13px}" +
+        "#docs-actions .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}" +
+        "#docs-actions .btn.primary:hover{background:var(--brand2);border-color:var(--brand2);color:#fff}" +
         "#docs-actions .btn:hover{border-color:#0f7b5f;color:#0f7b5f}" +
         ".docs-tplbar{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap;font-size:12px}" +
         ".docs-tplbar button{padding:5px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:12px}" +
