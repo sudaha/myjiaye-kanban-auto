@@ -36,6 +36,7 @@
   <nav class="plats" id="plats">
     <button class="plat on" data-plat="zycg">央采电子询价<span class="badge-n" id="n-zycg">-</span></button>
     <button class="plat" data-plat="poly">保利集团招标<span class="badge-n" id="n-poly">-</span></button>
+    <button class="plat" data-plat="docs">商务单证</button>
     <button class="plat" data-plat="picker">选型助手<span class="badge-n" id="n-picker">-</span></button>
     <span class="plat-hint" id="plat-hint"></span>
   </nav>
@@ -108,6 +109,20 @@
     <div id="pick-results"></div>
   </section>
 
+  <!-- 商务单证（报价单 / 货物签收单：粘贴信息自动填模板下载） -->
+  <section id="docsbox" class="docsbox hide">
+    <div class="pick-tabs">
+      <button class="docs-tab on" data-doc="quote">报价单（Excel）</button>
+      <button class="docs-tab" data-doc="receipt">货物签收单（Word）</button>
+    </div>
+    <div class="docs-hint muted">把下方信息粘贴进文本框（按占位提示的格式，产品行一行一条、竖线分隔），点「生成并下载」。文件在浏览器本地生成，数据不上传。</div>
+    <textarea id="docs-input" rows="14"></textarea>
+    <div class="pick-actions">
+      <button id="docs-gen" class="btn primary">⬇ 生成并下载</button>
+      <span id="docs-msg" class="muted"></span>
+    </div>
+  </section>
+
   <main id="list" class="list"></main>
 
   <div class="pager" id="pager">
@@ -130,6 +145,8 @@
 </footer>
 
 <script src="/app.js"></script>
+<script src="/jszip.min.js"></script>
+<script src="/docs.js"></script>
 
 <!-- 登录门：密码不存网页，只存 SHA-256 哈希；当次会话免重复输入 -->
 <style>
