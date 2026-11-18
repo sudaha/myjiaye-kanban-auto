@@ -111,29 +111,35 @@
       ssAdded++;
       return idx;
     }
-    // 动态填入的数据格统一正文：宋体 11、常规、黑色。
-    // 仅克隆对应 xf 并替换 fontId；边框/填充/对齐/数字格式保持原样。
+    // 动态填入的数据格统一正文：宋体 10、常规、黑色、水平/垂直居中。
+    // 仅克隆对应 xf 并替换 fontId/alignment；边框/填充/数字格式保持原样。
     function uniformVariant(xfIdx) {
       if (!stylesXml || uniformVariants[xfIdx] !== undefined) return uniformVariants[xfIdx] !== undefined ? uniformVariants[xfIdx] : xfIdx;
       if (uniformFontIdx < 0) {
         var fsec = stylesOut.match(/<fonts count="(\d+)">[\s\S]*?<\/fonts>/);
         if (!fsec) return xfIdx;
         uniformFontIdx = +fsec[1];
-        var font = '<font><name val="宋体"/><sz val="11"/><color rgb="FF000000"/><family val="3"/><charset val="134"/><scheme val="minor"/></font>';
+        var font = '<font><name val="宋体"/><sz val="10"/><color rgb="FF000000"/><family val="3"/><charset val="134"/><scheme val="minor"/></font>';
         var fnew = fsec[0].replace(/<\/fonts>/, font + "</fonts>").replace(/<fonts count="\d+"/, '<fonts count="' + (uniformFontIdx + 1) + '"');
         stylesOut = stylesOut.replace(fsec[0], fnew);
       }
       var xfSec = stylesOut.match(/<cellXfs count="(\d+)">[\s\S]*?<\/cellXfs>/);
       if (!xfSec) return xfIdx;
-      var xfs = xfSec[0].match(/<xf\b[^>]*(?:\/>|>[\s\S]*?<\/xf>)/g) || [];
+      var xfs = xfSec[0].match(/<xf\b[^>]*?(?:\/>|>[\s\S]*?<\/xf>)/g) || [];
       var xfStr = xfs[xfIdx] || "";
       if (!xfStr) return xfIdx;
       var newXf = /\bfontId="\d+"/.test(xfStr) ? xfStr.replace(/\bfontId="\d+"/, 'fontId="' + uniformFontIdx + '"') : xfStr.replace(/<xf\b/, '<xf fontId="' + uniformFontIdx + '"');
       newXf = newXf.replace(/^<xf\b[^>]*>/, function (tag) {
-        if (/\bapplyFont=/.test(tag)) return tag.replace(/\bapplyFont="[^"]*"/, 'applyFont="1"');
-        if (/\/>$/.test(tag)) return tag.replace(/\/>$/, ' applyFont="1"/>');
-        return tag.replace(/>$/, ' applyFont="1">');
+        if (/\bapplyFont=/.test(tag)) tag = tag.replace(/\bapplyFont="[^"]*"/, 'applyFont="1"');
+        else tag = tag.replace(/\s*\/?\>$/, function (end) { return ' applyFont="1"' + (end.indexOf('/') >= 0 ? '/>' : '>'); });
+        if (/\bapplyAlignment=/.test(tag)) tag = tag.replace(/\bapplyAlignment="[^"]*"/, 'applyAlignment="1"');
+        else tag = tag.replace(/\s*\/?\>$/, function (end) { return ' applyAlignment="1"' + (end.indexOf('/') >= 0 ? '/>' : '>'); });
+        return tag;
       });
+      var align = '<alignment horizontal="center" vertical="center" wrapText="1"/>';
+      if (/\/\>$/.test(newXf)) newXf = newXf.replace(/\/>$/, ' applyAlignment="1">' + align + '</xf>');
+      else if (/<alignment\b[^>]*\/>/.test(newXf)) newXf = newXf.replace(/<alignment\b[^>]*\/>/, align);
+      else if (/<\/xf>$/.test(newXf)) newXf = newXf.replace(/<\/xf>$/, align + '</xf>');
       var newIdx = +xfSec[1];
       var xfNew = xfSec[0].replace(/<\/cellXfs>/, newXf + "</cellXfs>").replace(/<cellXfs count="\d+"/, '<cellXfs count="' + (newIdx + 1) + '"');
       stylesOut = stylesOut.replace(xfSec[0], xfNew);
