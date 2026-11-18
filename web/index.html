@@ -109,13 +109,15 @@
     <div id="pick-results"></div>
   </section>
 
-  <!-- 商务单证（报价单 / 货物签收单：粘贴信息自动填模板下载） -->
+  <!-- 商务单证（报价单 / 货物签收单 / PDF导出 / 一键成表） -->
   <section id="docsbox" class="docsbox hide">
     <div class="pick-tabs">
-      <button class="docs-tab on" data-doc="quote">报价单（Excel）</button>
-      <button class="docs-tab" data-doc="receipt">货物签收单（Word）</button>
+      <button class="docs-tab on" data-doc="quote">报价单</button>
+      <button class="docs-tab" data-doc="receipt">货物签收单</button>
+      <button class="docs-tab" data-doc="pdf">PDF 导出</button>
+      <button class="docs-tab" data-doc="table">一键成表</button>
     </div>
-    <div class="docs-hint muted">把整块信息直接粘进文本框（客户信息 + 产品行混排均可，产品行用竖线/Tab/空行分隔，不必对齐），也可以拍照或截图后点「图片识别」自动提取，支持直接 Ctrl+V 粘贴图片。点「生成预览」核对后，选 Excel/Word 下载或一键导出 PDF。也可以点「下载空白模板」改好版式再上传，自定义模板自动识别 {名称}{数量} 等占位符。文件在浏览器本地生成，数据不上传。</div>
+    <div id="docs-hint" class="docs-hint muted"></div>
     <textarea id="docs-input" rows="12"></textarea>
     <div class="pick-actions">
       <button id="docs-gen" class="btn primary">👀 生成预览</button>
@@ -124,16 +126,18 @@
       <span id="docs-ocr" class="muted"></span>
       <span id="docs-msg" class="muted"></span>
     </div>
-    <div class="docs-tplbar">
-      <span id="docs-tpl-chip" class="muted">当前模板：内置报价单（可编辑后重新上传）</span>
+    <div class="docs-tplbar hide" id="docs-tplbar">
+      <span id="docs-tpl-chip" class="muted"></span>
       <button id="docs-tpl-upload">⬆ 上传自定义模板</button>
-      <button id="docs-tpl-blank">⬇ 下载空白模板</button>
+      <button id="docs-tpl-blank-x">⬇ 空白 Excel 模板</button>
+      <button id="docs-tpl-blank-d">⬇ 空白 Word 模板</button>
       <button id="docs-tpl-reset">恢复内置</button>
-      <input type="file" id="docs-tpl-file" hidden>
+      <input type="file" id="docs-tpl-file" accept=".xlsx,.docx" hidden>
     </div>
     <div id="docs-actions" class="hide">
-      <button id="docs-dl-native" class="btn primary">⬇ 下载文件（Excel / Word）</button>
-      <button id="docs-dl-pdf" class="btn">🖨 一键导出 PDF</button>
+      <button id="docs-dl-1" class="btn primary hide"></button>
+      <button id="docs-dl-2" class="btn hide"></button>
+      <button id="docs-dl-3" class="btn hide"></button>
     </div>
     <div id="docs-preview" class="hide"></div>
     <details id="docs-raw" class="docs-raw hide">
