@@ -183,6 +183,9 @@ def export_poly(out):
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     items = []
     for d in raw:
+        # 网页只保留进行中项目，已截止的不上线（用户 2026-11-18 要求；数据源仍存全量）
+        if (d.get("bid_end_time") or "") < now:
+            continue
         pdf_files = [a for a in (d.get("attachments") or []) if a.get("local")]
         pdf_path = ("pdf/poly/" + pdf_files[0]["local"]) if pdf_files else None
         it = {
