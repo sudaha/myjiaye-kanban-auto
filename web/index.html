@@ -130,5 +130,59 @@
 </footer>
 
 <script src="/app.js"></script>
+
+<!-- 登录门：密码不存网页，只存 SHA-256 哈希；当次会话免重复输入 -->
+<style>
+  #gate { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #eef7f4, #f6faf9); }
+  #gate.gate-hide { display: none; }
+  .gate-box { background: #fff; border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow-lg);
+    padding: 38px 42px; width: 340px; text-align: center; }
+  .gate-logo { height: 64px; margin: 0 auto; display: block; }
+  .gate-box h2 { margin: 14px 0 4px; font-size: 20px; }
+  .gate-box input { width: 100%; padding: 10px 12px; margin: 14px 0; border: 1px solid var(--line);
+    border-radius: 9px; font-size: 14px; box-sizing: border-box; }
+  .gate-err { color: #d4380d; font-size: 13px; margin-top: 10px; }
+  .gate-err.hide { display: none; }
+</style>
+<div id="gate" class="gate-hide">
+  <div class="gate-box">
+    <img class="gate-logo" src="/jiaye_logo.jpg" alt="佳业科技">
+    <h2>佳业采购雷达</h2>
+    <div class="muted">内部数据看板，请输入访问密码</div>
+    <form id="gate-form">
+      <input type="password" id="gate-pw" placeholder="访问密码" autocomplete="current-password" autofocus>
+      <button type="submit" class="btn primary" style="width:100%">进入看板</button>
+    </form>
+    <div class="gate-err hide" id="gate-err">密码错误，请重试</div>
+  </div>
+</div>
+<script>
+(function () {
+  var HASH = "65c074657a68406be3fbc5cb8273a20a05262b0f6a1f7fb3a96f210c7ed51fa4";
+  var KEY = "jiaye_auth";
+  var gate = document.getElementById("gate");
+  if (sessionStorage.getItem(KEY)) { gate.classList.add("gate-hide"); return; }
+  gate.classList.remove("gate-hide");
+  document.body.style.overflow = "hidden";
+  document.getElementById("gate-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var pw = document.getElementById("gate-pw").value;
+    var err = document.getElementById("gate-err");
+    err.classList.add("hide");
+    crypto.subtle.digest("SHA-256", new TextEncoder().encode(pw)).then(function (buf) {
+      var hex = Array.prototype.map.call(new Uint8Array(buf), function (b) { return b.toString(16).padStart(2, "0"); }).join("");
+      if (hex === HASH) {
+        sessionStorage.setItem(KEY, "1");
+        gate.classList.add("gate-hide");
+        document.body.style.overflow = "";
+      } else {
+        err.classList.remove("hide");
+        document.getElementById("gate-pw").value = "";
+      }
+    }).catch(function () { err.classList.remove("hide"); });
+  });
+})();
+</script>
 </body>
 </html>
