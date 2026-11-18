@@ -5,12 +5,13 @@
     zycg: { name: "央采电子询价", sub: "中央政府采购网 · 电子询价「需求公告」", hint: "可勾选多份公告，一键打包下载询价通知书 PDF" },
     poly: { name: "保利集团招标", sub: "中国保利集团招标采购供应链平台 · 全量项目", hint: "保利以工程/服务类为主，勾选「只看 IT 相关」筛硬件项目" },
     bid: { name: "招标公告·新源", sub: "央采主站（招标/征求/更正）+ 中国政府采购网（中央/地方）· 已筛 IT 硬件", hint: "点开卡片跳转原公告页查看采购人与预算；关键词/日期筛选可用" },
+    docs: { name: "商务单证", sub: "报价单 / 货物签收单 · 粘贴信息自动填模板一键下载", hint: "选单证类型，按占位格式粘贴信息，浏览器本地生成文件（数据不上传）" },
     picker: { name: "选型助手", sub: "基于央采卖场真实成交记录建库 · 需求一键选型 + 成交价参考", hint: "粘贴需求文本或挑一条公告，按品类/CPU/品牌匹配机型库（含真实成交价带）" }
   };
   function platFromHash() {
     var h = (location.hash || "").replace("#", "");
     // bid（招标公告·新源）2026-11-17 应用户要求暂时下线，#bid 回退到央采
-    return h === "poly" || h === "picker" ? h : "zycg";
+    return h === "poly" || h === "picker" || h === "docs" ? h : "zycg";
   }
   var plat = platFromHash();
   var state = { page: 1, pageSize: 20, total: 0, filters: {}, items: [], loaded: false, picked: {} };
@@ -55,13 +56,16 @@
     var m = PLAT_META[p];
     $("plat-hint").textContent = m.hint;
     var isPicker = p === "picker";
-    $("filterbar").classList.toggle("hide", isPicker);
+    var isDocs = p === "docs";
+    var noList = isPicker || isDocs;
+    $("filterbar").classList.toggle("hide", noList);
     if ($("f-brand")) $("f-brand").style.display = p === "poly" ? "none" : "";
     $("f-it-wrap").classList.toggle("hide", p !== "poly");
     $("batchbar").classList.toggle("hide", p !== "zycg");
     $("pickerbox").classList.toggle("hide", !isPicker);
-    $("list").classList.toggle("hide", isPicker);
-    $("pager").classList.toggle("hide", isPicker);
+    if ($("docsbox")) $("docsbox").classList.toggle("hide", !isDocs);
+    $("list").classList.toggle("hide", noList);
+    $("pager").classList.toggle("hide", noList);
     document.querySelector(".brand h1").textContent = isPicker
       ? "选型助手 · 成交机型库" : m.name + " · 佳业采购雷达";
     document.querySelector(".brand .sub").textContent = m.sub;
@@ -70,6 +74,10 @@
       $("st-total-lab").textContent = "机型总数";
       $("st-active-lab").textContent = "有成交价";
       $("st-latest-lab").textContent = "最后更新";
+    } else if (isDocs) {
+      $("st-total-lab").textContent = "单证类型";
+      $("st-active-lab").textContent = "模板";
+      $("st-latest-lab").textContent = "生成方式";
     } else if (p === "bid") {
       $("st-total-lab").textContent = "IT 公告";
       $("st-active-lab").textContent = "覆盖天数";
@@ -83,6 +91,14 @@
     ["f-keyword", "f-brand", "f-date"].forEach(function (i) { if ($(i)) $(i).value = ""; });
     $("f-category").value = ""; $("f-status").value = ""; $("f-it").checked = false;
     updateSel();
+    if (isDocs) {
+      $("result-count").textContent = "";
+      $("upd-time").textContent = "";
+      $("st-total").textContent = "2";
+      $("st-active").textContent = "佳业同创";
+      $("st-latest").textContent = "本地生成";
+      return;
+    }
     if (isPicker) {
       $("result-count").textContent = "";
       $("upd-time").textContent = "";
