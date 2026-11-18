@@ -209,6 +209,9 @@
   vertical-align: 2px; flex: none;
 }
 
+/* 通用隐藏（JS 用 class="hide" 切换） */
+.hide { display: none !important; }
+
 /* 商务单证 */
 .docsbox { display: block; }
 .docsbox.hide { display: none; }
