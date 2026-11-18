@@ -93,10 +93,27 @@ def inject_cell_token(tc, token):
     if not p:
         raise RuntimeError("原始签收单数据行单元格没有段落")
     pxml = p.group(0)
+    # 产品数据段落水平居中；表格单元格垂直居中。
+    ppr = re.search(r"<w:pPr>[\s\S]*?</w:pPr>", pxml)
+    if ppr:
+        ppr_new = re.sub(r"<w:jc\b[^>]*/>", "", ppr.group(0)).replace("</w:pPr>", '<w:jc w:val="center"/></w:pPr>')
+        pxml = pxml[:ppr.start()] + ppr_new + pxml[ppr.end():]
+    else:
+        pxml = pxml.replace(">", '><w:pPr><w:jc w:val="center"/></w:pPr>', 1)
+    tcpr = re.search(r"<w:tcPr>[\s\S]*?</w:tcPr>", tc)
+    if tcpr:
+        tcpr_new = re.sub(r"<w:vAlign\b[^>]*/>", "", tcpr.group(0)).replace("</w:tcPr>", '<w:vAlign w:val="center"/></w:tcPr>')
+        tc = tc[:tcpr.start()] + tcpr_new + tc[tcpr.end():]
+        p = re.search(r"<w:p\b[^>]*>[\s\S]*?</w:p>", tc)
+        pxml = p.group(0)
+        ppr = re.search(r"<w:pPr>[\s\S]*?</w:pPr>", pxml)
+        if ppr:
+            ppr_new = re.sub(r"<w:jc\b[^>]*/>", "", ppr.group(0)).replace("</w:pPr>", '<w:jc w:val="center"/></w:pPr>')
+            pxml = pxml[:ppr.start()] + ppr_new + pxml[ppr.end():]
     rpr = ('<w:rPr><w:rFonts w:hint="eastAsia" w:ascii="方正仿宋_GB2312" '
            'w:hAnsi="方正仿宋_GB2312" w:eastAsia="方正仿宋_GB2312" w:cs="方正仿宋_GB2312"/>'
            '<w:b w:val="0"/><w:bCs w:val="0"/><w:color w:val="000000"/>'
-           '<w:sz w:val="22"/><w:szCs w:val="22"/></w:rPr>')
+           '<w:sz w:val="20"/><w:szCs w:val="20"/></w:rPr>')
     run = '<w:r>%s<w:t xml:space="preserve">%s</w:t></w:r>' % (rpr, esc(token))
     pnew = pxml.replace("</w:p>", run + "</w:p>")
     return tc[:p.start()] + pnew + tc[p.end():]
