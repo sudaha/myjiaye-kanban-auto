@@ -88,12 +88,16 @@ def replace_wt_by_index(xml, mapping):
 
 
 def inject_cell_token(tc, token):
-    # 原数据行空白单元格：只在其首段末尾增加一个文本 run；tcPr/pPr/边框/宽度原样保留。
+    # 原数据行空白单元格：只在其首段末尾增加统一正文 run；tcPr/pPr/边框/宽度原样保留。
     p = re.search(r"<w:p\b[^>]*>[\s\S]*?</w:p>", tc)
     if not p:
         raise RuntimeError("原始签收单数据行单元格没有段落")
     pxml = p.group(0)
-    run = '<w:r><w:t xml:space="preserve">%s</w:t></w:r>' % esc(token)
+    rpr = ('<w:rPr><w:rFonts w:hint="eastAsia" w:ascii="方正仿宋_GB2312" '
+           'w:hAnsi="方正仿宋_GB2312" w:eastAsia="方正仿宋_GB2312" w:cs="方正仿宋_GB2312"/>'
+           '<w:b w:val="0"/><w:bCs w:val="0"/><w:color w:val="000000"/>'
+           '<w:sz w:val="22"/><w:szCs w:val="22"/></w:rPr>')
+    run = '<w:r>%s<w:t xml:space="preserve">%s</w:t></w:r>' % (rpr, esc(token))
     pnew = pxml.replace("</w:p>", run + "</w:p>")
     return tc[:p.start()] + pnew + tc[p.end():]
 
