@@ -59,13 +59,21 @@ def build_index_html():
 
 
 HEADERS = """/index.html
-  Cache-Control: no-cache
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+  CDN-Cache-Control: no-store
+  Cloudflare-CDN-Cache-Control: no-store
+  Pragma: no-cache
+  Expires: 0
 
 /
-  Cache-Control: no-cache
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+  CDN-Cache-Control: no-store
+  Cloudflare-CDN-Cache-Control: no-store
+  Pragma: no-cache
+  Expires: 0
 
 /data/*
-  Cache-Control: no-cache
+  Cache-Control: no-cache, must-revalidate, max-age=0
 
 /pdf/*
   Cache-Control: public, max-age=86400
