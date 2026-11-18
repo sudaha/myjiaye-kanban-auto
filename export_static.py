@@ -121,6 +121,7 @@ def export_zycg(out):
             "category": d["category"], "brands": d["brands"],
             "is_end": d["is_end"], "enquiry_no": d["enquiry_no"],
             "has_pdf": has_pdf,
+            "pdf_path": ("pdf/zycg/" + local) if has_pdf else None,
         })
     # 只保留最近 3 个发布日期的全部条目，更早的不上网页（2026-11-17 用户要求，随同步滚动）
     days = sorted({(it["pub_date"] or it["publish_date"] or "")[:10] for it in items if (it["pub_date"] or it["publish_date"])},
@@ -166,9 +167,14 @@ def export_zycg(out):
     write_json(os.path.join(out, "data", "zycg", "list.json"),
                {"total": len(items), "items": items})
     write_json(os.path.join(out, "data", "zycg", "categories.json"), {"categories": cats})
+    date_counts = {}
+    for it in items:
+        dd = day_of(it)
+        if dd:
+            date_counts[dd] = date_counts.get(dd, 0) + 1
     write_json(os.path.join(out, "data", "zycg", "status.json"), {
         "platform": "zycg", "total": len(items), "active": active,
-        "latest_date": latest[:10],
+        "latest_date": latest[:10], "available_dates": date_counts,
         "new_count": len(new_ids), "new_days": new_days,
         "last_fetch": meta.get("last_fetch") or "",
         "refresh_seconds": 1800,
@@ -216,6 +222,7 @@ def export_poly(out):
             "is_end": 0 if (d.get("bid_end_time") or "") >= now else 1,
             "enquiry_no": d.get("code") or "",
             "has_pdf": bool(pdf_path),
+            "pdf_path": pdf_path,
             "it_hint": bool(d.get("it_hint")),
             "notice_type_name": d.get("notice_type_name") or "",
         }
