@@ -96,6 +96,8 @@
     var wXfs = stylesXml ? whiteXfs(stylesXml, whiteFontIds(stylesXml)) : {};
     var stylesOut = stylesXml;
     var variants = {};
+    var uniformVariants = {};
+    var uniformFontIdx = -1;
     var ssAdded = 0;
 
     function appendSi(text) {
@@ -109,7 +111,37 @@
       ssAdded++;
       return idx;
     }
-    // 白字单元格 → 克隆 font/xf 改黑（唯一允许的样式变更）
+    // 动态填入的数据格统一正文：宋体 11、常规、黑色。
+    // 仅克隆对应 xf 并替换 fontId；边框/填充/对齐/数字格式保持原样。
+    function uniformVariant(xfIdx) {
+      if (!stylesXml || uniformVariants[xfIdx] !== undefined) return uniformVariants[xfIdx] !== undefined ? uniformVariants[xfIdx] : xfIdx;
+      if (uniformFontIdx < 0) {
+        var fsec = stylesOut.match(/<fonts count="(\d+)">[\s\S]*?<\/fonts>/);
+        if (!fsec) return xfIdx;
+        uniformFontIdx = +fsec[1];
+        var font = '<font><name val="宋体"/><sz val="11"/><color rgb="FF000000"/><family val="3"/><charset val="134"/><scheme val="minor"/></font>';
+        var fnew = fsec[0].replace(/<\/fonts>/, font + "</fonts>").replace(/<fonts count="\d+"/, '<fonts count="' + (uniformFontIdx + 1) + '"');
+        stylesOut = stylesOut.replace(fsec[0], fnew);
+      }
+      var xfSec = stylesOut.match(/<cellXfs count="(\d+)">[\s\S]*?<\/cellXfs>/);
+      if (!xfSec) return xfIdx;
+      var xfs = xfSec[0].match(/<xf\b[^>]*(?:\/>|>[\s\S]*?<\/xf>)/g) || [];
+      var xfStr = xfs[xfIdx] || "";
+      if (!xfStr) return xfIdx;
+      var newXf = /\bfontId="\d+"/.test(xfStr) ? xfStr.replace(/\bfontId="\d+"/, 'fontId="' + uniformFontIdx + '"') : xfStr.replace(/<xf\b/, '<xf fontId="' + uniformFontIdx + '"');
+      newXf = newXf.replace(/^<xf\b[^>]*>/, function (tag) {
+        if (/\bapplyFont=/.test(tag)) return tag.replace(/\bapplyFont="[^"]*"/, 'applyFont="1"');
+        if (/\/>$/.test(tag)) return tag.replace(/\/>$/, ' applyFont="1"/>');
+        return tag.replace(/>$/, ' applyFont="1">');
+      });
+      var newIdx = +xfSec[1];
+      var xfNew = xfSec[0].replace(/<\/cellXfs>/, newXf + "</cellXfs>").replace(/<cellXfs count="\d+"/, '<cellXfs count="' + (newIdx + 1) + '"');
+      stylesOut = stylesOut.replace(xfSec[0], xfNew);
+      uniformVariants[xfIdx] = newIdx;
+      return newIdx;
+    }
+
+    // 白字单元格 → 克隆 font/xf 改黑（兼容旧自定义模板）
     function blackVariant(xfIdx) {
       if (!stylesXml || variants[xfIdx]) return variants[xfIdx] ? variants[xfIdx].idx : xfIdx;
       var fonts = stylesOut.match(/<font>[\s\S]*?<\/font>/g) || [];
@@ -236,13 +268,14 @@
       return rowXml.replace(seg, ns);
     }
     // 行内 token 原位替换（保留多 run 富文本）
-    function fillRowTokens(rowXml, cells, map) {
+    function fillRowTokens(rowXml, cells, map, uniformData) {
       var out = rowXml;
       cells.forEach(function (c) {
         if (!c.ref || !tokensOf(c.text).length) return;
         var newVal = replaceTokens(c.text, map);
         var sAttr = c.s;
-        if (wXfs[c.s]) sAttr = String(blackVariant(+c.s));
+        if (uniformData) sAttr = String(uniformVariant(+c.s));
+        else if (wXfs[c.s]) sAttr = String(blackVariant(+c.s));
         if (c.t === "s") {
           // sharedStrings 格：原位转为 inlineStr 填入（WPS 对手写包追加 si 兼容性差；
           // 不触碰 sharedStrings.xml，其余模板字节保持原样）
@@ -312,7 +345,7 @@
       var cList = sourceCells.map(function (c) {
         return { ref: c.ref.replace(/\d+$/, String(nr)), s: c.s, t: c.t, idx: c.idx, text: c.text };
       });
-      clone = fillRowTokens(clone, cList, i < n ? rowVals[i] : emptyVals);
+      clone = fillRowTokens(clone, cList, i < n ? rowVals[i] : emptyVals, true);
       outRows.push(clone);
       if (nr > maxR) maxR = nr;
     }
