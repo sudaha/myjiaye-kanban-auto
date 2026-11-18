@@ -52,6 +52,8 @@ def build_index_html():
     html = html.replace('href="/style.css"', 'href="style.css?v=%s"' % stamp)
     html = html.replace('href="/extra.css"', 'href="extra.css?v=%s"' % stamp)
     html = html.replace('src="/app.js"', 'src="app.js?v=%s"' % stamp)
+    for js in ("jszip.min.js", "docs.js"):
+        html = html.replace('src="/%s"' % js, 'src="%s?v=%s"' % (js, stamp))
     lines = [ln for ln in html.splitlines() if 'id="f-refresh"' not in ln]
     return "\n".join(lines) + "\n"
 
@@ -283,6 +285,16 @@ def main():
     logo = os.path.join(WEB, "jiaye_logo.jpg")
     if os.path.isfile(logo):
         shutil.copy2(logo, os.path.join(out, "jiaye_logo.jpg"))
+    for extra in ("jszip.min.js", "docs.js"):
+        src = os.path.join(STATIC_SRC, extra)
+        if os.path.isfile(src):
+            shutil.copy2(src, os.path.join(out, extra))
+    tpl_dir = os.path.join(WEB, "templates")
+    if os.path.isdir(tpl_dir):
+        dst_tpl = os.path.join(out, "templates")
+        os.makedirs(dst_tpl, exist_ok=True)
+        for fn in os.listdir(tpl_dir):
+            shutil.copy2(os.path.join(tpl_dir, fn), os.path.join(dst_tpl, fn))
 
     # 选型助手机型库（央采卖场成交公告聚合）
     products_src = os.path.join(BASE, "data", "products.json")
