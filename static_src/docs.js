@@ -86,6 +86,65 @@
     if (!name || !qty) return null;
     return { name: name, model: model, spec: spec, qty: qty, unit: unit, price: price, remark: remark };
   }
+  // 免符号产品行：尾部启发式识别 数量/单位/单价/备注，头部按 CJK/ASCII 切 名称/型号/规格
+  function freeItem(l) {
+    var isNumT = function (t) { return /^[\d,]+(\.\d+)?$/.test(t); };
+    var isUnitT = function (t) { return !!t && t.length <= 3 && UNIT_CHARS.indexOf(t.charAt(0)) >= 0 && !isNumT(t); };
+    var fusedRe = /^([\d,]+(?:\.\d+)?)([台套件个条根把张块对双片只箱盒瓶罐支辆])$/;
+    var toks = l.split(/\s+/);
+    if (toks.length < 2) return null;
+    var price = null, qty = null, unit = "", remark = "", headLen = toks.length;
+    if (isNumT(toks[toks.length - 1])) {
+      price = num(toks[toks.length - 1]);
+      var i = toks.length - 2;
+      var fF = i >= 0 ? toks[i].match(fusedRe) : null; // 「10台」紧贴单价
+      if (fF) { qty = num(fF[1]); unit = fF[2]; headLen = i; }
+      else {
+        if (i >= 0 && isUnitT(toks[i])) { unit = toks[i]; i--; }
+        if (i >= 0) {
+          var f = toks[i].match(fusedRe);
+          if (f) { qty = num(f[1]); unit = unit || f[2]; headLen = i; }
+          else if (isNumT(toks[i])) { qty = num(toks[i]); headLen = i; }
+        }
+      }
+      if (qty == null) return null;
+    } else {
+      var qi = -1;
+      for (var k = toks.length - 1; k >= 0; k--) {
+        if (isNumT(toks[k]) || toks[k].match(fusedRe)) { qi = k; break; }
+      }
+      if (qi < 1) return null;
+      var f2 = toks[qi].match(fusedRe);
+      if (f2) { qty = num(f2[1]); unit = f2[2]; } else { qty = num(toks[qi]); }
+      var tail = toks.slice(qi + 1);
+      if (tail.length && isUnitT(tail[0])) { unit = unit || tail[0]; tail = tail.slice(1); }
+      remark = tail.join(" ");
+      headLen = qi;
+    }
+    var head = toks.slice(0, headLen);
+    if (!head.length) return null;
+    if (head.length < 2 && head[0].length < 4) return null; // 防误判普通句子
+    var isAsciiTok = function (t) { return /^[A-Za-z0-9][A-Za-z0-9\-\./]*$/.test(t) && /[A-Za-z]/.test(t) && t.length >= 2 && t.length <= 16; };
+    var hasCJK = function (t) { return /[\u4e00-\u9fa5]/.test(t); };
+    var mIdx = -1;
+    for (var m = 0; m < head.length; m++) {
+      if (!isAsciiTok(head[m])) continue;
+      if (m > 0 && hasCJK(head[m - 1])) continue; // 紧跟中文的 ASCII = 名称一部分
+      if (m === 0 && head.length > 1 && isAsciiTok(head[1]) && !hasCJK(head[0])) continue;
+      mIdx = m; break;
+    }
+    var name, model, spec;
+    if (mIdx > 0) { name = head.slice(0, mIdx).join(" "); model = head[mIdx]; spec = head.slice(mIdx + 1).join(" "); }
+    else { name = head[0]; model = ""; spec = head.slice(1).join(" "); }
+    if (!name) return null;
+    var parts = [name, model, spec];
+    if (!spec) parts.length = 2;
+    parts.push(String(qty));
+    if (unit) parts.push(unit);
+    if (price != null) parts.push(String(price));
+    if (remark) parts.push(remark);
+    return parts;
+  }
   function parseFree(text) {
     var fields = {}, items = [];
     String(text).split(/\r?\n/).forEach(function (raw) {
@@ -113,6 +172,12 @@
           var it = parseItemParts(parts);
           if (it) { items.push(it); return; }
         }
+      }
+      // 兜底：无任何分隔符的纯空格产品行（尾部启发式自动识别数量/单位/单价/备注）
+      var freeParts = freeItem(l);
+      if (freeParts) {
+        var it2 = parseItemParts(freeParts);
+        if (it2) { items.push(it2); return; }
       }
     });
     fields.date = (fields.date && normDate(fields.date)) || todayBJ();
