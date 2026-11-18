@@ -1,45 +1,18 @@
 (function () {
   "use strict";
-  // 商务单证：粘贴信息 → JSZip 在模板内替换占位符 → 一键下载（纯浏览器，数据不出本机）
-  var TPL = { quote: "/templates/quote_template.xlsx", receipt: "/templates/receipt_template.docx" };
+  // 商务单证 v2：整块自由粘贴 / 图片 OCR 识别 → 本地生成报价单(xlsx)、签收单(docx)
+  // 纯浏览器 JSZip 模板注入，数据不出本机
+  var TPL = {
+    quote: "/templates/quote_template.xlsx",
+    receipt: "/templates/receipt_template.docx",
+    quoteMeta: "/templates/quote_meta.json"
+  };
   var cache = {};
   function $(id) { return document.getElementById(id); }
-  function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
-  function num(v) { var n = parseFloat(String(v).replace(/[^\d.\-]/g, "")); return isNaN(n) ? null : n; }
-  function fmt(n) { return n == null ? "" : String(n); }
-  function parseKV(text) {
-    var kv = {};
-    text.split(/\r?\n/).forEach(function (line) {
-      var m = line.match(/^\s*([^\s:：|]{1,12})\s*[:：]\s*(.+?)\s*$/);
-      if (m) kv[m[1]] = m[2];
-    });
-    return kv;
-  }
-  function parseItems(text) {
-    var items = [];
-    text.split(/\r?\n/).forEach(function (line) {
-      var parts = line.split("|").map(function (s) { return s.trim(); });
-      if (parts.length < 4) return;
-      if (parts[0].indexOf("产品名称") >= 0) return; // 表头行
-      items.push(parts);
-    });
-    return items;
-  }
-
-  function loadTpl(kind) {
-    if (cache[kind]) return cache[kind];
-    cache[kind] = fetch(TPL[kind]).then(function (r) {
-      if (!r.ok) throw new Error("模板加载失败 HTTP " + r.status);
-      return JSZip.loadAsync(r.arrayBuffer());
-    });
-    return cache[kind];
-  }
-  function repl(xml, map) {
-    Object.keys(map).forEach(function (k) {
-      xml = xml.split(k).join(map[k]);
-    });
-    return xml;
-  }
+  function esc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+  function num(v) { var n = parseFloat(String(v).replace(/[^0-9.\-]/g, "")); return isNaN(n) ? null : n; }
+  function repl(xml, map) { Object.keys(map).forEach(function (k) { xml = xml.split(k).join(map[k]); }); return xml; }
+  function safeName(s) { return String(s || "").replace(/[\\/:*?"<>|]/g, "").trim().slice(0, 30) || "文件"; }
   function download(blob, name) {
     var a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
@@ -48,135 +21,432 @@
     a.click();
     setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
   }
-  function safeName(s) { return String(s || "").replace(/[\\/:*?"<>|]/g, "").slice(0, 30) || "文件"; }
-
-  function genQuote(text) {
-    var kv = parseKV(text);
-    var items = parseItems(text);
-    if (!items.length) throw new Error("未解析到产品行（每行：名称|型号|配置参数|数量|单位|单价，或 名称|型号|数量|单位|单价）");
-    var total = 0, map = {
-      "{CUSTOMER}": esc(kv["客户名称"] || kv["客户"] || ""),
-      "{DATE}": esc(kv["日期"] || ""),
-      "{CONTACT}": esc(kv["联系人"] || ""),
-      "{PHONE}": esc(kv["电话"] || ""),
-      "{EMAIL}": esc(kv["邮箱"] || kv["E-mail"] || ""),
-      "{REMARKS}": kv["备注"] ? esc(kv["备注"]) + "\n\n" : ""
-    };
-    items.forEach(function (p, i) {
-      var n = i + 1, spec = "", qty, unit, price;
-      if (p.length >= 6) { var _ = [p[0], p[1], p[2], p[3], p[4], p[5]]; spec = _[2]; qty = _[3]; unit = _[4]; price = _[5]; }
-      else { spec = ""; qty = p[2]; unit = p[3]; price = p[4]; }
-      var q = num(qty), pr = num(price);
-      if (q == null || pr == null) throw new Error("第 " + n + " 行数量/单价不是数字");
-      var amt = Math.round(q * pr * 100) / 100;
-      total += amt;
-      map["{I" + n + "_NAME}"] = esc(p[0]);
-      map["{I" + n + "_MODEL}"] = esc(p[1] || "");
-      map["{I" + n + "_SPEC}"] = esc(spec);
-      map["{I" + n + "_QTY}"] = fmt(q);
-      map["{I" + n + "_UNIT}"] = esc(unit || "台");
-      map["{I" + n + "_PRICE}"] = fmt(pr);
-      map["{I" + n + "_TOTAL}"] = fmt(amt);
-    });
-    for (var n = items.length + 1; n <= 10; n++) {
-      map["{I" + n + "_NAME}"] = map["{I" + n + "_MODEL}"] = map["{I" + n + "_SPEC}"] = "";
-      map["{I" + n + "_QTY}"] = map["{I" + n + "_UNIT}"] = map["{I" + n + "_PRICE}"] = map["{I" + n + "_TOTAL}"] = "";
+  function dispW(s) { // 显示宽度：CJK=2，其他=1
+    var w = 0;
+    for (var i = 0; i < s.length; i++) {
+      var c = s.charCodeAt(i);
+      if ((c >= 0x2e80 && c <= 0xfaff) || (c >= 0xff00 && c <= 0xffef)) w += 2; else w += 1;
     }
-    map["{TOTAL}"] = fmt(Math.round(total * 100) / 100);
-    return { map: map, name: "报价单_" + safeName(kv["客户名称"] || kv["客户"]) + "_" + (kv["日期"] || "") + ".xlsx" };
+    return w;
+  }
+  function wrapLines(text, colWidth) { // 估算换行后的行数（列宽单位≈半角字符数）
+    if (!text) return 1;
+    var cap = Math.floor(colWidth * 0.92);
+    var lines = 1, cur = 0;
+    for (var i = 0; i < text.length; i++) {
+      var w = dispW(text[i]) > 1 ? 2 : 1;
+      if (cur + w > cap) { lines++; cur = w; } else cur += w;
+    }
+    return lines;
   }
 
-  function setCellText(tcXml, val) {
-    // 取第一个段落，保留 pPr，替换为单个 run
-    var m = tcXml.match(/<w:p(?:\s[^>]*)?>([\s\S]*?)<\/w:p>/);
-    if (!m) return tcXml;
-    var inner = m[1], ppr = (inner.match(/<w:pPr>[\s\S]*?<\/w:pPr>/) || [""])[0];
-    var p = "<w:p>" + ppr + '<w:r><w:t xml:space="preserve">' + val + "</w:t></w:r></w:p>";
-    return tcXml.replace(m[0], p);
+  // ---------- 自由格式解析：整块粘贴，KV + 产品行混排 ----------
+  var FIELD_ALIASES = {
+    "客户名称": "customer", "客户": "customer", "公司名称": "customer", "公司": "customer", "致": "customer", "customer": "customer",
+    "日期": "date", "报价日期": "date", "发货日期": "date", "date": "date",
+    "联系人": "contact", "收货人": "contact", "contact": "contact",
+    "电话": "phone", "手机号": "phone", "手机": "phone", "phone": "phone", "tel": "phone",
+    "邮箱": "email", "email": "email", "e-mail": "email",
+    "备注": "remarks", "remarks": "remarks",
+    "合同编号": "contract", "关联合同编号": "contract", "合同号": "contract", "contract": "contract",
+    "送货方式": "delivery", "送货费用": "freight",
+    "送货公司": "courier", "物流公司": "courier", "运输公司": "courier",
+    "收货地址": "addr", "地址": "addr", "收货方地址": "addr", "收货方地址及联系人": "addr", "addr": "addr"
+  };
+  var UNIT_CHARS = "台套件个箱片只项根张米副把块pcs";
+  function isNum(s) { return /^[\d,]+(\.\d+)?$/.test(String(s).trim()); }
+  function normDate(s) {
+    var m = String(s).match(/(\d{4})\s*[年.\-\/]\s*(\d{1,2})\s*[月.\-\/]\s*(\d{1,2})/);
+    if (!m) return "";
+    return m[1] + "-" + ("0" + m[2]).slice(-2) + "-" + ("0" + m[3]).slice(-2);
   }
-  function fillTable(xml, rows) {
-    var tbl = xml.match(/<w:tbl>[\s\S]*?<\/w:tbl>/);
-    if (!tbl) return xml;
-    var trs = tbl[0].match(/<w:tr[ >][\s\S]*?<\/w:tr>/g) || [];
-    if (trs.length < 2) return xml;
-    var proto = trs[trs.length - 1]; // 空数据行作原型
-    var built = rows.map(function (r) {
-      var tcs = proto.match(/<w:tc>[\s\S]*?<\/w:tc>/g) || [];
-      var filled = tcs.map(function (tc, i) { return setCellText(tc, esc(r[i] || "")); });
-      return proto.replace(/<w:tc>[\s\S]*?<\/w:tc>/g, function () { return filled.shift(); });
+  function todayBJ() {
+    var d = new Date(Date.now() + 8 * 3600 * 1000);
+    return d.toISOString().slice(0, 10);
+  }
+  function parseItemParts(parts) {
+    // 数量定位优先级：
+    // 1) 「数字+单位字」对（报价单 6 段）  2) 末两位均数字 = 数量+单价（5 段）
+    // 3) 倒数第二位数字、末位非数字 = 数量+备注（签收单 4 段）  4) 末位数字 = 数量（3 段）
+    var i = -1, k, L = parts.length, remark = "";
+    for (k = L - 2; k >= 1; k--) {
+      if (isNum(parts[k]) && UNIT_CHARS.indexOf((parts[k + 1] || "").charAt(0)) >= 0) { i = k; break; }
+    }
+    if (i < 0 && L >= 3 && isNum(parts[L - 1]) && isNum(parts[L - 2])) i = L - 2;
+    else if (i < 0 && L >= 3 && isNum(parts[L - 2]) && !isNum(parts[L - 1])) { i = L - 2; remark = parts[L - 1]; }
+    else if (i < 0 && L >= 2 && isNum(parts[L - 1]) && !isNum(parts[L - 2])) i = L - 1;
+    if (i < 0) return null;
+    var qty = num(parts[i]);
+    var up = parts[i + 1];
+    var unit = (i + 1 < L && up && !isNum(up) && UNIT_CHARS.indexOf(up.charAt(0)) >= 0 && up.length <= 3) ? up : "";
+    var price = (i + 2 < L && isNum(parts[i + 2])) ? num(parts[i + 2]) : null;
+    var name = parts[0];
+    var model = i > 1 ? parts[1] : "";
+    var spec = parts.slice(2, i).join("/");
+    if (!name || !qty) return null;
+    return { name: name, model: model, spec: spec, qty: qty, unit: unit, price: price, remark: remark };
+  }
+  function parseFree(text) {
+    var fields = {}, items = [];
+    String(text).split(/\r?\n/).forEach(function (raw) {
+      var l = raw.replace(/\u00a0/g, " ").trim();
+      if (!l) return;
+      if (/^\s*(产品名称|品名|序号|NO\.?)/.test(l) && /数量/.test(l)) return; // 表头行
+      var m = l.match(/^([^\s|:：,，]{1,12})\s*[:：]\s*(.+)$/);
+      if (m) {
+        var key = FIELD_ALIASES[m[1]] || FIELD_ALIASES[m[1].toLowerCase()];
+        if (key) {
+          fields[key] = m[2].replace(/^\s*\([^)]*\)\s*[:：]\s*/, "").trim();
+          return;
+        }
+      }
+      var parts = null;
+      if (l.indexOf("|") >= 0) parts = l.split("|").map(function (s) { return s.trim(); });
+      else if (l.indexOf("\t") >= 0) parts = l.split("\t").map(function (s) { return s.trim(); });
+      else {
+        var t = l.split(/\s{2,}/).map(function (s) { return s.trim(); });
+        if (t.length >= 4) parts = t;
+      }
+      if (parts) {
+        while (parts.length && !parts[parts.length - 1]) parts.pop();
+        if (parts.length >= 3) {
+          var it = parseItemParts(parts);
+          if (it) { items.push(it); return; }
+        }
+      }
+    });
+    fields.date = (fields.date && normDate(fields.date)) || todayBJ();
+    return { fields: fields, items: items };
+  }
+  function normalizeBlock(raw) {
+    var p = parseFree(raw);
+    var L = [];
+    if (p.fields.customer) L.push("客户名称：" + p.fields.customer);
+    L.push("日期：" + p.fields.date);
+    if (p.fields.contact) L.push("联系人：" + p.fields.contact);
+    if (p.fields.phone) L.push("电话：" + p.fields.phone);
+    if (p.fields.email) L.push("邮箱：" + p.fields.email);
+    if (p.fields.remarks) L.push("备注：" + p.fields.remarks);
+    if (p.fields.contract) L.push("合同编号：" + p.fields.contract);
+    if (p.fields.delivery) L.push("送货方式：" + p.fields.delivery);
+    if (p.fields.courier) L.push("送货公司：" + p.fields.courier);
+    if (p.fields.addr) L.push("收货地址：" + p.fields.addr);
+    if (L.length) L.push("");
+    L.push("产品名称|产品型号|配置及参数|数量|单位|单价(元)");
+    p.items.forEach(function (it) {
+      L.push([it.name, it.model, it.spec, it.qty, it.unit, it.price == null ? "" : it.price].join("|"));
+    });
+    return L.join("\n");
+  }
+
+  // ---------- 报价单：产品行重建（删空行/加行/行高自适应/统一样式） ----------
+  function strC(ref, s, text) {
+    return '<c r="' + ref + '" s="' + s + '" t="inlineStr"><is><t>' + esc(text) + '</t></is></c>';
+  }
+  function emptyC(ref, s) { return '<c r="' + ref + '" s="' + s + '"/>'; }
+  function calcTotal(items) {
+    var total = 0;
+    items.forEach(function (it) { total += Math.round(it.qty * it.price * 100) / 100; });
+    return Math.round(total * 100) / 100;
+  }
+  function buildQuoteSheet(sheetXml, meta, items, fields) {
+    var n = items.length;
+    var rowRe = /<row\b[^>]*?\br="(\d+)"[^>]*?(?:\/>|>([\s\S]*?)<\/row>)/g;
+    var rows = [], m;
+    while ((m = rowRe.exec(sheetXml))) {
+      var tagEnd = m[0].indexOf(">") + 1;
+      rows.push({ r: +m[1], attrs: m[0].slice(0, tagEnd), body: m[2] || "", full: m[0] });
+    }
+    var delta = (9 + n) - 19; // 底部行（19 起）的新行号偏移（可正可负）
+    var top = "", bottom = "";
+    rows.forEach(function (rw) {
+      if (rw.r < 9) { top += rw.full; return; }
+      if (rw.r <= 18) return; // 产品区 9-18 整体由数据重建
+      var nr = rw.r + delta;
+      var attrs = rw.attrs.replace(/r="(\d+)"/, 'r="' + nr + '"');
+      var body = (rw.body || "").replace(/\br="([A-J])(\d+)"/g,
+        function (mm, col, rr) { return 'r="' + col + (+rr + delta) + '"'; });
+      bottom += attrs + body + "</row>";
+    });
+    var prod = "";
+    for (var i = 0; i < n; i++) {
+      var it = items[i];
+      var line = Math.max(wrapLines(it.name, meta.widths.B), wrapLines(it.model, meta.widths.C),
+                          wrapLines(it.spec, meta.widths.DF));
+      var ht = line <= 1 ? 21 : line * 16 + 5;
+      var r = 9 + i;
+      var amt = Math.round(it.qty * it.price * 100) / 100;
+      prod += '<row r="' + r + '" ht="' + ht + '" customHeight="1">'
+        + '<c r="A' + r + '" s="' + meta.styles.A + '"><v>' + (i + 1) + '</v></c>'
+        + (it.name ? strC("B" + r, meta.styles.B, it.name) : emptyC("B" + r, meta.styles.B))
+        + (it.model ? strC("C" + r, meta.styles.C, it.model) : emptyC("C" + r, meta.styles.C))
+        + (it.spec ? strC("D" + r, meta.styles.D, it.spec) : emptyC("D" + r, meta.styles.D))
+        + emptyC("E" + r, meta.styles.E) + emptyC("F" + r, meta.styles.F)
+        + '<c r="G' + r + '" s="' + meta.styles.G + '"><v>' + it.qty + '</v></c>'
+        + (it.unit ? strC("H" + r, meta.styles.H, it.unit) : emptyC("H" + r, meta.styles.H))
+        + '<c r="I' + r + '" s="' + meta.styles.I + '"><v>' + it.price + '</v></c>'
+        + '<c r="J' + r + '" s="' + meta.styles.J + '"><v>' + amt + '</v></c>'
+        + '</row>';
+    }
+    var sd = top + prod + bottom;
+    var xml = sheetXml;
+    var start = xml.indexOf("<sheetData>") + "<sheetData>".length;
+    var end = xml.indexOf("</sheetData>");
+    xml = xml.slice(0, start) + sd + xml.slice(end);
+    // 合并单元格：产品区保留实际行，底部随行号平移
+    function shift(rr) { return rr >= 19 ? rr + delta : rr; }
+    var merges = [];
+    meta.merges.forEach(function (ref) {
+      var mm = ref.match(/^([A-J])(\d+):([A-J])(\d+)$/);
+      if (!mm) return;
+      var r1 = +mm[2];
+      if (r1 >= 9 && r1 <= 18) { if (r1 <= 8 + n) merges.push(mm[1] + r1 + ":" + mm[3] + +mm[4]); }
+      else merges.push(mm[1] + shift(r1) + ":" + mm[3] + shift(+mm[4]));
+    });
+    // 超过模板 10 行产品区时，为新增行补 D:F 合并（模板只有 D9:F9..D18:F18）
+    for (var r = 19; r <= 8 + n; r++) merges.push("D" + r + ":F" + r);
+    xml = xml.replace(/<mergeCells count="\d+">[\s\S]*?<\/mergeCells>/,
+      '<mergeCells count="' + merges.length + '">' +
+      merges.map(function (x) { return '<mergeCell ref="' + x + '"/>'; }).join("") + "</mergeCells>");
+    xml = xml.replace(/<dimension ref="A1:J\d+"/, '<dimension ref="A1:J' + (13 + n) + '"/>');
+    var rep = {
+      "{CUSTOMER}": esc(fields.customer || ""),
+      "{DATE}": esc(fields.date || ""),
+      "{CONTACT}": esc(fields.contact || ""),
+      "{PHONE}": esc(fields.phone || ""),
+      "{EMAIL}": esc(fields.email || ""),
+      "{REMARKS}": fields.remarks ? esc(fields.remarks) + "\n" : "",
+      "{TOTAL}": String(calcTotal(items))
+    };
+    return repl(xml, rep);
+  }
+  function genQuote(text) {
+    var p = parseFree(text);
+    if (!p.items.length) throw new Error("未识别到产品行。每行一条产品，例如：联想开天X5h G1d-A007|LK-X5h|海光C86-4G/16G内存/512G固态|10|台|8300（竖线/Tab/空格分隔均可）");
+    p.items.forEach(function (it, i) {
+      if (it.price == null) throw new Error("第 " + (i + 1) + " 件产品缺少单价：" + it.name);
+    });
+    return {
+      items: p.items, fields: p.fields, total: calcTotal(p.items),
+      name: "报价单_" + safeName(p.fields.customer) + "_" + (p.fields.date || "") + ".xlsx"
+    };
+  }
+
+  // ---------- 签收单：表格行克隆（保留原型 run 的 rPr 字体） ----------
+  function cellRuns(val, rpr) {
+    var lines = String(val == null ? "" : val).split("\n");
+    return lines.map(function (ln, i) {
+      return (i ? '<w:r>' + rpr + "<w:br/></w:r>" : "")
+        + '<w:r>' + rpr + '<w:t xml:space="preserve">' + esc(ln) + "</w:t></w:r>";
     }).join("");
-    var newTbl = tbl[0].replace(proto, built);
-    return xml.replace(tbl[0], newTbl);
+  }
+  function setCellText(tcXml, val, rpr) {
+    var tcpr = (tcXml.match(/<w:tcPr>[\s\S]*?<\/w:tcPr>/) || [""])[0];
+    return "<w:tc>" + tcpr + "<w:p>" + cellRuns(val, rpr) + "</w:p></w:tc>";
+  }
+  var TC_RE = /<w:tc>[\s\S]*?<\/w:tc>|<w:tc\b[^>]*>[\s\S]*?<\/w:tc>/g;
+  function fillTable(xml, rows) {
+    var tblM = xml.match(/<w:tbl>[\s\S]*?<\/w:tbl>/);
+    if (!tblM) return xml;
+    var trs = tblM[0].match(/<w:tr\b[\s\S]*?<\/w:tr>/g) || [];
+    if (trs.length < 2) return xml;
+    var proto = trs[trs.length - 1]; // 模板空数据行作原型（已含统一字体 run）
+    TC_RE.lastIndex = 0;
+    var tcs = proto.match(TC_RE) || [];
+    var rprs = tcs.map(function (tc) {
+      var run = tc.match(/<w:r\b[\s\S]*?<\/w:r>/);
+      return run ? (run[0].match(/<w:rPr>[\s\S]*?<\/w:rPr>/) || [""])[0] : "";
+    });
+    var built = rows.map(function (row) {
+      var filled = tcs.map(function (tc, i) { return setCellText(tc, row[i] || "", rprs[i] || ""); });
+      TC_RE.lastIndex = 0;
+      return proto.replace(TC_RE, function () { return filled.shift(); });
+    }).join("");
+    return xml.replace(tblM[0], tblM[0].replace(proto, built));
   }
   function genReceipt(text) {
-    var kv = parseKV(text);
-    var items = parseItems(text).map(function (p) { return [p[0], p[1] || "", p[2] || "", p[3] || ""]; });
-    if (!items.length) throw new Error("未解析到发货清单行（每行：名称|规格描述|数量|备注）");
-    var ship = kv["发货日期"] || kv["日期"] || "";
-    var way = kv["送货方式"] || "", fee = kv["送货费用"] || "";
-    var mark = function (sel, key) { return sel ? "\u2611" : "\u25A1"; };
+    var p = parseFree(text);
+    if (!p.items.length) throw new Error("未识别到发货清单行，每行一条：产品名称|规格描述|数量|备注（也兼容报价单 6 段格式）");
+    var rows = p.items.map(function (it) {
+      var spec = it.spec || it.model || "";
+      if (it.model && it.spec) spec = it.model + " " + it.spec;
+      return [it.name, spec, String(it.qty), it.remark || (it.unit ? "单位：" + it.unit : "")];
+    });
+    var way = p.fields.delivery || "", fee = p.fields.freight || "";
+    function mark(kw) { return way.indexOf(kw) >= 0 ? "\u2611" : "\u25A1"; }
+    var fRec = fee.indexOf("收货方") >= 0 ? "\u2611" : "\u25A1";
+    var fSup = fee.indexOf("收货方") >= 0 ? "\u25A1" : "\u2611"; // 未指定时默认供方负担
     var map = {
-      "{SHIP_DATE}": esc(ship),
-      "{CONTACT}": esc(kv["联系人"] || ""),
-      "{PHONE}": esc(kv["电话"] || ""),
-      "{CONTRACT}": esc(kv["合同编号"] || ""),
-      "{COURIER}": esc(kv["送货公司"] || ""),
-      "{ADDR}": esc(kv["收货地址"] || kv["收货方地址"] || ""),
-      "{W_SELF}": mark(way.indexOf("自提") >= 0, 1),
-      "{W_LOGI}": mark(way.indexOf("物流") >= 0, 1),
-      "{W_SF}": mark(way.indexOf("顺丰") >= 0, 1),
-      "{W_OTH}": mark(way.indexOf("其他") >= 0, 1),
-      "{F_SUP}": mark(fee.indexOf("供方") >= 0, 1),
-      "{F_REC}": mark(fee.indexOf("收货方") >= 0, 1)
+      "{SHIP_DATE}": esc(p.fields.date || ""),
+      "{CONTACT}": esc(p.fields.contact || ""),
+      "{PHONE}": esc(p.fields.phone || ""),
+      "{CONTRACT}": esc(p.fields.contract || ""),
+      "{COURIER}": esc(p.fields.courier || ""),
+      "{ADDR}": esc(p.fields.addr || ""),
+      "{W_SELF}": mark("自提"), "{W_LOGI}": mark("物流"), "{W_SF}": mark("顺丰"), "{W_OTH}": mark("其他"),
+      "{F_SUP}": fSup, "{F_REC}": fRec
     };
-    return { map: map, rows: items, name: "货物签收单_" + (kv["合同编号"] || safeName(ship)) + ".docx" };
+    return { map: map, rows: rows,
+             name: "货物签收单_" + (p.fields.contract || safeName(p.fields.date || "")) + ".docx" };
   }
 
-  var PLACEHOLDER = {
-    quote: "客户名称：北京某某科技有限公司\n日期：2026-11-18\n联系人：张经理\n电话：13800000000\n邮箱：zhang@xx.com\n备注：（可留空）\n产品名称|产品型号|配置及参数|数量|单位|单价(元)\n联想开天X5h G1d-A007|LK-X5h|海光C86-4G/16G内存/512G固态|10|台|8300",
-    receipt: "发货日期：2026-11-20\n联系人：张经理\n电话：13800000000\n合同编号：HT-2026-1118\n送货方式：物流（自提/物流/顺丰/其他）\n送货费用：供方负担（供方负担/收货方自理）\n送货公司：顺丰速运\n收货地址：北京市海淀区XX路1号 王五 13900000000\n产品名称|规格及描述|数量|备注\n联想开天X5h G1d-A007|海光C86-4G/16G内存/512G固态|10|无"
-  };
+  // ---------- 模板加载 / 生成编排 ----------
+  function loadRes(kind) {
+    if (cache[kind]) return cache[kind];
+    var p = fetch(TPL[kind]).then(function (r) {
+      if (!r.ok) throw new Error("模板加载失败 HTTP " + r.status);
+      return JSZip.loadAsync(r.arrayBuffer());
+    });
+    if (kind === "quote") {
+      p = Promise.all([p, fetch(TPL.quoteMeta).then(function (r) { return r.json(); })])
+        .then(function (a) { return { zip: a[0], meta: a[1] }; });
+    } else {
+      p = p.then(function (zip) { return { zip: zip, meta: null }; });
+    }
+    cache[kind] = p;
+    return p;
+  }
+  function doGenerate() {
+    var text = $("docs-input").value;
+    var msg = $("docs-msg");
+    msg.textContent = "生成中…";
+    try {
+      if (kind === "quote") {
+        var g = genQuote(text);
+        loadRes("quote").then(function (res) {
+          return res.zip.file("xl/worksheets/sheet1.xml").async("string").then(function (sx) {
+            res.zip.file("xl/worksheets/sheet1.xml", buildQuoteSheet(sx, res.meta, g.items, g.fields));
+            return res.zip.generateAsync({ type: "blob" });
+          }).then(function (blob) { download(blob, g.name); msg.textContent = "已生成：" + g.name + "（合计 " + g.total.toLocaleString("zh-CN") + " 元）"; });
+        }).catch(function (e) { msg.textContent = "失败：" + e.message; });
+      } else {
+        var r = genReceipt(text);
+        loadRes("receipt").then(function (res) {
+          return res.zip.file("word/document.xml").async("string").then(function (xml) {
+            res.zip.file("word/document.xml", repl(fillTable(xml, r.rows), r.map));
+            return res.zip.generateAsync({ type: "blob" });
+          }).then(function (blob) { download(blob, r.name); msg.textContent = "已生成：" + r.name; });
+        }).catch(function (e) { msg.textContent = "失败：" + e.message; });
+      }
+    } catch (e) { msg.textContent = "失败：" + e.message; }
+  }
+
+  // ---------- 图片 OCR（Tesseract.js，模型自托管 /ocr/） ----------
+  var ocrWorker = null, ocrBusy = false;
+  function ocrSay(msg) { var el = $("docs-ocr"); if (el) el.textContent = msg; }
+  function loadScript(src) {
+    return new Promise(function (res, rej) {
+      var s = document.createElement("script");
+      s.src = src; s.onload = res;
+      s.onerror = function () { rej(new Error("加载 " + src + " 失败，请检查网络")); };
+      document.head.appendChild(s);
+    });
+  }
+  function getOcrWorker() {
+    if (ocrWorker) return Promise.resolve(ocrWorker);
+    return loadScript("/ocr/tesseract.min.js").then(function () {
+      ocrSay("加载识别模型（首次约 5MB，之后秒开）…");
+      return Tesseract.createWorker("chi_sim+eng", 1, {
+        workerPath: "/ocr/worker.min.js",
+        corePath: "/ocr",
+        langPath: "/ocr",
+        logger: function (m) {
+          if (m.status === "recognizing text") ocrSay("识别中 " + Math.round((m.progress || 0) * 100) + "%");
+          else if (m.status && m.progress != null) ocrSay("加载模型 " + Math.round(m.progress * 100) + "%");
+        }
+      });
+    }).then(function (w) { ocrWorker = w; return w; });
+  }
+  function fileToCanvas(file) {
+    return new Promise(function (resolve, reject) {
+      var url = URL.createObjectURL(file);
+      var img = new Image();
+      img.onload = function () {
+        try {
+          var scale = Math.min(1, 2400 / img.width);
+          var cv = document.createElement("canvas");
+          cv.width = Math.round(img.width * scale);
+          cv.height = Math.round(img.height * scale);
+          cv.getContext("2d").drawImage(img, 0, 0, cv.width, cv.height);
+          resolve(cv);
+        } catch (e) { reject(e); }
+        URL.revokeObjectURL(url);
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); reject(new Error("图片无法读取")); };
+      img.src = url;
+    });
+  }
+  function ocrImage(file) {
+    if (ocrBusy) { ocrSay("正在识别中，请稍候…"); return; }
+    ocrBusy = true;
+    ocrSay("准备识别…");
+    fileToCanvas(file).then(function (cv) {
+      return getOcrWorker().then(function (w) { return w.recognize(cv); });
+    }).then(function (res) {
+      var raw = (res && res.data && res.data.text) || "";
+      if (!raw.trim()) throw new Error("未识别到文字，请换一张更清晰的图片");
+      $("docs-input").value = normalizeBlock(raw);
+      var rawBox = $("docs-raw-text");
+      if (rawBox) rawBox.textContent = raw;
+      var det = $("docs-raw");
+      if (det) det.classList.remove("hide");
+      ocrSay("识别完成，请核对内容后点「生成并下载」");
+    }).catch(function (e) { ocrSay("识别失败：" + e.message); })
+      .then(function () { ocrBusy = false; });
+  }
+
+  // ---------- UI ----------
   var kind = "quote";
+  var PLACEHOLDER = {
+    quote: "把整块信息直接粘进来即可（客户信息 + 产品表混排都行），例如：\n客户名称：北京某某科技有限公司\n日期：2026-11-18\n联系人：张经理\n电话：13800000000\n邮箱：zhang@xx.com\n备注：（可留空）\n产品名称|产品型号|配置及参数|数量|单位|单价(元)\n联想开天X5h G1d-A007|LK-X5h|海光C86-4G/16G内存/512G固态|10|台|8300",
+    receipt: "把整块信息直接粘进来即可，例如：\n发货日期：2026-11-20\n联系人：张经理\n电话：13800000000\n合同编号：HT-2026-1118\n送货方式：物流（自提/物流/顺丰/其他）\n送货公司：顺丰速运\n收货地址：北京市海淀区XX路1号 王五 13900000000\n产品名称|规格及描述|数量|备注\n联想开天X5h G1d-A007|海光C86-4G/16G内存/512G固态|10|无"
+  };
   function switchKind(k) {
     kind = k;
     document.querySelectorAll(".docs-tab").forEach(function (b) { b.classList.toggle("on", b.dataset.doc === k); });
-    $("docs-input").placeholder = PLACEHOLDER[k];
-    $("docs-msg").textContent = "";
+    var ta = $("docs-input");
+    if (ta) { ta.placeholder = PLACEHOLDER[k]; ta.value = ""; }
+    var msg = $("docs-msg"); if (msg) msg.textContent = "";
+    ocrSay("");
+    var det = $("docs-raw"); if (det) det.classList.add("hide");
   }
   function init() {
     document.querySelectorAll(".docs-tab").forEach(function (b) {
       b.addEventListener("click", function () { switchKind(b.dataset.doc); });
     });
-    $("docs-gen").addEventListener("click", function () {
-      var text = $("docs-input").value;
-      var msg = $("docs-msg");
-      msg.textContent = "生成中…";
-      (function () {
-        try {
-          if (kind === "quote") {
-            var g = genQuote(text);
-            loadTpl("quote").then(function (zip) {
-              // openpyxl 模板用 inlineStr（无 sharedStrings.xml），两个位置都替换
-              zip.file("xl/worksheets/sheet1.xml").async("string").then(function (sx) {
-                zip.file("xl/worksheets/sheet1.xml", repl(sx, g.map));
-                var ss = zip.file("xl/sharedStrings.xml");
-                var p = ss ? ss.async("string").then(function (s) { zip.file("xl/sharedStrings.xml", repl(s, g.map)); }) : Promise.resolve();
-                return p.then(function () { return zip.generateAsync({ type: "blob" }); });
-              }).then(function (blob) { download(blob, g.name); msg.textContent = "已生成：" + g.name; });
-            }).catch(function (e) { msg.textContent = "失败：" + e.message; });
-          } else {
-            var g = genReceipt(text);
-            loadTpl("receipt").then(function (zip) {
-              zip.file("word/document.xml").async("string").then(function (xml) {
-                zip.file("word/document.xml", repl(fillTable(xml, g.rows), g.map));
-                return zip.generateAsync({ type: "blob" });
-              }).then(function (blob) { download(blob, g.name); msg.textContent = "已生成：" + g.name; });
-            }).catch(function (e) { msg.textContent = "失败：" + e.message; });
+    // #docs-gen 由 docs_v3.js 绑定（生成预览流程）
+    var ub = $("docs-upload");
+    if (ub) ub.addEventListener("click", function () { var fi = $("docs-file"); if (fi) fi.click(); });
+    var fi = $("docs-file");
+    if (fi) fi.addEventListener("change", function () {
+      if (fi.files && fi.files[0]) ocrImage(fi.files[0]);
+      fi.value = "";
+    });
+    var box = $("docsbox");
+    if (box) box.addEventListener("paste", function (e) {
+      var cd = e.clipboardData;
+      if (cd && cd.items) {
+        for (var i = 0; i < cd.items.length; i++) {
+          if (cd.items[i].type && cd.items[i].type.indexOf("image") === 0) {
+            e.preventDefault();
+            var f = cd.items[i].getAsFile();
+            if (f) ocrImage(f);
+            return;
           }
-        } catch (e) { msg.textContent = "失败：" + e.message; }
-      })();
+        }
+      }
     });
   }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
-  else init();
+  if (typeof document !== "undefined") {
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+    else init();
+  }
+
+  // 导出纯函数供 Node 端测试
+  var api = { parseFree: parseFree, parseItemParts: parseItemParts, normDate: normDate,
+             buildQuoteSheet: buildQuoteSheet, fillTable: fillTable, repl: repl,
+             normalizeBlock: normalizeBlock, wrapLines: wrapLines, calcTotal: calcTotal,
+             genQuote: genQuote, genReceipt: genReceipt, todayBJ: todayBJ };
+  if (typeof module !== "undefined" && module.exports) module.exports = api;
+  else if (typeof window !== "undefined") { window.DocsCore = api; window.Docs = api; }
 })();
