@@ -52,7 +52,7 @@ def build_index_html():
     html = html.replace('href="/style.css"', 'href="style.css?v=%s"' % stamp)
     html = html.replace('href="/extra.css"', 'href="extra.css?v=%s"' % stamp)
     html = html.replace('src="/app.js"', 'src="app.js?v=%s"' % stamp)
-    for js in ("jszip.min.js", "docs.js"):
+    for js in ("jszip.min.js", "docs.js", "docs_v3.js"):
         html = html.replace('src="/%s"' % js, 'src="%s?v=%s"' % (js, stamp))
     lines = [ln for ln in html.splitlines() if 'id="f-refresh"' not in ln]
     return "\n".join(lines) + "\n"
@@ -69,6 +69,9 @@ HEADERS = """/index.html
 
 /pdf/*
   Cache-Control: public, max-age=86400
+
+/ocr/*
+  Cache-Control: public, max-age=604800
 
 /*
   Cache-Control: public, max-age=600
@@ -285,7 +288,7 @@ def main():
     logo = os.path.join(WEB, "jiaye_logo.jpg")
     if os.path.isfile(logo):
         shutil.copy2(logo, os.path.join(out, "jiaye_logo.jpg"))
-    for extra in ("jszip.min.js", "docs.js"):
+    for extra in ("jszip.min.js", "docs.js", "docs_v3.js"):
         src = os.path.join(STATIC_SRC, extra)
         if os.path.isfile(src):
             shutil.copy2(src, os.path.join(out, extra))
@@ -295,6 +298,13 @@ def main():
         os.makedirs(dst_tpl, exist_ok=True)
         for fn in os.listdir(tpl_dir):
             shutil.copy2(os.path.join(tpl_dir, fn), os.path.join(dst_tpl, fn))
+    # OCR 自托管资产（tesseract 核心 + 中英文模型）
+    ocr_dir = os.path.join(WEB, "ocr")
+    if os.path.isdir(ocr_dir):
+        dst_ocr = os.path.join(out, "ocr")
+        os.makedirs(dst_ocr, exist_ok=True)
+        for fn in os.listdir(ocr_dir):
+            shutil.copy2(os.path.join(ocr_dir, fn), os.path.join(dst_ocr, fn))
 
     # 选型助手机型库（央采卖场成交公告聚合）
     products_src = os.path.join(BASE, "data", "products.json")
