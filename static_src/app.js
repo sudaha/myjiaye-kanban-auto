@@ -105,7 +105,7 @@
         nt = " · 新增 " + s.new_count + " 条（" + (s.new_days || []).join("、") + "）";
       }
       $("upd-time").textContent = snap !== "-" ? "数据快照 " + snap + nt : "";
-      $("foot-note").textContent = "数据来源：" + PLAT_META[plat].sub + " · 快照 " + snap;
+      $("foot-note").textContent = "数据来源：" + PLAT_META[plat].sub + " · 快照 " + snap + " · 每天 9/13/17/22 点自动更新";
     }).catch(function () { });
   }
   function loadCategoryBadges() {
