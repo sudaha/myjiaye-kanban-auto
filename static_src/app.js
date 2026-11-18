@@ -14,7 +14,7 @@
     return h === "poly" || h === "picker" || h === "docs" ? h : "zycg";
   }
   var plat = platFromHash();
-  var state = { page: 1, pageSize: 20, total: 0, filters: {}, items: [], loaded: false, picked: {} };
+  var state = { page: 1, pageSize: 20, total: 0, filters: {}, items: [], loaded: false, picked: {}, availableDates: {}, dateMonth: null };
   var picker = {
     products: null,          // data/products.json 的 products 数组
     meta: null,              // 库元信息（updated_at / product_count）
@@ -61,7 +61,9 @@
     $("filterbar").classList.toggle("hide", noList);
     if ($("f-brand")) $("f-brand").style.display = p === "poly" ? "none" : "";
     $("f-it-wrap").classList.toggle("hide", p !== "poly");
-    $("batchbar").classList.toggle("hide", p !== "zycg");
+    $("batchbar").classList.toggle("hide", p !== "zycg" && p !== "poly");
+    if ($("btn-zip")) $("btn-zip").textContent = p === "poly" ? "⬇ 打包下载选中项目资料" : "⬇ 打包下载选中 PDF";
+    if ($("notice-date-picker")) $("notice-date-picker").classList.toggle("hide", p !== "zycg");
     $("pickerbox").classList.toggle("hide", !isPicker);
     if ($("docsbox")) $("docsbox").classList.toggle("hide", !isDocs);
     $("list").classList.toggle("hide", noList);
@@ -88,7 +90,10 @@
       $("st-latest-lab").textContent = "最新日期";
     }
     state.loaded = false; state.items = []; state.page = 1; state.picked = {}; state.filters = {};
+    state.availableDates = {}; state.dateMonth = null;
     ["f-keyword", "f-brand", "f-date"].forEach(function (i) { if ($(i)) $(i).value = ""; });
+    if ($("f-date-btn")) $("f-date-btn").textContent = "选择公告日期";
+    if ($("date-pop")) $("date-pop").classList.add("hide");
     $("f-category").value = ""; $("f-status").value = ""; $("f-it").checked = false;
     updateSel();
     if (isDocs) {
@@ -144,6 +149,57 @@
     }).catch(function () { });
   }
 
+  // ---------- 公告日期选择器：仅实际有公告的日期可点 ----------
+  function itemDay(it) { return String(it.pub_date || it.publish_date || "").slice(0, 10); }
+  function initAvailableDates() {
+    state.availableDates = {};
+    state.items.forEach(function (it) {
+      var d = itemDay(it);
+      if (d) state.availableDates[d] = (state.availableDates[d] || 0) + 1;
+    });
+    var days = Object.keys(state.availableDates).sort();
+    var anchor = ($("f-date") && $("f-date").value) || days[days.length - 1] || new Date().toISOString().slice(0, 10);
+    var a = anchor.split("-");
+    state.dateMonth = new Date(+a[0], +a[1] - 1, 1);
+    renderDateCalendar();
+  }
+  function dateISO(y, m, d) {
+    return y + "-" + String(m + 1).padStart(2, "0") + "-" + String(d).padStart(2, "0");
+  }
+  function renderDateCalendar() {
+    if (!state.dateMonth || !$("date-grid")) return;
+    var y = state.dateMonth.getFullYear(), m = state.dateMonth.getMonth();
+    $("date-month").textContent = y + "年" + (m + 1) + "月";
+    var first = new Date(y, m, 1).getDay(), total = new Date(y, m + 1, 0).getDate();
+    var prevTotal = new Date(y, m, 0).getDate();
+    var cells = [];
+    for (var i = 0; i < 42; i++) {
+      var day = i - first + 1, cy = y, cm = m, outside = false;
+      if (day < 1) { day = prevTotal + day; cm = m - 1; outside = true; if (cm < 0) { cm = 11; cy--; } }
+      else if (day > total) { day -= total; cm = m + 1; outside = true; if (cm > 11) { cm = 0; cy++; } }
+      var iso = dateISO(cy, cm, day), count = state.availableDates[iso] || 0;
+      var selected = $("f-date") && $("f-date").value === iso;
+      cells.push('<button type="button" class="date-day' + (outside ? " outside" : "") +
+        (count ? " available" : " unavailable") + (selected ? " selected" : "") + '" data-date="' + iso + '"' +
+        (count ? ' title="' + iso + ' · ' + count + '条公告"' : ' disabled title="该日无公告"') + '>' +
+        day + (count ? '<small>' + count + "</small>" : "") + "</button>");
+    }
+    $("date-grid").innerHTML = cells.join("");
+    $("date-grid").querySelectorAll(".date-day.available").forEach(function (b) {
+      b.addEventListener("click", function () {
+        $("f-date").value = b.dataset.date;
+        $("f-date-btn").textContent = b.dataset.date + "（" + state.availableDates[b.dataset.date] + "条）";
+        $("date-pop").classList.add("hide");
+        state.filters = currentFilters(); state.page = 1; loadList();
+      });
+    });
+  }
+  function shiftDateMonth(delta) {
+    if (!state.dateMonth) return;
+    state.dateMonth = new Date(state.dateMonth.getFullYear(), state.dateMonth.getMonth() + delta, 1);
+    renderDateCalendar();
+  }
+
   // ---------- 筛选 ----------
   function currentFilters() {
     return {
@@ -177,6 +233,7 @@
     return getJSON(pdata("list.json")).then(function (d) {
       state.items = d.items || [];
       state.loaded = true;
+      if (plat === "zycg") initAvailableDates();
     });
   }
 
@@ -226,7 +283,7 @@
 
   function cardHtml(it) {
     var on = it.is_end === 0;
-    var pickable = plat === "zycg";
+    var pickable = plat === "zycg" || plat === "poly";
     var checked = pickable && state.picked[it.id];
     var isBid = plat === "bid";
     return '<div class="card' + (pickable ? " pickable" : "") + (checked ? " picked" : "") + '" data-id="' + it.id + '">' +
@@ -435,7 +492,12 @@
   function pdfFileName(it) {
     var proj = it.enquiry_name || it.title || "未命名项目";
     var org = it.purchase_company || it.org_name || "未知采购人";
-    return safeName(proj) + "_" + safeName(org) + ".pdf";
+    var ext = ".pdf";
+    if (it.pdf_path) {
+      var m = String(it.pdf_path).match(/(\.[A-Za-z0-9]{1,8})$/);
+      if (m) ext = m[1].toLowerCase();
+    }
+    return safeName(proj) + "_" + safeName(org) + ext;
   }
   function buildManifestTxt(list) {
     var today = new Date().toISOString().slice(0, 10);
@@ -446,7 +508,7 @@
     });
     var cats = Object.keys(byCat).sort();
     var lines = [];
-    lines.push("中央政府采购网 · 电子询价 · 需求公告（" + today + "）· 询价通知书PDF 分类归档");
+    lines.push((plat === "poly" ? "中国保利集团招标采购平台 · 项目附件" : "中央政府采购网 · 电子询价 · 需求公告 · 询价通知书PDF") + "（" + today + "）分类归档");
     lines.push("");
     lines.push("共 " + list.length + " 个项目，按项目类型分文件夹；文件名=采购项目_采购公司。");
     lines.push("导出时间：" + new Date().toLocaleString("zh-CN"));
@@ -467,6 +529,23 @@
       lines.push("");
     });
     return lines.join("\r\n");
+  }
+
+  function polyProjectHtml(d) {
+    var rows = [
+      ["项目名称", d.title || d.enquiry_name || ""], ["招标人", d.org_name || ""],
+      ["项目编号", d.enquiry_no || ""], ["预算/概算", money(d.budget_num) || d.budget_amount || "未公示"],
+      ["公告类型", d.notice_type_name || ""], ["采购类型", d.project_type || ""],
+      ["采购方式", [d.pattern, d.organize_form].filter(Boolean).join(" / ")],
+      ["发布日期", d.publish_date || ""], ["投标截止", d.end_time || ""],
+      ["品类", d.category || ""], ["联系人", [d.contact_person, d.contact_phone].filter(Boolean).join("　")]
+    ];
+    return '<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>' + esc(d.title || "保利项目资料") + '</title>' +
+      '<style>body{font-family:宋体,serif;max-width:980px;margin:36px auto;padding:0 24px;color:#222}h1{font-size:24px;text-align:center}table{width:100%;border-collapse:collapse;margin:22px 0}th,td{border:1px solid #777;padding:10px;vertical-align:top}th{width:130px;background:#f3f5f4}pre{white-space:pre-wrap;line-height:1.7;border:1px solid #aaa;padding:15px}a{color:#126db3}@media print{body{margin:0}}</style></head><body>' +
+      '<h1>' + esc(d.title || "保利项目资料") + '</h1><table>' + rows.map(function (r) { return '<tr><th>' + esc(r[0]) + '</th><td>' + esc(r[1]) + '</td></tr>'; }).join("") + '</table>' +
+      (d.scope ? '<h2>采购范围 / 技术参数</h2><pre>' + esc(d.scope) + '</pre>' : "") +
+      '<p><b>原始公告：</b><a href="' + esc(d.source_url || "") + '">' + esc(d.source_url || "") + '</a></p>' +
+      '<p>导出时间：' + esc(new Date().toLocaleString("zh-CN")) + '</p></body></html>';
   }
 
   function fetchPdf(url, timeoutMs) {
@@ -493,10 +572,10 @@
   function downloadZip() {
     var ids = Object.keys(state.picked);
     if (!ids.length) return;
-    var picked = state.items.filter(function (it) { return state.picked[it.id] && it.has_pdf; });
-    var noPdf = ids.length - picked.length;
+    var picked = state.items.filter(function (it) { return state.picked[it.id] && (plat === "poly" || it.has_pdf); });
+    var noPdf = plat === "poly" ? 0 : ids.length - picked.length;
     if (!picked.length) {
-      $("zip-progress").textContent = "选中项都没有 PDF 附件";
+      $("zip-progress").textContent = plat === "poly" ? "没有可打包的项目" : "选中项都没有 PDF 附件";
       return;
     }
     var btn = $("btn-zip");
@@ -513,10 +592,11 @@
       var blob = buildZip(out);
       var a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = "中央政采网_电子询价_" + new Date().toISOString().slice(0, 10) + "_询价通知书PDF.zip";
+      a.download = (plat === "poly" ? "保利集团招标_" : "中央政采网_电子询价_") + new Date().toISOString().slice(0, 10) +
+        (plat === "poly" ? "_项目附件.zip" : "_询价通知书PDF.zip");
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(function () { URL.revokeObjectURL(a.href); }, 5000);
-      $("zip-progress").textContent = "完成：" + out.length + " 份" +
+      $("zip-progress").textContent = "完成：" + okItems.length + " 个项目" +
         (failed ? "（" + failed + " 份失败已跳过）" : "") + (noPdf ? "（另有 " + noPdf + " 项无 PDF）" : "");
       btn.disabled = false;
     }
@@ -525,7 +605,16 @@
       var it = picked[i];
       $("zip-progress").textContent = "打包中 " + (i + 1) + "/" + picked.length +
         "：" + (it.title || "").slice(0, 16) + (failed ? "（已失败 " + failed + "）" : "");
-      fetchWithRetry("pdf/zycg/" + it.id + ".pdf", 2).then(function (buf) {
+      if (plat === "poly") {
+        getJSON("data/poly/detail/" + it.id + ".json").then(function (d) {
+          var html = polyProjectHtml(d);
+          out.push({ name: catFolder(it) + "/" + safeName(it.title || "保利项目") + ".html", data: new TextEncoder().encode(html) });
+          okItems.push(it); i++; next();
+        }).catch(function () { failed++; i++; next(); });
+        return;
+      }
+      var pdfUrl = it.pdf_path || "pdf/zycg/" + it.id + ".pdf";
+      fetchWithRetry(pdfUrl, 2).then(function (buf) {
         out.push({
           name: catFolder(it) + "/" + pdfFileName(it),
           data: new Uint8Array(buf)
@@ -675,6 +764,25 @@
     return chips.join("");
   }
 
+  function mallNoticeUrl(id) {
+    return "https://mkt.zycg.gov.cn/mall-view/information/detail?noticeId=" + encodeURIComponent(id);
+  }
+  function originalNoticeLink(id, label) {
+    return '<button type="button" class="original-notice-link" data-notice-id="' + esc(id) + '">' + esc(label) + "</button>";
+  }
+  function bindOriginalNoticeLinks(root) {
+    (root || document).querySelectorAll(".original-notice-link").forEach(function (b) {
+      b.addEventListener("pointerdown", function (e) { e.stopPropagation(); });
+      b.addEventListener("click", function (e) {
+        e.preventDefault(); e.stopPropagation();
+        var url = mallNoticeUrl(b.dataset.noticeId);
+        var w = window.open(url, "_blank");
+        if (w) { try { w.opener = null; } catch (ignore) { } }
+        else window.location.href = url;
+      });
+    });
+  }
+
   function pickCardHtml(x, unitBudget) {
     var p = x.p;
     var cls = x.s.score >= 60 ? "hit-good" : (x.s.score >= 30 ? "hit-mid" : "hit-low");
@@ -688,7 +796,7 @@
       else budgetTag = ' <span class="budget-bad">! 超预算（最低 ' + money(p.price_min) + " 元）</span>";
     }
     var src = (p.notice_ids && p.notice_ids.length)
-      ? ' <a target="_blank" href="https://mkt.zycg.gov.cn/mall-view/information/detail?noticeId=' + p.notice_ids[0] + '">查看原始成交公告</a>' : "";
+      ? " · " + originalNoticeLink(p.notice_ids[0], "查看原始成交公告") : "";
     return '<div class="pick-card ' + cls + '">' +
       '<div class="pc-head"><span class="pc-name">' + esc(p.name) + "</span>" +
       '<span class="tag cat">' + esc(p.category) + "</span>" +
@@ -757,6 +865,7 @@
       html += pickResultsHtml(req, pool, unitBudget);
       $("pick-summary").textContent = "匹配完成 " + new Date().toLocaleTimeString("zh-CN");
       box.innerHTML = html;
+      bindOriginalNoticeLinks(box);
     });
   }
 
@@ -776,12 +885,19 @@
 
   function fillNoticeSelect() {
     var cat = $("pick-notice-cat").value;
+    var kw = $("pick-notice-key") ? $("pick-notice-key").value.trim().toLowerCase() : "";
     var items = picker.zycgList.slice().filter(function (it) {
-      return !cat || (it.category || "") === cat;
+      if (cat && (it.category || "") !== cat) return false;
+      if (kw) {
+        var hay = [it.title, it.enquiry_name, it.org_name, it.purchase_company, it.brands, it.category, it.enquiry_no].join(" ").toLowerCase();
+        if (hay.indexOf(kw) < 0) return false;
+      }
+      return true;
     }).sort(function (a, b) {
       if (a.is_end !== b.is_end) return a.is_end - b.is_end;
       return String(b.publish_date || "").localeCompare(String(a.publish_date || ""));
     });
+    if ($("pick-notice-count")) $("pick-notice-count").textContent = "找到 " + items.length + " 条公告";
     $("pick-notice").innerHTML = items.length
       ? items.map(function (it) {
           return '<option value="' + it.id + '">' + (it.is_end === 0 ? "【进行中】" : "【已截止】") +
@@ -806,6 +922,12 @@
           return '<option value="' + esc(c) + '">' + esc(NOTICE_CAT_LABELS[c] || c) + "（" + counts[c] + "）</option>";
         }).join("");
       $("pick-notice-cat").addEventListener("change", fillNoticeSelect);
+      if ($("pick-notice-key")) {
+        $("pick-notice-key").addEventListener("input", fillNoticeSelect);
+        $("pick-notice-key").addEventListener("keydown", function (e) {
+          if (e.key === "Enter") { e.preventDefault(); fillNoticeSelect(); if ($("pick-notice").value) runPickNotice(); }
+        });
+      }
       fillNoticeSelect();
       $("pick-notice").dataset.ready = "1";
     });
@@ -850,6 +972,7 @@
         html += pickResultsHtml(req, pickPool(req), unitB);
       });
       box.innerHTML = html;
+      bindOriginalNoticeLinks(box);
     }).catch(function (e) {
       box.innerHTML = '<div class="pick-empty">公告详情加载失败：' + esc(e.message) + "</div>";
     });
@@ -896,7 +1019,7 @@
     $("br-info").textContent = "共 " + pool.length + " 个机型 · " + picker.browsePage + "/" + pages + " 页";
     var rows = slice.map(function (p) {
       var src = (p.notice_ids && p.notice_ids.length)
-        ? ' <a target="_blank" href="https://mkt.zycg.gov.cn/mall-view/information/detail?noticeId=' + p.notice_ids[0] + '">源</a>' : "";
+        ? " " + originalNoticeLink(p.notice_ids[0], "原公告") : "";
       var price = p.price_min == null ? "-" :
         (p.price_min === p.price_max ? money(p.price_min) : money(p.price_min) + " ~ " + money(p.price_max));
       return "<tr><td>" + esc(p.name) + src + "</td><td>" + esc(p.brand || "-") + "</td><td>" +
@@ -914,6 +1037,7 @@
       "</tr></thead><tbody>" + rows + "</tbody></table></div>" + pager;
     $("br-prev").addEventListener("click", function () { picker.browsePage--; runBrowse(); });
     $("br-next").addEventListener("click", function () { picker.browsePage++; runBrowse(); });
+    bindOriginalNoticeLinks($("br-table"));
   }
 
   function bindPicker() {
@@ -958,12 +1082,24 @@
   $("f-it").addEventListener("change", function () {
     state.filters = currentFilters(); state.page = 1; loadList();
   });
-  // 选中日期即筛选（不用再点"查询"）；清空日期则恢复全部
-  $("f-date").addEventListener("change", function () {
-    state.filters = currentFilters(); state.page = 1; loadList();
+  // 自定义公告日期日历：只允许点击有公告的日期
+  $("f-date-btn").addEventListener("click", function (e) {
+    e.stopPropagation();
+    $("date-pop").classList.toggle("hide");
+    renderDateCalendar();
   });
+  $("date-pop").addEventListener("click", function (e) { e.stopPropagation(); });
+  $("date-prev").addEventListener("click", function () { shiftDateMonth(-1); });
+  $("date-next").addEventListener("click", function () { shiftDateMonth(1); });
+  $("date-clear").addEventListener("click", function () {
+    $("f-date").value = ""; $("f-date-btn").textContent = "选择公告日期";
+    $("date-pop").classList.add("hide"); state.filters = currentFilters(); state.page = 1; loadList();
+  });
+  document.addEventListener("click", function () { $("date-pop").classList.add("hide"); });
   $("f-reset").addEventListener("click", function () {
     ["f-keyword", "f-brand", "f-date"].forEach(function (i) { if ($(i)) $(i).value = ""; });
+    if ($("f-date-btn")) $("f-date-btn").textContent = "选择公告日期";
+    if ($("date-pop")) $("date-pop").classList.add("hide");
     $("f-category").value = ""; $("f-status").value = ""; $("f-it").checked = false;
     state.filters = {}; state.page = 1; state.picked = {}; loadList();
   });
