@@ -134,7 +134,7 @@
 
     var n = p.items.length;
     if (!n) throw new Error("没有可填入的产品行");
-    var delta = n - 1;
+    var delta = 0; // 检出母版原有产品行数量后再计算
 
     var total = 0;
     p.items.forEach(function (it) { total += (it.qty || 0) * (it.price || 0); });
@@ -154,7 +154,7 @@
 
     // 行/格解析（仅定位用，不重建）
     var rows = {};
-    (sheetXml.match(/<row\b[^>]*>[\s\S]*?<\/row>/g) || []).forEach(function (rx) {
+    (sheetXml.match(/<row\b[^>]*\/>|<row\b[^>]*>[\s\S]*?<\/row>/g) || []).forEach(function (rx) {
       var r = +((rx.match(/\br="(\d+)"/) || [])[1]);
       if (r) rows[r] = rx;
     });
@@ -192,8 +192,26 @@
     if (productRow < 0) productRow = fallback;
     if (productRow < 0) throw new Error("模板未找到产品行（需有一行包含 {名称} 占位符，建议同时含 {数量}）");
 
+    // 连续 token 产品行均属于母版容量（原始报价单为 9-11 共3行）
+    var productRows = [];
+    for (var pr = productRow; rows[pr]; pr++) {
+      var pcs = cellsOf(rows[pr]), pHasN = false, pHasQ = false;
+      pcs.forEach(function (c) {
+        var tk = tokensOf(c.text);
+        if (tk.indexOf("name") >= 0) pHasN = true;
+        if (tk.indexOf("qty") >= 0) pHasQ = true;
+      });
+      if (!pHasN || !pHasQ) break;
+      productRows.push(pr);
+    }
+    if (!productRows.length) productRows = [productRow];
+    var productEnd = productRows[productRows.length - 1];
+    var capacity = productRows.length;
+    var outputProductRows = Math.max(n, capacity);
+    delta = outputProductRows - capacity;
+
     var widths = colWidths(sheetXml);
-    var protoRow = rows[productRow];
+    var protoRow = rows[productEnd]; // 扩容时只复制母版最后一个产品行
     var protoCells = cellsOf(protoRow);
 
     // 行 XML 工具
@@ -283,36 +301,26 @@
       cells.forEach(function (c) { if (c.ref) trackCol(c.ref); });
       outRows.push(fillRowTokens(rx, cells, scalar));
     });
-    // 2) 产品行 × n
-    var specCap = 40, nameCap = 12;
-    protoCells.forEach(function (c) {
-      var tk = tokensOf(c.text);
-      var L = c.ref.replace(/\d+$/, "");
-      if (tk.indexOf("spec") >= 0) specCap = widths[L] ? Math.floor(widths[L] * 0.92) : 40;
-      if (tk.indexOf("name") >= 0) nameCap = widths[L] ? Math.floor(widths[L] * 0.92) : 12;
-    });
-    var protoHasHt = /\bht="[\d.]+"\s+customHeight="1"/.test(protoRow);
-    for (var i = 0; i < n; i++) {
+    // 2) 产品区：母版原有格数全部保留；不足时留空，超出时只复制母版最后一个产品行
+    var emptyVals = { no: "", name: "", model: "", spec: "", qty: "", unit: "", price: "", itemtotal: "" };
+    for (var i = 0; i < outputProductRows; i++) {
       var nr = productRow + i;
-      var clone = i === 0 ? protoRow : renumRow(protoRow, productRow, nr);
-      var cList = protoCells.map(function (c) {
+      var sourceR = i < capacity ? productRows[i] : productEnd;
+      var sourceRow = rows[sourceR];
+      var sourceCells = cellsOf(sourceRow);
+      var clone = sourceR === nr ? sourceRow : renumRow(sourceRow, sourceR, nr);
+      var cList = sourceCells.map(function (c) {
         return { ref: c.ref.replace(/\d+$/, String(nr)), s: c.s, t: c.t, idx: c.idx, text: c.text };
       });
-      clone = fillRowTokens(clone, cList, rowVals[i]);
-      if (!protoHasHt && kind === "quote" && D.wrapLines) {
-        var lines = Math.max(D.wrapLines(rowVals[i].spec, specCap), D.wrapLines(rowVals[i].name, nameCap));
-        if (lines > 1) clone = clone.replace(/<row\b([^>]*)>/, function (m, pre) {
-          return '<row' + pre + ' ht="' + (lines * 16 + 5) + '" customHeight="1">';
-        });
-      }
+      clone = fillRowTokens(clone, cList, i < n ? rowVals[i] : emptyVals);
       outRows.push(clone);
       if (nr > maxR) maxR = nr;
     }
-    // 3) 底部行：平移 + 标量替换
+    // 3) 底部行：仅在扩容时整体下移；原属性与标量位置保持
     rList.forEach(function (r) {
-      if (r <= productRow) return;
+      if (r <= productEnd) return;
       var nr = r + delta;
-      var rx = renumRow(rows[r], r, nr);
+      var rx = delta ? renumRow(rows[r], r, nr) : rows[r];
       var cells = cellsOf(rows[r], nr);
       cells.forEach(function (c) { if (c.ref) trackCol(c.ref); });
       outRows.push(fillRowTokens(rx, cells, scalar));
@@ -323,21 +331,27 @@
 
     var newSheet = sheetXml.replace(/<sheetData>[\s\S]*?<\/sheetData>/, "<sheetData>" + outRows.join("") + "</sheetData>");
 
-    // 合并单元格（纯结构平移）
-    var merges = [], m, mre = /<mergeCell ref="([A-Z]+\d+:[A-Z]+\d+)"/g;
+    // 合并单元格：母版产品区原合并全部保留；扩容复制最后产品行的合并；底部整体下移
+    var merges = [], m, protoMerges = [], mre = /<mergeCell ref="([A-Z]+\d+:[A-Z]+\d+)"/g;
     while ((m = mre.exec(sheetXml))) {
       var parts = m[1].split(":");
       var r1 = +parts[0].replace(/[A-Z]/g, ""), r2 = +parts[1].replace(/[A-Z]/g, "");
-      if (r1 === productRow && r2 === productRow) {
-        for (var k = 0; k < n; k++) merges.push(parts[0].replace(productRow, productRow + k) + ":" + parts[1].replace(productRow, productRow + k));
-      } else if (r1 > productRow) {
+      if (r1 === productEnd && r2 === productEnd) protoMerges.push(m[1]);
+      if (r1 > productEnd) {
         merges.push(parts[0].replace(r1, r1 + delta) + ":" + parts[1].replace(r2, r2 + delta));
       } else merges.push(m[1]);
+    }
+    for (var k = capacity; k < outputProductRows; k++) {
+      var newR = productRow + k;
+      protoMerges.forEach(function (ref) {
+        var pp = ref.split(":");
+        merges.push(pp[0].replace(productEnd, newR) + ":" + pp[1].replace(productEnd, newR));
+      });
     }
     newSheet = newSheet.replace(/<mergeCells count="\d+">[\s\S]*?<\/mergeCells>/,
       '<mergeCells count="' + merges.length + '">' + merges.map(function (r) { return '<mergeCell ref="' + r + '"/>'; }).join("") + "</mergeCells>");
 
-    var lastR = Math.max(maxR, (rList[rList.length - 1] || productRow) + ((rList[rList.length - 1] || 0) > productRow ? delta : 0));
+    var lastR = Math.max(maxR, (rList[rList.length - 1] || productEnd) + ((rList[rList.length - 1] || 0) > productEnd ? delta : 0));
     newSheet = newSheet.replace(/<dimension ref="[^"]*"/, '<dimension ref="A1:' + (maxColL || "J") + lastR + '"');
 
     return { sheetXml: newSheet, ssXml: ssOut, stylesXml: stylesOut };
@@ -345,7 +359,7 @@
 
   function detectXlsx(sheetXml, ss) {
     var rows = {};
-    (sheetXml.match(/<row\b[^>]*>[\s\S]*?<\/row>/g) || []).forEach(function (rx) {
+    (sheetXml.match(/<row\b[^>]*\/>|<row\b[^>]*>[\s\S]*?<\/row>/g) || []).forEach(function (rx) {
       var r = +((rx.match(/\br="(\d+)"/) || [])[1]);
       if (r) rows[r] = rx;
     });
@@ -491,8 +505,9 @@
         cellInfo[k].toks.forEach(function (t) { map[t.raw] = itemVals[t.key]; });
         return docxFillCell(tc, cellInfo[k].rpr, map);
       });
-      var trPr = (proto.match(/<w:trPr>[\s\S]*?<\/w:trPr>/) || [""])[0];
-      return "<w:tr>" + trPr + newTcs.join("") + "</w:tr>";
+      var pos = 0;
+      // 保留原始 <w:tr ...> 外层属性及 trPr，只替换四个单元格 XML
+      return proto.replace(/<w:tc>[\s\S]*?<\/w:tc>/g, function () { return newTcs[pos++]; });
     }).join("");
     var tblNew = det.tbl.replace(proto, rows);
     var xml = docXml.slice(0, det.tblStart) + tblNew + docXml.slice(det.tblEnd);
@@ -518,7 +533,10 @@
   function previewQuoteHtml(p, total, logoUrl) {
     var map = { customer: p.fields.customer || "", date: p.fields.date || "",
                 contact: p.fields.contact || "", phone: p.fields.phone || "", email: p.fields.email || "" };
-    var trs = p.items.map(function (it, i) {
+    var previewItems = p.items.slice();
+    while (previewItems.length < 3) previewItems.push(null); // 原始报价单母版固定保留3个产品格
+    var trs = previewItems.map(function (it, i) {
+      if (!it) return '<tr class="dq-empty"><td class="c"></td><td></td><td></td><td class="spec"></td><td class="c"></td><td class="c"></td><td class="r"></td><td class="r"></td></tr>';
       var spec = it.spec || it.model || "";
       return "<tr>" +
         '<td class="c">' + (i + 1) + "</td>" +
@@ -581,7 +599,12 @@
       "　　送货费用：" + map.fee_sup + "由供方负担　　" + map.fee_rec + "收货方自理</div>" +
       '<div class="dr-line">送货公司：  ' + escHtml(map.courier) + "</div>" +
       '<div class="dr-line dr-addr">收货方地址及联系人：  ' + escHtml(map.addr) + "</div>" +
-      '<div class="dr-sign">—————— 签 收 栏 ——————<span class="dr-signline">签收人(盖章或签字)：　　　　　　　　身份证号(代签需填写)：　　　　　　　　</span></div>' +
+      '<div class="dr-sign"><span class="dr-sign-bar">签　收　栏</span>' +
+      '<span class="dr-signline">签收人(盖章或签字)：　　　　　　　　　　身份证号(代签需填写)：　　　　　　　　　　</span></div>' +
+      '<div class="dr-declare">请阅读并理解下述声明，您在最后的签字表明您确认收到的物品与此单所填内容一致。<br>' +
+      '*本货物签收单所填写的信息均与送达您手上的实际物品的信息相符合<br>' +
+      '*如您对本次的送货或货物有任何意见和建议，请联系我们<br>' +
+      '*请您在确认本货物签收单内容均为正确且属实后，签字或盖章确认。</div>' +
       "</div>";
   }
 
@@ -621,6 +644,7 @@
     ".dq-table .w-no{width:44px}.dq-table .w-name{width:110px}.dq-table .w-model{width:90px}" +
     ".dq-table .w-qty{width:64px}.dq-table .w-unit{width:48px}.dq-table .w-price{width:90px}.dq-table .w-total{width:96px}" +
     ".dq-table .tb{font-weight:700}" +
+    ".dq-table tbody tr:not(.dq-total):not(.dq-remark) td{height:40px}" +
     ".dq-total td{height:30px}" +
     ".dq-remark td{height:74px;vertical-align:top;font-size:11px}" +
     ".dq-contact{margin-top:10px;text-align:right;font-size:12px}" +
@@ -635,8 +659,10 @@
     ".dr-table .w1{width:24%}.dr-table .w2{width:46%}.dr-table .w3{width:12%}.dr-table .w4{width:18%}" +
     ".dr-line{font-size:12px;margin-top:10px}" +
     ".dr-addr{line-height:1.8}" +
-    ".dr-sign{margin-top:26px;font-weight:700;font-size:13px;letter-spacing:4px}" +
-    ".dr-signline{display:block;font-weight:400;letter-spacing:0;margin-top:26px;font-size:12px}" +
+    ".dr-sign{margin-top:26px;border-top:1px dashed #000;padding-top:0;font-size:13px}" +
+    ".dr-sign-bar{display:inline-block;background:#000;color:#fff;padding:4px 24px;font-weight:700;letter-spacing:6px;transform:translateY(-50%)}" +
+    ".dr-signline{display:block;font-weight:400;letter-spacing:0;margin:18px 0 48px;font-size:12px;line-height:5}" +
+    ".dr-declare{border-top:1px solid #000;padding-top:10px;font-size:11px;line-height:2}" +
     ".dt-paper{padding:34px 40px;max-width:860px}" +
     ".dt-title{text-align:center;font-size:20px;font-weight:700;letter-spacing:6px;margin-bottom:16px}" +
     ".dt-meta{font-size:12px;margin-bottom:12px}" +
