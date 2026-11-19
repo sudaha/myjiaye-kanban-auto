@@ -352,7 +352,8 @@
 .join-btn { margin-left: 8px; border: 1px solid #2f6fed; border-radius: 7px; background: #fff; color: #2f6fed;
   padding: 5px 10px; cursor: pointer; font: inherit; font-size: 12px; font-weight: 700; white-space: nowrap; }
 .join-btn:hover { background: #2f6fed; color: #fff; }
-.join-btn.joined, .join-btn:disabled { border-color: #cdd5e0; background: #f1f4f8; color: #8a94a6; cursor: default; }
+.join-btn.joined { border-color: #d97706; background: #fff; color: #d97706; }
+.join-btn.joined:hover { background: #d97706; color: #fff; }
 .join-tag { display: inline-block; margin-left: 7px; padding: 2px 8px; border-radius: 6px; background: #eaf8f1; color: #087a48; font-size: 12px; font-weight: 700; white-space: nowrap; }
 
 /* 参与投标记录面板 */
@@ -388,9 +389,11 @@
 .rec-deal-line b { color: #1a2333; }
 .rec-view { margin-top: 6px; border: 0; border-radius: 6px; background: #eef7f3; color: #0f7b5f; cursor: pointer; padding: 4px 10px; font: inherit; font-size: 12px; font-weight: 700; }
 .rec-view:hover { background: #0f7b5f; color: #fff; }
-.rec-actions { margin-top: 10px; padding-top: 8px; border-top: 1px solid #eef1f5; }
+.rec-actions { margin-top: 10px; padding-top: 8px; border-top: 1px solid #eef1f5; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
 .rec-manual { font-size: 12px; color: #687385; }
 .rec-manual select { margin-left: 6px; padding: 4px 8px; border: 1px solid #d5dce4; border-radius: 6px; font: inherit; background: #fff; }
+.rec-cancel { border: 1px solid #d97706; border-radius: 7px; background: #fff; color: #d97706; cursor: pointer; padding: 5px 12px; font: inherit; font-size: 12px; font-weight: 700; }
+.rec-cancel:hover { background: #d97706; color: #fff; }
 
 @media (max-width: 640px) {
   .rec-stats { grid-template-columns: repeat(2, 1fr); }

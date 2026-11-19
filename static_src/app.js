@@ -306,7 +306,7 @@
           e.preventDefault(); e.stopPropagation();
           var it = null;
           for (var i = 0; i < state.items.length; i++) if (String(state.items[i].id) === String(b.dataset.id)) { it = state.items[i]; break; }
-          if (it) recJoin(it, b);
+          if (it) recToggle(it);
         });
       });
       syncPickUI();
@@ -341,7 +341,7 @@
             '<span class="badge ' + (on ? "on" : "off") + '">' + (on ? "进行中" : "已截止") + "</span>" +
             (joined ? '<span class="join-tag">已参与投标</span>' : "")) +
         (pickable
-          ? '<button type="button" class="join-btn' + (joined ? " joined" : "") + '" data-id="' + esc(it.id) + '"' + (joined ? " disabled" : "") + ">" + (joined ? "已参与" : "＋ 参与投标") + "</button>" : "") +
+          ? '<button type="button" class="join-btn' + (joined ? " joined" : "") + '" data-id="' + esc(it.id) + '" title="' + (joined ? "点击取消参与" : "点击参与投标") + '">' + (joined ? "取消参与" : "＋ 参与投标") + "</button>" : "") +
         (plat === "zycg" ? '<button type="button" class="quick-pick" data-id="' + esc(it.id) + '">一键技术选型</button>' : "") +
       "</div>" +
     "</div>";
@@ -1666,28 +1666,34 @@
     }).catch(function () { recState.deals = []; recState.dealsMap = {}; return recState.deals; });
   }
 
-  function recJoin(it, btn) {
+  function recToggle(it) {
+    var k = recKey(it.platform, it.id);
     if (recJoined(it.platform, it.id)) {
-      if (btn) { btn.textContent = "已参与"; btn.disabled = true; btn.classList.add("joined"); }
-      return;
+      recState.items = recState.items.filter(function (r) { return r.id !== k; });
+    } else {
+      recState.items.unshift({
+        id: k,
+        platform: it.platform,
+        noticeId: String(it.id),
+        title: it.title || it.enquiry_name || "",
+        buyer: it.purchase_company || it.org_name || "",
+        category: it.category || "",
+        publish_date: String(it.pub_date || it.publish_date || "").slice(0, 10),
+        end_time: it.end_time || "",
+        budget_num: it.budget_num != null ? it.budget_num : null,
+        joinedAt: Date.now(),
+        manualResult: null
+      });
     }
-    recState.items.unshift({
-      id: recKey(it.platform, it.id),
-      platform: it.platform,
-      noticeId: String(it.id),
-      title: it.title || it.enquiry_name || "",
-      buyer: it.purchase_company || it.org_name || "",
-      category: it.category || "",
-      publish_date: String(it.pub_date || it.publish_date || "").slice(0, 10),
-      end_time: it.end_time || "",
-      budget_num: it.budget_num != null ? it.budget_num : null,
-      joinedAt: Date.now(),
-      manualResult: null
-    });
     recSave();
-    if (btn) { btn.textContent = "已参与"; btn.disabled = true; btn.classList.add("joined"); }
     loadList();
     recUpdateBadge();
+  }
+  function recCancel(id) {
+    recState.items = recState.items.filter(function (r) { return r.id !== id; });
+    recSave();
+    recUpdateBadge();
+    renderRecords();
   }
 
   function recMatches(rec) {
@@ -1838,6 +1844,7 @@
               '<option value="lose"' + (r.manualResult === "lose" ? " selected" : "") + ">未中标</option>" +
               '<option value="pending"' + (r.manualResult === "pending" ? " selected" : "") + ">待出结果</option>" +
               "</select></label>" +
+            '<button type="button" class="rec-cancel" data-id="' + esc(r.id) + '">取消参与</button>' +
             "</div>" +
             "</div>";
         });
@@ -1876,6 +1883,12 @@
         b.addEventListener("click", function (e) {
           e.stopPropagation();
           openMallNotice(b.dataset.notice);
+        });
+      });
+      Array.prototype.forEach.call(box.querySelectorAll(".rec-cancel"), function (b) {
+        b.addEventListener("click", function (e) {
+          e.stopPropagation();
+          recCancel(b.dataset.id);
         });
       });
     });
