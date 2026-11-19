@@ -217,8 +217,11 @@
 .docsbox.hide { display: none; }
 .docs-tab {
   padding: 8px 16px; border: 1px solid var(--line); border-radius: 999px;
-  background: #fff; color: var(--muted); font-size: 13px; cursor: pointer;
+  background: #fff; color: #4a5568; font-size: 13px; font-weight: 600; cursor: pointer;
 }
+.pdf-up-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; flex-wrap: wrap; font-size: 12px; }
+.pdf-up-row .btn { padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: #fff; cursor: pointer; font-size: 13px; }
+.pdf-up-row .btn:hover { border-color: #0f7b5f; color: #0f7b5f; }
 .docs-tab.on { background: #0f7b5f; border-color: #0f7b5f; color: #fff; }
 .docs-hint { font-size: 12px; margin: 0 0 8px; line-height: 1.6; }
 .docsbox textarea {
@@ -266,6 +269,75 @@
 .pick-notice-key:focus { outline: 2px solid rgba(15,123,95,.16); border-color: var(--brand); }
 .original-notice-link { border: 0; background: transparent; color: #1571c4; text-decoration: underline; cursor: pointer; padding: 0 2px; font: inherit; }
 .original-notice-link:hover { color: #0f7b5f; }
+.quick-pick { margin-left: auto; border: 1px solid #0f7b5f; border-radius: 7px; background: #fff; color: #0f7b5f;
+  padding: 5px 10px; cursor: pointer; font: inherit; font-size: 12px; font-weight: 700; }
+.quick-pick:hover { background: #0f7b5f; color: #fff; }
+
+/* 选型助手：左侧常显公告，右侧技术参数分析与具体型号推荐 */
+.notice-workbench { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 16px; align-items: start; margin-top: 14px; }
+.notice-list { max-height: 72vh; overflow: auto; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+.pnl-item { display: block; width: 100%; text-align: left; border: 0; border-bottom: 1px solid #eef1f5;
+  background: #fff; padding: 11px 12px; cursor: pointer; font: inherit; }
+.pnl-item:last-child { border-bottom: 0; }
+.pnl-item:hover { background: #f7fafc; }
+.pnl-item.on { background: #eef8f4; box-shadow: inset 4px 0 0 #0f7b5f; }
+.pnl-title { display: block; font-size: 13px; font-weight: 700; color: #1a2333; line-height: 1.5; }
+.pnl-meta, .pnl-tags { display: block; font-size: 12px; color: #7b8797; margin-top: 4px; line-height: 1.5; }
+.notice-analysis { min-width: 0; }
+.analysis-head { position: sticky; top: 8px; z-index: 5; background: #f2faf6; border: 1px solid #cdeede;
+  border-radius: 12px; padding: 13px 15px; margin-bottom: 12px; }
+.analysis-head .title { font-size: 15px; font-weight: 700; color: #1a2333; line-height: 1.6; }
+.analysis-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.notice-detail-link { border: 0; border-radius: 7px; background: #0f7b5f; color: #fff; cursor: pointer; padding: 6px 12px; font: inherit; }
+.tech-box, .brand-tendency { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 12px; }
+.tech-title { font-size: 14px; font-weight: 700; color: #1a2333; margin-bottom: 8px; }
+.tech-grid { display: flex; flex-wrap: wrap; gap: 7px; }
+.tech-chip { display: inline-block; background: #eef7f3; color: #0f7b5f; border-radius: 7px; padding: 3px 9px; font-size: 12px; }
+.tech-chip.hard { background: #fff4df; color: #9a6200; }
+.req-section { margin-top: 10px; border: 1px solid #e0e6e3; border-radius: 9px; overflow: hidden; }
+.req-section-title { background: #eef7f3; color: #155f4e; font-weight: 700; padding: 7px 10px; }
+.req-atomic { padding: 8px 10px; border-top: 1px solid #edf1ef; }
+.attr-name { font-weight: 700; color: #1a2333; margin-right: 7px; }
+.attr-code { display: inline-block; border-radius: 4px; padding: 1px 5px; background: #eef1f5; color: #667085; font: 11px Consolas, monospace; }
+.attr-source { margin-top: 4px; color: #687385; font-size: 12px; line-height: 1.55; }
+.source-badge { display: inline-block; margin-bottom: 5px; padding: 2px 7px; border-radius: 5px; background: #eaf8f1; color: #087a48; font-size: 11px; font-weight: 700; }
+.coverage-audit { margin: 8px 0 10px; padding: 8px 10px; background: #f7f9fa; border-radius: 7px; font-size: 12px; color: #566070; }
+.coverage-ok, .coverage-bad { display: inline-block; margin-left: 6px; padding: 2px 7px; border-radius: 5px; font-weight: 700; }
+.coverage-ok { color: #087a48; background: #eaf8f1; }
+.coverage-bad { color: #b42318; background: #feeceb; }
+.brand-tendency b { color: #0f7b5f; }
+.model-rec { border-left: 4px solid #0f7b5f; }
+.model-rec .pc-name { font-size: 15px; }
+.model-origin { display: inline-block; margin-left: 6px; color: #8a5a00; background: #fff4df; border-radius: 6px; padding: 1px 7px; font-size: 11px; }
+.model-gap { margin-top: 6px; color: #a15c00; font-size: 12px; }
+.compliance { margin-top: 10px; border-top: 1px dashed #d8dee4; padding-top: 10px; }
+.compliance-summary { margin-bottom: 8px; font-weight: 700; }
+.strict-ok { color: #087a48; background: #eaf8f1; border-radius: 6px; padding: 4px 9px; }
+.strict-bad { color: #a44400; background: #fff2df; border-radius: 6px; padding: 4px 9px; }
+.compliance-table { overflow-x: auto; }
+.compliance-table table { width: 100%; border-collapse: collapse; min-width: 640px; font-size: 12px; }
+.compliance-table th, .compliance-table td { border: 1px solid #dfe4e8; padding: 6px 8px; text-align: left; vertical-align: top; }
+.compliance-table th { background: #f5f7f8; }
+.comp-pass, .comp-fail, .comp-verify { display: inline-block; border-radius: 5px; padding: 1px 6px; white-space: nowrap; font-weight: 700; }
+.comp-pass { color: #087a48; background: #eaf8f1; }
+.comp-fail { color: #b42318; background: #feeceb; }
+.comp-verify { color: #9a6200; background: #fff4df; }
+.nonmatch-note { margin-top: 8px; padding: 8px 10px; border-left: 3px solid #d97706; background: #fff8eb; color: #7a4800; font-size: 12px; line-height: 1.6; }
+
+@media (max-width: 900px) {
+  .notice-workbench { grid-template-columns: 1fr; }
+  .notice-list { display: flex; max-height: none; overflow-x: auto; gap: 8px; border: 0; background: transparent; }
+  .pnl-item { flex: 0 0 78%; border: 1px solid var(--line); border-radius: 10px; }
+}
+
+/* 成交公告原文弹层：央采 WAF 对外部 Referer 跨站返回 403，正文改站内缓存渲染 */
+.notice-body { max-height: 60vh; overflow: auto; padding: 14px 16px; background: #fff;
+  border: 1px solid var(--line); border-radius: 10px; font-size: 13px; line-height: 1.7; color: var(--ink); }
+.notice-body table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 12.5px; }
+.notice-body th, .notice-body td { border: 1px solid #d8dee4; padding: 6px 8px; text-align: left; vertical-align: top; }
+.notice-body th { background: #f2f6f4; font-weight: 600; }
+.notice-body p { margin: 6px 0; }
+.notice-body h1, .notice-body h2, .notice-body h3 { margin: 10px 0 6px; font-size: 14px; }
 
 @media (max-width: 640px) {
   .notice-date-picker { width: 100%; }
@@ -273,4 +345,5 @@
   .date-pop { position: fixed; left: 12px; right: 12px; top: 80px; width: auto; }
   .notice-search-row { flex-wrap: wrap; }
   .pick-notice-key { width: 100%; flex-basis: 100%; }
+  .notice-body { max-height: 55vh; }
 }

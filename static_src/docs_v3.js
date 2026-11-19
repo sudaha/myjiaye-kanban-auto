@@ -12,7 +12,13 @@
   var D = window.Docs || {};
 
   function escXml(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
-  function unescXml(s) { return String(s).replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&"); }
+  // 兼容 openpyxl/Word 等把中文写成数字字符实体（&#21517; / &#x540D;）的包
+  function unescXml(s) {
+    return String(s)
+      .replace(/&#x([0-9a-fA-F]+);/g, function (m, h) { try { return String.fromCodePoint(parseInt(h, 16)); } catch (e) { return m; } })
+      .replace(/&#(\d+);/g, function (m, d) { try { return String.fromCodePoint(+d); } catch (e) { return m; } })
+      .replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
+  }
   function fmtMoney(n) { return Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 
   var ALIAS = {
@@ -30,7 +36,14 @@
     "数量": "qty", "QTY": "qty",
     "单位": "unit", "UNIT": "unit",
     "单价": "price", "PRICE": "price",
-    "行合计": "itemtotal", "TOTAL_ITEM": "itemtotal"
+    "行合计": "itemtotal", "TOTAL_ITEM": "itemtotal",
+    // 签收单（Excel 版）头部 token
+    "发货日期": "shipdate", "SHIP_DATE": "shipdate",
+    "合同": "contract", "合同编号": "contract", "CONTRACT": "contract",
+    "自提": "way_self", "物流": "way_logi", "顺丰": "way_sf", "其他": "way_oth",
+    "供方": "fee_sup", "收货": "fee_rec",
+    "快递": "courier", "送货公司": "courier",
+    "地址": "addr", "ADDR": "addr"
   };
   var TOKEN_RE = /\{([A-Za-z0-9_\u4e00-\u9fa5]+)\}/g;
   function tokensOf(text) {
@@ -176,19 +189,43 @@
 
     var total = 0;
     p.items.forEach(function (it) { total += (it.qty || 0) * (it.price || 0); });
-    var scalar = {
-      customer: p.fields.customer || "", date: p.fields.date || (D.todayBJ ? D.todayBJ() : ""),
-      contact: p.fields.contact || "", phone: p.fields.phone || "",
-      email: p.fields.email || "", remarks: p.fields.remarks || "", total: fmtMoney(total)
-    };
-    var rowVals = p.items.map(function (it, i) {
-      return {
-        no: String(i + 1), name: it.name || "", model: it.model || "", spec: it.spec || "",
-        qty: String(it.qty != null ? it.qty : ""), unit: it.unit || "",
-        price: it.price != null ? fmtMoney(it.price) : "",
-        itemtotal: it.price != null ? fmtMoney((it.qty || 0) * it.price) : ""
+    // kind="receipt"：签收单 Excel 版（{名称}{规格}{数量}{备注} 产品行 + 签收单头部 token）
+    var isReceipt = kind === "receipt";
+    var scalar, rowVals, emptyVals;
+    if (isReceipt) {
+      var way = p.fields.delivery || "", fee = p.fields.freight || "";
+      function mark(kw) { return way.indexOf(kw) >= 0 ? "\u2611" : "\u25A1"; }
+      var fRec = fee.indexOf("收货方") >= 0;
+      scalar = {
+        shipdate: p.fields.date || (D.todayBJ ? D.todayBJ() : ""),
+        contact: p.fields.contact || "", phone: p.fields.phone || "",
+        contract: p.fields.contract || "",
+        way_self: mark("自提"), way_logi: mark("物流"), way_sf: mark("顺丰"), way_oth: mark("其他"),
+        fee_sup: fRec ? "\u25A1" : "\u2611", fee_rec: fRec ? "\u2611" : "\u25A1",
+        courier: p.fields.courier || "", addr: p.fields.addr || ""
       };
-    });
+      rowVals = p.items.map(function (it) {
+        return { name: it.name || "", spec: it.spec || it.model || "",
+                 qty: String(it.qty != null ? it.qty : ""),
+                 remarks: it.remark || (it.unit ? "单位：" + it.unit : "") };
+      });
+      emptyVals = { name: "", spec: "", qty: "", remarks: "" };
+    } else {
+      scalar = {
+        customer: p.fields.customer || "", date: p.fields.date || (D.todayBJ ? D.todayBJ() : ""),
+        contact: p.fields.contact || "", phone: p.fields.phone || "",
+        email: p.fields.email || "", remarks: p.fields.remarks || "", total: fmtMoney(total)
+      };
+      rowVals = p.items.map(function (it, i) {
+        return {
+          no: String(i + 1), name: it.name || "", model: it.model || "", spec: it.spec || "",
+          qty: String(it.qty != null ? it.qty : ""), unit: it.unit || "",
+          price: it.price != null ? fmtMoney(it.price) : "",
+          itemtotal: it.price != null ? fmtMoney((it.qty || 0) * it.price) : ""
+        };
+      });
+      emptyVals = { no: "", name: "", model: "", spec: "", qty: "", unit: "", price: "", itemtotal: "" };
+    }
 
     // 行/格解析（仅定位用，不重建）
     var rows = {};
@@ -447,6 +484,23 @@
     "名称": "name", "NAME": "name", "规格": "spec", "SPEC": "spec",
     "数量": "qty", "QTY": "qty", "备注": "remark", "UNIT": "unit", "单位": "unit"
   };
+  // 报价单 Word 版：8 列产品行 + 报价单头部 token（与 xlsx 母版 token 口径一致）
+  var Q_ALIAS = {
+    "客户": "customer", "CUSTOMER": "customer",
+    "日期": "date", "DATE": "date",
+    "联系人": "contact", "CONTACT": "contact",
+    "电话": "phone", "PHONE": "phone",
+    "邮箱": "email", "EMAIL": "email",
+    "备注": "remarks", "REMARKS": "remarks",
+    "序号": "no", "NO": "no",
+    "名称": "name", "NAME": "name", "型号": "model", "MODEL": "model",
+    "规格": "spec", "SPEC": "spec",
+    "数量": "qty", "QTY": "qty", "单位": "unit", "UNIT": "unit",
+    "单价": "price", "PRICE": "price",
+    "行合计": "itemtotal", "合计": "itemtotal",
+    "总数": "total", "TOTAL": "total"
+  };
+  var Q_ITEM_KEYS = ["no", "name", "model", "spec", "qty", "unit", "price", "itemtotal"];
   var R_TOKEN_RE = /\{([A-Za-z0-9_\u4e00-\u9fa5]+)\}/g;
   var ITEM_KEYS = ["name", "spec", "qty", "remark", "unit"];
 
@@ -465,16 +519,21 @@
   }
 
   function detectDocx(docXml) {
-    var tbl = docXml.match(/<w:tbl>[\s\S]*?<\/w:tbl>/);
-    if (!tbl) throw new Error("模板未找到表格");
-    var trs = tbl[0].match(/<w:tr\b[\s\S]*?<\/w:tr>/g) || [];
-    var protoIdx = -1;
-    trs.forEach(function (t, i) {
-      if (t.indexOf("{名称}") >= 0 || t.indexOf("{NAME}") >= 0) protoIdx = i;
-    });
+    // 文档可能含多个表格（如公司信息表），逐个找含产品行 token 的表
+    var tbls = docXml.match(/<w:tbl>[\s\S]*?<\/w:tbl>|<w:tbl\b[^>]*>[\s\S]*?<\/w:tbl>/g) || [];
+    if (!tbls.length) throw new Error("模板未找到表格");
+    var tbl = null, trs = [], protoIdx = -1;
+    for (var ti = 0; ti < tbls.length && protoIdx < 0; ti++) {
+      var candTrs = tbls[ti].match(/<w:tr\b[\s\S]*?<\/w:tr>/g) || [];
+      var pi = -1;
+      candTrs.forEach(function (t, i) {
+        if (t.indexOf("{名称}") >= 0 || t.indexOf("{NAME}") >= 0) pi = i;
+      });
+      if (pi >= 0) { tbl = tbls[ti]; trs = candTrs; protoIdx = pi; }
+    }
     if (protoIdx < 0) throw new Error("模板未找到产品行（表格内需有一行包含 {名称} 占位符）");
-    return { tblStart: docXml.indexOf(tbl[0]), tblEnd: docXml.indexOf(tbl[0]) + tbl[0].length,
-             tbl: tbl[0], trs: trs, protoIdx: protoIdx };
+    return { tblStart: docXml.indexOf(tbl), tblEnd: docXml.indexOf(tbl) + tbl.length,
+             tbl: tbl, trs: trs, protoIdx: protoIdx };
   }
 
   function cellTexts(tc) {
@@ -513,7 +572,22 @@
     return "<w:tc>" + tcpr + "<w:p>" + ppr + runs + "</w:p></w:tc>";
   }
 
-  function buildDocxXml(docXml, p) {
+  function quoteMap(p) {
+    var total = 0;
+    p.items.forEach(function (it) { total += (it.qty || 0) * (it.price || 0); });
+    return {
+      customer: p.fields.customer || "",
+      date: p.fields.date || (D.todayBJ ? D.todayBJ() : ""),
+      contact: p.fields.contact || "", phone: p.fields.phone || "",
+      email: p.fields.email || "", remarks: p.fields.remarks || "",
+      total: X.fmtMoney(total)
+    };
+  }
+  function buildDocxXml(docXml, p, mode) {
+    mode = mode || "receipt";
+    var isQ = mode === "quote";
+    var alias = isQ ? Q_ALIAS : R_ALIAS;
+    var itemKeys = isQ ? Q_ITEM_KEYS : ITEM_KEYS;
     var det = detectDocx(docXml);
     var proto = det.trs[det.protoIdx];
     var tcs = proto.match(/<w:tc>[\s\S]*?<\/w:tc>/g) || [];
@@ -525,19 +599,22 @@
       var txt = cellTexts(tc);
       var toks = [], m, re = /\{([A-Za-z0-9_\u4e00-\u9fa5]+)\}/g;
       while ((m = re.exec(txt))) {
-        var k = R_ALIAS[m[1]];
-        if (k && ITEM_KEYS.indexOf(k) >= 0) toks.push({ raw: m[1], key: k });
+        var k = alias[m[1]];
+        if (k && itemKeys.indexOf(k) >= 0) toks.push({ raw: m[1], key: k });
       }
       return { rpr: fixWhite(rpr), toks: toks };
     });
-    var headerMap = receiptMap(p);
-    var rows = p.items.map(function (it) {
+    var headerMap = isQ ? quoteMap(p) : receiptMap(p);
+    var rows = p.items.map(function (it, i) {
       var spec = it.spec || it.model || "";
       if (it.model && it.spec) spec = it.model + " " + it.spec;
-      var itemVals = {
-        name: it.name || "", spec: spec, qty: String(it.qty != null ? it.qty : ""),
-        remark: it.remark || (it.unit ? "单位：" + it.unit : ""), unit: it.unit || ""
-      };
+      var itemVals = isQ
+        ? { no: String(i + 1), name: it.name || "", model: it.model || "", spec: it.spec || "",
+            qty: String(it.qty != null ? it.qty : ""), unit: it.unit || "",
+            price: it.price != null ? X.fmtMoney(it.price) : "",
+            itemtotal: it.price != null ? X.fmtMoney((it.qty || 0) * it.price) : "" }
+        : { name: it.name || "", spec: spec, qty: String(it.qty != null ? it.qty : ""),
+            remark: it.remark || (it.unit ? "单位：" + it.unit : ""), unit: it.unit || "" };
       var newTcs = tcs.map(function (tc, k) {
         if (!cellInfo[k].toks.length) return tc;
         var map = {};
@@ -545,15 +622,15 @@
         return docxFillCell(tc, cellInfo[k].rpr, map);
       });
       var pos = 0;
-      // 保留原始 <w:tr ...> 外层属性及 trPr，只替换四个单元格 XML
+      // 保留原始 <w:tr ...> 外层属性及 trPr，只替换产品单元格 XML
       return proto.replace(/<w:tc>[\s\S]*?<\/w:tc>/g, function () { return newTcs[pos++]; });
     }).join("");
     var tblNew = det.tbl.replace(proto, rows);
     var xml = docXml.slice(0, det.tblStart) + tblNew + docXml.slice(det.tblEnd);
     // 表头 token 全局原位替换
     xml = xml.replace(R_TOKEN_RE, function (all, name) {
-      var k = R_ALIAS[name];
-      if (k && ITEM_KEYS.indexOf(k) < 0 && headerMap[k] !== undefined) return String(headerMap[k]);
+      var k = alias[name];
+      if (k && itemKeys.indexOf(k) < 0 && headerMap[k] !== undefined) return String(headerMap[k]);
       return all;
     });
     var left = [], m, cre = /<w:t[^>]*>([\s\S]*?)<\/w:t>/g;
@@ -712,11 +789,21 @@
     ".dt-table .w1{width:20%}.dt-table .w2{width:13%}.dt-table .w3{width:37%}.dt-table .w4{width:9%}.dt-table .w5{width:7%}.dt-table .w6{width:9%}.dt-table .w7{width:15%}" +
     ".dt-total td{font-weight:700}";
 
-  var PRINT_CSS = "@page{margin:10mm}html,body{margin:0;padding:0}.dr-paper,.dt-paper{max-width:none;width:auto}" + PREVIEW_CSS;
+  // 上传文件转 PDF：通用转换渲染样式
+  var CONV_CSS =
+    ".conv-paper{padding:30px 40px;max-width:980px;font-family:宋体,SimSun,serif;font-size:12px;color:#000}" +
+    ".conv-paper p{margin:4px 0}" +
+    ".conv-table{border-collapse:collapse;margin:8px 0}" +
+    ".conv-table td{border:1px solid #333;padding:5px 7px;font-size:12px;vertical-align:middle;word-wrap:break-word}" +
+    ".conv-table td.b{font-weight:700}" +
+    ".conv-table p{margin:2px 0}";
 
   function printPdf(bodyHtml, landscape, title) {
+    var pageRule = "@page{" + (landscape ? "size:A4 landscape;" : "") + "margin:10mm}";
     var html = "<!doctype html><html><head><meta charset='utf-8'><title>" + (title || "打印") +
-      "</title><style>" + PRINT_CSS + "</style></head><body>" + bodyHtml + "</body></html>";
+      "</title><style>" + pageRule +
+      "html,body{margin:0;padding:0}.dr-paper,.dt-paper,.conv-paper{max-width:none;width:auto}" +
+      PREVIEW_CSS + CONV_CSS + "</style></head><body>" + bodyHtml + "</body></html>";
     var ifr = document.createElement("iframe");
     ifr.style.cssText = "position:fixed;right:100%;bottom:0;width:0;height:0;border:0;visibility:hidden;";
     document.body.appendChild(ifr);
@@ -754,12 +841,192 @@
     return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>");
   }
 
+  /* ---------- 上传文件 → HTML（PDF 导出模块一键转换） ---------- */
+  function colNum(L) { var n = 0; for (var i = 0; i < L.length; i++) n = n * 26 + (L.charCodeAt(i) - 64); return n; }
+
+  function xlsxToHtml(sheetXml, ssXml, stylesXml) {
+    var ss = X.parseSharedStrings(ssXml);
+    var widths = {};
+    (sheetXml.match(/<col\b[^>]*\/?>/g) || []).forEach(function (cm) {
+      var mi = cm.match(/\bmin="(\d+)"/), ma = cm.match(/\bmax="(\d+)"/), mw = cm.match(/\bwidth="([\d.]+)"/);
+      if (!mi || !mw) return;
+      for (var c = +mi[1]; c <= Math.min(ma ? +ma[1] : +mi[1], 40); c++) widths[c] = parseFloat(mw[1]);
+    });
+    var fontBold = {}, xfBold = {};
+    if (stylesXml) {
+      (stylesXml.match(/<font>[\s\S]*?<\/font>/g) || []).forEach(function (f, i) {
+        if (/<b\/>|<b val="1"\/>/.test(f)) fontBold[i] = true;
+      });
+      var xfSec = stylesXml.match(/<cellXfs count="\d+">[\s\S]*?<\/cellXfs>/);
+      if (xfSec) (xfSec[0].match(/<xf\b[^>]*\/?>/g) || []).forEach(function (xf, i) {
+        var fid = +((xf.match(/\bfontId="(\d+)"/) || [])[1] || 0);
+        if (fontBold[fid]) xfBold[i] = true;
+      });
+    }
+    var spanMap = {}, covered = {};
+    (sheetXml.match(/<mergeCell ref="([A-Z]+\d+:[A-Z]+\d+)"/g) || []).forEach(function (mr) {
+      var rr = mr.match(/ref="([A-Z]+)(\d+):([A-Z]+)(\d+)"/);
+      if (!rr) return;
+      var c1 = colNum(rr[1]), c2 = colNum(rr[3]), r1 = +rr[2], r2 = +rr[4];
+      spanMap[r1 + "," + c1] = { cs: c2 - c1 + 1, rs: r2 - r1 + 1 };
+      for (var r = r1; r <= r2; r++) for (var c = c1; c <= c2; c++) if (r !== r1 || c !== c1) covered[r + "," + c] = true;
+    });
+    var rows = {};
+    (sheetXml.match(/<row\b[^>]*\/>|<row\b[^>]*>[\s\S]*?<\/row>/g) || []).forEach(function (rx) {
+      var r = +((rx.match(/\br="(\d+)"/) || [])[1]); if (r) rows[r] = rx;
+    });
+    var rList = Object.keys(rows).map(Number).sort(function (a, b) { return a - b; });
+    if (!rList.length) throw new Error("工作表没有数据");
+    var maxC = 0;
+    var body = rList.map(function (r) {
+      var tds = "", cm, cre = /<c\b([^>]*?)(?:\/>|>([\s\S]*?)<\/c>)/g;
+      while ((cm = cre.exec(rows[r]))) {
+        var ca = cm[1] || "", cb = cm[2] || "";
+        var refM = ca.match(/\br="([A-Z]+)(\d+)"/);
+        if (!refM) continue;
+        var c = colNum(refM[1]);
+        if (covered[r + "," + c]) continue;
+        if (c > maxC) maxC = c;
+        var t = (ca.match(/\bt="([^"]+)"/) || [])[1] || "";
+        var s = (ca.match(/\bs="(\d+)"/) || [])[1];
+        var v = "";
+        var isM = cb.match(/<is>[\s\S]*?<t[^>]*>([\s\S]*?)<\/t>[\s\S]*?<\/is>/);
+        if (isM) v = X.unescXml(isM[1]);
+        else { var vm = cb.match(/<v>([\s\S]*?)<\/v>/); if (vm) v = X.unescXml(vm[1]); }
+        if (t === "s") v = ss[+v] != null ? ss[+v] : v;
+        else if (v !== "" && !isNaN(Number(v)) && /^[\d.\-]+$/.test(v)) {
+          var num = Number(v);
+          v = num % 1 === 0 ? num.toLocaleString("en-US")
+            : num.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+        var sp = spanMap[r + "," + c] || { cs: 1, rs: 1 };
+        var attr = (sp.cs > 1 ? ' colspan="' + sp.cs + '"' : "") + (sp.rs > 1 ? ' rowspan="' + sp.rs + '"' : "");
+        tds += "<td" + attr + (s && xfBold[+s] ? ' class="b"' : "") + ">" + escH(v) + "</td>";
+      }
+      return "<tr>" + tds + "</tr>";
+    }).join("");
+    var colg = "";
+    for (var cc = 1; cc <= maxC; cc++) if (widths[cc]) colg += '<col style="width:' + (widths[cc] * 7) + 'px">';
+    var html = '<div class="doc-paper conv-paper"><table class="conv-table">' + colg + "<tbody>" + body + "</tbody></table></div>";
+    return { html: html, landscape: /orientation="landscape"/.test(sheetXml) };
+  }
+
+  async function docxToHtml(zip, docXml) {
+    var landscape = /<w:pgSz[^>]*orient="landscape"/.test(docXml);
+    var rels = {};
+    var relF = zip.file("word/_rels/document.xml.rels");
+    if (relF) {
+      var rx = await relF.async("string");
+      (rx.match(/<Relationship[^>]*\/>/g) || []).forEach(function (r) {
+        var id = (r.match(/Id="([^"]+)"/) || [])[1];
+        var tgt = (r.match(/Target="([^"]+)"/) || [])[1];
+        if (id && tgt) rels[id] = tgt.replace(/^\//, "");
+      });
+    }
+    var imgCache = {};
+    async function imgOf(rId) {
+      var key = rels[rId];
+      if (!key) return "";
+      if (imgCache[key] !== undefined) return imgCache[key];
+      imgCache[key] = null;
+      var f = zip.file("word/" + key);
+      if (f) {
+        var b = await f.async("base64");
+        var mime = /\.png$/i.test(key) ? "image/png" : /\.jpe?g$/i.test(key) ? "image/jpeg" : "image/png";
+        imgCache[key] = '<img src="data:' + mime + ';base64,' + b + '" style="max-height:60px">';
+      }
+      return imgCache[key] || "";
+    }
+    async function runHtml(r) {
+      var rpr = (r.match(/<w:rPr>[\s\S]*?<\/w:rPr>/) || [""])[0];
+      var b = /<w:b\/>|<w:b w:val="1"|<w:b w:val="true"/.test(rpr);
+      var i = /<w:i\/>|<w:i w:val="1"|<w:i w:val="true"/.test(rpr);
+      var sz = (rpr.match(/<w:sz w:val="(\d+)"/) || [])[1];
+      var style = sz ? ' style="font-size:' + (sz / 2) + 'pt"' : "";
+      var dm = r.match(/r:embed="([^"]+)"/) || r.match(/r:id="([^"]+)"/);
+      var inner = dm ? await imgOf(dm[1]) : "";
+      var parts = [], pm, pre = /<w:t[^>]*>([\s\S]*?)<\/w:t>|<w:br\s*\/?>|<w:tab\s*\/?>/g, segs = r.replace(/<w:rPr>[\s\S]*?<\/w:rPr>/, "");
+      while ((pm = pre.exec(segs))) {
+        if (pm[1] != null) parts.push(escH(X.unescXml(pm[1])));
+        else if (pm[0].indexOf("br") >= 0) parts.push("<br>");
+        else parts.push("　");
+      }
+      var txt = parts.join("");
+      if (!txt && !inner) return "";
+      if (b && i) txt = "<b><i" + style + ">" + txt + "</i></b>";
+      else if (b) txt = "<b" + style + ">" + txt + "</b>";
+      else if (i) txt = "<i" + style + ">" + txt + "</i>";
+      else if (style) txt = "<span" + style + ">" + txt + "</span>";
+      return inner + txt;
+    }
+    async function pHtml(p) {
+      var jc = ((p.match(/<w:jc w:val="(\w+)"/) || [])[1]) || "";
+      var runs = p.match(/<w:r\b[^>]*>[\s\S]*?<\/w:r>/g) || [];
+      var h = "";
+      for (var i = 0; i < runs.length; i++) h += await runHtml(runs[i]);
+      if (!h) h = "&nbsp;";
+      var st = jc === "center" ? 'text-align:center;' : jc === "right" ? "text-align:right;" : "";
+      return '<p style="' + st + '">' + h + "</p>";
+    }
+    async function tblHtml(tbl) {
+      var trs = tbl.match(/<w:tr\b[^>]*>[\s\S]*?<\/w:tr>/g) || [];
+      var rows = "";
+      for (var ti = 0; ti < trs.length; ti++) {
+        var tds = "", tcs = trs[ti].match(/<w:tc>[\s\S]*?<\/w:tc>/g) || [];
+        for (var ci = 0; ci < tcs.length; ci++) {
+          var tc = tcs[ci];
+          var gs = +((tc.match(/<w:gridSpan w:val="(\d+)"/) || [])[1] || 1);
+          var vm = tc.match(/<w:vMerge(\s+w:val="(\w+)")?\s*\/>/);
+          var ps = tc.match(/<w:p\b[^>]*>[\s\S]*?<\/w:p>/g) || [];
+          var inner = "";
+          for (var pi = 0; pi < ps.length; pi++) inner += await pHtml(ps[pi]);
+          if (vm && !vm[2]) { tds += "<td" + (gs > 1 ? ' colspan="' + gs + '"' : "") + "></td>"; continue; } // vMerge 续格
+          tds += "<td" + (gs > 1 ? ' colspan="' + gs + '"' : "") + ">" + (inner || "&nbsp;") + "</td>";
+        }
+        rows += "<tr>" + tds + "</tr>";
+      }
+      return '<table class="conv-table"><tbody>' + rows + "</tbody></table>";
+    }
+    var body = (docXml.match(/<w:body>([\s\S]*?)<\/w:body>/) || ["", ""])[1];
+    var out = "", bm, bre = /<w:tbl\b[^>]*>[\s\S]*?<\/w:tbl>|<w:p\b[^>]*>[\s\S]*?<\/w:p>/g;
+    while ((bm = bre.exec(body))) {
+      if (bm[0].indexOf("<w:tbl") === 0) out += await tblHtml(bm[0]);
+      else out += await pHtml(bm[0]);
+    }
+    if (!out.trim()) throw new Error("文档没有可转换的内容");
+    return { html: '<div class="doc-paper conv-paper">' + out + "</div>", landscape: landscape };
+  }
+
+  // PDF 导出模块：上传 EXCEL/WORD → 本地转 HTML → 打印对话框另存为 PDF
+  async function doPdfUpload(file) {
+    msg("");
+    var ext = /\.xlsx?$/i.test(file.name) ? "xlsx" : /\.docx$/i.test(file.name) ? "docx" : null;
+    if (!ext) return msg("仅支持 .xlsx / .docx 文件", true);
+    try {
+      var buf = await file.arrayBuffer();
+      var zip = await JSZip.loadAsync(buf);
+      var pr;
+      if (ext === "xlsx") {
+        var a = await readParts(zip, true);
+        pr = xlsxToHtml(a.sheet, a.ss, a.styles);
+      } else {
+        var a2 = await readParts(zip, false);
+        pr = await docxToHtml(zip, a2.doc);
+      }
+      printPdf(pr.html, pr.landscape, file.name.replace(/\.(xlsx|docx)$/i, "") + ".pdf");
+      msg("已打开打印对话框（" + file.name + "，浏览器本地转换）：目标打印机选「另存为 PDF」即可");
+    } catch (e) {
+      msg("转换失败：" + e.message, true);
+    }
+  }
+
   /* ---------- 状态 ---------- */
   var state = {
     kind: "quote",
     custom: { xlsx: null, docx: null },
     customName: { xlsx: "", docx: "" },
     last: null,
+    lastP: null, // 最近一次生成解析结果（供 PDF/Word/Excel 三格式复用）
     tplCache: {}, logoUrl: ""
   };
   function msg(t, err) {
@@ -780,6 +1047,10 @@
     var pr = fetch(url, force ? { cache: "no-store" } : undefined).then(function (r) {
       if (!r.ok) throw new Error("模板加载失败：" + url);
       return r.arrayBuffer();
+    }).catch(function (e) {
+      // 网络瞬断不能永久缓存 rejected Promise；清理后允许 no-store 重试。
+      delete state.tplCache[url];
+      throw e;
     });
     if (!force) state.tplCache[url] = pr;
     return pr;
@@ -891,6 +1162,25 @@
     return zip.generateAsync({ type: "arraybuffer" });
   }
 
+  // 报价单 Word 版 / 签收单 Excel 版（内置模板，布局镜像对应母版）
+  async function buildQuoteDocx(p) {
+    var zip = await JSZip.loadAsync(await loadTplBuf("quote_template.docx"));
+    var a = await readParts(zip, false);
+    var res = DX.buildDocxXml(a.doc, p, "quote");
+    if (res.leftTokens.length) msg("提示：报价单 Word 模板残留未识别占位符 " + res.leftTokens.join(" "));
+    zip.file("word/document.xml", res.xml);
+    return zip.generateAsync({ type: "arraybuffer" });
+  }
+  async function buildReceiptXlsx(p) {
+    var zip = await JSZip.loadAsync(await loadTplBuf("receipt_template.xlsx"));
+    var a = await readParts(zip, true);
+    var res = X.buildXlsxXml(a.sheet, a.ss, a.styles, p, "receipt");
+    zip.file("xl/worksheets/sheet1.xml", res.sheetXml);
+    if (res.ssXml && a.ss) zip.file("xl/sharedStrings.xml", res.ssXml);
+    if (res.stylesXml && a.styles) zip.file("xl/styles.xml", res.stylesXml);
+    return zip.generateAsync({ type: "arraybuffer" });
+  }
+
   function detectKind(p) {
     if (p.fields.delivery || p.fields.freight || p.fields.courier || p.fields.addr) return "receipt";
     return "quote";
@@ -907,7 +1197,7 @@
 
   function parseInput() {
     var text = ($("docs-input") || { value: "" }).value.trim();
-    if (!text) { msg("请先粘贴信息（或点「图片识别」）", true); return null; }
+    if (!text) { msg("请先粘贴信息", true); return null; }
     var p = D.parseFree(text);
     if (!p.items.length) { msg("未识别到产品行。每行一件产品即可，无需符号，例如：联想开天X5h G1d-A007 LK-X5h 海光C86-4G/16G内存 10台 8300", true); return null; }
     return p;
@@ -929,11 +1219,12 @@
           ? "报价单_" + (p.fields.customer || "客户") + "_" + (p.fields.date || "") + ".xlsx"
           : "签收单_" + (p.fields.contract || p.fields.customer || "客户") + ".docx";
         var file = await commitFormalFile(buf, name, kind);
+        state.lastP = p;
         if (pv) { pv.innerHTML = formalFilePanel(file); pv.classList.remove("hide"); }
         var act = $("docs-actions");
         if (act) act.classList.remove("hide");
-        showMainAction();
-        msg("正式文件已生成；打开预览与下载使用同一份文件（指纹 " + (file.hash ? file.hash.slice(0, 12) : "不可用") + "…）");
+        showMainActions();
+        msg("正式文件已生成；打开预览与下载使用同一份文件（指纹 " + (file.hash ? file.hash.slice(0, 12) : "不可用") + "…），PDF/Word/Excel 三种版本任选下载");
         break;
       } catch (e) {
         if (attempt === 0 && /模板/.test(e.message) && /产品行|占位符|表格/.test(e.message)) { attempt = 1; continue; }
@@ -1022,9 +1313,9 @@
 
   /* ---------- 标签切换 ---------- */
   var HINTS = {
-    quote: "整块粘贴即可（客户信息 + 产品行混排，产品行无需符号）。点「生成正式文件」后，可打开正式 Excel 预览或下载；两者使用同一份文件，不再使用 HTML 模拟排版。",
-    receipt: "整块粘贴即可（发货日期/联系人/合同编号/送货方式/收货地址 + 产品行）。点「生成正式文件」后，可打开正式 Word 预览或下载；两者使用同一份文件。", 
-    pdf: "整块粘贴信息，自动识别是报价单还是签收单，一键打印导出 PDF（打印对话框里选「另存为 PDF」）。",
+    quote: "整块粘贴即可（客户信息 + 产品行混排，产品行无需符号）。点「生成正式文件」后，可选 PDF / Word / Excel 三种版本下载；打开预览与 Excel 版下载使用同一份文件，不再使用 HTML 模拟排版。",
+    receipt: "整块粘贴即可（发货日期/联系人/合同编号/送货方式/收货地址 + 产品行）。点「生成正式文件」后，可选 PDF / Word / Excel 三种版本下载；打开预览与 Word 版下载使用同一份文件。",
+    pdf: "两种用法：① 整块粘贴信息，自动识别报价单/签收单，一键导出 PDF；② 上传手头已有的 EXCEL / WORD 文件一键转 PDF（浏览器本地转换，文件不上传服务器）。打印对话框里选「另存为 PDF」。",
     table: "快速制表工具：整块粘贴信息，一键生成 Word / Excel / PDF 表格。支持上传自己的模板：先「下载空白模板」改好版式再上传（产品行需含 {名称}{数量} 占位符）。"
   };
   function setTab(kind) {
@@ -1033,6 +1324,10 @@
     var pv = $("docs-preview"); if (pv) { pv.innerHTML = ""; pv.classList.add("hide"); }
     var act = $("docs-actions"); if (act) act.classList.add("hide");
     var tb = $("docs-tplbar"); if (tb) tb.classList.toggle("hide", kind !== "table");
+    // PDF 导出模块无图片识别；改为「上传文件转 PDF」入口
+    var upBtn = $("docs-upload"); if (upBtn) upBtn.classList.toggle("hide", kind === "pdf");
+    var ocr = $("docs-ocr"); if (ocr) ocr.classList.toggle("hide", kind === "pdf");
+    var pur = $("pdf-up-row"); if (pur) pur.classList.toggle("hide", kind !== "pdf");
     var hint = $("docs-hint"); if (hint) hint.textContent = HINTS[kind];
     var gen = $("docs-gen");
     if (gen) gen.textContent = kind === "pdf" ? "🖨 一键导出 PDF" : (kind === "table" ? "👀 预览内容" : "📄 生成正式文件");
@@ -1052,13 +1347,47 @@
     setActionBtn("docs-dl-1", "⬇ 一键 Word", true, function () { doTable("docx"); });
     setActionBtn("docs-dl-2", "⬇ 一键 Excel", true, function () { doTable("xlsx"); });
     setActionBtn("docs-dl-3", "🖨 一键 PDF", true, function () { doTable("pdf"); });
+    setActionBtn("docs-dl-4", "", false, null);
   }
-  function showMainAction() {
+  function showMainActions() {
     var kind = state.kind;
-    if (kind === "quote" || kind === "receipt") {
-      setActionBtn("docs-dl-1", "↗ 用 WPS/Office 打开正式文件", true, openFormalFile);
-      setActionBtn("docs-dl-2", kind === "quote" ? "⬇ 下载正式 Excel" : "⬇ 下载正式 Word", true, dlNative);
-      setActionBtn("docs-dl-3", "", false, null);
+    if (kind !== "quote" && kind !== "receipt") return;
+    setActionBtn("docs-dl-1", "↗ 用 WPS/Office 打开正式文件", true, openFormalFile);
+    setActionBtn("docs-dl-2", "⬇ 下载 PDF 版本", true, doKindPdf);
+    setActionBtn("docs-dl-3", "⬇ 下载 Word 版本", true,
+      kind === "quote" ? function () { dlOther("docx"); } : dlNative);
+    setActionBtn("docs-dl-4", "⬇ 下载 Excel 版本", true,
+      kind === "quote" ? dlNative : function () { dlOther("xlsx"); });
+  }
+  // 当前模块的 PDF 版本：复用与正式文件同一份解析结果，打印对话框另存为 PDF
+  async function doKindPdf() {
+    var p = state.lastP;
+    if (!p) return msg("请先生成正式文件", true);
+    if (state.kind === "quote") await logoDataUrl();
+    var pr = previewOf(state.kind, p);
+    var title = (state.kind === "receipt" ? "签收单" : "报价单") + "_" +
+      (state.kind === "receipt" ? (p.fields.contract || p.fields.customer || "客户") : (p.fields.customer || "客户") + "_" + (p.fields.date || "")) + ".pdf";
+    printPdf(pr.html, pr.landscape, title);
+    msg("已打开打印对话框：目标打印机选「另存为 PDF」即可");
+  }
+  // 非母版格式的正式文件：报价单 Word 版 / 签收单 Excel 版
+  async function dlOther(type) {
+    var p = state.lastP;
+    if (!p) return msg("请先生成正式文件", true);
+    msg("正在生成…");
+    try {
+      var buf, name;
+      if (type === "docx") {
+        buf = await buildQuoteDocx(p);
+        name = "报价单_" + (p.fields.customer || "客户") + "_" + (p.fields.date || "") + ".docx";
+      } else {
+        buf = await buildReceiptXlsx(p);
+        name = "签收单_" + (p.fields.contract || p.fields.customer || "客户") + ".xlsx";
+      }
+      download(buf, name);
+      msg("已生成并下载 " + name);
+    } catch (e) {
+      msg("生成失败：" + e.message, true);
     }
   }
   function openFormalFile() {
@@ -1108,12 +1437,17 @@
     });
     var input = $("docs-input");
     if (input) input.addEventListener("input", function () {
-      if (!state.last) return;
+      if (!state.last && !state.lastP) return;
       clearLastFile();
+      state.lastP = null;
       var pv0 = $("docs-preview"); if (pv0) { pv0.innerHTML = ""; pv0.classList.add("hide"); }
       var act0 = $("docs-actions"); if (act0) act0.classList.add("hide");
       msg("内容已修改，请重新生成正式文件");
     });
+    var pub = $("pdf-up-btn");
+    if (pub) pub.addEventListener("click", function () { var f = $("pdf-up-file"); if (f) f.click(); });
+    var puf = $("pdf-up-file");
+    if (puf) puf.addEventListener("change", function () { if (puf.files && puf.files[0]) doPdfUpload(puf.files[0]); puf.value = ""; });
     var gen = $("docs-gen");
     if (gen) gen.addEventListener("click", function () {
       if (state.kind === "pdf") doPdf();
@@ -1147,7 +1481,9 @@
     whiteXfs: X.whiteXfs, whiteFontIds: X.whiteFontIds,
     buildDocxXml: DX.buildDocxXml, detectDocx: DX.detectDocx,
     previewQuoteHtml: PV.previewQuoteHtml, previewReceiptHtml: PV.previewReceiptHtml,
-    previewTableHtml: previewTableHtml, printPdf: printPdf, fmtMoney: X.fmtMoney
+    previewTableHtml: previewTableHtml, printPdf: printPdf, fmtMoney: X.fmtMoney,
+    buildQuoteDocx: buildQuoteDocx, buildReceiptXlsx: buildReceiptXlsx,
+    xlsxToHtml: xlsxToHtml, docxToHtml: docxToHtml
   };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
 })();

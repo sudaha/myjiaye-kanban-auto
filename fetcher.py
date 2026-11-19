@@ -239,11 +239,25 @@ def run_fetch(db_file, pdf_dir, flag=0, seed_days=14, verbose=True):
                 1 if r.get("end") in (True, "true", 1) else 0)
         prods = d.get("products") or []
         d["category"] = categorize(d.get("title"), prods)
-        d["products_json"] = json.dumps(prods, ensure_ascii=False)
         pdf_local = None
         if d.get("pdf_url"):
             pdf_local = download_pdf(d["pdf_url"], pdf_dir, nid)
             d["pdf_local"] = os.path.basename(pdf_local) if pdf_local else None
+        # API 的 specification 只含“其他技术指标要求”，会漏掉 PDF 表格中的“商品属性要求”。
+        # 新公告入库前必须用 PDF 完整技术要求回填；有品目但 PDF 不可用/不一致时不允许伪装完整。
+        if prods and pdf_local:
+            from pdf_requirements import enrich_products_from_pdf, extract_pdf_requirements
+            pdf_items = extract_pdf_requirements(pdf_local)
+            prods, req_audit = enrich_products_from_pdf(prods, pdf_items)
+            if len(pdf_items) != len(prods) or any(not x.get("complete") for x in req_audit):
+                raise RuntimeError("PDF技术要求回填失败: API品目%d/PDF品目%d" % (len(prods), len(pdf_items)))
+        elif prods:
+            for p in prods:
+                p["specification_api"] = p.get("specification") or ""
+                p["requirements_source"] = "api_only"
+                p["requirements_complete"] = False
+        d["products"] = prods
+        d["products_json"] = json.dumps(prods, ensure_ascii=False)
         d["detail_fetched"] = 1
         db.upsert_announcement(db_file, d)
         if int(nid) > max_id:

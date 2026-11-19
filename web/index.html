@@ -44,7 +44,6 @@
   <section class="filterbar" id="filterbar">
     <input type="search" id="f-keyword" placeholder="搜索标题 / 采购公司 / 品牌…" class="f-key">
     <select id="f-category"><option value="">全部品类</option></select>
-    <input type="text" id="f-brand" placeholder="品牌(如 华为/海光)" class="f-brand">
     <select id="f-status">
       <option value="">全部状态</option>
       <option value="进行中">进行中</option>
@@ -103,9 +102,13 @@
       <div class="notice-row">
         <select id="pick-notice-cat" class="pick-select br-cat" title="按项目类型筛选"></select>
         <select id="pick-notice" class="pick-select"></select>
-        <button id="pick-notice-run" class="btn primary">按此公告品目选型</button>
+        <button id="pick-notice-run" class="btn primary">按技术参数选型</button>
       </div>
-      <span id="pick-notice-summary" class="muted">先选项目类型（服务器 / 网络设备 / 会议设备…），再挑一条公告（推荐进行中的），按品目逐条匹配机型库。</span>
+      <span id="pick-notice-summary" class="muted">选择公告后，将从采购需求附件中提取技术参数、品牌和指定型号，推荐倾向性更强的具体配置。</span>
+      <div class="notice-workbench">
+        <aside id="pick-notice-list" class="notice-list" aria-label="公告列表"></aside>
+        <div id="pick-notice-analysis" class="notice-analysis"><div class="pick-empty">请从左侧选择公告，查看技术参数和具体型号推荐</div></div>
+      </div>
     </div>
 
     <div class="pick-pane hide" id="ppane-browse">
@@ -122,41 +125,25 @@
     <div id="pick-results"></div>
   </section>
 
-  <!-- 商务单证（报价单 / 货物签收单 / PDF导出 / 一键成表） -->
+  <!-- 商务单证（报价单 / 货物签收单） -->
   <section id="docsbox" class="docsbox hide">
     <div class="pick-tabs">
       <button class="docs-tab on" data-doc="quote">报价单</button>
       <button class="docs-tab" data-doc="receipt">货物签收单</button>
-      <button class="docs-tab" data-doc="pdf">PDF 导出</button>
-      <button class="docs-tab" data-doc="table">一键成表</button>
     </div>
     <div id="docs-hint" class="docs-hint muted"></div>
     <textarea id="docs-input" rows="12"></textarea>
     <div class="pick-actions">
-      <button id="docs-gen" class="btn primary">👀 生成预览</button>
-      <button id="docs-upload" class="btn">📷 图片识别</button>
-      <input type="file" id="docs-file" accept="image/*" hidden>
-      <span id="docs-ocr" class="muted"></span>
+      <button id="docs-gen" class="btn primary">📄 生成正式文件</button>
       <span id="docs-msg" class="muted"></span>
-    </div>
-    <div class="docs-tplbar hide" id="docs-tplbar">
-      <span id="docs-tpl-chip" class="muted"></span>
-      <button id="docs-tpl-upload">⬆ 上传自定义模板</button>
-      <button id="docs-tpl-blank-x">⬇ 空白 Excel 模板</button>
-      <button id="docs-tpl-blank-d">⬇ 空白 Word 模板</button>
-      <button id="docs-tpl-reset">恢复内置</button>
-      <input type="file" id="docs-tpl-file" accept=".xlsx,.docx" hidden>
     </div>
     <div id="docs-actions" class="hide">
       <button id="docs-dl-1" class="btn primary hide"></button>
       <button id="docs-dl-2" class="btn hide"></button>
       <button id="docs-dl-3" class="btn hide"></button>
+      <button id="docs-dl-4" class="btn hide"></button>
     </div>
     <div id="docs-preview" class="hide"></div>
-    <details id="docs-raw" class="docs-raw hide">
-      <summary>OCR 原文（供核对）</summary>
-      <pre id="docs-raw-text"></pre>
-    </details>
   </section>
 
   <main id="list" class="list"></main>

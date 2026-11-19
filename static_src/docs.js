@@ -464,13 +464,15 @@
   var kind = "quote";
   var PLACEHOLDER = {
     quote: "把整块信息直接粘进来即可（客户信息 + 产品表混排都行），例如：\n客户名称：北京某某科技有限公司\n日期：2026-11-18\n联系人：张经理\n电话：13800000000\n邮箱：zhang@xx.com\n备注：（可留空）\n产品名称|产品型号|配置及参数|数量|单位|单价(元)\n联想开天X5h G1d-A007|LK-X5h|海光C86-4G/16G内存/512G固态|10|台|8300",
-    receipt: "把整块信息直接粘进来即可，例如：\n发货日期：2026-11-20\n联系人：张经理\n电话：13800000000\n合同编号：HT-2026-1118\n送货方式：物流（自提/物流/顺丰/其他）\n送货公司：顺丰速运\n收货地址：北京市海淀区XX路1号 王五 13900000000\n产品名称|规格及描述|数量|备注\n联想开天X5h G1d-A007|海光C86-4G/16G内存/512G固态|10|无"
+    receipt: "把整块信息直接粘进来即可，例如：\n发货日期：2026-11-20\n联系人：张经理\n电话：13800000000\n合同编号：HT-2026-1118\n送货方式：物流（自提/物流/顺丰/其他）\n送货公司：顺丰速运\n收货地址：北京市海淀区XX路1号 王五 13900000000\n产品名称|规格及描述|数量|备注\n联想开天X5h G1d-A007|海光C86-4G/16G内存/512G固态|10|无",
+    pdf: "整块粘贴信息，自动识别报价单/签收单后一键导出 PDF；不用粘贴时，可直接点下方「上传 EXCEL / WORD 文件」一键转 PDF",
+    table: "整块粘贴产品信息即可（每行一件，无需符号），例如：联想开天X5h G1d-A007 海光C86-4G/16G内存/512G固态 10台 8300"
   };
   function switchKind(k) {
     kind = k;
     document.querySelectorAll(".docs-tab").forEach(function (b) { b.classList.toggle("on", b.dataset.doc === k); });
     var ta = $("docs-input");
-    if (ta) { ta.placeholder = PLACEHOLDER[k]; ta.value = ""; }
+    if (ta) { ta.placeholder = PLACEHOLDER[k] || ""; ta.value = ""; }
     var msg = $("docs-msg"); if (msg) msg.textContent = "";
     ocrSay("");
     var det = $("docs-raw"); if (det) det.classList.add("hide");
@@ -479,28 +481,7 @@
     document.querySelectorAll(".docs-tab").forEach(function (b) {
       b.addEventListener("click", function () { switchKind(b.dataset.doc); });
     });
-    // #docs-gen 由 docs_v3.js 绑定（生成预览流程）
-    var ub = $("docs-upload");
-    if (ub) ub.addEventListener("click", function () { var fi = $("docs-file"); if (fi) fi.click(); });
-    var fi = $("docs-file");
-    if (fi) fi.addEventListener("change", function () {
-      if (fi.files && fi.files[0]) ocrImage(fi.files[0]);
-      fi.value = "";
-    });
-    var box = $("docsbox");
-    if (box) box.addEventListener("paste", function (e) {
-      var cd = e.clipboardData;
-      if (cd && cd.items) {
-        for (var i = 0; i < cd.items.length; i++) {
-          if (cd.items[i].type && cd.items[i].type.indexOf("image") === 0) {
-            e.preventDefault();
-            var f = cd.items[i].getAsFile();
-            if (f) ocrImage(f);
-            return;
-          }
-        }
-      }
-    });
+    // #docs-gen 由 docs_v3.js 绑定；商务单证仅保留文字粘贴生成，不再接入图片 OCR。
   }
   if (typeof document !== "undefined") {
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

@@ -5,7 +5,7 @@
     zycg: { name: "央采电子询价", sub: "中央政府采购网 · 电子询价「需求公告」", hint: "可勾选多份公告，一键打包下载询价通知书 PDF" },
     poly: { name: "保利集团招标", sub: "中国保利集团招标采购供应链平台 · 全量项目", hint: "保利以工程/服务类为主，勾选「只看 IT 相关」筛硬件项目" },
     bid: { name: "招标公告·新源", sub: "央采主站（招标/征求/更正）+ 中国政府采购网（中央/地方）· 已筛 IT 硬件", hint: "点开卡片跳转原公告页查看采购人与预算；关键词/日期筛选可用" },
-    docs: { name: "商务单证", sub: "报价单 / 货物签收单 · 整块粘贴或拍照识别，一键生成下载", hint: "选单证类型，整块粘贴信息或点「图片识别」拍照提取（支持 Ctrl+V 图片），浏览器本地生成文件（数据不上传）" },
+    docs: { name: "商务单证", sub: "报价单 / 货物签收单 · 整块粘贴信息，一键生成下载", hint: "选择报价单或货物签收单，整块粘贴信息后生成正式文件；支持 PDF / Word / Excel 三种版本（数据不上传）" },
     picker: { name: "选型助手", sub: "基于央采卖场真实成交记录建库 · 需求一键选型 + 成交价参考", hint: "粘贴需求文本或挑一条公告，按品类/CPU/品牌匹配机型库（含真实成交价带）" }
   };
   function platFromHash() {
@@ -19,6 +19,11 @@
     products: null,          // data/products.json 的 products 数组
     meta: null,              // 库元信息（updated_at / product_count）
     zycgList: null,          // 央采公告列表（供「选一条公告」用）
+    notices: null,           // data/mall_notices.json 的 notices 映射（成交公告原文缓存）
+    noticeFiltered: [],      // 当前搜索/品类筛选后的央采公告（左侧常显列表）
+    noticeInitPromise: null, // 公告选择器初始化中的 Promise，防止一键跳转与平台加载竞态
+    currentNotice: null,     // 当前正在对比的公告详情
+    modelSpecs: null,        // 官网/公开平台核验过的具体型号规格与来源
     browsePage: 1, browseTotal: 0, browseSize: 50
   };
 
@@ -39,7 +44,8 @@
     return m ? m + " 元" : "—";
   }
   function getJSON(url) {
-    return fetch(url, { cache: "no-cache" }).then(function (r) {
+    // 用 no-store 而非 no-cache：本站 CDN 对条件重验证请求会偶发无限挂起（首屏卡“加载中”）。
+    return fetch(url, { cache: "no-store" }).then(function (r) {
       if (!r.ok) throw new Error("HTTP " + r.status);
       return r.json();
     });
@@ -59,11 +65,10 @@
     var isDocs = p === "docs";
     var noList = isPicker || isDocs;
     $("filterbar").classList.toggle("hide", noList);
-    if ($("f-brand")) $("f-brand").style.display = p === "poly" ? "none" : "";
     $("f-it-wrap").classList.toggle("hide", p !== "poly");
     $("batchbar").classList.toggle("hide", p !== "zycg" && p !== "poly");
     if ($("btn-zip")) $("btn-zip").textContent = p === "poly" ? "⬇ 打包下载选中项目资料" : "⬇ 打包下载选中 PDF";
-    if ($("notice-date-picker")) $("notice-date-picker").classList.toggle("hide", p !== "zycg");
+    if ($("notice-date-picker")) $("notice-date-picker").classList.toggle("hide", p !== "zycg" && p !== "poly");
     $("pickerbox").classList.toggle("hide", !isPicker);
     if ($("docsbox")) $("docsbox").classList.toggle("hide", !isDocs);
     $("list").classList.toggle("hide", noList);
@@ -91,7 +96,7 @@
     }
     state.loaded = false; state.items = []; state.page = 1; state.picked = {}; state.filters = {};
     state.availableDates = {}; state.dateMonth = null;
-    ["f-keyword", "f-brand", "f-date"].forEach(function (i) { if ($(i)) $(i).value = ""; });
+    ["f-keyword", "f-date"].forEach(function (i) { if ($(i)) $(i).value = ""; });
     if ($("f-date-btn")) $("f-date-btn").textContent = "选择公告日期";
     if ($("date-pop")) $("date-pop").classList.add("hide");
     $("f-category").value = ""; $("f-status").value = ""; $("f-it").checked = false;
@@ -140,7 +145,10 @@
     }).catch(function () { });
   }
   function loadCategories() {
-    return getJSON(pdata("categories.json")).then(function (d) {
+    // 捕获发起请求时的平台；切换平台后旧请求即使较晚返回，也不能覆盖新平台品类。
+    var requestPlat = plat;
+    return getJSON("data/" + requestPlat + "/categories.json").then(function (d) {
+      if (plat !== requestPlat) return;
       var sel = $("f-category");
       sel.innerHTML = '<option value="">全部品类</option>' +
         (d.categories || []).map(function (c) {
@@ -205,7 +213,7 @@
     return {
       keyword: $("f-keyword").value.trim(),
       category: $("f-category").value,
-      brand: $("f-brand") ? $("f-brand").value.trim() : "",
+      brand: "",
       status: $("f-status").value,
       it: $("f-it").checked,
       date: $("f-date") ? $("f-date").value : ""
@@ -233,7 +241,7 @@
     return getJSON(pdata("list.json")).then(function (d) {
       state.items = d.items || [];
       state.loaded = true;
-      if (plat === "zycg") initAvailableDates();
+      if (plat === "zycg" || plat === "poly") initAvailableDates();
     });
   }
 
@@ -263,7 +271,7 @@
       $("pg-next").disabled = state.page >= pages;
       Array.prototype.forEach.call(list.querySelectorAll(".card"), function (el) {
         el.addEventListener("click", function (e) {
-          if (e.target && e.target.classList.contains("pick")) return;
+          if (e.target && (e.target.classList.contains("pick") || e.target.closest(".quick-pick"))) return;
           showDetail(el.dataset.id);
         });
       });
@@ -273,6 +281,11 @@
           if (cb.checked) state.picked[id] = true; else delete state.picked[id];
           cb.closest(".card").classList.toggle("picked", cb.checked);
           updateSel();
+        });
+      });
+      Array.prototype.forEach.call(list.querySelectorAll(".quick-pick"), function (b) {
+        b.addEventListener("click", function (e) {
+          e.preventDefault(); e.stopPropagation(); jumpToPickerNotice(b.dataset.id);
         });
       });
       syncPickUI();
@@ -304,6 +317,7 @@
             (it.category ? '<span class="tag cat">' + esc(it.category) + "</span>" : "") +
             (plat === "poly" && it.notice_type_name ? '<span class="tag">' + esc(it.notice_type_name) + "</span>" : "") +
             '<span class="badge ' + (on ? "on" : "off") + '">' + (on ? "进行中" : "已截止") + "</span>") +
+        (plat === "zycg" ? '<button type="button" class="quick-pick" data-id="' + esc(it.id) + '">一键技术选型</button>' : "") +
       "</div>" +
     "</div>";
   }
@@ -321,10 +335,29 @@
       return;
     }
     $("d-body").innerHTML = '<div class="loading">加载中…</div>';
-    getJSON(pdata("detail/" + id + ".json")).then(function (d) {
-      $("d-body").innerHTML = plat === "zycg" ? detailZycg(d) : detailPoly(d);
+    // 平台取真实目标；选型助手内跳转时 plat=picker，但详情仍是央采公告。
+    var detailBase = plat === "poly" ? "data/poly/detail/" : "data/zycg/detail/";
+    getJSON(detailBase + id + ".json").then(function (d) {
+      $("d-body").innerHTML = detailBase.indexOf("poly") >= 0 ? detailPoly(d) : detailZycg(d);
     }).catch(function (e) {
       $("d-body").innerHTML = '<div class="empty">详情加载失败：' + esc(e.message) + "</div>";
+    });
+  }
+  function openZycgDetail(id) {
+    $("overlay").classList.add("show");
+    document.body.style.overflow = "hidden";
+    $("d-body").innerHTML = '<div class="loading">加载公告详情与技术要求…</div>';
+    getJSON("data/zycg/detail/" + id + ".json").then(function (d) {
+      $("d-body").innerHTML = detailZycg(d);
+    }).catch(function (e) {
+      $("d-body").innerHTML = '<div class="empty">详情加载失败：' + esc(e.message) + "</div>";
+    });
+  }
+  function bindZycgDetailLinks(root) {
+    (root || document).querySelectorAll(".notice-detail-link").forEach(function (b) {
+      b.addEventListener("click", function (e) {
+        e.preventDefault(); e.stopPropagation(); openZycgDetail(b.dataset.noticeId);
+      });
     });
   }
   function metaIt(k, v) { return '<div class="it"><div class="k">' + k + '</div><div class="v">' + v + "</div></div>"; }
@@ -348,8 +381,10 @@
     var on = d.is_end === 0;
     var m = money(d.budget_num);
     var rows = (d.products || []).map(function (p, i) {
+      var fullReq = p.technical_requirements_full || p.specification || "—";
       return "<tr><td>" + (i + 1) + "</td><td>" + esc(p.productName || "—") +
-        '</td><td class="spec">' + esc(p.specification || "—") +
+        '</td><td class="spec"><div class="source-badge">' + (p.requirements_source === "pdf" ? "PDF完整原文" : "接口字段") +
+        "</div>" + esc(fullReq) +
         "</td><td>" + esc(p.brands || "不限") + "</td><td>" + esc(p.models || "") +
         "</td><td>" + esc(p.enquiryNum != null ? p.enquiryNum : "") + " " + esc(p.unit || "") + "</td></tr>";
     }).join("");
@@ -378,7 +413,7 @@
           return '<span class="tag" style="margin:0 6px 6px 0">' + esc(b) + "</span>";
         }).join("") + "</div>" : "") +
       '<div class="d-actions">' + pdfBtn +
-        '<a class="btn ghost" href="http://mkt.zycg.gov.cn/mall-view/information/detail?noticeId=' + d.id + '" target="_blank">打开央采原页</a>' +
+        '<a class="btn ghost" href="http://mkt.zycg.gov.cn/mall-view/information/detail?noticeId=' + d.id + '" target="_blank" rel="noopener noreferrer">打开央采原页</a>' +
       "</div>";
   }
 
@@ -664,6 +699,12 @@
       picker.meta = d;
     });
   }
+  function ensureModelSpecs() {
+    if (picker.modelSpecs) return Promise.resolve();
+    return getJSON("data/model_specs.json").then(function (d) {
+      picker.modelSpecs = d.models || {};
+    }).catch(function () { picker.modelSpecs = {}; });
+  }
 
   function parseReq(text) {
     var t = String(text || "");
@@ -711,12 +752,265 @@
     return req;
   }
 
+  function normModel(s) { return String(s || "").toUpperCase().replace(/[^A-Z0-9]/g, ""); }
+  function canonicalBrand(s) {
+    s = String(s || "").toLowerCase();
+    if (/h3c|华三|新华三/.test(s)) return "H3C";
+    if (/华为|huawei/.test(s)) return "华为";
+    if (/锐捷|ruijie/.test(s)) return "锐捷";
+    if (/中兴|zte/.test(s)) return "中兴";
+    if (/迈普|maipu/.test(s)) return "迈普";
+    return String(s || "").trim();
+  }
+  function brandOfModel(model, fallback) {
+    var m = String(model || "").toUpperCase();
+    if (/^S57|^CE|^AR\d|^USG/.test(m)) return "华为";
+    if (/^S51|^S55|^MSR|^LS-/.test(m)) return "H3C";
+    if (/^RG-/.test(m)) return "锐捷";
+    return canonicalBrand(fallback || "");
+  }
+  function splitModels(s) {
+    var out = [];
+    String(s || "").split(/[,，;；、\n]+/).forEach(function (x) {
+      x = x.trim().replace(/^型号[:：]?\s*/, "");
+      if (x && out.indexOf(x) < 0) out.push(x);
+    });
+    return out;
+  }
+  function techProfile(text) {
+    var t = String(text || ""), out = [];
+    function add(key, label, hard) { if (!out.some(function (x) { return x.key === key; })) out.push({ key: key, label: label, hard: !!hard }); }
+    var m;
+    m = t.match(/(?:背板带宽|交换容量)[^\d]{0,8}(?:≥|不低于)?\s*([\d.]+)\s*(Tbps|Gbps)/i); if (m) add("backplane", "背板带宽≥" + m[1] + m[2], true);
+    m = t.match(/包转发率[^\d]{0,8}(?:≥|不低于)?\s*(?:最高)?\s*([\d.]+)\s*Mpps/i); if (m) add("forward", "包转发率≥" + m[1] + "Mpps", true);
+    m = t.match(/MAC地址表[^\d]{0,8}(?:≥|不低于)?\s*([\d.]+)\s*K/i); if (m) add("mac", "MAC表≥" + m[1] + "K", true);
+    m = t.match(/(?:≥|不少于|至少)?\s*(\d{1,3})\s*个?\s*(?:10\/100\/1000M|千兆|GE)[^，。；]{0,12}(?:电口|以太网)/i);
+    if (!m) m = t.match(/(?:≥|不少于|至少)?\s*(\d{1,3})\s*个?[^，。；]{0,8}(?:千兆电口|GE电口)/i);
+    if (m) add("ge", "千兆电口≥" + m[1], true);
+    m = t.match(/(?:≥|不少于|至少)?\s*(\d{1,2})\s*个?\s*(?:1G\/10G|10G|万兆)[^，。；]{0,15}(?:SFP\+?|光口)/i);
+    if (!m) m = t.match(/(?:1G\/10G|10G|万兆)[^，。；]{0,12}(?:SFP\+?|光口)\s*(?:≥|不少于|不低于|至少)\s*(\d{1,2})\s*个?/i);
+    if (m) add("uplink", "万兆光口≥" + m[1], true);
+    m = t.match(/实配\s*(\d{1,2})\s*个?\s*10G[^，。；]{0,16}(?:光模块|光接口模块)/i);
+    if (m) add("optics", "实配10G光模块×" + m[1], true);
+    if (/1U|高度\s*1U/i.test(t)) add("1u", "1U机架式", true);
+    if (/冗余供电|双电源/.test(t)) add("power_redundancy", "冗余供电", true);
+    if (/实配\s*(?:≥|不少于|至少)?\s*2\s*个[^，。；]*电源|(?:配置)?\s*2\s*个(?:模块化)?电源(?:模块)?|双电源/.test(t)) add("power_modules", "模块化电源≥2个", true);
+    if (/冗余风扇/.test(t)) add("fan", "冗余风扇", true);
+    if (/堆叠/.test(t)) { m = t.match(/堆叠[^\d]{0,8}(?:≥|不低于)?\s*(\d+)\s*台/); add("stack", "堆叠" + (m ? "≥" + m[1] + "台" : "支持"), true); }
+    if (/IPv6/i.test(t)) add("ipv6", "IPv6", false);
+    if (/4K\s*(?:个)?\s*VLAN|4096\s*(?:个)?\s*VLAN/i.test(t)) add("vlan", "4K VLAN", false);
+    if (/9216\s*(?:B|字节)/i.test(t)) add("jumbo", "9216B巨帧", false);
+    if (/STP|RSTP|MSTP/i.test(t)) add("stp", "STP/RSTP/MSTP", false);
+    if (/LACP/i.test(t)) add("lacp", "LACP", false);
+    if (/802\.1X/i.test(t)) add("dot1x", "802.1X", false);
+    if (/SNMP\s*v?2c|SNMP\s*v?3/i.test(t)) add("snmp", "SNMP v2c/v3", false);
+    if (/SSH/i.test(t)) add("ssh", "SSH管理", false);
+    return out;
+  }
+
+  // 商品属性统一字典：公告原文中的同义表达归一为固定属性编码/名称。
+  // 规则无法识别的原文也必须进入 raw.* 待核验项，禁止静默跳过。
+  var ATOMIC_ATTRIBUTE_RULES = [
+    ["dual_controller", "双主控", /双主控|≥\s*2\s*个主控|不少于\s*2\s*个主控/i],
+    ["hot_swap", "热插拔能力", /热插拔/i],
+    ["managed_device", "网管功能", /(?:^|[^带外])网管(?:交换机|路由器|功能)?(?:$|[^理口])/i],
+    ["ethernet_ports", "以太网电口数量", /电口\s*(?:≥|不少于|不低于|至少)\s*\d+\s*个?|(?:≥|不少于|不低于|至少)\s*\d+\s*个?[^，。；]*电口/i],
+    ["optical_module_required", "万兆光模块实配", /(?:配|配置|实配|标配)[^，。；]*万兆(?:多模|单模)?(?:光)?模块|并配万兆模块/i],
+    ["controller_count", "主控模块数量", /(?:配置|实配)?\s*\d+\s*个?主控(?:板|模块)?/i],
+    ["fan_count", "风扇模块数量", /(?:配置|实配)?\s*\d+\s*个?(?:独立模块化)?风扇(?:框|模块)?/i],
+    ["optical_modules", "光模块数量与规格", /(?:配置|实配|提供)[^，。；]*光模块/i],
+    ["stack_cable", "堆叠线缆配置", /\d+\s*(?:条|根)[^，。；]*堆叠线缆/i],
+    ["high_speed_ports", "高速光接口数量", /(?:10GE|25G|40\/100GE|40GE|100GE)[^，。；]*(?:端口|接口)\s*(?:≥|不少于|不低于|至少)\s*\d+/i],
+    ["expansion_slots", "扩展插槽数量", /扩展插槽\s*(?:≥|不少于|不低于|至少)?\s*\d+/i],
+    ["airflow", "设备散热风道", /端口侧进风|电源侧出风|散热流向/i],
+    ["power_watt", "电源模块功率", /电源模块功率\s*(?:≤|不高于)\s*\d+W/i],
+    ["arp_capacity", "ARP表容量", /ARP地址容量/i],
+    ["ipv4_route_capacity", "IPv4路由表容量", /IPv4路由表容量/i],
+    ["ipv6_route_capacity", "IPv6路由表容量", /IPv6路由表容量/i],
+    ["wireless_ac", "融合AC功能", /融合AC/i],
+    ["ap_capacity", "AP管理数量", /管理\s*(?:≥|不少于|不低于|至少)?\s*\d+\s*个?AP/i],
+    ["firewall_card", "防火墙业务插卡", /防火墙(?:业务)?插卡/i],
+    ["m_lag", "M-LAG二层转发", /M-?LAG/i],
+    ["gui_management", "图形化统一管理", /图形化界面管理|图形化操作/i],
+    ["config_delivery", "一键配置下发", /一键配置下发/i],
+    ["version_upgrade", "版本升级", /版本升级/i],
+    ["vxlan", "VXLAN隧道", /VXLAN\s*隧道/i],
+    ["hardware_warranty", "硬件维保年限", /\d+\s*年硬件维保/i],
+    ["fixed_interface", "固定接口形态", /固定接口交换机|固定端口交换机/i],
+    ["ac220", "220V交流供电", /220V\s*交流/i],
+    ["hot_swap", "接口模块热插拔", /接口模块热插拔|模块热插拔/i],
+    ["mac_learning", "MAC地址自动学习", /MAC地址自动学习/i],
+    ["mac_aging", "MAC地址老化", /MAC地址[^；。]*老化/i],
+    ["source_mac_filter", "源MAC地址过滤", /源MAC地址过滤/i],
+    ["acl", "访问控制列表ACL", /(?:支持|具备)?\s*ACL\b/i],
+    ["port_mirror", "端口流量镜像", /端口(?:流量)?镜像/i],
+    ["bpdu_protect", "BPDU保护", /BPDU保护/i],
+    ["root_protect", "根保护", /根保护/i],
+    ["loop_protect", "环路保护", /环路保护/i],
+    ["tc_bpdu_protect", "TC-BPDU保护", /TC-?BPDU保护/i],
+    ["multi_virtual_one", "多虚一虚拟化", /多虚一/i],
+    ["hot_patch", "在线热补丁", /热补丁|在线进行补丁升级/i],
+    ["user_levels", "用户分级管理", /用户分级管理/i],
+    ["encrypted_password", "密文口令保护", /密文口令保护/i],
+    ["arp_attack", "ARP攻击保护", /ARP协议?攻击保护/i],
+    ["arp_isolation", "ARP攻击端口隔离处理", /未受ARP攻击的端口[^；。]*不受影响/i],
+    ["port_security", "端口安全", /端口安全/i],
+    ["sticky_mac", "Sticky MAC", /Sticky\s*MAC/i],
+    ["mac_limit", "MAC地址学习数量限制", /MAC地址学习数(?:目|量)限制/i],
+    ["snmp_source_acl", "SNMP源地址访问限制", /SNMP源地址访问限制/i],
+    ["console", "Console管理", /Console口/i],
+    ["telnet", "Telnet管理", /Telnet/i],
+    ["oob_mgmt", "带外管理口", /带外管理口/i],
+    ["mgmt_acl", "管理地址访问控制", /管理地址[^；。]*访问控制/i],
+    ["ntp", "NTP时间同步", /NTP协议|\bNTP\b/i],
+    ["system_log", "系统日志", /系统日志/i],
+    ["operation_log", "用户操作日志", /用户操作日志/i],
+    ["syslog", "Syslog日志输出", /syslog/i],
+    ["hardware_alarm", "硬件异常告警", /硬件[^；。]*异常[^；。]*告警/i],
+    ["temperature_alarm", "温度异常告警", /温度[^；。]*异常[^；。]*告警/i],
+    ["power_alarm", "电源异常告警", /电源[^；。]*异常[^；。]*告警/i],
+    ["miit_test", "工信部入网检测", /工业和信息化部入网检测|工信部入网检测/i],
+    ["telecom_license", "电信设备进网许可", /电信设备进网许可/i],
+    ["cybersecurity_law", "符合网络安全法", /网络安全法/i]
+  ];
+  var PRODUCT_ATTR_ALIASES = {
+    "传输速率": "transmission_rate", "背板容量": "backplane", "交换容量": "backplane",
+    "包转发速率": "forward", "转发性能": "forward", "功能类别": "function_category",
+    "成像原理": "imaging_principle", "最大原稿尺寸": "max_original_size",
+    "支持功能": "supported_functions", "单面或自动双面打印": "duplex_print",
+    "打印速度": "print_speed", "打印分辨率": "print_resolution", "内存容量": "memory_capacity",
+    "端口数量": "port_count", "接口数量": "port_count", "电源数量": "power_modules",
+    "主控数量": "controller_count", "风扇数量": "fan_count", "扩展槽数量": "expansion_slots"
+  };
+  function parseProductAttributes(text) {
+    var out = [];
+    String(text || "").split(/[,，;；\n]+/).forEach(function (field, i) {
+      field = field.trim(); if (!field) return;
+      var m = field.match(/^([^:：]+)[:：](.*)$/);
+      var name = m ? m[1].trim() : "商品属性";
+      var value = m ? m[2].trim() : field;
+      var key = PRODUCT_ATTR_ALIASES[name] || ("product_attr." + (i + 1));
+      out.push({ key: key, label: name + "：" + value, hard: true, sectionNo: 0,
+        section: "商品属性要求", source: field, productAttribute: true });
+    });
+    return out;
+  }
+  function fullRequirements(text) {
+    var src = String(text || "").replace(/\u00a0/g, " ").replace(/\r/g, "");
+    var productAttrText = "", otherText = src;
+    var pa = src.indexOf("商品属性要求："), ot = src.indexOf("其他技术指标要求：");
+    if (pa >= 0) {
+      productAttrText = src.slice(pa + "商品属性要求：".length, ot > pa ? ot : src.length).trim();
+      otherText = ot > pa ? src.slice(ot + "其他技术指标要求：".length).trim() : "";
+    }
+    var sections = [], current = null;
+    otherText.split(/\n+/).forEach(function (line) {
+      line = line.trim(); if (!line) return;
+      var m = line.match(/^(\d+)[.、．]\s*([^：:]+?)要求[:：]\s*(.*)$/);
+      if (m) {
+        current = { no: Number(m[1]), name: m[2].trim() + "要求", body: m[3].trim() };
+        sections.push(current);
+      } else if (current) current.body += " " + line;
+      else { current = { no: sections.length + 1, name: "其他要求", body: line }; sections.push(current); }
+    });
+    var out = parseProductAttributes(productAttrText), rawSeq = 0;
+    var sourceFragments = out.length, coveredFragments = out.length;
+    // 无编号、短文本通常是商品属性摘要，逗号/顿号即属性边界；
+    // 编号式长公告中的逗号/顿号常用于协议或对象枚举，不能盲拆（如 SNMP V2C、V3；硬件、温度、电源告警）。
+    var compactSummary = sections.length === 1 && otherText.length <= 180 && !/^\s*\d+[.、．]/m.test(otherText);
+    sections.forEach(function (sec) {
+      var parts = sec.body.split(compactSummary ? /[；;。，、]+/ : /[；;。]+/)
+        .map(function (x) { return x.trim().replace(/^[,，、]+|[,，、]+$/g, ""); }).filter(Boolean);
+      var atomic = [];
+      parts.forEach(function (part) {
+        // 仅在出现新的独立谓语时再拆，枚举值（STP、RSTP、MSTP）保持同一条。
+        part.split(/，(?=(?:支持|实配|接口(?:不少于|不低于|≥)|高度|全局支持|可对|未受|供应商所投))/).forEach(function (x) {
+          x = x.trim(); if (x) atomic.push(x);
+        });
+      });
+      atomic.forEach(function (clause) {
+        sourceFragments++;
+        var matched = {}, hadMatch = false;
+        techProfile(clause).forEach(function (x) {
+          matched[x.key] = true; hadMatch = true;
+          out.push({ key: x.key, label: x.label, hard: true, sectionNo: sec.no, section: sec.name, source: clause });
+        });
+        ATOMIC_ATTRIBUTE_RULES.forEach(function (r) {
+          // 已识别千兆GE端口时，不再重复记录通用“以太网电口数量”；无速率信息时才用通用属性。
+          if (r[0] === "ethernet_ports" && matched.ge) return;
+          if (!matched[r[0]] && r[2].test(clause)) {
+            matched[r[0]] = true; hadMatch = true;
+            out.push({ key: r[0], label: r[1], hard: true, sectionNo: sec.no, section: sec.name, source: clause });
+          }
+        });
+        if (!Object.keys(matched).length) {
+          rawSeq++;
+          out.push({ key: "raw." + rawSeq, label: "未归类原始条款", hard: true,
+            sectionNo: sec.no, section: sec.name, source: clause });
+        }
+        if (hadMatch) coveredFragments++;
+      });
+    });
+    // 同一统一属性在多处出现时合并原文证据，不重复计入符合性表。
+    var unique = [], byKey = {};
+    out.forEach(function (x) {
+      if (!byKey[x.key]) { byKey[x.key] = x; unique.push(x); }
+      else if (byKey[x.key].source.indexOf(x.source) < 0) byKey[x.key].source += "；" + x.source;
+    });
+    unique.audit = { fragments: sourceFragments, covered: coveredFragments,
+      raw: unique.filter(function (x) { return x.key.indexOf("raw.") === 0; }).length,
+      coverage: sourceFragments ? Math.round(coveredFragments * 10000 / sourceFragments) / 100 : 0 };
+    return unique;
+  }
+  function modelTech(model) {
+    var m = String(model || "").toUpperCase(), f = [];
+    var p = m.match(/(?:^|[-])(?:S?)(\d{2})(?:GT|T|S).*?(\d{1,2})X/);
+    if (!p) p = m.match(/(48)(?:GT|T).*?(4)(?:XS|X)/);
+    if (p) { f.push({ key: "ge", label: p[1] + "GE电口（型号推断）" }); f.push({ key: "uplink", label: p[2] + "×10GE（型号推断）" }); }
+    else if (/52S/.test(m)) { f.push({ key: "ge", label: "48GE电口（52S系列）" }); f.push({ key: "uplink", label: "4×10GE（52S系列）" }); }
+    if (/PWR|POE/.test(m)) f.push({ key: "poe", label: "PoE型号" });
+    return f;
+  }
+  function findProductByModel(model) {
+    var n = normModel(model), exact = null;
+    (picker.products || []).some(function (p) {
+      var pn = normModel(p.model || p.name);
+      if (pn === n) { exact = p; return true; }
+      return false;
+    });
+    return exact;
+  }
+  function enrichReq(req, product) {
+    req.explicitModels = splitModels(product && product.models);
+    // 结构化解析使用 PDF 原文的版面换行归一副本；“规格/需求”展示始终使用 raw 原文。
+    var requirementText = (product && (product.technical_requirements_normalized || product.technical_requirements_full || product.specification)) || "";
+    req.tech = fullRequirements(requirementText);
+    req.audit = req.tech.audit || { fragments: 0, covered: 0, raw: 0, coverage: 0 };
+    if (!req.tech.length) {
+      req.tech = techProfile([product && product.specification, product && product.productName].join(" "));
+      req.audit = { fragments: req.tech.length, covered: req.tech.length, raw: 0, coverage: req.tech.length ? 100 : 0 };
+    }
+    req.explicitModels.forEach(function (m, i) {
+      var b = brandOfModel(m, req.brands[i] || "");
+      if (b && req.brands.indexOf(b) < 0) req.brands.push(b);
+    });
+    return req;
+  }
+
   function scoreProduct(p, req) {
-    var hay = ((p.brand || "") + " " + (p.name || "")).toLowerCase();
+    var hay = ((p.brand || "") + " " + (p.model || "") + " " + (p.name || "")).toLowerCase();
     var hits = [];
     var score = 0;
+    var pn = normModel(p.model || p.name);
+    (req.explicitModels || []).forEach(function (m) {
+      var rn = normModel(m);
+      if (pn === rn) { score += 140; hits.push("采购附件指定型号"); }
+      else if (rn && (pn.indexOf(rn) >= 0 || rn.indexOf(pn) >= 0)) { score += 90; hits.push("指定型号同系列"); }
+    });
     req.brands.forEach(function (b) {
-      if (hay.indexOf(b.toLowerCase()) >= 0) { score += 30; hits.push("品牌·" + b); }
+      if (canonicalBrand(hay) === canonicalBrand(b) || hay.indexOf(String(b).toLowerCase()) >= 0) {
+        score += 30; hits.push("品牌倾向·" + canonicalBrand(b));
+      }
     });
     PICK_CPU.forEach(function (c) {
       if (req.cpuFams.indexOf(c.fam) >= 0 && c.re.test(hay)) { score += 40; hits.push("CPU·" + c.fam); }
@@ -733,6 +1027,11 @@
     var kwHit = 0;
     req.keywords.forEach(function (k) {
       if (kwHit < 3 && hay.indexOf(k.toLowerCase()) >= 0) { kwHit++; score += 6; hits.push(k); }
+    });
+    var mt = modelTech(p.model || p.name);
+    (req.tech || []).forEach(function (need) {
+      var got = mt.filter(function (x) { return x.key === need.key; })[0];
+      if (got) { score += need.hard ? 18 : 8; hits.push(got.label); }
     });
     score += Math.min(p.deals || 0, 5) * 2;
     return { score: score, hits: hits };
@@ -770,15 +1069,77 @@
   function originalNoticeLink(id, label) {
     return '<button type="button" class="original-notice-link" data-notice-id="' + esc(id) + '">' + esc(label) + "</button>";
   }
+  // 央采 WAF 拦截带外部 Referer 的跨站访问（直接跳转官网会 403），
+  // 所以成交公告正文在服务端缓存进 data/mall_notices.json，站内弹层展示；
+  // 官网链接只作兜底，且用 rel=noreferrer 去掉 Referer 再打开。
+  function ensureMallNotices() {
+    if (picker.notices) return Promise.resolve();
+    return getJSON("data/mall_notices.json").then(function (d) {
+      picker.notices = d.notices || {};
+    }).catch(function () {
+      picker.notices = {};
+    });
+  }
+  function openMallNotice(id) {
+    ensureMallNotices().then(function () {
+      var d = (picker.notices || {})[String(id)];
+      if (!d) {
+        openOfficialNoReferrer(mallNoticeUrl(id));
+        return;
+      }
+      $("d-body").innerHTML = detailMallNotice(d);
+      $("overlay").classList.add("show");
+      document.body.style.overflow = "hidden";
+    });
+  }
+  function openOfficialNoReferrer(url) {
+    var a = document.createElement("a");
+    a.href = url;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+  function detailMallNotice(d) {
+    var body = (d.content || "").replace(/<script[\s\S]*?<\/script>/gi, "");
+    // 原公告正文里带相对链接（如 /mall-view/...），统一补全到央采官网域名并加 noreferrer，
+    // 避免在本站 404 或被 WAF 按外部 Referer 拦 403
+    body = body.replace(/<a\s+([^>]*)>/gi, function (m, attrs) {
+      var hm = attrs.match(/href\s*=\s*(?:"([^"]*)"|'([^']*)')/i);
+      if (!hm) return m;
+      var href = hm[1] != null ? hm[1] : hm[2];
+      if (/^(?:#|mailto:|javascript:)/i.test(href)) return m;
+      var abs;
+      if (/^https?:\/\//i.test(href)) abs = href;
+      else if (/^\/\//.test(href)) abs = "https:" + href;
+      else if (/^\//.test(href)) abs = "https://mkt.zycg.gov.cn" + href;
+      else abs = "https://mkt.zycg.gov.cn/" + href;
+      var newAttrs = attrs
+        .replace(/href\s*=\s*(?:"[^"]*"|'[^']*')/i, 'href="' + abs + '"')
+        .replace(/\s*target\s*=\s*(?:"[^"]*"|'[^']*')/gi, "")
+        .replace(/\s*rel\s*=\s*(?:"[^"]*"|'[^']*')/gi, "");
+      return '<a ' + newAttrs + ' target="_blank" rel="noopener noreferrer">';
+    });
+    if (!body) body = '<div class="empty">该公告正文暂缺（缓存里没有这条 id），请用下方按钮到官网查看</div>';
+    return '<div class="d-title">' + esc(d.title || "成交公告") + "</div>" +
+      '<div class="d-meta">' +
+        metaIt("公告编号", esc(d.code || "—")) +
+        metaIt("发布时间", esc(d.date || "—")) +
+        metaIt("数据来源", "央采电子卖场 · 成交公告（站内缓存正文）") +
+      "</div>" +
+      '<div class="d-sec">公告正文</div>' +
+      '<div class="notice-body">' + body + "</div>" +
+      (d.official ? '<div class="d-actions">' +
+        '<a class="btn ghost" href="' + esc(d.official) + '" target="_blank" rel="noopener noreferrer">在央采官网打开（若被网站拦截属对方风控）</a>' +
+      "</div>" : "");
+  }
   function bindOriginalNoticeLinks(root) {
     (root || document).querySelectorAll(".original-notice-link").forEach(function (b) {
       b.addEventListener("pointerdown", function (e) { e.stopPropagation(); });
       b.addEventListener("click", function (e) {
         e.preventDefault(); e.stopPropagation();
-        var url = mallNoticeUrl(b.dataset.noticeId);
-        var w = window.open(url, "_blank");
-        if (w) { try { w.opener = null; } catch (ignore) { } }
-        else window.location.href = url;
+        openMallNotice(b.dataset.noticeId);
       });
     });
   }
@@ -786,9 +1147,9 @@
   function pickCardHtml(x, unitBudget) {
     var p = x.p;
     var cls = x.s.score >= 60 ? "hit-good" : (x.s.score >= 30 ? "hit-mid" : "hit-low");
-    var price = (p.price_min === p.price_max)
+    var price = p.price_med == null ? '<span class="muted">暂无历史成交价</span>' : ((p.price_min === p.price_max)
       ? '<b>' + money(p.price_min) + "</b> 元"
-      : money(p.price_min) + " ~ " + money(p.price_max) + ' 元（中位 <b>' + money(p.price_med) + "</b>）";
+      : money(p.price_min) + " ~ " + money(p.price_max) + ' 元（中位 <b>' + money(p.price_med) + "</b>）");
     var budgetTag = "";
     if (unitBudget && p.price_med != null) {
       if (p.price_max <= unitBudget) budgetTag = ' <span class="budget-ok">✓ 预算内</span>';
@@ -798,10 +1159,11 @@
     var src = (p.notice_ids && p.notice_ids.length)
       ? " · " + originalNoticeLink(p.notice_ids[0], "查看原始成交公告") : "";
     return '<div class="pick-card ' + cls + '">' +
-      '<div class="pc-head"><span class="pc-name">' + esc(p.name) + "</span>" +
+      '<div class="pc-head"><span class="pc-name">' + esc(p.model || p.name) + "</span>" +
+      (p.model && p.name && p.name !== p.model ? '<span class="model-origin">' + esc(p.name) + "</span>" : "") +
       '<span class="tag cat">' + esc(p.category) + "</span>" +
       (p.brand ? '<span class="tag">' + esc(p.brand) + "</span>" : "") +
-      '<span class="badge on">成交 ' + p.deals + " 次</span></div>" +
+      (p.deals ? '<span class="badge on">成交 ' + p.deals + " 次</span>" : '<span class="badge off">待核价</span>') + "</div>" +
       '<div class="pc-price">成交单价：' + price + budgetTag + "</div>" +
       (x.s.hits.length ? '<div class="pc-hits">' +
         x.s.hits.map(function (h) { return '<span class="chip">' + esc(h) + "</span>"; }).join("") + "</div>" : "") +
@@ -883,6 +1245,55 @@
   };
   var NOTICE_CAT_ORDER = ["服务器", "网络", "视频会议", "存储", "打印机", "计算机", "网络安全"];
 
+  function jumpToPickerNotice(id) {
+    // 一次点击：切到选型助手→央采项目选择→定位公告→立即按技术参数出结果
+    setPlatform("picker", true);
+    document.querySelectorAll(".ptab").forEach(function (b) {
+      var on = b.dataset.pane === "notice";
+      b.classList.toggle("on", on);
+    });
+    ["text", "notice", "browse"].forEach(function (n) {
+      $("ppane-" + n).classList.toggle("hide", n !== "notice");
+    });
+    $("pick-results").innerHTML = "";
+    initPickerNoticeSelect().then(function () {
+      var found = (picker.zycgList || []).filter(function (x) { return String(x.id) === String(id); })[0];
+      if (found) {
+        $("pick-notice-key").value = "";
+        $("pick-notice-cat").value = found.category || "";
+        fillNoticeSelect();
+        $("pick-notice").value = String(id);
+        renderNoticeList(picker.noticeFiltered || []);
+        runPickNotice(String(id));
+        setTimeout(function () { $("ppane-notice").scrollIntoView({ behavior: "smooth", block: "start" }); }, 0);
+      } else {
+        $("pick-notice-analysis").innerHTML = '<div class="pick-empty">未找到该公告，请刷新数据后重试</div>';
+      }
+    });
+  }
+
+  function renderNoticeList(items) {
+    var list = $("pick-notice-list");
+    if (!list) return;
+    var selected = $("pick-notice").value;
+    list.innerHTML = items.length ? items.map(function (it) {
+      return '<button type="button" class="pnl-item' + (String(it.id) === String(selected) ? " on" : "") +
+        '" data-notice-id="' + esc(it.id) + '">' +
+        '<span class="pnl-title">' + esc(it.title || it.enquiry_name) + "</span>" +
+        '<span class="pnl-meta">' + esc(it.org_name || it.purchase_company || "-") +
+        (it.budget_num ? " · " + money(it.budget_num) + "元" : "") +
+        " · " + (it.is_end === 0 ? "进行中" : "已截止") + "</span>" +
+        '<span class="pnl-tags">' + esc(NOTICE_CAT_LABELS[it.category] || it.category || "") +
+        (it.brands ? " · " + esc(it.brands) : "") + "</span></button>";
+    }).join("") : '<div class="pick-empty">没有匹配公告</div>';
+    list.querySelectorAll(".pnl-item").forEach(function (b) {
+      b.addEventListener("click", function () {
+        $("pick-notice").value = b.dataset.noticeId;
+        runPickNotice(b.dataset.noticeId);
+      });
+    });
+  }
+
   function fillNoticeSelect() {
     var cat = $("pick-notice-cat").value;
     var kw = $("pick-notice-key") ? $("pick-notice-key").value.trim().toLowerCase() : "";
@@ -898,17 +1309,22 @@
       return String(b.publish_date || "").localeCompare(String(a.publish_date || ""));
     });
     if ($("pick-notice-count")) $("pick-notice-count").textContent = "找到 " + items.length + " 条公告";
+    var oldValue = $("pick-notice").value;
     $("pick-notice").innerHTML = items.length
       ? items.map(function (it) {
           return '<option value="' + it.id + '">' + (it.is_end === 0 ? "【进行中】" : "【已截止】") +
             esc(it.title || it.enquiry_name) + " · " + esc(it.org_name || it.purchase_company || "") + "</option>";
         }).join("")
       : '<option value="">该类型下暂无公告</option>';
+    if (oldValue && items.some(function (it) { return String(it.id) === String(oldValue); })) $("pick-notice").value = oldValue;
+    picker.noticeFiltered = items;
+    renderNoticeList(items);
   }
 
   function initPickerNoticeSelect() {
-    if ($("pick-notice").dataset.ready) return;
-    ensureZycgList().then(function () {
+    if ($("pick-notice").dataset.ready) return Promise.resolve();
+    if (picker.noticeInitPromise) return picker.noticeInitPromise;
+    picker.noticeInitPromise = ensureZycgList().then(function () {
       var counts = {};
       picker.zycgList.forEach(function (it) {
         var c = it.category || "";
@@ -922,6 +1338,9 @@
           return '<option value="' + esc(c) + '">' + esc(NOTICE_CAT_LABELS[c] || c) + "（" + counts[c] + "）</option>";
         }).join("");
       $("pick-notice-cat").addEventListener("change", fillNoticeSelect);
+      $("pick-notice").addEventListener("change", function () {
+        renderNoticeList(picker.noticeFiltered || []);
+      });
       if ($("pick-notice-key")) {
         $("pick-notice-key").addEventListener("input", fillNoticeSelect);
         $("pick-notice-key").addEventListener("keydown", function (e) {
@@ -930,48 +1349,160 @@
       }
       fillNoticeSelect();
       $("pick-notice").dataset.ready = "1";
-    });
+    }).finally(function () { picker.noticeInitPromise = null; });
+    return picker.noticeInitPromise;
   }
-  function runPickNotice() {
-    var id = $("pick-notice").value;
-    var box = $("pick-results");
+  function complianceOf(req, model, info) {
+    var evidence = {}, inferred = modelTech(model), facts = info.facts || [];
+    inferred.forEach(function (x) { evidence[x.key] = x.label; });
+    techProfile(facts.join(" ")).forEach(function (x) { evidence[x.key] = x.label; });
+    var rows = (req.tech || []).map(function (need) {
+      var ev = evidence[need.key];
+      return ev
+        ? { need: need, status: "pass", note: "规格证据：" + ev }
+        : { need: need, status: "verify", note: "公开资料未覆盖此项，不能判定满足，须取得厂商彩页/检测报告核验" };
+    });
+    return {
+      rows: rows,
+      pass: rows.filter(function (x) { return x.status === "pass"; }).length,
+      fail: rows.filter(function (x) { return x.status === "fail"; }).length,
+      verify: rows.filter(function (x) { return x.status === "verify"; }).length,
+      strict: rows.length > 0 && rows.every(function (x) { return x.status === "pass"; })
+    };
+  }
+  function complianceHtml(c) {
+    var summary = c.strict
+      ? '<span class="strict-ok">严格满足全部技术要求</span>'
+      : '<span class="strict-bad">未确认严格满足：满足 ' + c.pass + " 项，不满足 " + c.fail + " 项，待核验 " + c.verify + " 项</span>";
+    var rows = c.rows.map(function (x) {
+      var label = x.status === "pass" ? "满足" : (x.status === "fail" ? "不满足" : "待核验");
+      return '<tr><td><b>' + esc((x.need.sectionNo ? x.need.sectionNo + ". " : "") + (x.need.section || "技术要求")) +
+        '</b><br>' + esc(x.need.label) + '<br><span class="attr-code">' + esc(x.need.key) + '</span><br><span class="muted">原文：' +
+        esc(x.need.source || x.need.label) + '</span></td><td><span class="comp-' + x.status + '">' + label +
+        '</span></td><td>' + esc(x.note) + "</td></tr>";
+    }).join("");
+    var issues = c.rows.filter(function (x) { return x.status !== "pass"; });
+    return '<div class="compliance"><div class="compliance-summary">' + summary + "</div>" +
+      '<div class="compliance-table"><table><thead><tr><th>采购技术条款</th><th>结论</th><th>依据/备注</th></tr></thead><tbody>' +
+      rows + "</tbody></table></div>" +
+      (issues.length ? '<div class="nonmatch-note"><b>不满足/待核验备注：</b>' + issues.map(function (x) {
+        return esc((x.need.sectionNo ? x.need.sectionNo + "." : "") + x.need.label + "（原文：" + (x.need.source || x.need.label) + "）：" + x.note);
+      }).join("；") + "</div>" : "") + "</div>";
+  }
+  function explicitModelCard(model, req, unitBudget) {
+    var history = findProductByModel(model);
+    var info = (picker.modelSpecs || {})[model] || {};
+    var brand = info.brand || brandOfModel(model, history && history.brand);
+    var facts = info.facts || [];
+    var compliance = complianceOf(req, model, info);
+    var hit = compliance.rows.filter(function (x) { return x.status === "pass"; }).map(function (x) { return x.note.replace(/^规格证据：/, ""); });
+    var gaps = compliance.rows.filter(function (x) { return x.status !== "pass"; }).map(function (x) { return x.need.label; });
+    var price = history && history.price_med != null
+      ? "历史成交中位价 <b>" + money(history.price_med) + "</b> 元" : "机型库暂无成交价，需询价";
+    var budget = "";
+    if (unitBudget && history && history.price_med != null) {
+      budget = history.price_med <= unitBudget ? ' <span class="budget-ok">✓ 预算内</span>' : ' <span class="budget-bad">! 超预算</span>';
+    }
+    var source = info.source_url ? '<a href="' + esc(info.source_url) + '" target="_blank" rel="noopener noreferrer">' +
+      esc(info.source_label || "查看公开规格来源") + "</a>" : '<span class="muted">暂无公开来源链接</span>';
+    var historyLink = history && history.notice_ids && history.notice_ids.length
+      ? " · " + originalNoticeLink(history.notice_ids[0], "查看历史成交公告") : "";
+    return '<div class="pick-card hit-good model-rec"><div class="pc-head">' +
+      '<span class="pc-name">' + esc(model) + '</span><span class="tag">' + esc(brand || "品牌待核") +
+      '</span><span class="model-origin">采购附件指定型号</span>' +
+      (history ? '<span class="badge on">成交 ' + history.deals + " 次</span>" : '<span class="badge off">待核价</span>') + "</div>" +
+      '<div class="pc-price">' + price + budget + "</div>" +
+      '<div class="pc-hits"><span class="chip">附件型号直接命中</span>' +
+      hit.map(function (h) { return '<span class="chip">' + esc(h) + "</span>"; }).join("") + "</div>" +
+      (facts.length ? '<div class="pc-meta">公开资料：' + esc(facts.join("；")) + "</div>" : "") +
+      (gaps.length ? '<div class="model-gap">当前未确认满足：' + esc(gaps.join("、")) + "</div>" : "") +
+      complianceHtml(compliance) +
+      (info.source_note ? '<div class="model-gap">核验提示：' + esc(info.source_note) + "</div>" : "") +
+      '<div class="pc-meta">规格来源：' + source + historyLink + "</div></div>";
+  }
+  function tendencyHtml(req) {
+    var brands = {};
+    (req.explicitModels || []).forEach(function (m, i) {
+      var b = brandOfModel(m, req.brands[i] || "未知"); brands[b] = (brands[b] || 0) + 1;
+    });
+    var names = Object.keys(brands);
+    if (!names.length) names = (req.brands || []).map(canonicalBrand);
+    var text = names.length ? names.join("、") : "未发现明确品牌";
+    return '<div class="brand-tendency"><b>客户参数倾向：</b>' + esc(text) +
+      '。判断依据：采购附件中的品牌范围、指定型号及型号对应端口结构；附件明确型号的权重最高，历史成交仅作价格和落地证据。</div>';
+  }
+  function techHtml(req) {
+    var tech = req.tech || [], sections = {};
+    tech.forEach(function (x) { var k = x.sectionNo || 0; (sections[k] || (sections[k] = [])).push(x); });
+    var body = Object.keys(sections).sort(function (a, b) { return +a - +b; }).map(function (k) {
+      var xs = sections[k], title = (xs[0].sectionNo ? xs[0].sectionNo + ". " : "") + (xs[0].section || "技术要求");
+      return '<div class="req-section"><div class="req-section-title">' + esc(title) + "（" + xs.length + "项）</div>" +
+        xs.map(function (x) {
+          return '<div class="req-atomic"><span class="attr-name">' + esc(x.label) + '</span><span class="attr-code">' + esc(x.key) +
+            '</span><div class="attr-source">原文：' + esc(x.source || x.label) + "</div></div>";
+        }).join("") + "</div>";
+    }).join("");
+    var audit = req.audit || { fragments: tech.length, covered: tech.length, raw: 0, coverage: tech.length ? 100 : 0 };
+    var gate = audit.coverage === 100 && audit.raw === 0
+      ? '<span class="coverage-ok">归类覆盖率 100% · 未归类 0 · 允许生成推荐</span>'
+      : '<span class="coverage-bad">归类覆盖率 ' + audit.coverage + "% · 未归类保留 " + audit.raw + " · 已停止推荐（原文未删除，仅待补充属性字典）</span>";
+    return '<div class="tech-box"><div class="tech-title">采购附件全量技术要求（' + tech.length +
+      " 个统一属性；原文逐条保留，绝不删除）</div>" +
+      '<div class="coverage-audit">原文分片 ' + audit.fragments + " 条（全部保留）· 已归类 " + audit.covered +
+      " 条 · 未归类保留 " + audit.raw + " 条 · " + gate + "</div>" +
+      (body || '<span class="muted">未提取到技术条款，请打开公告详情人工核对附件</span>') + "</div>";
+  }
+  function runPickNotice(idArg) {
+    var id = (typeof idArg === "string" || typeof idArg === "number") ? String(idArg) : $("pick-notice").value;
+    var box = $("pick-notice-analysis");
     if (!id) { box.innerHTML = '<div class="pick-empty">请先选择一条公告</div>'; return; }
-    box.innerHTML = '<div class="loading">加载公告品目…</div>';
-    ensureProducts().then(function () {
-      return getJSON("data/zycg/detail/" + id + ".json");
-    }).then(function (d) {
-      var prods = d.products || [];
+    $("pick-notice").value = id;
+    renderNoticeList(picker.noticeFiltered || []);
+    box.innerHTML = '<div class="loading">正在读取采购附件并分析技术参数…</div>';
+    Promise.all([ensureProducts(), ensureModelSpecs(), getJSON("data/zycg/detail/" + id + ".json")]).then(function (all) {
+      var d = all[2], prods = d.products || [];
+      picker.currentNotice = d;
       var qtyTotal = prods.reduce(function (s, p) { return s + (Number(p.enquiryNum) || 0); }, 0);
       var unitBudget = (d.budget_num && qtyTotal > 0) ? Math.round(d.budget_num / qtyTotal) : null;
-      var html = '<div class="req-line">公告：<b>' + esc(d.title || d.enquiry_name) + "</b><br>" +
-        "采购公司：" + esc(d.purchase_company || d.org_name || "-") + " · 品类：" + esc(d.category || "-") +
-        (d.budget_num ? " · 总预算 " + money(d.budget_num) + " 元" : "") +
-        (unitBudget ? "（折合约 " + money(unitBudget) + " 元/台）" : "") +
-        (d.brands ? "<br>指定品牌：" + esc(d.brands) : "") + "</div>";
+      var pdfUrl = d.pdf_path || d.pdf_url || "";
+      var html = '<div class="analysis-head"><div class="title">' + esc(d.title || d.enquiry_name) + "</div>" +
+        '<div class="pnl-meta">采购公司：' + esc(d.purchase_company || d.org_name || "-") +
+        " · 品类：" + esc(d.category || "-") + (d.budget_num ? " · 总预算 " + money(d.budget_num) + " 元" : "") +
+        (unitBudget ? " · 折合约 " + money(unitBudget) + " 元/台" : "") + "</div>" +
+        '<div class="analysis-actions"><button type="button" class="notice-detail-link" data-notice-id="' + esc(id) +
+        '">查看公告详情 / 技术要求</button>' + (pdfUrl ? '<a class="btn ghost" href="' + esc(pdfUrl) +
+        '" target="_blank" rel="noopener noreferrer">打开采购需求附件 PDF</a>' : "") + "</div></div>";
       if (!prods.length) {
-        html += '<div class="pick-empty">该公告没有结构化品目明细，请切到「粘贴需求文本」直接贴参数</div>';
-        box.innerHTML = html;
-        return;
+        box.innerHTML = html + '<div class="pick-empty">该公告没有结构化品目明细，请打开公告附件或切到「粘贴需求文本」</div>';
+        bindZycgDetailLinks(box); return;
       }
       prods.forEach(function (p, idx) {
         var itemText = [p.productName, p.specification, p.brands, p.models].join(" ");
-        var req = parseReq(itemText);
+        var req = enrichReq(parseReq(itemText), p);
         if (!req.cats.length && d.category && PICK_IT_CATS.indexOf(d.category) >= 0) req.cats = [d.category];
-        if (!req.brands.length && d.brands) {
-          d.brands.split(",").forEach(function (b) {
-            b = b.trim();
-            if (b && b !== "不限" && PICK_BRANDS.indexOf(b) >= 0 && req.brands.indexOf(b) < 0) req.brands.push(b);
-          });
-        }
+        if (d.brands) d.brands.split(",").forEach(function (b) {
+          b = canonicalBrand(b.trim()); if (b && b !== "不限" && req.brands.indexOf(b) < 0) req.brands.push(b);
+        });
         var unitB = (Number(p.enquiryNum) && d.budget_num && prods.length === 1)
           ? Math.round(d.budget_num / Number(p.enquiryNum)) : unitBudget;
         html += '<div class="pick-group">品目 ' + (idx + 1) + "：" + esc(p.productName || "未命名") +
-          (p.enquiryNum ? " × " + esc(p.enquiryNum) + " " + esc(p.unit || "") : "") + "</div>";
-        html += '<div class="req-line">' + reqChipsHtml(req) +
-          (unitB ? " · 折合单价预算 ≈ " + money(unitB) + " 元" : "") + "</div>";
-        html += pickResultsHtml(req, pickPool(req), unitB);
+          (p.enquiryNum ? " × " + esc(p.enquiryNum) + " " + esc(p.unit || "") : "") + "</div>" +
+          tendencyHtml(req) + techHtml(req);
+        if ((req.audit || {}).coverage === 100 && (req.audit || {}).raw === 0) {
+          if (req.explicitModels.length) {
+            html += '<div class="pick-group">优先推荐：采购附件明确型号（按参数吻合度与历史成交证据排序）</div>' +
+              req.explicitModels.map(function (m) { return explicitModelCard(m, req, unitB); }).join("");
+          }
+          var pool = pickPool(req).filter(function (x) {
+            return req.explicitModels.indexOf(x.model) < 0;
+          });
+          html += '<div class="pick-group">同品牌 / 同品类备选（需逐项核验技术条款）</div>' + pickResultsHtml(req, pool, unitB);
+        } else {
+          html += '<div class="pick-empty">原文采集覆盖率不足100%，已停止推荐，避免因漏项造成错误选型。</div>';
+        }
       });
       box.innerHTML = html;
+      bindZycgDetailLinks(box);
       bindOriginalNoticeLinks(box);
     }).catch(function (e) {
       box.innerHTML = '<div class="pick-empty">公告详情加载失败：' + esc(e.message) + "</div>";
@@ -1049,13 +1580,14 @@
         });
         $("pick-results").innerHTML = "";
         if (b.dataset.pane === "browse") initBrowseFilters();
+        if (b.dataset.pane === "notice") renderNoticeList(picker.noticeFiltered || []);
       });
     });
     $("pick-run").addEventListener("click", runPickText);
     $("pick-text").addEventListener("keydown", function (e) {
       if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) runPickText();
     });
-    $("pick-notice-run").addEventListener("click", runPickNotice);
+    $("pick-notice-run").addEventListener("click", function () { runPickNotice(); });
     $("br-run").addEventListener("click", function () { picker.browsePage = 1; runBrowse(); });
     $("br-key").addEventListener("keydown", function (e) {
       if (e.key === "Enter") { picker.browsePage = 1; runBrowse(); }
@@ -1074,10 +1606,15 @@
   $("f-search").addEventListener("click", function () {
     state.filters = currentFilters(); state.page = 1; loadList();
   });
-  ["f-keyword", "f-brand"].forEach(function (id) {
+  ["f-keyword"].forEach(function (id) {
     if ($(id)) $(id).addEventListener("keydown", function (e) {
       if (e.key === "Enter") { state.filters = currentFilters(); state.page = 1; loadList(); }
     });
+  });
+  // 央采 / 保利：切换品类后立即筛选并跳到结果第 1 页，无需再点「查询」
+  $("f-category").addEventListener("change", function () {
+    if (plat !== "zycg" && plat !== "poly") return;
+    state.filters = currentFilters(); state.page = 1; loadList();
   });
   $("f-it").addEventListener("change", function () {
     state.filters = currentFilters(); state.page = 1; loadList();
@@ -1097,7 +1634,7 @@
   });
   document.addEventListener("click", function () { $("date-pop").classList.add("hide"); });
   $("f-reset").addEventListener("click", function () {
-    ["f-keyword", "f-brand", "f-date"].forEach(function (i) { if ($(i)) $(i).value = ""; });
+    ["f-keyword", "f-date"].forEach(function (i) { if ($(i)) $(i).value = ""; });
     if ($("f-date-btn")) $("f-date-btn").textContent = "选择公告日期";
     if ($("date-pop")) $("date-pop").classList.add("hide");
     $("f-category").value = ""; $("f-status").value = ""; $("f-it").checked = false;

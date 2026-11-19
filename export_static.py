@@ -81,8 +81,6 @@ HEADERS = """/index.html
 /ocr/*
   Cache-Control: public, max-age=604800
 
-/*
-  Cache-Control: public, max-age=600
 """
 
 
@@ -108,6 +106,14 @@ def export_zycg(out):
             products = json.loads(d.get("products_json") or "[]")
         except Exception:
             products = []
+        # 发布门禁：有品目的央采公告必须已由 PDF 回填完整技术要求。
+        # 任何一项不完整时立即阻断构建，禁止把缺失商品属性的站点发布出去。
+        incomplete = [p for p in products if not p.get("requirements_complete") or
+                      not p.get("technical_requirements_full")]
+        if incomplete:
+            names = ", ".join((p.get("productName") or "未命名") for p in incomplete[:3])
+            raise RuntimeError("公告 %s 技术要求未完整采集（%d项）：%s；请先运行 backfill_pdf_requirements.py --strict" %
+                               (d["id"], len(incomplete), names))
         raw[d["id"]] = {"d": d, "products": products,
                         "pdf_local": local if has_pdf else None,
                         "pdf_path": ("pdf/zycg/" + local) if has_pdf else None}
@@ -193,6 +199,32 @@ def export_zycg(out):
 
 
 # ---------------- 保利 ----------------
+def classify_poly(d):
+    """为保利项目补齐品类。数据源绝大多数 category 为空，按标题/采购范围/目录归类。"""
+    original = (d.get("category") or "").strip()
+    if original:
+        return original
+    text = " ".join(str(d.get(k) or "") for k in (
+        "title", "scope", "catalog", "project_type", "pattern", "organize_form"
+    ))
+    rules = [
+        ("信息技术", ("服务器", "台式机", "笔记本", "计算机", "网络设备", "交换机", "路由器",
+                    "信息系统", "软件", "硬件", "等保", "网络安全", "数据中心", "在网运行设备")),
+        ("工程施工", ("工程", "施工", "改造", "防水", "硬化", "拆除", "开采", "采剥", "爆破",
+                    "销纳", "矿区", "装修", "建设")),
+        ("运维维保", ("维保", "维修", "保养", "清洗", "运维")),
+        ("租赁服务", ("租赁", "车辆租用", "用车", "大巴车")),
+        ("宣传印刷", ("宣传", "推广", "图文", "印刷", "会刊", "海报", "新媒体")),
+        ("设备物资", ("设备", "系统", "仪器", "工服", "工作服", "服装", "耗材", "物资", "锅炉")),
+        ("专业服务", ("体检", "造价", "测评", "咨询", "采购代理", "劳务外包", "安保", "消防",
+                    "餐饮", "工作餐", "酒店", "住宿", "会务", "票务", "综合服务包")),
+    ]
+    for category, words in rules:
+        if any(w in text for w in words):
+            return category
+    return "其他服务"
+
+
 def export_poly(out):
     if not os.path.isfile(POLY_JSON):
         return 0, 0
@@ -217,7 +249,7 @@ def export_poly(out):
             "budget_num": money(d.get("budget")),
             "end_time": d.get("bid_end_time") or "",
             "publish_date": d.get("publish_date") or "",
-            "category": d.get("category") or "",
+            "category": classify_poly(d),
             "brands": "",
             "is_end": 0 if (d.get("bid_end_time") or "") >= now else 1,
             "enquiry_no": d.get("code") or "",
@@ -262,9 +294,14 @@ def export_poly(out):
     write_json(os.path.join(out, "data", "poly", "list.json"),
                {"total": len(items), "items": items})
     write_json(os.path.join(out, "data", "poly", "categories.json"), {"categories": cats})
+    date_counts_p = {}
+    for it in items:
+        dd = pday(it)
+        if dd:
+            date_counts_p[dd] = date_counts_p.get(dd, 0) + 1
     write_json(os.path.join(out, "data", "poly", "status.json"), {
         "platform": "poly", "total": len(items), "active": active,
-        "latest_date": latest,
+        "latest_date": latest, "available_dates": date_counts_p,
         "new_count": len(new_poly), "new_days": new_days_p,
         "last_fetch": data.get("updated_at") or "",
         "refresh_seconds": 3600,
@@ -326,6 +363,18 @@ def main():
     if os.path.isfile(products_src):
         write_json(os.path.join(out, "data", "products.json"),
                    json.load(open(products_src, encoding="utf-8")))
+    # 已核验的具体型号公开规格与来源（选型助手用）
+    specs_src = os.path.join(BASE, "data", "model_specs.json")
+    if os.path.isfile(specs_src):
+        write_json(os.path.join(out, "data", "model_specs.json"),
+                   json.load(open(specs_src, encoding="utf-8")))
+
+    # 成交公告原文缓存（站内弹层展示；央采 WAF 对外部 Referer 跨站跳转返回 403，
+    # 服务端缓存正文可离线可读，见 fetch_mall_notices.py）
+    notices_src = os.path.join(BASE, "data", "mall_notices.json")
+    if os.path.isfile(notices_src):
+        write_json(os.path.join(out, "data", "mall_notices.json"),
+                   json.load(open(notices_src, encoding="utf-8")))
 
     if BID_SECTION:
         out, manifest = export_bid(out)
