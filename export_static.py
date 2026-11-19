@@ -334,9 +334,16 @@ def export_rail(out):
     merged = list(data.get("items") or []) + list(mall_data.get("items") or [])
     now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     items = []
+    excluded_categories = {"一体机", "打印机", "打印扫描", "扫描仪"}
     for d in merged:
         end = d.get("bid_end_time") or ""
         is_mall = "mall.95306.cn" in (d.get("source") or "")
+        # 国铁模块只展示当前可参与的核心IT硬件；已截止及打印扫描/一体机不导出到前端。
+        if (d.get("category") or "") in excluded_categories:
+            continue
+        is_open = (is_mall and end and end >= now) or (not is_mall and d.get("is_open") == 1)
+        if not is_open:
+            continue
         # 两个来源 id 空间不同，加来源前缀避免碰撞；详情与卡片仍使用同一前缀ID。
         raw_id = str(d.get("uuid") or d.get("id") or "")
         source_prefix = "mall_" if "mall.95306.cn" in (d.get("source") or "") else "cg_"
@@ -349,7 +356,7 @@ def export_rail(out):
             "budget_num": money(d.get("estimated_amount") or d.get("budget_amount")),
             "end_time": "" if end in ("null", "None", None) else end, "publish_date": d.get("publish_date") or "",
             "category": d.get("category") or "其他", "brands": d.get("brand_scope") or "",
-            "is_end": 0 if ((is_mall and end and end >= now) or (not is_mall and d.get("is_open") == 1)) else 1,
+            "is_end": 0,
             "enquiry_no": d.get("project_code") or "", "has_pdf": False,
             "notice_type_name": d.get("notice_type_name") or "",
             "bid_type_name": d.get("bid_type_name") or "",
