@@ -404,6 +404,7 @@
 .rail-source-status a { color: #1571c4; text-decoration: underline; }
 .rail-ok { color: #087a48; background: #eaf8f1; border-radius: 5px; padding: 2px 7px; font-weight: 700; }
 .rail-wait { color: #9a6200; background: #fff4df; border-radius: 5px; padding: 2px 7px; font-weight: 700; }
+.rail-mall-tag { color: #9a6200 !important; background: #fff4df !important; border-color: #f0d6a2 !important; }
 .rail-access { margin: 12px 0; padding: 9px 12px; border: 1px solid #b9dccf; border-radius: 8px;
   background: #edf9f4; color: #087a48; font-size: 12px; font-weight: 700; }
 .rail-detail { max-height: 420px; overflow-y: auto; white-space: pre-wrap; line-height: 1.75; }

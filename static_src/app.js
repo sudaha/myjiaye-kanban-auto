@@ -326,7 +326,11 @@
     var checked = pickable && state.picked[it.id];
     var isBid = plat === "bid";
     var joined = participatable && recJoined(it.platform, it.id);
-    var railSource = plat === "rail" ? '<span class="tag">公开招投标·无需Key</span>' : "";
+    var railSource = plat === "rail"
+      ? (String(it.source_access || "").indexOf("UKey") >= 0
+          ? '<span class="tag rail-mall-tag">商城批采·UKey登录采集</span>'
+          : '<span class="tag">公开招投标·无需Key</span>')
+      : "";
     return '<div class="card' + (pickable ? " pickable" : "") + (checked ? " picked" : "") + '" data-id="' + it.id + '">' +
       (pickable ? '<input type="checkbox" class="pick" data-id="' + it.id + '"' + (checked ? " checked" : "") + ">" : "") +
       '<div class="row1">' +
