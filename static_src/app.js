@@ -1716,13 +1716,11 @@
   }
 
   function recUpdateBadge() {
-    recLoad();
     var n = recState.items.length;
     if ($("n-records")) $("n-records").textContent = n > 0 ? n : "-";
   }
 
   function renderRecords() {
-    recLoad();
     recUpdateBadge();
     var box = $("recordsbox");
     if (!box) return;
