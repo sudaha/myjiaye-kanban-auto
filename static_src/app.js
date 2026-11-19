@@ -4,7 +4,7 @@
   var PLAT_META = {
     zycg: { name: "央采电子询价", sub: "中央政府采购网 · 电子询价「需求公告」", hint: "可勾选多份公告，一键打包下载询价通知书 PDF" },
     poly: { name: "保利集团招标", sub: "中国保利集团招标采购供应链平台 · 全量项目", hint: "保利以工程/服务类为主，勾选「只看 IT 相关」筛硬件项目" },
-    rail: { name: "国铁商城批采", sub: "国铁商城批量采购专区 + 国铁采购平台相关招投标", hint: "公开招投标无需 Key；商城批量采购专区需国铁 SSO 登录后才能采集" },
+    rail: { name: "国铁商城批采", sub: "国铁商城批量采购专区 + 国铁采购平台相关招投标", hint: "可切换查看两个来源的项目公告" },
     bid: { name: "招标公告·新源", sub: "央采主站（招标/征求/更正）+ 中国政府采购网（中央/地方）· 已筛 IT 硬件", hint: "点开卡片跳转原公告页查看采购人与预算；关键词/日期筛选可用" },
     docs: { name: "商务单证", sub: "报价单 / 货物签收单 · 整块粘贴信息，一键生成下载", hint: "选择报价单或货物签收单，整块粘贴信息后生成正式文件；支持 PDF / Word / Excel 三种版本（数据不上传）" },
     picker: { name: "选型助手", sub: "基于央采卖场真实成交记录建库 · 需求一键选型 + 成交价参考", hint: "粘贴需求文本或挑一条公告，按品类/CPU/品牌匹配机型库（含真实成交价带）" },
@@ -16,7 +16,7 @@
     return h === "poly" || h === "rail" || h === "picker" || h === "docs" || h === "records" ? h : "zycg";
   }
   var plat = platFromHash();
-  var state = { page: 1, pageSize: 20, total: 0, filters: {}, items: [], loaded: false, picked: {}, availableDates: {}, dateMonth: null };
+  var state = { page: 1, pageSize: 20, total: 0, filters: {}, items: [], loaded: false, picked: {}, availableDates: {}, dateMonth: null, railSource: "" };
   var picker = {
     products: null,          // data/products.json 的 products 数组
     meta: null,              // 库元信息（updated_at / product_count）
@@ -244,6 +244,7 @@
       if (hay.indexOf(kw) < 0) return false;
     }
     if (f.category && it.category !== f.category) return false;
+    if (plat === "rail" && state.railSource && String(it.id || "").indexOf(state.railSource) !== 0) return false;
     if (f.brand && String(it.brands || "").toLowerCase().indexOf(f.brand.toLowerCase()) < 0) return false;
     // 按发布日期（平台上架日）精确选某一天；无上架日的旧数据退回标书落款日
     if (f.date && String(it.pub_date || it.publish_date || "").slice(0, 10) !== f.date) return false;
@@ -258,6 +259,13 @@
     return getJSON(pdata("list.json")).then(function (d) {
       state.items = d.items || [];
       state.loaded = true;
+      if (plat === "rail") {
+        var mallN = state.items.filter(function (it) { return String(it.id || "").indexOf("mall_") === 0; }).length;
+        var cgN = state.items.filter(function (it) { return String(it.id || "").indexOf("cg_") === 0; }).length;
+        if ($("rail-source-all")) $("rail-source-all").textContent = state.items.length;
+        if ($("rail-source-cg")) $("rail-source-cg").textContent = cgN;
+        if ($("rail-source-mall")) $("rail-source-mall").textContent = mallN;
+      }
       if (plat === "zycg" || plat === "poly" || plat === "rail") initAvailableDates();
     });
   }
@@ -327,9 +335,9 @@
     var isBid = plat === "bid";
     var joined = participatable && recJoined(it.platform, it.id);
     var railSource = plat === "rail"
-      ? (String(it.source_access || "").indexOf("UKey") >= 0
-          ? '<span class="tag rail-mall-tag">商城批采·UKey登录采集</span>'
-          : '<span class="tag">公开招投标·无需Key</span>')
+      ? (String(it.id || "").indexOf("mall_") === 0
+          ? '<span class="tag rail-mall-tag">国铁商城批量采购专区</span>'
+          : '<span class="tag">国铁采购平台公开招投标</span>')
       : "";
     return '<div class="card' + (pickable ? " pickable" : "") + (checked ? " picked" : "") + '" data-id="' + it.id + '">' +
       (pickable ? '<input type="checkbox" class="pick" data-id="' + it.id + '"' + (checked ? " checked" : "") + ">" : "") +
@@ -498,7 +506,8 @@
         metaIt("品类", esc(d.category || "未分类")) +
         metaIt("状态", '<span class="badge ' + (on ? "on" : "off") + '">' + (on ? "进行中" : "已截止") + "</span>") +
       "</div>" +
-      '<div class="rail-access">' + esc(d.source_access || "公开公告无需 Key；附件需登录") + "</div>" +
+      '<div class="d-sec">项目来源</div><div class="scope-box">' +
+        (String(d.id || "").indexOf("mall_") === 0 ? "国铁商城批量采购专区" : "国铁采购平台公开招投标") + "</div>" +
       '<div class="d-sec">品牌适配判断</div><div class="scope-box">' + esc(brand) + "</div>" +
       '<div class="d-sec">公告正文</div><div class="scope-box rail-detail">' + esc(d.detail_text || d.digest || "正文待补采") + "</div>" +
       '<div class="d-sec">附件</div><div class="scope-box muted">' + esc(d.attachment_status || "附件下载需登录国铁采购平台") + "</div>" +
@@ -1932,6 +1941,14 @@
   window.addEventListener("hashchange", function () {
     var p = platFromHash();
     if (p !== plat) setPlatform(p, false);
+  });
+  Array.prototype.forEach.call(document.querySelectorAll(".rail-source-btn"), function (b) {
+    b.addEventListener("click", function () {
+      state.railSource = b.dataset.source || "";
+      state.page = 1;
+      document.querySelectorAll(".rail-source-btn").forEach(function (x) { x.classList.toggle("on", x === b); });
+      loadList();
+    });
   });
   $("f-search").addEventListener("click", function () {
     state.filters = currentFilters(); state.page = 1; loadList();
