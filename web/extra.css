@@ -395,7 +395,21 @@
 .rec-cancel { border: 1px solid #d97706; border-radius: 7px; background: #fff; color: #d97706; cursor: pointer; padding: 5px 12px; font: inherit; font-size: 12px; font-weight: 700; }
 .rec-cancel:hover { background: #d97706; color: #fff; }
 
+/* 国铁商城批采：公开源与登录受限源提示 */
+.rail-source-status { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0 0 12px; }
+.rail-source-status.hide { display: none; }
+.rail-source-status > div { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 10px 12px;
+  border: 1px solid var(--line); border-radius: 9px; background: #fff; font-size: 12px; }
+.rail-source-status b { color: #1a2333; }
+.rail-source-status a { color: #1571c4; text-decoration: underline; }
+.rail-ok { color: #087a48; background: #eaf8f1; border-radius: 5px; padding: 2px 7px; font-weight: 700; }
+.rail-wait { color: #9a6200; background: #fff4df; border-radius: 5px; padding: 2px 7px; font-weight: 700; }
+.rail-access { margin: 12px 0; padding: 9px 12px; border: 1px solid #b9dccf; border-radius: 8px;
+  background: #edf9f4; color: #087a48; font-size: 12px; font-weight: 700; }
+.rail-detail { max-height: 420px; overflow-y: auto; white-space: pre-wrap; line-height: 1.75; }
+
 @media (max-width: 640px) {
+  .rail-source-status { grid-template-columns: 1fr; }
   .rec-stats { grid-template-columns: repeat(2, 1fr); }
   .rec-cfg input { width: 120px; }
   .rec-filters select { flex: 1 1 auto; }

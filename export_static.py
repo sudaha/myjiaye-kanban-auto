@@ -23,6 +23,7 @@ DB_FILE = os.path.join(BASE, "data", "board.db")
 ZYCG_PDF = os.path.join(BASE, "data", "pdfs")
 POLY_JSON = os.path.join(BASE, "data", "poly_items.json")
 POLY_PDF = os.path.join(BASE, "data", "poly_pdfs")
+RAIL_JSON = os.path.join(BASE, "data", "rail_items.json")
 WEB = os.path.join(BASE, "web")
 STATIC_SRC = os.path.join(BASE, "static_src")
 
@@ -318,6 +319,79 @@ def export_poly(out):
     return len(items), n
 
 
+# ---------------- 国铁商城批采 / 国铁采购平台 ----------------
+def export_rail(out):
+    data = {"items": [], "updated_at": "", "source_status": {}}
+    if os.path.isfile(RAIL_JSON):
+        with open(RAIL_JSON, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    # 合并已登录UKey/SSO后抓到的国铁商城批量采购专区数据。
+    mall_path = os.path.join(BASE, "data", "rail_mall_items.json")
+    mall_data = {"items": [], "updated_at": ""}
+    if os.path.isfile(mall_path):
+        with open(mall_path, "r", encoding="utf-8") as f:
+            mall_data = json.load(f)
+    merged = list(data.get("items") or []) + list(mall_data.get("items") or [])
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    items = []
+    for d in merged:
+        end = d.get("bid_end_time") or ""
+        is_mall = "mall.95306.cn" in (d.get("source") or "")
+        # 两个来源 id 空间不同，加来源前缀避免碰撞；详情与卡片仍使用同一前缀ID。
+        raw_id = str(d.get("uuid") or d.get("id") or "")
+        source_prefix = "mall_" if "mall.95306.cn" in (d.get("source") or "") else "cg_"
+        rid = source_prefix + raw_id
+        it = {
+            "id": rid, "source_id": raw_id, "platform": "rail",
+            "title": d.get("title") or "", "enquiry_name": d.get("title") or "",
+            "org_name": d.get("buyer") or "国铁采购单位（正文待识别）", "purchase_company": d.get("buyer") or "国铁采购单位（正文待识别）",
+            "budget_amount": money(d.get("estimated_amount") or d.get("budget_amount")),
+            "budget_num": money(d.get("estimated_amount") or d.get("budget_amount")),
+            "end_time": "" if end in ("null", "None", None) else end, "publish_date": d.get("publish_date") or "",
+            "category": d.get("category") or "其他", "brands": d.get("brand_scope") or "",
+            "is_end": 0 if ((is_mall and end and end >= now) or (not is_mall and d.get("is_open") == 1)) else 1,
+            "enquiry_no": d.get("project_code") or "", "has_pdf": False,
+            "notice_type_name": d.get("notice_type_name") or "",
+            "bid_type_name": d.get("bid_type_name") or "",
+            "source": d.get("source") or "国铁采购平台",
+            "source_access": d.get("source_access") or "",
+        }
+        if it["id"]:
+            items.append(it)
+            write_json(os.path.join(out, "data", "rail", "detail", it["id"] + ".json"), dict(
+                it, detail_text=d.get("detail_text") or d.get("digest") or "",
+                digest=d.get("digest") or "", brand_scope=d.get("brand_scope") or "",
+                matched_keywords=d.get("matched_keywords") or [],
+                project_type_name=d.get("project_type_name") or "",
+                source_url=d.get("detail_url") or "",
+                attachment_status=("商城批采详情已在登录态采集；附件以源站为准" if is_mall else "附件下载需登录国铁采购平台"),
+                mall_category=d.get("mall_category") or "",
+                brand_name_list=d.get("brand_name_list") or [],
+                rounds=d.get("rounds"), attachments=d.get("attachments") or [],
+            ))
+    items.sort(key=lambda x: (x["publish_date"], x["id"]), reverse=True)
+    cats = sorted({x["category"] for x in items if x["category"]})
+    active = sum(1 for x in items if x["is_end"] == 0)
+    latest = max([x["publish_date"] for x in items if x["publish_date"]] or [""])
+    date_counts = {}
+    for x in items:
+        dd = (x["publish_date"] or "")[:10]
+        if dd:
+            date_counts[dd] = date_counts.get(dd, 0) + 1
+    write_json(os.path.join(out, "data", "rail", "list.json"), {"total": len(items), "items": items})
+    write_json(os.path.join(out, "data", "rail", "categories.json"), {"categories": cats})
+    write_json(os.path.join(out, "data", "rail", "status.json"), {
+        "platform": "rail", "total": len(items), "active": active,
+        "latest_date": latest, "available_dates": date_counts,
+        "new_count": 0, "new_days": [], "last_fetch": max(data.get("updated_at") or "", mall_data.get("updated_at") or ""),
+        "source_status": {
+            "cg95306": "公开可采集：无需key、无需登录；附件下载需登录",
+            "mall95306_batch": "已用UKey/SSO登录态采集：无需API key；登录失效时沿用上次数据",
+        }, "refresh_seconds": 86400,
+    })
+    return len(items), 0
+
+
 def main():
     out = sys.argv[1] if len(sys.argv) > 1 else os.path.join(BASE, "dist")
     if os.path.isdir(out):
@@ -326,6 +400,7 @@ def main():
 
     n_zycg, p_zycg = export_zycg(out)
     n_poly, p_poly = export_poly(out)
+    n_rail, p_rail = export_rail(out)
 
     with open(os.path.join(out, "index.html"), "w", encoding="utf-8", newline="\n") as f:
         f.write(build_index_html())
@@ -392,6 +467,7 @@ def main():
     print("输出目录 : %s" % out)
     print("央采     : %d 条公告 / %d 份 PDF" % (n_zycg, p_zycg))
     print("保利     : %d 个项目 / %d 份 PDF" % (n_poly, p_poly))
+    print("国铁批采 : %d 个项目（公开公告；商城批采需登录）" % n_rail)
     print("文件总数 : %d，总体积 %.2f MB" % (len(manifest), total_size / 1048576.0))
 
 

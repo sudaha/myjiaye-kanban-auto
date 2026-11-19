@@ -4,6 +4,7 @@
   var PLAT_META = {
     zycg: { name: "央采电子询价", sub: "中央政府采购网 · 电子询价「需求公告」", hint: "可勾选多份公告，一键打包下载询价通知书 PDF" },
     poly: { name: "保利集团招标", sub: "中国保利集团招标采购供应链平台 · 全量项目", hint: "保利以工程/服务类为主，勾选「只看 IT 相关」筛硬件项目" },
+    rail: { name: "国铁商城批采", sub: "国铁商城批量采购专区 + 国铁采购平台相关招投标", hint: "公开招投标无需 Key；商城批量采购专区需国铁 SSO 登录后才能采集" },
     bid: { name: "招标公告·新源", sub: "央采主站（招标/征求/更正）+ 中国政府采购网（中央/地方）· 已筛 IT 硬件", hint: "点开卡片跳转原公告页查看采购人与预算；关键词/日期筛选可用" },
     docs: { name: "商务单证", sub: "报价单 / 货物签收单 · 整块粘贴信息，一键生成下载", hint: "选择报价单或货物签收单，整块粘贴信息后生成正式文件；支持 PDF / Word / Excel 三种版本（数据不上传）" },
     picker: { name: "选型助手", sub: "基于央采卖场真实成交记录建库 · 需求一键选型 + 成交价参考", hint: "粘贴需求文本或挑一条公告，按品类/CPU/品牌匹配机型库（含真实成交价带）" },
@@ -12,7 +13,7 @@
   function platFromHash() {
     var h = (location.hash || "").replace("#", "");
     // bid（招标公告·新源）2026-11-17 应用户要求暂时下线，#bid 回退到央采
-    return h === "poly" || h === "picker" || h === "docs" || h === "records" ? h : "zycg";
+    return h === "poly" || h === "rail" || h === "picker" || h === "docs" || h === "records" ? h : "zycg";
   }
   var plat = platFromHash();
   var state = { page: 1, pageSize: 20, total: 0, filters: {}, items: [], loaded: false, picked: {}, availableDates: {}, dateMonth: null };
@@ -44,9 +45,11 @@
     var m = money(it.budget_num);
     return m ? m + " 元" : "—";
   }
+  var DATA_V = (document.currentScript && (document.currentScript.src.match(/[?&]v=([^&]+)/) || [])[1]) || Date.now();
   function getJSON(url) {
-    // 用 no-store 而非 no-cache：本站 CDN 对条件重验证请求会偶发无限挂起（首屏卡“加载中”）。
-    return fetch(url, { cache: "no-store" }).then(function (r) {
+    // no-store + 构建版本参数：避免 CDN/浏览器沿用部署前旧 JSON（例如国铁62条旧快照）。
+    var sep = url.indexOf("?") >= 0 ? "&" : "?";
+    return fetch(url + sep + "v=" + encodeURIComponent(DATA_V), { cache: "no-store" }).then(function (r) {
       if (!r.ok) throw new Error("HTTP " + r.status);
       return r.json();
     });
@@ -67,10 +70,11 @@
     var isRecords = p === "records";
     var noList = isPicker || isDocs || isRecords;
     $("filterbar").classList.toggle("hide", noList);
+    if ($("rail-source-status")) $("rail-source-status").classList.toggle("hide", p !== "rail");
     $("f-it-wrap").classList.toggle("hide", p !== "poly");
     $("batchbar").classList.toggle("hide", p !== "zycg" && p !== "poly");
     if ($("btn-zip")) $("btn-zip").textContent = p === "poly" ? "⬇ 打包下载选中项目资料" : "⬇ 打包下载选中 PDF";
-    if ($("notice-date-picker")) $("notice-date-picker").classList.toggle("hide", p !== "zycg" && p !== "poly");
+    if ($("notice-date-picker")) $("notice-date-picker").classList.toggle("hide", p !== "zycg" && p !== "poly" && p !== "rail");
     $("pickerbox").classList.toggle("hide", !isPicker);
     if ($("docsbox")) $("docsbox").classList.toggle("hide", !isDocs);
     if ($("recordsbox")) $("recordsbox").classList.toggle("hide", !isRecords);
@@ -148,7 +152,7 @@
     }).catch(function () { });
   }
   function loadCategoryBadges() {
-      ["zycg", "poly"].forEach(function (p) {
+      ["zycg", "poly", "rail"].forEach(function (p) {
       getJSON("data/" + p + "/status.json").then(function (s) {
         $("n-" + p).textContent = s.total;
       }).catch(function () { });
@@ -254,7 +258,7 @@
     return getJSON(pdata("list.json")).then(function (d) {
       state.items = d.items || [];
       state.loaded = true;
-      if (plat === "zycg" || plat === "poly") initAvailableDates();
+      if (plat === "zycg" || plat === "poly" || plat === "rail") initAvailableDates();
     });
   }
 
@@ -318,9 +322,11 @@
   function cardHtml(it) {
     var on = it.is_end === 0;
     var pickable = plat === "zycg" || plat === "poly";
+    var participatable = pickable || plat === "rail";
     var checked = pickable && state.picked[it.id];
     var isBid = plat === "bid";
-    var joined = pickable && recJoined(it.platform, it.id);
+    var joined = participatable && recJoined(it.platform, it.id);
+    var railSource = plat === "rail" ? '<span class="tag">公开招投标·无需Key</span>' : "";
     return '<div class="card' + (pickable ? " pickable" : "") + (checked ? " picked" : "") + '" data-id="' + it.id + '">' +
       (pickable ? '<input type="checkbox" class="pick" data-id="' + it.id + '"' + (checked ? " checked" : "") + ">" : "") +
       '<div class="row1">' +
@@ -335,12 +341,13 @@
           ? '<span class="tag cat">' + esc(it.source || "") + "</span>" +
             (it.notice_type ? '<span class="tag">' + esc(it.notice_type) + "</span>" : "") +
             (it.region ? '<span class="tag">' + esc(it.region) + "</span>" : "")
-          : '<span><b>' + (plat === "zycg" ? "投标截止" : "截止") + '</b> ' + esc((it.end_time || "—").slice(0, 16)) + "</span>" +
+          : '<span><b>' + (plat === "zycg" ? "投标截止" : "截止") + '</b> ' + esc((it.end_time && it.end_time !== "null" ? it.end_time : "未公示").slice(0, 16)) + "</span>" +
             (it.category ? '<span class="tag cat">' + esc(it.category) + "</span>" : "") +
-            (plat === "poly" && it.notice_type_name ? '<span class="tag">' + esc(it.notice_type_name) + "</span>" : "") +
+            ((plat === "poly" || plat === "rail") && it.notice_type_name ? '<span class="tag">' + esc(it.notice_type_name) + "</span>" : "") +
+            railSource +
             '<span class="badge ' + (on ? "on" : "off") + '">' + (on ? "进行中" : "已截止") + "</span>" +
             (joined ? '<span class="join-tag">已参与投标</span>' : "")) +
-        (pickable
+        (participatable
           ? '<button type="button" class="join-btn' + (joined ? " joined" : "") + '" data-id="' + esc(it.id) + '" title="' + (joined ? "点击取消参与" : "点击参与投标") + '">' + (joined ? "取消参与" : "＋ 参与投标") + "</button>" : "") +
         (plat === "zycg" ? '<button type="button" class="quick-pick" data-id="' + esc(it.id) + '">一键技术选型</button>' : "") +
       "</div>" +
@@ -361,9 +368,9 @@
     }
     $("d-body").innerHTML = '<div class="loading">加载中…</div>';
     // 平台取真实目标；选型助手内跳转时 plat=picker，但详情仍是央采公告。
-    var detailBase = plat === "poly" ? "data/poly/detail/" : "data/zycg/detail/";
+    var detailBase = plat === "poly" ? "data/poly/detail/" : (plat === "rail" ? "data/rail/detail/" : "data/zycg/detail/");
     getJSON(detailBase + id + ".json").then(function (d) {
-      $("d-body").innerHTML = detailBase.indexOf("poly") >= 0 ? detailPoly(d) : detailZycg(d);
+      $("d-body").innerHTML = detailBase.indexOf("poly") >= 0 ? detailPoly(d) : (detailBase.indexOf("rail") >= 0 ? detailRail(d) : detailZycg(d));
     }).catch(function (e) {
       $("d-body").innerHTML = '<div class="empty">详情加载失败：' + esc(e.message) + "</div>";
     });
@@ -471,6 +478,28 @@
           (d.contact_phone ? "　" + esc(d.contact_phone) : "") + "</div>" : "") +
       (atts ? '<div class="d-sec">公告附件</div><ul class="att-list">' + atts + "</ul>" : "") +
       '<div class="d-actions"><a class="btn primary" href="' + esc(d.source_url) + '" target="_blank">打开保利原页</a></div>';
+  }
+
+  function detailRail(d) {
+    var on = d.is_end === 0;
+    var brand = d.brand_scope || d.brands || "附件需登录核验品牌要求";
+    return '<div class="d-title">' + esc(d.title) + "</div>" +
+      '<div class="d-meta">' +
+        metaIt("采购单位", esc(d.purchase_company || d.org_name || "未从正文识别")) +
+        metaIt("项目编号", esc(d.enquiry_no || "—")) +
+        metaIt("公告类型", esc(d.notice_type_name || "—")) +
+        metaIt("采购方式", esc(d.bid_type_name || "—")) +
+        metaIt("发布日期", esc(d.publish_date || "—")) +
+        metaIt("投标截止", esc((d.end_time && d.end_time !== "null" ? d.end_time : "未公示").slice(0, 16))) +
+        metaIt("品类", esc(d.category || "未分类")) +
+        metaIt("状态", '<span class="badge ' + (on ? "on" : "off") + '">' + (on ? "进行中" : "已截止") + "</span>") +
+      "</div>" +
+      '<div class="rail-access">' + esc(d.source_access || "公开公告无需 Key；附件需登录") + "</div>" +
+      '<div class="d-sec">品牌适配判断</div><div class="scope-box">' + esc(brand) + "</div>" +
+      '<div class="d-sec">公告正文</div><div class="scope-box rail-detail">' + esc(d.detail_text || d.digest || "正文待补采") + "</div>" +
+      '<div class="d-sec">附件</div><div class="scope-box muted">' + esc(d.attachment_status || "附件下载需登录国铁采购平台") + "</div>" +
+      '<div class="d-actions"><a class="btn primary" href="' + esc(d.source_url) + '" target="_blank" rel="noopener noreferrer">打开国铁原公告</a>' +
+      '<a class="btn ghost" href="https://mall.95306.cn/mall-view/negotiationArea/home" target="_blank" rel="noopener noreferrer">登录国铁商城批量采购专区</a></div>';
   }
 
   function closeDetail() {
@@ -1789,7 +1818,7 @@
           var resBadge = res === "win" ? '<span class="rec-badge win">我方中标</span>'
             : res === "lose" ? '<span class="rec-badge lose">未中标</span>'
             : '<span class="rec-badge pending">待出结果</span>';
-          var platName = r.platform === "zycg" ? "央采" : "保利";
+          var platName = r.platform === "zycg" ? "央采" : (r.platform === "rail" ? "国铁" : "保利");
           var moneyTxt = r.budget_num != null ? "预算 " + money(r.budget_num) + " 元" : "";
 
           html += '<div class="rec-card" data-id="' + esc(r.id) + '">' +
@@ -1908,9 +1937,9 @@
       if (e.key === "Enter") { state.filters = currentFilters(); state.page = 1; loadList(); }
     });
   });
-  // 央采 / 保利：切换品类后立即筛选并跳到结果第 1 页，无需再点「查询」
+  // 央采 / 保利 / 国铁：切换品类后立即筛选并跳到结果第 1 页，无需再点「查询」
   $("f-category").addEventListener("change", function () {
-    if (plat !== "zycg" && plat !== "poly") return;
+    if (plat !== "zycg" && plat !== "poly" && plat !== "rail") return;
     state.filters = currentFilters(); state.page = 1; loadList();
   });
   $("f-it").addEventListener("change", function () {

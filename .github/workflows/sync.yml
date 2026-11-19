@@ -25,6 +25,10 @@ jobs:
       - name: fetch zycg enquiries
         run: python fetcher.py || echo "[warn] 央采抓取失败（限流/网络），沿用库内数据"
 
+      # 国铁公开平台可在 CI 免登录采集；商城批采依赖本机 UKey/SSO 登录态，
+      # 由每天10:00的本机计划任务刷新 data/rail_mall_items.json，CI仅沿用已提交快照。
+      # 公开接口限流较严，定时CI不重复扫全量，避免0-0203阻断整个部署。
+
       # 导出静态站（含最近 3 日期规则、is_new 新增标注、基线更新）
       - name: export static site
         run: python export_static.py dist
@@ -42,7 +46,7 @@ jobs:
         run: |
           git config user.name "kanban-sync-bot"
           git config user.email "sync@users.noreply.github.com"
-          git add data/pdfs data/board.db data/last_seen_zycg.json 2>/dev/null || true
+          git add data/pdfs data/board.db data/last_seen_zycg.json data/rail_items.json 2>/dev/null || true
           if ! git diff --cached --quiet; then
             git commit -m "auto sync $(date -u +%Y-%m-%d_%H:%M)"
             git push
