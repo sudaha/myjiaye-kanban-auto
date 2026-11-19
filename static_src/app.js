@@ -1810,7 +1810,11 @@
             Object.keys(uniq).forEach(function (sk) {
               var arr = uniq[sk];
               var first = arr[0];
-              var totalAmt = arr.reduce(function (s, x) { return s + (Number(x.amount) || 0); }, 0);
+              var totalAmt = arr.reduce(function (s, x) {
+                var amt = Number(x.amount);
+                if (!(amt > 0)) amt = (Number(x.unit_price) || 0) * (Number(x.qty) || 0);
+                return s + amt;
+              }, 0);
               var items = arr.map(function (x) {
                 return esc(x.product || "") + " " + esc((x.brand || "") + " " + (x.model || "")).trim() +
                   " ×" + (x.qty != null ? x.qty : "—") + " @ " + (x.unit_price != null ? money(x.unit_price) : "—") + " 元";

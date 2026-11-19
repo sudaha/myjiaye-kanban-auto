@@ -33,6 +33,25 @@ def norm_title(t):
     return re.sub(r"[\s·：:，。、\-—/（）()\"\u201c\u201d]", "", t)
 
 
+def _amount(r):
+    """成交金额：原文 amount 缺失时用 单价×数量 兜底（很多成交明细未回填 amount）。"""
+    a = r.get("amount")
+    if a is not None:
+        try:
+            v = float(a)
+            if v > 0:
+                return v
+        except (TypeError, ValueError):
+            pass
+    try:
+        up = float(r.get("unit_price") or 0)
+        q = float(r.get("qty") or 0)
+        v = round(up * q, 2)
+        return v if v > 0 else None
+    except (TypeError, ValueError):
+        return None
+
+
 def extract_supplier(content):
     txt = re.sub(r"<[^>]+>", " ", content or "")
     txt = re.sub(r"&nbsp;?", " ", txt)
@@ -79,7 +98,7 @@ def main():
             "category": r.get("category") or "其他",
             "qty": r.get("qty"),
             "unit_price": r.get("unit_price"),
-            "amount": r.get("amount"),
+            "amount": _amount(r),
             "date": r.get("date") or "",
         })
     json.dump({"updated_at": json.load(open(DEALS, encoding="utf-8")).get("updated_at", ""),
