@@ -347,3 +347,53 @@
   .pick-notice-key { width: 100%; flex-basis: 100%; }
   .notice-body { max-height: 55vh; }
 }
+
+/* 参与投标按钮（卡片上）+ 已参与投标标签 */
+.join-btn { margin-left: 8px; border: 1px solid #2f6fed; border-radius: 7px; background: #fff; color: #2f6fed;
+  padding: 5px 10px; cursor: pointer; font: inherit; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.join-btn:hover { background: #2f6fed; color: #fff; }
+.join-btn.joined, .join-btn:disabled { border-color: #cdd5e0; background: #f1f4f8; color: #8a94a6; cursor: default; }
+.join-tag { display: inline-block; margin-left: 7px; padding: 2px 8px; border-radius: 6px; background: #eaf8f1; color: #087a48; font-size: 12px; font-weight: 700; white-space: nowrap; }
+
+/* 参与投标记录面板 */
+.recordsbox { display: block; }
+.recordsbox.hide { display: none; }
+.rec-head { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; background: #f7fafc;
+  border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin: 4px 0 14px; }
+.rec-cfg { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: #1a2333; }
+.rec-cfg input { width: 160px; padding: 6px 10px; border: 1px solid #d5dce4; border-radius: 7px; font: inherit; }
+.rec-note { flex: 1 1 260px; font-size: 12px; color: #687385; line-height: 1.6; }
+.rec-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
+.rec-stat { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 13px 15px; text-align: center; }
+.rec-stat b { display: block; font-size: 24px; color: #0f7b5f; }
+.rec-stat span { font-size: 12px; color: #7b8797; }
+.rec-filters { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+.rec-filters select, .rec-filters input { padding: 7px 10px; border: 1px solid #d5dce4; border-radius: 8px; font: inherit; background: #fff; }
+.rec-filters input { flex: 1 1 220px; }
+.rec-empty { padding: 40px 20px; text-align: center; color: #7b8797; font-size: 14px; background: #fff; border: 1px dashed var(--line); border-radius: 12px; }
+.rec-card { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 13px 15px; margin-bottom: 12px; }
+.rec-card-top { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-bottom: 7px; }
+.rec-date, .rec-budget { font-size: 12px; color: #687385; }
+.rec-budget { margin-left: auto; }
+.rec-title { font-size: 14px; font-weight: 700; color: #1a2333; line-height: 1.55; }
+.rec-meta { font-size: 12px; color: #7b8797; margin-top: 5px; }
+.rec-badge { display: inline-block; padding: 2px 9px; border-radius: 6px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.rec-badge.win { color: #087a48; background: #eaf8f1; }
+.rec-badge.lose { color: #b42318; background: #feeceb; }
+.rec-badge.pending { color: #9a6200; background: #fff4df; }
+.rec-deals { margin-top: 10px; border-top: 1px dashed #dde4ea; padding-top: 9px; }
+.rec-deal { background: #f8fafb; border: 1px solid #e7ecf1; border-radius: 9px; padding: 9px 11px; margin-bottom: 8px; }
+.rec-deal:last-child { margin-bottom: 0; }
+.rec-deal-line { font-size: 12.5px; color: #445063; line-height: 1.65; }
+.rec-deal-line b { color: #1a2333; }
+.rec-view { margin-top: 6px; border: 0; border-radius: 6px; background: #eef7f3; color: #0f7b5f; cursor: pointer; padding: 4px 10px; font: inherit; font-size: 12px; font-weight: 700; }
+.rec-view:hover { background: #0f7b5f; color: #fff; }
+.rec-actions { margin-top: 10px; padding-top: 8px; border-top: 1px solid #eef1f5; }
+.rec-manual { font-size: 12px; color: #687385; }
+.rec-manual select { margin-left: 6px; padding: 4px 8px; border: 1px solid #d5dce4; border-radius: 6px; font: inherit; background: #fff; }
+
+@media (max-width: 640px) {
+  .rec-stats { grid-template-columns: repeat(2, 1fr); }
+  .rec-cfg input { width: 120px; }
+  .rec-filters select { flex: 1 1 auto; }
+}

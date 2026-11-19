@@ -6,12 +6,13 @@
     poly: { name: "保利集团招标", sub: "中国保利集团招标采购供应链平台 · 全量项目", hint: "保利以工程/服务类为主，勾选「只看 IT 相关」筛硬件项目" },
     bid: { name: "招标公告·新源", sub: "央采主站（招标/征求/更正）+ 中国政府采购网（中央/地方）· 已筛 IT 硬件", hint: "点开卡片跳转原公告页查看采购人与预算；关键词/日期筛选可用" },
     docs: { name: "商务单证", sub: "报价单 / 货物签收单 · 整块粘贴信息，一键生成下载", hint: "选择报价单或货物签收单，整块粘贴信息后生成正式文件；支持 PDF / Word / Excel 三种版本（数据不上传）" },
-    picker: { name: "选型助手", sub: "基于央采卖场真实成交记录建库 · 需求一键选型 + 成交价参考", hint: "粘贴需求文本或挑一条公告，按品类/CPU/品牌匹配机型库（含真实成交价带）" }
+    picker: { name: "选型助手", sub: "基于央采卖场真实成交记录建库 · 需求一键选型 + 成交价参考", hint: "粘贴需求文本或挑一条公告，按品类/CPU/品牌匹配机型库（含真实成交价带）" },
+    records: { name: "参与投标记录", sub: "参与项目档案留存 · 中标率分析 · 竞品型号价格查漏补缺", hint: "点央采/保利卡片上的「参与」自动归档；此处按发布标书时间与品类分类，长期积累不删除" }
   };
   function platFromHash() {
     var h = (location.hash || "").replace("#", "");
     // bid（招标公告·新源）2026-11-17 应用户要求暂时下线，#bid 回退到央采
-    return h === "poly" || h === "picker" || h === "docs" ? h : "zycg";
+    return h === "poly" || h === "picker" || h === "docs" || h === "records" ? h : "zycg";
   }
   var plat = platFromHash();
   var state = { page: 1, pageSize: 20, total: 0, filters: {}, items: [], loaded: false, picked: {}, availableDates: {}, dateMonth: null };
@@ -63,7 +64,8 @@
     $("plat-hint").textContent = m.hint;
     var isPicker = p === "picker";
     var isDocs = p === "docs";
-    var noList = isPicker || isDocs;
+    var isRecords = p === "records";
+    var noList = isPicker || isDocs || isRecords;
     $("filterbar").classList.toggle("hide", noList);
     $("f-it-wrap").classList.toggle("hide", p !== "poly");
     $("batchbar").classList.toggle("hide", p !== "zycg" && p !== "poly");
@@ -71,6 +73,7 @@
     if ($("notice-date-picker")) $("notice-date-picker").classList.toggle("hide", p !== "zycg" && p !== "poly");
     $("pickerbox").classList.toggle("hide", !isPicker);
     if ($("docsbox")) $("docsbox").classList.toggle("hide", !isDocs);
+    if ($("recordsbox")) $("recordsbox").classList.toggle("hide", !isRecords);
     $("list").classList.toggle("hide", noList);
     $("pager").classList.toggle("hide", noList);
     document.querySelector(".brand h1").textContent = isPicker
@@ -85,6 +88,10 @@
       $("st-total-lab").textContent = "单证类型";
       $("st-active-lab").textContent = "模板";
       $("st-latest-lab").textContent = "生成方式";
+    } else if (isRecords) {
+      $("st-total-lab").textContent = "参与项目";
+      $("st-active-lab").textContent = "我方中标";
+      $("st-latest-lab").textContent = "中标率";
     } else if (p === "bid") {
       $("st-total-lab").textContent = "IT 公告";
       $("st-active-lab").textContent = "覆盖天数";
@@ -114,6 +121,12 @@
       $("upd-time").textContent = "";
       loadPickerStatus();
       initPickerNoticeSelect();
+      return;
+    }
+    if (isRecords) {
+      $("result-count").textContent = "";
+      $("upd-time").textContent = "";
+      renderRecords();
       return;
     }
     loadStatus(); loadCategories(); loadList();
@@ -271,7 +284,7 @@
       $("pg-next").disabled = state.page >= pages;
       Array.prototype.forEach.call(list.querySelectorAll(".card"), function (el) {
         el.addEventListener("click", function (e) {
-          if (e.target && (e.target.classList.contains("pick") || e.target.closest(".quick-pick"))) return;
+          if (e.target && (e.target.classList.contains("pick") || e.target.closest(".quick-pick") || e.target.closest(".join-btn"))) return;
           showDetail(el.dataset.id);
         });
       });
@@ -288,6 +301,14 @@
           e.preventDefault(); e.stopPropagation(); jumpToPickerNotice(b.dataset.id);
         });
       });
+      Array.prototype.forEach.call(list.querySelectorAll(".join-btn"), function (b) {
+        b.addEventListener("click", function (e) {
+          e.preventDefault(); e.stopPropagation();
+          var it = null;
+          for (var i = 0; i < state.items.length; i++) if (String(state.items[i].id) === String(b.dataset.id)) { it = state.items[i]; break; }
+          if (it) recJoin(it, b);
+        });
+      });
       syncPickUI();
     }).catch(function (e) {
       list.innerHTML = '<div class="empty">数据加载失败：' + esc(e.message) + "</div>";
@@ -299,6 +320,7 @@
     var pickable = plat === "zycg" || plat === "poly";
     var checked = pickable && state.picked[it.id];
     var isBid = plat === "bid";
+    var joined = pickable && recJoined(it.platform, it.id);
     return '<div class="card' + (pickable ? " pickable" : "") + (checked ? " picked" : "") + '" data-id="' + it.id + '">' +
       (pickable ? '<input type="checkbox" class="pick" data-id="' + it.id + '"' + (checked ? " checked" : "") + ">" : "") +
       '<div class="row1">' +
@@ -316,7 +338,10 @@
           : '<span><b>' + (plat === "zycg" ? "投标截止" : "截止") + '</b> ' + esc((it.end_time || "—").slice(0, 16)) + "</span>" +
             (it.category ? '<span class="tag cat">' + esc(it.category) + "</span>" : "") +
             (plat === "poly" && it.notice_type_name ? '<span class="tag">' + esc(it.notice_type_name) + "</span>" : "") +
-            '<span class="badge ' + (on ? "on" : "off") + '">' + (on ? "进行中" : "已截止") + "</span>") +
+            '<span class="badge ' + (on ? "on" : "off") + '">' + (on ? "进行中" : "已截止") + "</span>" +
+            (joined ? '<span class="join-tag">已参与投标</span>' : "")) +
+        (pickable
+          ? '<button type="button" class="join-btn' + (joined ? " joined" : "") + '" data-id="' + esc(it.id) + '"' + (joined ? " disabled" : "") + ">" + (joined ? "已参与" : "＋ 参与投标") + "</button>" : "") +
         (plat === "zycg" ? '<button type="button" class="quick-pick" data-id="' + esc(it.id) + '">一键技术选型</button>' : "") +
       "</div>" +
     "</div>";
@@ -1595,6 +1620,263 @@
   }
   bindPicker();
 
+  // ---------- 参与投标记录 ----------
+  var REC_KEY = "jiaye_bid_records_v1";
+  var recState = { ourCompany: "佳业", items: [], deals: null, dealsMap: null };
+  var recKwTimer = null;
+
+  function recLoad() {
+    try {
+      var raw = JSON.parse(localStorage.getItem(REC_KEY) || "{}");
+      recState.ourCompany = raw.ourCompany || "佳业";
+      recState.items = Array.isArray(raw.items) ? raw.items : [];
+    } catch (e) { recState.ourCompany = "佳业"; recState.items = []; }
+  }
+  function recSave() {
+    try { localStorage.setItem(REC_KEY, JSON.stringify({ ourCompany: recState.ourCompany, items: recState.items })); } catch (e) {}
+  }
+  function recKey(platform, id) { return platform + "_" + id; }
+  function recFind(platform, id) {
+    var k = recKey(platform, id);
+    for (var i = 0; i < recState.items.length; i++) if (recState.items[i].id === k) return recState.items[i];
+    return null;
+  }
+  function recJoined(platform, id) { return !!recFind(platform, id); }
+
+  function normTitle(t) {
+    t = String(t || "").replace(/[（(][^）)]*[）)]/g, "");
+    ["采购项目需求公告", "采购需求公告", "需求公告", "采购项目成交公告", "成交公告",
+     "反拍采购成交公告", "询价采购成交公告", "框采采购成交公告", "反拍成交公告",
+     "反拍", "询价", "框采", "竞价", "采购项目", "采购", "公告", "成交"].forEach(function (m) {
+      t = t.split(m).join("");
+    });
+    return t.replace(/[\s·：:，。、\-—\/（）()"“”]/g, "");
+  }
+
+  function recEnsureDeals() {
+    if (recState.deals) return Promise.resolve(recState.deals);
+    return getJSON("data/deals.json").then(function (d) {
+      recState.deals = (d && d.deals) ? d.deals : [];
+      recState.dealsMap = {};
+      recState.deals.forEach(function (x) {
+        var k = x.norm_key || normTitle(x.title);
+        (recState.dealsMap[k] = recState.dealsMap[k] || []).push(x);
+      });
+      return recState.deals;
+    }).catch(function () { recState.deals = []; recState.dealsMap = {}; return recState.deals; });
+  }
+
+  function recJoin(it, btn) {
+    if (recJoined(it.platform, it.id)) {
+      if (btn) { btn.textContent = "已参与"; btn.disabled = true; btn.classList.add("joined"); }
+      return;
+    }
+    recState.items.unshift({
+      id: recKey(it.platform, it.id),
+      platform: it.platform,
+      noticeId: String(it.id),
+      title: it.title || it.enquiry_name || "",
+      buyer: it.purchase_company || it.org_name || "",
+      category: it.category || "",
+      publish_date: String(it.pub_date || it.publish_date || "").slice(0, 10),
+      end_time: it.end_time || "",
+      budget_num: it.budget_num != null ? it.budget_num : null,
+      joinedAt: Date.now(),
+      manualResult: null
+    });
+    recSave();
+    if (btn) { btn.textContent = "已参与"; btn.disabled = true; btn.classList.add("joined"); }
+    loadList();
+    recUpdateBadge();
+  }
+
+  function recMatches(rec) {
+    if (rec.platform !== "zycg") return [];
+    if (!recState.dealsMap) return [];
+    return recState.dealsMap[normTitle(rec.title)] || [];
+  }
+  function recCompanyWon(supplier) {
+    var ours = (recState.ourCompany || "").trim();
+    if (!ours) return false;
+    return String(supplier || "").indexOf(ours) >= 0;
+  }
+  function recResultOf(rec) {
+    if (rec.manualResult === "win") return "win";
+    if (rec.manualResult === "lose") return "lose";
+    if (rec.manualResult === "pending") return "pending";
+    var ds = recMatches(rec);
+    if (!ds.length) return "pending";
+    return ds.some(function (x) { return recCompanyWon(x.supplier); }) ? "win" : "lose";
+  }
+
+  function recUpdateBadge() {
+    recLoad();
+    var n = recState.items.length;
+    if ($("n-records")) $("n-records").textContent = n > 0 ? n : "-";
+  }
+
+  function renderRecords() {
+    recLoad();
+    recUpdateBadge();
+    var box = $("recordsbox");
+    if (!box) return;
+    recEnsureDeals().then(function () {
+      var total = recState.items.length;
+      var withResult = 0, wins = 0;
+      recState.items.forEach(function (r) {
+        var res = recResultOf(r);
+        if (res === "win" || res === "lose") { withResult++; if (res === "win") wins++; }
+      });
+      var rate = withResult ? Math.round(wins / withResult * 100) : 0;
+      if ($("st-total")) $("st-total").textContent = total;
+      if ($("st-active")) $("st-active").textContent = wins;
+      if ($("st-latest")) $("st-latest").textContent = rate + "%";
+
+      // 筛选值
+      var fCat = ($("rec-cat") && $("rec-cat").value) || "";
+      var fMon = ($("rec-mon") && $("rec-mon").value) || "";
+      var fKw = (($("rec-kw") && $("rec-kw").value) || "").trim();
+
+      var cats = {}, months = {};
+      recState.items.forEach(function (r) {
+        if (r.category) cats[r.category] = 1;
+        var m = String(r.publish_date || "").slice(0, 7);
+        if (m) months[m] = 1;
+      });
+      var catOpts = '<option value="">全部品类</option>' + Object.keys(cats).sort().map(function (c) {
+        return '<option value="' + esc(c) + '"' + (fCat === c ? " selected" : "") + ">" + esc(c) + "</option>";
+      }).join("");
+      var monOpts = '<option value="">全部月份</option>' + Object.keys(months).sort().reverse().map(function (m) {
+        return '<option value="' + esc(m) + '"' + (fMon === m ? " selected" : "") + ">" + esc(m) + "</option>";
+      }).join("");
+
+      var list = recState.items.filter(function (r) {
+        if (fCat && r.category !== fCat) return false;
+        if (fMon && String(r.publish_date || "").slice(0, 7) !== fMon) return false;
+        if (fKw && (r.title + " " + r.buyer + " " + r.category).toLowerCase().indexOf(fKw.toLowerCase()) < 0) return false;
+        return true;
+      });
+
+      var html = "";
+      html += '<div class="rec-head">' +
+        '<label class="rec-cfg">我方公司名称 <input id="rec-company" type="text" value="' + esc(recState.ourCompany) + '" placeholder="如：佳业"></label>' +
+        '<div class="rec-note">自动判定中标：成交公告中标供应商含「我方公司名称」即记为「我方中标」，否则「未中标」；无法匹配到成交结果的项目为「待出结果」。</div>' +
+        "</div>";
+
+      html += '<div class="rec-stats">' +
+        '<div class="rec-stat"><b>' + total + '</b><span>参与项目</span></div>' +
+        '<div class="rec-stat"><b>' + withResult + '</b><span>已出结果</span></div>' +
+        '<div class="rec-stat"><b>' + wins + '</b><span>我方中标</span></div>' +
+        '<div class="rec-stat"><b>' + rate + '%</b><span>中标率</span></div>' +
+        "</div>";
+
+      html += '<div class="rec-filters">' +
+        '<select id="rec-cat">' + catOpts + "</select>" +
+        '<select id="rec-mon">' + monOpts + "</select>" +
+        '<input id="rec-kw" type="text" placeholder="搜索项目 / 采购方 / 品类" value="' + esc(fKw) + '">' +
+        "</div>";
+
+      if (!list.length) {
+        html += '<div class="rec-empty">暂无参与记录。回到「央采电子询价」或「保利集团招标」，点卡片上的「＋ 参与投标」即可归档到此处。</div>';
+      } else {
+        list.forEach(function (r) {
+          var res = recResultOf(r);
+          var ds = recMatches(r);
+          var resBadge = res === "win" ? '<span class="rec-badge win">我方中标</span>'
+            : res === "lose" ? '<span class="rec-badge lose">未中标</span>'
+            : '<span class="rec-badge pending">待出结果</span>';
+          var platName = r.platform === "zycg" ? "央采" : "保利";
+          var moneyTxt = r.budget_num != null ? "预算 " + money(r.budget_num) + " 元" : "";
+
+          html += '<div class="rec-card" data-id="' + esc(r.id) + '">' +
+            '<div class="rec-card-top">' +
+              '<span class="tag plat">' + platName + "</span>" +
+              (r.category ? '<span class="tag cat">' + esc(r.category) + "</span>" : "") +
+              '<span class="rec-date">发布 ' + esc(r.publish_date || "—") + "</span>" +
+              (r.budget_num != null ? '<span class="rec-budget">' + moneyTxt + "</span>" : "") +
+              resBadge +
+            "</div>" +
+            '<div class="rec-title">' + esc(r.title) + "</div>" +
+            '<div class="rec-meta">采购方 ' + esc(r.buyer || "—") + " · 参与于 " + esc(new Date(r.joinedAt).toLocaleString("zh-CN")) + "</div>";
+
+          // 中标详情（查漏补缺）
+          if (ds.length) {
+            var uniq = {};
+            ds.forEach(function (x) {
+              var sk = (x.supplier || "未知") + "|" + (x.brand || "") + "|" + (x.model || "");
+              (uniq[sk] = uniq[sk] || []).push(x);
+            });
+            html += '<div class="rec-deals">';
+            Object.keys(uniq).forEach(function (sk) {
+              var arr = uniq[sk];
+              var first = arr[0];
+              var totalAmt = arr.reduce(function (s, x) { return s + (Number(x.amount) || 0); }, 0);
+              var items = arr.map(function (x) {
+                return esc(x.product || "") + " " + esc((x.brand || "") + " " + (x.model || "")).trim() +
+                  " ×" + (x.qty != null ? x.qty : "—") + " @ " + (x.unit_price != null ? money(x.unit_price) : "—") + " 元";
+              }).join("；");
+              html += '<div class="rec-deal">' +
+                '<div class="rec-deal-line"><b>中标公司：</b>' + esc(first.supplier || "—") +
+                (recCompanyWon(first.supplier) ? '<span class="rec-badge win">我方</span>' : "") + "</div>" +
+                '<div class="rec-deal-line"><b>成交明细：</b>' + items + "</div>" +
+                '<div class="rec-deal-line"><b>成交合计：</b>' + money(totalAmt) + " 元" +
+                (first.date ? "（" + esc(first.date) + "）" : "") + "</div>" +
+                (first.notice_id ? '<button type="button" class="rec-view" data-notice="' + esc(first.notice_id) + '">查看成交公告原文</button>' : "") +
+                "</div>";
+            });
+            html += "</div>";
+          }
+
+          html += '<div class="rec-actions">' +
+            '<label class="rec-manual">手动标注结果：<select class="rec-result-sel" data-id="' + esc(r.id) + '">' +
+              '<option value="auto"' + (r.manualResult == null ? " selected" : "") + ">自动判定</option>" +
+              '<option value="win"' + (r.manualResult === "win" ? " selected" : "") + ">我方中标</option>" +
+              '<option value="lose"' + (r.manualResult === "lose" ? " selected" : "") + ">未中标</option>" +
+              '<option value="pending"' + (r.manualResult === "pending" ? " selected" : "") + ">待出结果</option>" +
+              "</select></label>" +
+            "</div>" +
+            "</div>";
+        });
+      }
+
+      box.innerHTML = html;
+      // 绑定
+      var comp = $("rec-company");
+      if (comp) comp.addEventListener("change", function () {
+        recState.ourCompany = comp.value.trim() || "佳业";
+        recSave();
+        renderRecords();
+      });
+      if ($("rec-cat")) $("rec-cat").addEventListener("change", renderRecords);
+      if ($("rec-mon")) $("rec-mon").addEventListener("change", renderRecords);
+      if ($("rec-kw")) $("rec-kw").addEventListener("input", function (e) {
+        var el = e.target;
+        clearTimeout(recKwTimer);
+        recKwTimer = setTimeout(function () {
+          renderRecords();
+          var ni = $("rec-kw");
+          if (ni && el.value) { ni.focus(); try { ni.setSelectionRange(el.value.length, el.value.length); } catch (err) {} }
+        }, 350);
+      });
+      Array.prototype.forEach.call(box.querySelectorAll(".rec-result-sel"), function (s) {
+        s.addEventListener("change", function () {
+          var rec = null;
+          for (var i = 0; i < recState.items.length; i++) if (recState.items[i].id === s.dataset.id) { rec = recState.items[i]; break; }
+          if (!rec) return;
+          rec.manualResult = s.value === "auto" ? null : s.value;
+          recSave();
+          renderRecords();
+        });
+      });
+      Array.prototype.forEach.call(box.querySelectorAll(".rec-view"), function (b) {
+        b.addEventListener("click", function (e) {
+          e.stopPropagation();
+          openMallNotice(b.dataset.notice);
+        });
+      });
+    });
+  }
+
   // ---------- 事件 ----------
   document.querySelectorAll(".plat").forEach(function (b) {
     b.addEventListener("click", function () { setPlatform(b.dataset.plat, true); });
@@ -1658,6 +1940,8 @@
   $("overlay").addEventListener("click", function (e) { if (e.target === $("overlay")) closeDetail(); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeDetail(); });
 
+  recLoad();
+  recUpdateBadge();
   setPlatform(plat, false);
   loadCategoryBadges();
 })();

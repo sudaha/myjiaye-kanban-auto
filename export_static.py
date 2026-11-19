@@ -376,6 +376,14 @@ def main():
         write_json(os.path.join(out, "data", "mall_notices.json"),
                    json.load(open(notices_src, encoding="utf-8")))
 
+    # 成交结果库（中标公司+品牌+型号+单价/金额；供「参与投标记录」中标率与查漏补缺）。
+    # 直接使用已生成的 data/deals.json（由 build_deals.py 生成、随仓库提交），
+    # 不在导出时重建，避免 CI 缺 mall_deals.json（.gitignore）导致失败。
+    deals_src = os.path.join(BASE, "data", "deals.json")
+    if os.path.isfile(deals_src):
+        write_json(os.path.join(out, "data", "deals.json"),
+                   json.load(open(deals_src, encoding="utf-8")))
+
     if BID_SECTION:
         out, manifest = export_bid(out)
     else:
