@@ -482,9 +482,7 @@ def main():
     logo = os.path.join(WEB, "jiaye_logo.jpg")
     if os.path.isfile(logo):
         shutil.copy2(logo, os.path.join(out, "jiaye_logo.jpg"))
-    diag = os.path.join(WEB, "diag_wheel.html")
-    if os.path.isfile(diag):
-        shutil.copy2(diag, os.path.join(out, "diag_wheel.html"))
+
     for extra in ("jszip.min.js", "docs.js", "docs_v3.js"):
         src = os.path.join(STATIC_SRC, extra)
         if os.path.isfile(src):
