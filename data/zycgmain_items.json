@@ -1,719 +1,808 @@
 {
-    "source":  "zycgmain",
-    "updated_at":  "2026-11-20T09:46:32+08:00",
-    "count":  89,
-    "items":  [
-                  {
-                      "id":  "a8d376cd-e479-11f1-9615-fa163ee0ead6",
-                      "title":  "国家统计局上海调查总队网络及会议室智能改造采购项目招标公告",
-                      "buyer":  "国家统计局上海调查总队",
-                      "date":  "2026-11-20",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7514e10f-4838-4d04-a167-46df08874bd4.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "e19f0ec0-e47e-11f1-9615-fa163ee0ead6",
-                      "title":  "中山大学附属第一医院精准高性能硬件平台六期存储扩容采购项目招标公告",
-                      "buyer":  "中山大学附属第一医院",
-                      "date":  "2026-11-20",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/f31ce172-25e5-4b91-b140-fa9a7db3a038.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "06cb56f2-e3c4-11f1-9615-fa163ee0ead6",
-                      "title":  "工业和信息化部电子第五研究所AI芯片软件平台标准和应用采购项目招标公告",
-                      "buyer":  "中国电子产品可靠性与环境试验研究所((工业和信息化部电子第五研究所)(中国赛宝实验室))",
-                      "date":  "2026-11-19",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7b0a132a-ada3-4da0-8294-a6e748bb59b1.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "3ba1c877-e3bc-11f1-9615-fa163ee0ead6",
-                      "title":  "上海市气象信息与技术支持中心面向短临预报的华东区域（上海、浙江、江西、福建）气象大数据云平台支撑算力及存储扩充项目-上海市采购项目招标公告",
-                      "buyer":  "上海市气象信息与技术支持中心(上海市气象档案馆)",
-                      "date":  "2026-11-19",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/d5f0fbe2-7c23-45b2-adef-f7ebbd6634ad.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "677f0258-e3b8-11f1-9615-fa163ee0ead6",
-                      "title":  "国家广播电视总局无线电台管理局大湾区覆盖项目直播卫星系统集成播出系统信息化系统设备采购项目招标公告",
-                      "buyer":  "国家广播电视总局无线电台管理局",
-                      "date":  "2026-11-19",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/bf8285ac-2455-4315-99fe-400549e095d9.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "be626d52-e3e4-11f1-9615-fa163ee0ead6",
-                      "title":  "中国中医科学院广安门医院高水平中医医院临床科研及诊疗能力提升项目数据中心机房主机与存储采购项目招标公告",
-                      "buyer":  "中国中医科学院广安门医院",
-                      "date":  "2026-11-19",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/58a9a7b1-fa77-4424-a7aa-2e1c617c1ce5.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "3aa75b2a-e3e2-11f1-9615-fa163ee0ead6",
-                      "title":  "国家气象信息中心面向短临预报的气象大数据云平台加工流水线支撑算力扩充采购项目招标公告",
-                      "buyer":  "国家气象信息中心(中国气象局气象数据中心)",
-                      "date":  "2026-11-19",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/b93e78fe-409d-47e6-b3f5-12250e61d147.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "256f69e9-e3e2-11f1-9615-fa163ee0ead6",
-                      "title":  "国家气象信息中心面向短临预报业务的内网区虚拟化资源池扩充采购项目招标公告",
-                      "buyer":  "国家气象信息中心(中国气象局气象数据中心)",
-                      "date":  "2026-11-19",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7f045ed2-94ef-45fc-b4a9-de23b4fe29fc.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "cfef7891-e2ea-11f1-9615-fa163ee0ead6",
-                      "title":  "中国船级社数据集服务器基础设施采购项目招标公告",
-                      "buyer":  "中国船级社",
-                      "date":  "2026-11-18",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/57472335-10cc-4117-8d26-1e83eb35f6a6.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "7be45908-e2f2-11f1-9615-fa163ee0ead6",
-                      "title":  "河北省气象信息中心面向短临预报的华北区域气象大数据云平台支撑算力及存储扩充采购项目招标公告",
-                      "buyer":  "河北省气象信息中心",
-                      "date":  "2026-11-18",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/00d2688d-63fa-4d73-add2-bc4d5bc5fcb2.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "7a55699c-e259-11f1-9615-fa163ee0ead6",
-                      "title":  "吉林大学中日联谊医院内网工作站采购项目招标公告",
-                      "buyer":  "吉林大学中日联谊医院",
-                      "date":  "2026-11-17",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/9b4f6ad5-ddac-4a64-ba10-79e54652a58a.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "84affca8-e26d-11f1-9615-fa163ee0ead6",
-                      "title":  "国家广播电视总局广播电视卫星直播管理中心信息网络设备及软件采购项目招标公告",
-                      "buyer":  "国家广播电视总局广播电视卫星直播管理中心",
-                      "date":  "2026-11-17",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/4fa8a1b5-d7e8-41e5-8177-5026cbaf7b5d.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "78650714-e272-11f1-9615-fa163ee0ead6",
-                      "title":  "国家医保局医药价格和招标采购指导中心医保综合价值评价工作服务器采购项目招标公告",
-                      "buyer":  "国家医疗保障局医药价格和招标采购指导中心",
-                      "date":  "2026-11-17",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/60142f7a-e238-45d5-8c46-eb3e64aac6c2.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "23cb4ec6-e163-11f1-9615-fa163ee0ead6",
-                      "title":  "中国疾病预防控制中心新址二期信息楼-数据中心-AI算力平台采购项目招标公告",
-                      "buyer":  "中国疾病预防控制中心",
-                      "date":  "2026-11-16",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/d1325108-9193-4ece-804d-c98ce7028144.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "15b7f5b0-e161-11f1-9615-fa163ee0ead6",
-                      "title":  "西安交通大学第二附属医院双活数据中心容灾备份系统建设采购项目招标公告",
-                      "buyer":  "西安交通大学医学院第二附属医院",
-                      "date":  "2026-11-16",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/d4bd7f17-4cce-4fac-aa43-219afc842809.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "6663ff1c-e18e-11f1-9615-fa163ee0ead6",
-                      "title":  "中国科学院高能物理研究所云平台首批服务器和核心交换机采购项目招标公告",
-                      "buyer":  "中国科学院高能物理研究所",
-                      "date":  "2026-11-16",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7502ea79-ca55-448f-9407-1edc526edbd1.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "a33818d1-e18c-11f1-9615-fa163ee0ead6",
-                      "title":  "国家广播电视总局信息中心“中国视听”平台服务能力提升通用软硬件、软件定制开发及系统集成采购项目招标公告",
-                      "buyer":  "国家广播电视总局信息中心",
-                      "date":  "2026-11-16",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/01b275e9-6710-4747-81b5-a8d8cb52c19c.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "4bc0a348-df00-11f1-9615-fa163ee0ead6",
-                      "title":  "国家气象信息中心面向短临预报的气象大数据云平台在线数据支撑存储扩充采购项目招标公告",
-                      "buyer":  "国家气象信息中心(中国气象局气象数据中心)",
-                      "date":  "2026-11-13",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/674eaaa4-b0e9-4746-98ff-3c555d545192.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "6f1e9611-df00-11f1-9615-fa163ee0ead6",
-                      "title":  "国家统计局重庆调查总队网络改造采购项目招标公告",
-                      "buyer":  "国家统计局重庆调查总队",
-                      "date":  "2026-11-13",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/f7c40ce4-8988-413c-84ac-66b3f60684c9.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "2efa3c9c-df00-11f1-9615-fa163ee0ead6",
-                      "title":  "国家工业信息安全发展研究中心智能化能力建设配套软硬件资源设备采购项目招标公告",
-                      "buyer":  "国家工业信息安全发展研究中心(工业和信息化部电子第一研究所)",
-                      "date":  "2026-11-13",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/3dca9b45-ca69-4d73-8a88-02ea878ca932.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "29f78929-deff-11f1-9615-fa163ee0ead6",
-                      "title":  "天津市气象信息中心面向短临预报的华北区域气象大数据云平台支撑算力及存储扩充采购项目招标公告",
-                      "buyer":  "天津市气象信息中心(天津市气象档案馆)",
-                      "date":  "2026-11-13",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/70ac2e62-2f1f-4947-8a50-624416038192.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "f369cea3-deff-11f1-9615-fa163ee0ead6",
-                      "title":  "中央国家机关住房资金管理中心基础软硬件采购项目招标公告",
-                      "buyer":  "中央国家机关住房资金管理中心",
-                      "date":  "2026-11-13",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/a22249d0-37fc-4adf-be90-16677f1bbf47.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "357d23c6-df41-11f1-9615-fa163ee0ead6",
-                      "title":  "郑州警察学院算力中心服务器采购项目（三次）招标公告",
-                      "buyer":  "郑州警察学院",
-                      "date":  "2026-11-13",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/52849884-fd66-4f44-89bc-04641c8dd947.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "8cf87149-df48-11f1-9615-fa163ee0ead6",
-                      "title":  "中国科学院高能物理研究所BES网络及安全设备采购项目招标公告",
-                      "buyer":  "中国科学院高能物理研究所",
-                      "date":  "2026-11-13",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/5a9e9337-269f-424c-a638-e2036cc307fc.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "f87f2a96-df15-11f1-9615-fa163ee0ead6",
-                      "title":  "中国互联网络信息中心同城数据中心升级设备采购项目招标公告",
-                      "buyer":  "中国互联网络信息中心",
-                      "date":  "2026-11-13",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/e675afcf-ed31-45de-8fa4-2ae2a50f4408.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "a1e48061-df01-11f1-9615-fa163ee0ead6",
-                      "title":  "中山大学附属第一医院网络安全组件升级改造采购项目招标公告",
-                      "buyer":  "中山大学附属第一医院",
-                      "date":  "2026-11-13",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/70e96f2b-e9d7-477e-9750-d0056b3a37a9.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "75684fd0-df05-11f1-9615-fa163ee0ead6",
-                      "title":  "国家金融监督管理总局安徽监管局12台数据库服务器采购项目招标公告",
-                      "buyer":  "中国银行保险监督管理委员会安徽监管局",
-                      "date":  "2026-11-13",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/99e58ab9-f150-4da5-a513-6b33a91e3ffc.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "965f9f94-de30-11f1-9615-fa163ee0ead6",
-                      "title":  "工业和信息化部电子第五研究所AI芯片软硬件适配验证和研究平台采购项目招标公告",
-                      "buyer":  "中国电子产品可靠性与环境试验研究所((工业和信息化部电子第五研究所)(中国赛宝实验室))",
-                      "date":  "2026-11-12",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/739d6ef5-000c-411e-a52f-2300a0785371.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "fa34f023-de68-11f1-9615-fa163ee0ead6",
-                      "title":  "中国科学院高能物理研究所智能化计算服务器采购项目招标公告",
-                      "buyer":  "中国科学院高能物理研究所",
-                      "date":  "2026-11-12",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/56ae310f-47f9-4e84-9f5c-74868bd5036d.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "6b1fed51-dd72-11f1-9615-fa163ee0ead6",
-                      "title":  "国家统计局吉林调查总队信息化改造项目（二期）采购项目招标公告",
-                      "buyer":  "国家统计局吉林调查总队",
-                      "date":  "2026-11-11",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/0778903e-8524-494f-b6c8-657d3cd6eb73.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "0ef7522a-dd69-11f1-9615-fa163ee0ead6",
-                      "title":  "中国人民银行山东省分行2026年网络和安全设备采购项目招标公告",
-                      "buyer":  "中国人民银行山东省分行（国家外汇管理局山东省分局）",
-                      "date":  "2026-11-11",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/2e7e3988-020f-46b0-96be-d3c23f0a450f.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "ee882418-dd73-11f1-9615-fa163ee0ead6",
-                      "title":  "国家气象信息中心关于面向短临预报的气象大数据云平台存储资源管理及接口服务支撑算力扩充采购项目招标公告",
-                      "buyer":  "国家气象信息中心(中国气象局气象数据中心)",
-                      "date":  "2026-11-11",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/41d51ad5-bd25-4069-893b-7c099eeb6c2d.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "6fa478f3-dd9a-11f1-9615-fa163ee0ead6",
-                      "title":  "人力资源社会保障部部省指挥系统和部视频会议室会议系统设备采购及部西院数据中心运维室系统建设采购项目招标公告",
-                      "buyer":  "中华人民共和国人力资源和社会保障部",
-                      "date":  "2026-11-11",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/e64d90c4-5738-4e25-86dd-6d234c8805d3.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "9cae2826-dd7b-11f1-9615-fa163ee0ead6",
-                      "title":  "中国人民大学通州校区校园网络基础设施建设采购项目（二次）招标公告",
-                      "buyer":  "中国人民大学",
-                      "date":  "2026-11-11",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/8e7bdae3-ee54-485c-8794-785bee24ae8e.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "2dc9b95c-dcd8-11f1-9615-fa163ee0ead6",
-                      "title":  "国家广播电视总局广播电视卫星直播管理中心信息网络设备及网络安全软硬件采购项目招标公告",
-                      "buyer":  "国家广播电视总局广播电视卫星直播管理中心",
-                      "date":  "2026-11-10",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/9398b5e6-1291-4648-b315-00331d692b2b.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "7b859460-dc1a-11f1-9615-fa163ee0ead6",
-                      "title":  "北京理工大学教育学院教育数据中心服务器采购项目招标公告",
-                      "buyer":  "北京理工大学",
-                      "date":  "2026-11-09",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/85f1101b-a2a1-4404-932b-1e60e8e3ea56.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "5ea1bf55-dc1b-11f1-9615-fa163ee0ead6",
-                      "title":  "吉林大学第一医院信息化建设采购项目招标公告",
-                      "buyer":  "吉林大学第一医院",
-                      "date":  "2026-11-09",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/4aecae6e-c7b9-4564-8280-1917500de2bc.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "a7c52087-d97c-11f1-9615-fa163ee0ead6",
-                      "title":  "重庆大学储能技术大楼及沙坪坝学生宿舍网络设备采购项目（二次）招标公告",
-                      "buyer":  "重庆大学",
-                      "date":  "2026-11-06",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/119468ce-b98a-47a7-b947-b629728f3895.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "f6a9a4ef-d98a-11f1-9615-fa163ee0ead6",
-                      "title":  "山东省气象数据中心面向短临预报的华东区域（安徽、江苏、山东）气象大数据云平台支撑算力及存储扩充采购项目招标公告",
-                      "buyer":  "山东省气象数据中心",
-                      "date":  "2026-11-06",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/79d74f3c-28c4-48d8-87bc-39136cea5b52.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "4d8a68ea-d9a0-11f1-9615-fa163ee0ead6",
-                      "title":  "四川省气象数据中心服务器及存储设备采购项目招标公告",
-                      "buyer":  "四川省气象数据中心(四川省气象探测中心、四川省气象档案馆)",
-                      "date":  "2026-11-06",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/4a35ba0e-1fc7-4b37-b654-278bc4fb1c52.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "122e2e33-d8bf-11f1-9615-fa163ee0ead6",
-                      "title":  "新华通讯社智能化技术服务项目高性能GPU服务器云服务子项采购项目招标公告",
-                      "buyer":  "新华通讯社",
-                      "date":  "2026-11-05",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/0cc23cf3-71c3-4910-ba2b-26d3eacc443c.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "5d17ae2d-d8e9-11f1-9615-fa163ee0ead6",
-                      "title":  "珠江水利委员会珠江水利科学研究院采购云电脑采购项目招标公告",
-                      "buyer":  "珠江水利委员会珠江水利科学研究院",
-                      "date":  "2026-11-05",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/c09df8d3-103b-4412-b8b7-ad823f2427ad.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "ede763c8-d7fe-11f1-9615-fa163ee0ead6",
-                      "title":  "某单位2园区信息化建设采购项目招标公告",
-                      "buyer":  "某单位2",
-                      "date":  "2026-11-04",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/b40b8ee8-80b1-450b-8c49-e67747090c00.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "8737f883-d807-11f1-9615-fa163ee0ead6",
-                      "title":  "中国电子口岸数据中心深圳分中心开发环境升级建设项目采购项目招标公告",
-                      "buyer":  "中华人民共和国深圳海关",
-                      "date":  "2026-11-04",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/2be4d69d-603e-4d19-8e69-bd6729309162.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "a3e66b6d-d7f1-11f1-9615-fa163ee0ead6",
-                      "title":  "北京理工大学新能源汽车国家监测与管理平台数据中心互联网接入服务采购项目(二次)招标公告",
-                      "buyer":  "北京理工大学",
-                      "date":  "2026-11-04",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/d1c873c1-aed6-4099-b9b0-7ef7cbc69c64.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "0d6d06f0-d7fe-11f1-9615-fa163ee0ead6",
-                      "title":  "中央广播电视总台总台AI语料项目-基础资源支撑平台-存储系统及西部数据中心存储系统（二）迁移服务器和分布式存储采购项目招标公告",
-                      "buyer":  "中央广播电视总台",
-                      "date":  "2026-11-04",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7191d621-8075-4814-96e3-5a801392db06.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "b30a8dcb-d829-11f1-9615-fa163ee0ead6",
-                      "title":  "中国中医科学院广安门医院数据中心机房网络与安全相关设备高水平中医医院临床大数据科研分析平台——网络与安全采购项目招标公告",
-                      "buyer":  "中国中医科学院广安门医院",
-                      "date":  "2026-11-04",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/d6ea298e-4a72-4ea2-9bc4-4a42e384f6e7.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "77bc6e4d-d82a-11f1-9615-fa163ee0ead6",
-                      "title":  "北京大学口腔医院信息化设备采购项目招标公告",
-                      "buyer":  "北京大学口腔医学院（北京大学口腔医院）",
-                      "date":  "2026-11-04",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/48258dc4-5d10-4707-9dbd-6839790b7e78.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "7c078b0c-d822-11f1-9615-fa163ee0ead6",
-                      "title":  "安徽省气象数据中心(安徽省气象探测中心、安徽省气象档案馆)面向短临预报的华东区域（安徽、江苏、山东）气象大数据云平台支撑算力及存储扩充项目安徽省设备采购项目招标公告",
-                      "buyer":  "安徽省气象数据中心(安徽省气象探测中心、安徽省气象档案馆)",
-                      "date":  "2026-11-04",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/f74b3269-b8e1-4bf0-bb44-9ac5ea5260e2.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "17b7edb7-d823-11f1-9615-fa163ee0ead6",
-                      "title":  "浙江省气象数据中心面向短临预报的华东区域（上海、浙江、江西、福建）气象大数据云平台支撑算力及存储扩充项目浙江省采购项目招标公告",
-                      "buyer":  "浙江省气象数据中心（浙江省气象探测中心、浙江省气象档案馆）",
-                      "date":  "2026-11-04",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/15aa09e1-c3d1-4f82-8357-3c30c627c591.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "cfaa4ed6-d75a-11f1-9615-fa163ee0ead6",
-                      "title":  "中国科学技术信息研究所2026年国科管系统基础运行环境软硬件设备采购项目招标公告",
-                      "buyer":  "中国科学技术信息研究所",
-                      "date":  "2026-11-03",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/3e7a1ea1-4128-4343-adbe-ba05afdb9d35.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "aee82378-d698-11f1-9615-fa163ee0ead6",
-                      "title":  "北京大学人民医院服务器存储灾备一体机防火墙采购项目招标公告",
-                      "buyer":  "北京大学人民医院(北京大学第二临床医学院)",
-                      "date":  "2026-11-02",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/2cedfdc3-cc82-4e8e-9b66-f917ab9bddc2.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "4249f11f-d443-11f1-9615-fa163ee0ead6",
-                      "title":  "民航总医院服务器和存储设备扩容采购项目招标公告",
-                      "buyer":  "民航总医院",
-                      "date":  "2026-10-30",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/f6c6c3b8-875b-4f5c-85eb-243a4c784825.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "d28b06ae-d446-11f1-9615-fa163ee0ead6",
-                      "title":  "中国矿业大学（北京）校园网络综合项目采购项目招标公告",
-                      "buyer":  "中国矿业大学(北京)",
-                      "date":  "2026-10-30",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/b8ccb937-6095-42cd-9d69-7f50276a40c1.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "97e7dff9-d26a-11f1-9615-fa163ee0ead6",
-                      "title":  "新华通讯社重庆分社业务用房基础设施更新改造机房基础设施采购项目招标公告",
-                      "buyer":  "新华通讯社重庆分社",
-                      "date":  "2026-10-28",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/2e3f7c7a-7a88-4320-b4d3-06308916c44b.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "51cf3a55-d26d-11f1-9615-fa163ee0ead6",
-                      "title":  "中国人民大学附属小学网络安全加固项目采购项目招标公告",
-                      "buyer":  "中国人民大学附属小学",
-                      "date":  "2026-10-28",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/226ae870-4873-45b6-9a6f-6bb03fdda31e.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "4e149ad9-d277-11f1-9615-fa163ee0ead6",
-                      "title":  "某单位信息化建设项目服务器、基础软件及其他设备采购项目招标公告",
-                      "buyer":  "某单位1",
-                      "date":  "2026-10-28",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/35d9c43d-e968-495e-a1ef-2d527ae3892b.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "16574400-d1a0-11f1-9615-fa163ee0ead6",
-                      "title":  "国家统计局天津调查总队四农普遥感测量软硬件采购项目招标公告",
-                      "buyer":  "国家统计局天津调查总队",
-                      "date":  "2026-10-27",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/4bcb9354-3015-4245-9929-154e8492b2c1.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "3166f6d5-d0e7-11f1-9615-fa163ee0ead6",
-                      "title":  "中国科学技术信息研究所2026年国科管系统评审相关软硬件设备采购项目招标公告",
-                      "buyer":  "中国科学技术信息研究所",
-                      "date":  "2026-10-26",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/cffe59bd-07fd-4e75-8061-1ce662bc3624.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "0c3f73b3-d0de-11f1-9615-fa163ee0ead6",
-                      "title":  "北京市气象数据中心面向短临预报的华北区域气象大数据云平台支撑算力及存储扩充采购项目招标公告",
-                      "buyer":  "北京市气象数据中心(北京市气象档案馆)",
-                      "date":  "2026-10-26",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/1edffd60-e150-4667-849e-64dddc7e8208.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "903ea72f-d115-11f1-9615-fa163ee0ead6",
-                      "title":  "zrcgr23120801GPU及HPC云计算服务采购项目招标公告",
-                      "buyer":  "zrcgr23120801",
-                      "date":  "2026-10-26",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/9ed2c122-d743-4bfd-8ff9-9713ec3aacbf.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "c9d0287b-d10e-11f1-9615-fa163ee0ead6",
-                      "title":  "工业和信息化部2026年政务信息化基础网络及基础设施年度运维政务外网及互联网运维服务采购项目招标公告",
-                      "buyer":  "工业和信息化部机关服务中心(工业和信息化部机关服务局)",
-                      "date":  "2026-10-26",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/ab3282ea-2c73-4bbf-8f17-2b0d2eaf123e.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "b86115f1-ce6d-11f1-9615-fa163ee0ead6",
-                      "title":  "中央广播电视总台总台AI语料项目-鲁谷数据中心智算系统采购项目招标公告",
-                      "buyer":  "中央广播电视总台",
-                      "date":  "2026-10-23",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/fd5cb06b-4d7b-45cd-baef-a2bf81cf301f.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "ac8ce600-ceb0-11f1-9615-fa163ee0ead6",
-                      "title":  "国家无线电监测中心卫星信号接收设施所需服务器等信息化配套采购项目招标公告",
-                      "buyer":  "国家无线电监测中心",
-                      "date":  "2026-10-23",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/0c5ed9bd-22ce-49af-aef6-9196e9c1d5d1.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "874b72ba-cdb1-11f1-9615-fa163ee0ead6",
-                      "title":  "中华人民共和国重庆海关2026年GPU算力服务器采购项目招标公告",
-                      "buyer":  "中华人民共和国重庆海关",
-                      "date":  "2026-10-22",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/99a03339-3532-48ae-9a90-fe4e796e11e1.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "357d4b9b-cdbb-11f1-9615-fa163ee0ead6",
-                      "title":  "北京大学第一医院一部改造网络建设采购项目招标公告",
-                      "buyer":  "北京大学第一医院（北京大学第一临床医学院）",
-                      "date":  "2026-10-22",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7a0614e2-7f95-4d89-b330-6e4f6b8c7d49.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "9f044c1c-ce09-11f1-9615-fa163ee0ead6",
-                      "title":  "中央国家机关2026年度多功能一体机框架协议联合征集采购项目征集公告",
-                      "buyer":  "",
-                      "date":  "2026-10-22",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/09b4b804-b1b3-45ec-be3b-72380e6dd035.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "5c148b9b-cd04-11f1-9615-fa163ee0ead6",
-                      "title":  "中国互联网络信息中心国家顶级域名解析系统主机房建设项目施工采购项目采购公告",
-                      "buyer":  "",
-                      "date":  "2026-10-21",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/55594777-a984-45e8-a253-a631c97d33bf.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "68c46b3b-cd28-11f1-9615-fa163ee0ead6",
-                      "title":  "新华通讯社全媒平台升级改造一期项目服务器子项采购项目（二次）招标公告",
-                      "buyer":  "新华通讯社",
-                      "date":  "2026-10-21",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/91051ab1-01ec-42be-a1fd-27a8c6674ae5.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "8605de22-cc1e-11f1-9615-fa163ee0ead6",
-                      "title":  "中国科学院大学信息技术中心交换机采购项目招标公告",
-                      "buyer":  "中国科学院大学",
-                      "date":  "2026-10-20",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/ae0365db-00e8-42ab-ae53-9ceeaf164fe9.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "3a949b6e-cb9e-11f1-9615-fa163ee0ead6",
-                      "title":  "中国互联网络信息中心云平台软件采购项目（二次）招标公告",
-                      "buyer":  "中国互联网络信息中心",
-                      "date":  "2026-10-19",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/cd337843-c504-4a95-a14f-34bf19774fdf.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "a9634c2b-cb93-11f1-9615-fa163ee0ead6",
-                      "title":  "安徽省气象台练江流域精细化降水-径流预报大模型技术攻关及应用智算服务器采购项目招标公告",
-                      "buyer":  "安徽省气象台",
-                      "date":  "2026-10-19",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/1a929053-fbea-4bce-b9bb-2cba2701b6b7.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "e8ff5c6c-cba1-11f1-9615-fa163ee0ead6",
-                      "title":  "华南理工大学校园网无线AP及核心网络设备一批采购项目招标公告",
-                      "buyer":  "华南理工大学",
-                      "date":  "2026-10-19",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/6578dca6-6419-45b5-babb-83b9d2b27150.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "6321df8f-cba0-11f1-9615-fa163ee0ead6",
-                      "title":  "江苏省气候中心人影调度指挥协同省级网络和数据安全能力提升（硬件部分）采购项目招标公告",
-                      "buyer":  "江苏省气候中心",
-                      "date":  "2026-10-19",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/cc06cf45-ea8d-4400-988e-a0651d1f1e8f.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "b49f8474-c934-11f1-9615-fa163ee0ead6",
-                      "title":  "中国农业大学网络技术中心2026年校园网出口带宽服务采购项目招标公告",
-                      "buyer":  "中国农业大学",
-                      "date":  "2026-10-16",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/8f9d54d4-6aed-4adb-8ed6-084d86592cbc.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "1342a675-c83c-11f1-9615-fa163ee0ead6",
-                      "title":  "南京大学苏州校区档案馆信息化设备与集成服务采购项目招标公告",
-                      "buyer":  "南京大学",
-                      "date":  "2026-10-15",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/2afd2c14-aa18-4bcd-b3cb-ad222b202649.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "97d8ce92-c867-11f1-9615-fa163ee0ead6",
-                      "title":  "中国社会科学院大学科教融合智能育人平台二期算力服务器采购项目招标公告",
-                      "buyer":  "中国社会科学院大学(中国社会科学院研究生院)",
-                      "date":  "2026-10-15",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/d6881da5-ce3b-4ff0-9d87-feecf3d02f56.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "8292c2ad-c86a-11f1-9615-fa163ee0ead6",
-                      "title":  "江苏省气候中心人影作业省级算力资源扩容采购项目招标公告",
-                      "buyer":  "江苏省气候中心",
-                      "date":  "2026-10-15",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/986986ce-ed26-44db-916e-648bc65ac199.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "1bf81653-c777-11f1-9615-fa163ee0ead6",
-                      "title":  "云南省气象台2026年面向短临预报的云南省气象大数据云平台支撑算力及存储扩充采购项目招标公告",
-                      "buyer":  "云南省气象局",
-                      "date":  "2026-10-14",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/a8dcb27a-7c0c-4846-93e8-7876b07f55d5.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "c536a667-c76b-11f1-9615-fa163ee0ead6",
-                      "title":  "湖北省气象数据中心面向短临预报的华中区域气象大数据云平台支撑算力及存储扩充采购项目招标公告",
-                      "buyer":  "湖北省气象数据中心（湖北省气象探测中心、湖北省气象档案馆）",
-                      "date":  "2026-10-14",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/fadc648f-e7d0-4b4a-b1c6-2eaaa23a7735.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "82967640-c77a-11f1-9615-fa163ee0ead6",
-                      "title":  "国家林业和草原局林草调查规划院林草生态综合监测服务器采购项目招标公告",
-                      "buyer":  "国家林业和草原局林草调查规划院",
-                      "date":  "2026-10-14",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/bb08af72-5047-481b-9b6b-66f5017cb4a3.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "b50f3d16-c7a8-11f1-9615-fa163ee0ead6",
-                      "title":  "中华人民共和国吉林出入境边防检查总站网络安全建设采购项目招标公告",
-                      "buyer":  "中华人民共和国吉林出入境边防检查总站(吉林省公安厅边境管理总队)",
-                      "date":  "2026-10-14",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/977e4143-7b82-4115-bd80-7e96adf89af8.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "7d9a91ed-c7a8-11f1-9615-fa163ee0ead6",
-                      "title":  "中国民用航空局空中交通管理局航空气象中心采购备份虚拟化平台采购项目招标公告",
-                      "buyer":  "中国民用航空局空中交通管理局航空气象中心",
-                      "date":  "2026-10-14",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/add4c0fe-57ae-4033-a8f7-90339a973a2c.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "2c33d36c-c44b-11f1-9615-fa163ee0ead6",
-                      "title":  "北京中医药大学东方医院高水平中医医院临床科研业务费信息机房设备采购项目招标公告",
-                      "buyer":  "北京中医药大学东方医院",
-                      "date":  "2026-10-10",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/60ab1796-7684-430f-b9dd-58079ea73ee9.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "9a0d7481-c44b-11f1-9615-fa163ee0ead6",
-                      "title":  "江苏省气象信息中心面向短临预报的华东区域（江苏）气象大数据云平台支撑算力及存储扩充采购项目招标公告",
-                      "buyer":  "江苏省气象信息中心(江苏省气象档案馆)",
-                      "date":  "2026-10-10",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/4e4cdb19-5060-415a-a416-452e114121ce.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "8fe22ff9-c38e-11f1-9615-fa163ee0ead6",
-                      "title":  "对外经济贸易大学中心机房基础设施改造采购项目招标公告",
-                      "buyer":  "对外经济贸易大学",
-                      "date":  "2026-10-09",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/534767c8-1622-4dfe-a975-d70db67ab16e.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "5f9bb31a-c3a9-11f1-9615-fa163ee0ead6",
-                      "title":  "云南省气象局云南省加密气象观测网建设项目(2025年-2026年)通用计算和存储资源建设采购项目招标公告",
-                      "buyer":  "云南省气象局",
-                      "date":  "2026-10-09",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/b1d5ffdd-4dbf-4b66-b488-1b57a395b84b.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "83b222cf-c3b2-11f1-9615-fa163ee0ead6",
-                      "title":  "最高人民法院知识产权法庭搬迁信息化采购项目（二次）招标公告",
-                      "buyer":  "中华人民共和国最高人民法院",
-                      "date":  "2026-10-09",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/48618d48-99ad-4e22-9da1-2545997e0faa.html",
-                      "notice_type":  "招标采购公告"
-                  },
-                  {
-                      "id":  "d7ac54d0-c2a5-11f1-9615-fa163ee0ead6",
-                      "title":  "中国人民大学通州校区校园网络基础设施建设采购项目招标公告",
-                      "buyer":  "中国人民大学",
-                      "date":  "2026-10-08",
-                      "url":  "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/035d09e6-e92c-43a0-a25f-6057e9950b0d.html",
-                      "notice_type":  "招标采购公告"
-                  }
-              ]
+ "source": "zycgmain",
+ "updated_at": "2026-11-20T09:46:32+08:00",
+ "count": 89,
+ "items": [
+  {
+   "id": "a8d376cd-e479-11f1-9615-fa163ee0ead6",
+   "title": "国家统计局上海调查总队网络及会议室智能改造采购项目招标公告",
+   "buyer": "国家统计局上海调查总队",
+   "date": "2026-11-20",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7514e10f-4838-4d04-a167-46df08874bd4.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "e19f0ec0-e47e-11f1-9615-fa163ee0ead6",
+   "title": "中山大学附属第一医院精准高性能硬件平台六期存储扩容采购项目招标公告",
+   "buyer": "中山大学附属第一医院",
+   "date": "2026-11-20",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/f31ce172-25e5-4b91-b140-fa9a7db3a038.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "06cb56f2-e3c4-11f1-9615-fa163ee0ead6",
+   "title": "工业和信息化部电子第五研究所AI芯片软件平台标准和应用采购项目招标公告",
+   "buyer": "中国电子产品可靠性与环境试验研究所((工业和信息化部电子第五研究所)(中国赛宝实验室))",
+   "date": "2026-11-19",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7b0a132a-ada3-4da0-8294-a6e748bb59b1.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "3ba1c877-e3bc-11f1-9615-fa163ee0ead6",
+   "title": "上海市气象信息与技术支持中心面向短临预报的华东区域（上海、浙江、江西、福建）气象大数据云平台支撑算力及存储扩充项目-上海市采购项目招标公告",
+   "buyer": "上海市气象信息与技术支持中心(上海市气象档案馆)",
+   "date": "2026-11-19",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/d5f0fbe2-7c23-45b2-adef-f7ebbd6634ad.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "677f0258-e3b8-11f1-9615-fa163ee0ead6",
+   "title": "国家广播电视总局无线电台管理局大湾区覆盖项目直播卫星系统集成播出系统信息化系统设备采购项目招标公告",
+   "buyer": "国家广播电视总局无线电台管理局",
+   "date": "2026-11-19",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/bf8285ac-2455-4315-99fe-400549e095d9.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "be626d52-e3e4-11f1-9615-fa163ee0ead6",
+   "title": "中国中医科学院广安门医院高水平中医医院临床科研及诊疗能力提升项目数据中心机房主机与存储采购项目招标公告",
+   "buyer": "中国中医科学院广安门医院",
+   "date": "2026-11-19",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/58a9a7b1-fa77-4424-a7aa-2e1c617c1ce5.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "3aa75b2a-e3e2-11f1-9615-fa163ee0ead6",
+   "title": "国家气象信息中心面向短临预报的气象大数据云平台加工流水线支撑算力扩充采购项目招标公告",
+   "buyer": "国家气象信息中心(中国气象局气象数据中心)",
+   "date": "2026-11-19",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/b93e78fe-409d-47e6-b3f5-12250e61d147.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "256f69e9-e3e2-11f1-9615-fa163ee0ead6",
+   "title": "国家气象信息中心面向短临预报业务的内网区虚拟化资源池扩充采购项目招标公告",
+   "buyer": "国家气象信息中心(中国气象局气象数据中心)",
+   "date": "2026-11-19",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7f045ed2-94ef-45fc-b4a9-de23b4fe29fc.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "cfef7891-e2ea-11f1-9615-fa163ee0ead6",
+   "title": "中国船级社数据集服务器基础设施采购项目招标公告",
+   "buyer": "中国船级社",
+   "date": "2026-11-18",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/57472335-10cc-4117-8d26-1e83eb35f6a6.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "7be45908-e2f2-11f1-9615-fa163ee0ead6",
+   "title": "河北省气象信息中心面向短临预报的华北区域气象大数据云平台支撑算力及存储扩充采购项目招标公告",
+   "buyer": "河北省气象信息中心",
+   "date": "2026-11-18",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/00d2688d-63fa-4d73-add2-bc4d5bc5fcb2.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "7a55699c-e259-11f1-9615-fa163ee0ead6",
+   "title": "吉林大学中日联谊医院内网工作站采购项目招标公告",
+   "buyer": "吉林大学中日联谊医院",
+   "date": "2026-11-17",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/9b4f6ad5-ddac-4a64-ba10-79e54652a58a.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "84affca8-e26d-11f1-9615-fa163ee0ead6",
+   "title": "国家广播电视总局广播电视卫星直播管理中心信息网络设备及软件采购项目招标公告",
+   "buyer": "国家广播电视总局广播电视卫星直播管理中心",
+   "date": "2026-11-17",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/4fa8a1b5-d7e8-41e5-8177-5026cbaf7b5d.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "78650714-e272-11f1-9615-fa163ee0ead6",
+   "title": "国家医保局医药价格和招标采购指导中心医保综合价值评价工作服务器采购项目招标公告",
+   "buyer": "国家医疗保障局医药价格和招标采购指导中心",
+   "date": "2026-11-17",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/60142f7a-e238-45d5-8c46-eb3e64aac6c2.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "23cb4ec6-e163-11f1-9615-fa163ee0ead6",
+   "title": "中国疾病预防控制中心新址二期信息楼-数据中心-AI算力平台采购项目招标公告",
+   "buyer": "中国疾病预防控制中心",
+   "date": "2026-11-16",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/d1325108-9193-4ece-804d-c98ce7028144.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "15b7f5b0-e161-11f1-9615-fa163ee0ead6",
+   "title": "西安交通大学第二附属医院双活数据中心容灾备份系统建设采购项目招标公告",
+   "buyer": "西安交通大学医学院第二附属医院",
+   "date": "2026-11-16",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/d4bd7f17-4cce-4fac-aa43-219afc842809.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "6663ff1c-e18e-11f1-9615-fa163ee0ead6",
+   "title": "中国科学院高能物理研究所云平台首批服务器和核心交换机采购项目招标公告",
+   "buyer": "中国科学院高能物理研究所",
+   "date": "2026-11-16",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7502ea79-ca55-448f-9407-1edc526edbd1.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "a33818d1-e18c-11f1-9615-fa163ee0ead6",
+   "title": "国家广播电视总局信息中心“中国视听”平台服务能力提升通用软硬件、软件定制开发及系统集成采购项目招标公告",
+   "buyer": "国家广播电视总局信息中心",
+   "date": "2026-11-16",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/01b275e9-6710-4747-81b5-a8d8cb52c19c.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "4bc0a348-df00-11f1-9615-fa163ee0ead6",
+   "title": "国家气象信息中心面向短临预报的气象大数据云平台在线数据支撑存储扩充采购项目招标公告",
+   "buyer": "国家气象信息中心(中国气象局气象数据中心)",
+   "date": "2026-11-13",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/674eaaa4-b0e9-4746-98ff-3c555d545192.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "6f1e9611-df00-11f1-9615-fa163ee0ead6",
+   "title": "国家统计局重庆调查总队网络改造采购项目招标公告",
+   "buyer": "国家统计局重庆调查总队",
+   "date": "2026-11-13",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/f7c40ce4-8988-413c-84ac-66b3f60684c9.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "2efa3c9c-df00-11f1-9615-fa163ee0ead6",
+   "title": "国家工业信息安全发展研究中心智能化能力建设配套软硬件资源设备采购项目招标公告",
+   "buyer": "国家工业信息安全发展研究中心(工业和信息化部电子第一研究所)",
+   "date": "2026-11-13",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/3dca9b45-ca69-4d73-8a88-02ea878ca932.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "29f78929-deff-11f1-9615-fa163ee0ead6",
+   "title": "天津市气象信息中心面向短临预报的华北区域气象大数据云平台支撑算力及存储扩充采购项目招标公告",
+   "buyer": "天津市气象信息中心(天津市气象档案馆)",
+   "date": "2026-11-13",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/70ac2e62-2f1f-4947-8a50-624416038192.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "f369cea3-deff-11f1-9615-fa163ee0ead6",
+   "title": "中央国家机关住房资金管理中心基础软硬件采购项目招标公告",
+   "buyer": "中央国家机关住房资金管理中心",
+   "date": "2026-11-13",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/a22249d0-37fc-4adf-be90-16677f1bbf47.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "357d23c6-df41-11f1-9615-fa163ee0ead6",
+   "title": "郑州警察学院算力中心服务器采购项目（三次）招标公告",
+   "buyer": "郑州警察学院",
+   "date": "2026-11-13",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/52849884-fd66-4f44-89bc-04641c8dd947.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "8cf87149-df48-11f1-9615-fa163ee0ead6",
+   "title": "中国科学院高能物理研究所BES网络及安全设备采购项目招标公告",
+   "buyer": "中国科学院高能物理研究所",
+   "date": "2026-11-13",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/5a9e9337-269f-424c-a638-e2036cc307fc.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "f87f2a96-df15-11f1-9615-fa163ee0ead6",
+   "title": "中国互联网络信息中心同城数据中心升级设备采购项目招标公告",
+   "buyer": "中国互联网络信息中心",
+   "date": "2026-11-13",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/e675afcf-ed31-45de-8fa4-2ae2a50f4408.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "a1e48061-df01-11f1-9615-fa163ee0ead6",
+   "title": "中山大学附属第一医院网络安全组件升级改造采购项目招标公告",
+   "buyer": "中山大学附属第一医院",
+   "date": "2026-11-13",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/70e96f2b-e9d7-477e-9750-d0056b3a37a9.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "75684fd0-df05-11f1-9615-fa163ee0ead6",
+   "title": "国家金融监督管理总局安徽监管局12台数据库服务器采购项目招标公告",
+   "buyer": "中国银行保险监督管理委员会安徽监管局",
+   "date": "2026-11-13",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/99e58ab9-f150-4da5-a513-6b33a91e3ffc.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "965f9f94-de30-11f1-9615-fa163ee0ead6",
+   "title": "工业和信息化部电子第五研究所AI芯片软硬件适配验证和研究平台采购项目招标公告",
+   "buyer": "中国电子产品可靠性与环境试验研究所((工业和信息化部电子第五研究所)(中国赛宝实验室))",
+   "date": "2026-11-12",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/739d6ef5-000c-411e-a52f-2300a0785371.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "fa34f023-de68-11f1-9615-fa163ee0ead6",
+   "title": "中国科学院高能物理研究所智能化计算服务器采购项目招标公告",
+   "buyer": "中国科学院高能物理研究所",
+   "date": "2026-11-12",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/56ae310f-47f9-4e84-9f5c-74868bd5036d.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "6b1fed51-dd72-11f1-9615-fa163ee0ead6",
+   "title": "国家统计局吉林调查总队信息化改造项目（二期）采购项目招标公告",
+   "buyer": "国家统计局吉林调查总队",
+   "date": "2026-11-11",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/0778903e-8524-494f-b6c8-657d3cd6eb73.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "0ef7522a-dd69-11f1-9615-fa163ee0ead6",
+   "title": "中国人民银行山东省分行2026年网络和安全设备采购项目招标公告",
+   "buyer": "中国人民银行山东省分行（国家外汇管理局山东省分局）",
+   "date": "2026-11-11",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/2e7e3988-020f-46b0-96be-d3c23f0a450f.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "ee882418-dd73-11f1-9615-fa163ee0ead6",
+   "title": "国家气象信息中心关于面向短临预报的气象大数据云平台存储资源管理及接口服务支撑算力扩充采购项目招标公告",
+   "buyer": "国家气象信息中心(中国气象局气象数据中心)",
+   "date": "2026-11-11",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/41d51ad5-bd25-4069-893b-7c099eeb6c2d.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "6fa478f3-dd9a-11f1-9615-fa163ee0ead6",
+   "title": "人力资源社会保障部部省指挥系统和部视频会议室会议系统设备采购及部西院数据中心运维室系统建设采购项目招标公告",
+   "buyer": "中华人民共和国人力资源和社会保障部",
+   "date": "2026-11-11",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/e64d90c4-5738-4e25-86dd-6d234c8805d3.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "9cae2826-dd7b-11f1-9615-fa163ee0ead6",
+   "title": "中国人民大学通州校区校园网络基础设施建设采购项目（二次）招标公告",
+   "buyer": "中国人民大学",
+   "date": "2026-11-11",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/8e7bdae3-ee54-485c-8794-785bee24ae8e.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "2dc9b95c-dcd8-11f1-9615-fa163ee0ead6",
+   "title": "国家广播电视总局广播电视卫星直播管理中心信息网络设备及网络安全软硬件采购项目招标公告",
+   "buyer": "国家广播电视总局广播电视卫星直播管理中心",
+   "date": "2026-11-10",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/9398b5e6-1291-4648-b315-00331d692b2b.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "7b859460-dc1a-11f1-9615-fa163ee0ead6",
+   "title": "北京理工大学教育学院教育数据中心服务器采购项目招标公告",
+   "buyer": "北京理工大学",
+   "date": "2026-11-09",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/85f1101b-a2a1-4404-932b-1e60e8e3ea56.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "5ea1bf55-dc1b-11f1-9615-fa163ee0ead6",
+   "title": "吉林大学第一医院信息化建设采购项目招标公告",
+   "buyer": "吉林大学第一医院",
+   "date": "2026-11-09",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/4aecae6e-c7b9-4564-8280-1917500de2bc.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "a7c52087-d97c-11f1-9615-fa163ee0ead6",
+   "title": "重庆大学储能技术大楼及沙坪坝学生宿舍网络设备采购项目（二次）招标公告",
+   "buyer": "重庆大学",
+   "date": "2026-11-06",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/119468ce-b98a-47a7-b947-b629728f3895.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "f6a9a4ef-d98a-11f1-9615-fa163ee0ead6",
+   "title": "山东省气象数据中心面向短临预报的华东区域（安徽、江苏、山东）气象大数据云平台支撑算力及存储扩充采购项目招标公告",
+   "buyer": "山东省气象数据中心",
+   "date": "2026-11-06",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/79d74f3c-28c4-48d8-87bc-39136cea5b52.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "4d8a68ea-d9a0-11f1-9615-fa163ee0ead6",
+   "title": "四川省气象数据中心服务器及存储设备采购项目招标公告",
+   "buyer": "四川省气象数据中心(四川省气象探测中心、四川省气象档案馆)",
+   "date": "2026-11-06",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/4a35ba0e-1fc7-4b37-b654-278bc4fb1c52.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "122e2e33-d8bf-11f1-9615-fa163ee0ead6",
+   "title": "新华通讯社智能化技术服务项目高性能GPU服务器云服务子项采购项目招标公告",
+   "buyer": "新华通讯社",
+   "date": "2026-11-05",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/0cc23cf3-71c3-4910-ba2b-26d3eacc443c.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "5d17ae2d-d8e9-11f1-9615-fa163ee0ead6",
+   "title": "珠江水利委员会珠江水利科学研究院采购云电脑采购项目招标公告",
+   "buyer": "珠江水利委员会珠江水利科学研究院",
+   "date": "2026-11-05",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/c09df8d3-103b-4412-b8b7-ad823f2427ad.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "ede763c8-d7fe-11f1-9615-fa163ee0ead6",
+   "title": "某单位2园区信息化建设采购项目招标公告",
+   "buyer": "某单位2",
+   "date": "2026-11-04",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/b40b8ee8-80b1-450b-8c49-e67747090c00.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "8737f883-d807-11f1-9615-fa163ee0ead6",
+   "title": "中国电子口岸数据中心深圳分中心开发环境升级建设项目采购项目招标公告",
+   "buyer": "中华人民共和国深圳海关",
+   "date": "2026-11-04",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/2be4d69d-603e-4d19-8e69-bd6729309162.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "a3e66b6d-d7f1-11f1-9615-fa163ee0ead6",
+   "title": "北京理工大学新能源汽车国家监测与管理平台数据中心互联网接入服务采购项目(二次)招标公告",
+   "buyer": "北京理工大学",
+   "date": "2026-11-04",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/d1c873c1-aed6-4099-b9b0-7ef7cbc69c64.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "0d6d06f0-d7fe-11f1-9615-fa163ee0ead6",
+   "title": "中央广播电视总台总台AI语料项目-基础资源支撑平台-存储系统及西部数据中心存储系统（二）迁移服务器和分布式存储采购项目招标公告",
+   "buyer": "中央广播电视总台",
+   "date": "2026-11-04",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7191d621-8075-4814-96e3-5a801392db06.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "b30a8dcb-d829-11f1-9615-fa163ee0ead6",
+   "title": "中国中医科学院广安门医院数据中心机房网络与安全相关设备高水平中医医院临床大数据科研分析平台——网络与安全采购项目招标公告",
+   "buyer": "中国中医科学院广安门医院",
+   "date": "2026-11-04",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/d6ea298e-4a72-4ea2-9bc4-4a42e384f6e7.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "77bc6e4d-d82a-11f1-9615-fa163ee0ead6",
+   "title": "北京大学口腔医院信息化设备采购项目招标公告",
+   "buyer": "北京大学口腔医学院（北京大学口腔医院）",
+   "date": "2026-11-04",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/48258dc4-5d10-4707-9dbd-6839790b7e78.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "7c078b0c-d822-11f1-9615-fa163ee0ead6",
+   "title": "安徽省气象数据中心(安徽省气象探测中心、安徽省气象档案馆)面向短临预报的华东区域（安徽、江苏、山东）气象大数据云平台支撑算力及存储扩充项目安徽省设备采购项目招标公告",
+   "buyer": "安徽省气象数据中心(安徽省气象探测中心、安徽省气象档案馆)",
+   "date": "2026-11-04",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/f74b3269-b8e1-4bf0-bb44-9ac5ea5260e2.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "17b7edb7-d823-11f1-9615-fa163ee0ead6",
+   "title": "浙江省气象数据中心面向短临预报的华东区域（上海、浙江、江西、福建）气象大数据云平台支撑算力及存储扩充项目浙江省采购项目招标公告",
+   "buyer": "浙江省气象数据中心（浙江省气象探测中心、浙江省气象档案馆）",
+   "date": "2026-11-04",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/15aa09e1-c3d1-4f82-8357-3c30c627c591.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "cfaa4ed6-d75a-11f1-9615-fa163ee0ead6",
+   "title": "中国科学技术信息研究所2026年国科管系统基础运行环境软硬件设备采购项目招标公告",
+   "buyer": "中国科学技术信息研究所",
+   "date": "2026-11-03",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/3e7a1ea1-4128-4343-adbe-ba05afdb9d35.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "aee82378-d698-11f1-9615-fa163ee0ead6",
+   "title": "北京大学人民医院服务器存储灾备一体机防火墙采购项目招标公告",
+   "buyer": "北京大学人民医院(北京大学第二临床医学院)",
+   "date": "2026-11-02",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/2cedfdc3-cc82-4e8e-9b66-f917ab9bddc2.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "4249f11f-d443-11f1-9615-fa163ee0ead6",
+   "title": "民航总医院服务器和存储设备扩容采购项目招标公告",
+   "buyer": "民航总医院",
+   "date": "2026-10-30",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/f6c6c3b8-875b-4f5c-85eb-243a4c784825.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "d28b06ae-d446-11f1-9615-fa163ee0ead6",
+   "title": "中国矿业大学（北京）校园网络综合项目采购项目招标公告",
+   "buyer": "中国矿业大学(北京)",
+   "date": "2026-10-30",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/b8ccb937-6095-42cd-9d69-7f50276a40c1.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "97e7dff9-d26a-11f1-9615-fa163ee0ead6",
+   "title": "新华通讯社重庆分社业务用房基础设施更新改造机房基础设施采购项目招标公告",
+   "buyer": "新华通讯社重庆分社",
+   "date": "2026-10-28",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/2e3f7c7a-7a88-4320-b4d3-06308916c44b.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "51cf3a55-d26d-11f1-9615-fa163ee0ead6",
+   "title": "中国人民大学附属小学网络安全加固项目采购项目招标公告",
+   "buyer": "中国人民大学附属小学",
+   "date": "2026-10-28",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/226ae870-4873-45b6-9a6f-6bb03fdda31e.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "4e149ad9-d277-11f1-9615-fa163ee0ead6",
+   "title": "某单位信息化建设项目服务器、基础软件及其他设备采购项目招标公告",
+   "buyer": "某单位1",
+   "date": "2026-10-28",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/35d9c43d-e968-495e-a1ef-2d527ae3892b.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "16574400-d1a0-11f1-9615-fa163ee0ead6",
+   "title": "国家统计局天津调查总队四农普遥感测量软硬件采购项目招标公告",
+   "buyer": "国家统计局天津调查总队",
+   "date": "2026-10-27",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/4bcb9354-3015-4245-9929-154e8492b2c1.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "3166f6d5-d0e7-11f1-9615-fa163ee0ead6",
+   "title": "中国科学技术信息研究所2026年国科管系统评审相关软硬件设备采购项目招标公告",
+   "buyer": "中国科学技术信息研究所",
+   "date": "2026-10-26",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/cffe59bd-07fd-4e75-8061-1ce662bc3624.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "0c3f73b3-d0de-11f1-9615-fa163ee0ead6",
+   "title": "北京市气象数据中心面向短临预报的华北区域气象大数据云平台支撑算力及存储扩充采购项目招标公告",
+   "buyer": "北京市气象数据中心(北京市气象档案馆)",
+   "date": "2026-10-26",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/1edffd60-e150-4667-849e-64dddc7e8208.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "903ea72f-d115-11f1-9615-fa163ee0ead6",
+   "title": "zrcgr23120801GPU及HPC云计算服务采购项目招标公告",
+   "buyer": "zrcgr23120801",
+   "date": "2026-10-26",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/9ed2c122-d743-4bfd-8ff9-9713ec3aacbf.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "c9d0287b-d10e-11f1-9615-fa163ee0ead6",
+   "title": "工业和信息化部2026年政务信息化基础网络及基础设施年度运维政务外网及互联网运维服务采购项目招标公告",
+   "buyer": "工业和信息化部机关服务中心(工业和信息化部机关服务局)",
+   "date": "2026-10-26",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/ab3282ea-2c73-4bbf-8f17-2b0d2eaf123e.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "b86115f1-ce6d-11f1-9615-fa163ee0ead6",
+   "title": "中央广播电视总台总台AI语料项目-鲁谷数据中心智算系统采购项目招标公告",
+   "buyer": "中央广播电视总台",
+   "date": "2026-10-23",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/fd5cb06b-4d7b-45cd-baef-a2bf81cf301f.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "ac8ce600-ceb0-11f1-9615-fa163ee0ead6",
+   "title": "国家无线电监测中心卫星信号接收设施所需服务器等信息化配套采购项目招标公告",
+   "buyer": "国家无线电监测中心",
+   "date": "2026-10-23",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/0c5ed9bd-22ce-49af-aef6-9196e9c1d5d1.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "874b72ba-cdb1-11f1-9615-fa163ee0ead6",
+   "title": "中华人民共和国重庆海关2026年GPU算力服务器采购项目招标公告",
+   "buyer": "中华人民共和国重庆海关",
+   "date": "2026-10-22",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/99a03339-3532-48ae-9a90-fe4e796e11e1.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "357d4b9b-cdbb-11f1-9615-fa163ee0ead6",
+   "title": "北京大学第一医院一部改造网络建设采购项目招标公告",
+   "buyer": "北京大学第一医院（北京大学第一临床医学院）",
+   "date": "2026-10-22",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7a0614e2-7f95-4d89-b330-6e4f6b8c7d49.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "9f044c1c-ce09-11f1-9615-fa163ee0ead6",
+   "title": "中央国家机关2026年度多功能一体机框架协议联合征集采购项目征集公告",
+   "buyer": "",
+   "date": "2026-10-22",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/09b4b804-b1b3-45ec-be3b-72380e6dd035.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "5c148b9b-cd04-11f1-9615-fa163ee0ead6",
+   "title": "中国互联网络信息中心国家顶级域名解析系统主机房建设项目施工采购项目采购公告",
+   "buyer": "",
+   "date": "2026-10-21",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/55594777-a984-45e8-a253-a631c97d33bf.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "68c46b3b-cd28-11f1-9615-fa163ee0ead6",
+   "title": "新华通讯社全媒平台升级改造一期项目服务器子项采购项目（二次）招标公告",
+   "buyer": "新华通讯社",
+   "date": "2026-10-21",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/91051ab1-01ec-42be-a1fd-27a8c6674ae5.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "8605de22-cc1e-11f1-9615-fa163ee0ead6",
+   "title": "中国科学院大学信息技术中心交换机采购项目招标公告",
+   "buyer": "中国科学院大学",
+   "date": "2026-10-20",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/ae0365db-00e8-42ab-ae53-9ceeaf164fe9.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "3a949b6e-cb9e-11f1-9615-fa163ee0ead6",
+   "title": "中国互联网络信息中心云平台软件采购项目（二次）招标公告",
+   "buyer": "中国互联网络信息中心",
+   "date": "2026-10-19",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/cd337843-c504-4a95-a14f-34bf19774fdf.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "a9634c2b-cb93-11f1-9615-fa163ee0ead6",
+   "title": "安徽省气象台练江流域精细化降水-径流预报大模型技术攻关及应用智算服务器采购项目招标公告",
+   "buyer": "安徽省气象台",
+   "date": "2026-10-19",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/1a929053-fbea-4bce-b9bb-2cba2701b6b7.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "e8ff5c6c-cba1-11f1-9615-fa163ee0ead6",
+   "title": "华南理工大学校园网无线AP及核心网络设备一批采购项目招标公告",
+   "buyer": "华南理工大学",
+   "date": "2026-10-19",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/6578dca6-6419-45b5-babb-83b9d2b27150.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "6321df8f-cba0-11f1-9615-fa163ee0ead6",
+   "title": "江苏省气候中心人影调度指挥协同省级网络和数据安全能力提升（硬件部分）采购项目招标公告",
+   "buyer": "江苏省气候中心",
+   "date": "2026-10-19",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/cc06cf45-ea8d-4400-988e-a0651d1f1e8f.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "b49f8474-c934-11f1-9615-fa163ee0ead6",
+   "title": "中国农业大学网络技术中心2026年校园网出口带宽服务采购项目招标公告",
+   "buyer": "中国农业大学",
+   "date": "2026-10-16",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/8f9d54d4-6aed-4adb-8ed6-084d86592cbc.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "1342a675-c83c-11f1-9615-fa163ee0ead6",
+   "title": "南京大学苏州校区档案馆信息化设备与集成服务采购项目招标公告",
+   "buyer": "南京大学",
+   "date": "2026-10-15",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/2afd2c14-aa18-4bcd-b3cb-ad222b202649.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "97d8ce92-c867-11f1-9615-fa163ee0ead6",
+   "title": "中国社会科学院大学科教融合智能育人平台二期算力服务器采购项目招标公告",
+   "buyer": "中国社会科学院大学(中国社会科学院研究生院)",
+   "date": "2026-10-15",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/d6881da5-ce3b-4ff0-9d87-feecf3d02f56.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "8292c2ad-c86a-11f1-9615-fa163ee0ead6",
+   "title": "江苏省气候中心人影作业省级算力资源扩容采购项目招标公告",
+   "buyer": "江苏省气候中心",
+   "date": "2026-10-15",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/986986ce-ed26-44db-916e-648bc65ac199.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "1bf81653-c777-11f1-9615-fa163ee0ead6",
+   "title": "云南省气象台2026年面向短临预报的云南省气象大数据云平台支撑算力及存储扩充采购项目招标公告",
+   "buyer": "云南省气象局",
+   "date": "2026-10-14",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/a8dcb27a-7c0c-4846-93e8-7876b07f55d5.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "c536a667-c76b-11f1-9615-fa163ee0ead6",
+   "title": "湖北省气象数据中心面向短临预报的华中区域气象大数据云平台支撑算力及存储扩充采购项目招标公告",
+   "buyer": "湖北省气象数据中心（湖北省气象探测中心、湖北省气象档案馆）",
+   "date": "2026-10-14",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/fadc648f-e7d0-4b4a-b1c6-2eaaa23a7735.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "82967640-c77a-11f1-9615-fa163ee0ead6",
+   "title": "国家林业和草原局林草调查规划院林草生态综合监测服务器采购项目招标公告",
+   "buyer": "国家林业和草原局林草调查规划院",
+   "date": "2026-10-14",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/bb08af72-5047-481b-9b6b-66f5017cb4a3.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "b50f3d16-c7a8-11f1-9615-fa163ee0ead6",
+   "title": "中华人民共和国吉林出入境边防检查总站网络安全建设采购项目招标公告",
+   "buyer": "中华人民共和国吉林出入境边防检查总站(吉林省公安厅边境管理总队)",
+   "date": "2026-10-14",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/977e4143-7b82-4115-bd80-7e96adf89af8.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "7d9a91ed-c7a8-11f1-9615-fa163ee0ead6",
+   "title": "中国民用航空局空中交通管理局航空气象中心采购备份虚拟化平台采购项目招标公告",
+   "buyer": "中国民用航空局空中交通管理局航空气象中心",
+   "date": "2026-10-14",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/add4c0fe-57ae-4033-a8f7-90339a973a2c.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "2c33d36c-c44b-11f1-9615-fa163ee0ead6",
+   "title": "北京中医药大学东方医院高水平中医医院临床科研业务费信息机房设备采购项目招标公告",
+   "buyer": "北京中医药大学东方医院",
+   "date": "2026-10-10",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/60ab1796-7684-430f-b9dd-58079ea73ee9.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "9a0d7481-c44b-11f1-9615-fa163ee0ead6",
+   "title": "江苏省气象信息中心面向短临预报的华东区域（江苏）气象大数据云平台支撑算力及存储扩充采购项目招标公告",
+   "buyer": "江苏省气象信息中心(江苏省气象档案馆)",
+   "date": "2026-10-10",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/4e4cdb19-5060-415a-a416-452e114121ce.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "8fe22ff9-c38e-11f1-9615-fa163ee0ead6",
+   "title": "对外经济贸易大学中心机房基础设施改造采购项目招标公告",
+   "buyer": "对外经济贸易大学",
+   "date": "2026-10-09",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/534767c8-1622-4dfe-a975-d70db67ab16e.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "5f9bb31a-c3a9-11f1-9615-fa163ee0ead6",
+   "title": "云南省气象局云南省加密气象观测网建设项目(2025年-2026年)通用计算和存储资源建设采购项目招标公告",
+   "buyer": "云南省气象局",
+   "date": "2026-10-09",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/b1d5ffdd-4dbf-4b66-b488-1b57a395b84b.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "83b222cf-c3b2-11f1-9615-fa163ee0ead6",
+   "title": "最高人民法院知识产权法庭搬迁信息化采购项目（二次）招标公告",
+   "buyer": "中华人民共和国最高人民法院",
+   "date": "2026-10-09",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/48618d48-99ad-4e22-9da1-2545997e0faa.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  },
+  {
+   "id": "d7ac54d0-c2a5-11f1-9615-fa163ee0ead6",
+   "title": "中国人民大学通州校区校园网络基础设施建设采购项目招标公告",
+   "buyer": "中国人民大学",
+   "date": "2026-10-08",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/035d09e6-e92c-43a0-a25f-6057e9950b0d.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-20"
+  }
+ ]
 }

@@ -176,6 +176,8 @@
   }
 
   // ---------- 公告日期选择器：仅实际有公告的日期可点 ----------
+  // 口径按分类（export_static.py 已统一进 pub_date）：央采询价=发布日期、单独委托=采集日期、
+  // 国铁/保利=公告发布日期；旧数据回退 publish_date
   function itemDay(it) { return String(it.pub_date || it.publish_date || "").slice(0, 10); }
   function initAvailableDates() {
     state.availableDates = {};
@@ -248,7 +250,7 @@
     if (plat === "rail" && state.railSource && String(it.id || "").indexOf(state.railSource) !== 0) return false;
     if (plat === "zycg" && state.zycgSource && it.source !== state.zycgSource) return false;
     if (f.brand && String(it.brands || "").toLowerCase().indexOf(f.brand.toLowerCase()) < 0) return false;
-    // 按发布日期（平台上架日）精确选某一天；无上架日的旧数据退回标书落款日
+    // 按分类口径日期精确选某一天（询价=发布日期 / 委托=采集日期 / 国铁保利=公告发布日）；无 pub_date 的旧数据退回 publish_date
     if (f.date && String(it.pub_date || it.publish_date || "").slice(0, 10) !== f.date) return false;
     if (f.status === "进行中" && it.is_end !== 0) return false;
     if (f.status === "已截止" && it.is_end !== 1) return false;
@@ -359,7 +361,7 @@
       "</div>" +
       '<div class="row2">' +
         '<span><b>' + (isBid ? "采购人" : "采购方") + '</b> ' + esc(it.org_name || it.purchase_company || "—") + "</span>" +
-         '<span><b>' + (plat === "zycg" ? "发布" : "发布") + '</b> ' + esc(((it.pub_date || it.publish_date) || "—").slice(0, 16)) + "</span>" +
+         '<span><b>' + (it.source === "委托" ? "采集" : "发布") + '</b> ' + esc(((it.pub_date || it.publish_date) || "—").slice(0, 16)) + "</span>" +
         (isBid
           ? '<span class="tag cat">' + esc(it.source || "") + "</span>" +
             (it.notice_type ? '<span class="tag">' + esc(it.notice_type) + "</span>" : "") +
@@ -434,6 +436,7 @@
         metaIt("公告类型", esc(d.notice_type || "—")) +
         metaIt("地区", esc(d.region || "—")) +
         metaIt("发布时间", esc(d.publish_date || "—")) +
+        (d.source === "委托" ? metaIt("采集日期", esc(d.seen_date || d.pub_date || "—")) : "") +
         metaIt("数据来源", esc(d.source === "委托" ? "央采主站·单独委托项目" : (d.source || "—"))) +
       "</div>" +
       '<div class="d-actions">' +

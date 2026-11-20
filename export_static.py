@@ -126,7 +126,10 @@ def _load_weituo_items():
             "purchase_company": it.get("buyer") or "",
             "budget_amount": None, "budget_num": None,
             "end_time": "", "publish_date": (it.get("date") or "").replace(".", "-"),
-            "pub_date": (it.get("date") or "").replace(".", "-"),
+            # 单独委托项目按采集日期标注（2026-11-20 用户要求）：pub_date = seen_date（采集日）；
+            # 存量数据无采集日期时回退公告发布日期
+            "pub_date": (it.get("seen_date") or it.get("date") or "").replace(".", "-"),
+            "seen_date": (it.get("seen_date") or "").replace(".", "-"),
             "category": _weituo_category(title),
             "brands": "", "is_end": 0,
             "enquiry_no": "", "has_pdf": False, "pdf_path": None,

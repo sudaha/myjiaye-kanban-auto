@@ -130,6 +130,7 @@ def main():
                         "id": aid,
                         "title": title,
                         "date": it.get("addtimeStr", ""),
+                        "seen_date": dt.date.today().isoformat(),
                         "url": "https://www.zycg.gov.cn" + it.get("pageurl", ""),
                         "source": "zycg-main",
                     })
