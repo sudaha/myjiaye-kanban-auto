@@ -1406,7 +1406,9 @@
   function ensureZycgList() {
     if (picker.zycgList) return Promise.resolve();
     return getJSON("data/zycg/list.json").then(function (d) {
-      picker.zycgList = d.items || [];
+      // 选型助手「央采项目选择」只保留电子询价公告（2026-11-20 用户要求）：
+      // 单独委托项目无电子询价品目与技术附件，不参与一键选型
+      picker.zycgList = (d.items || []).filter(function (it) { return it.source !== "委托"; });
     });
   }
   // 央采公告品类 → 界面叫法（按数据里的 category 值映射）
