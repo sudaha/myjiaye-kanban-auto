@@ -1742,7 +1742,7 @@
     }
   }
   // ---------- 喜报 FX v6：参考实拍烟花——长尾丝状大牡丹、慢速展开、多朵同开、闪裂星光 + 空压彩虹炮 ----------
-  function startWinFx(host) {
+  function startWinFx(host, endMs) {
     var cv = document.createElement("canvas");
     cv.className = "win-fx";
     var W = window.innerWidth, H = window.innerHeight;
@@ -1753,21 +1753,26 @@
     if (!ctx) return;
     var small = W < 640;
     var P = [], frame = 0, running = true;
+    // 整场特效与标书雨同步结束（endFrame 由最后一张标书的落地时刻折算）
+    var endFrame = Math.round((endMs || 7000) / 1000 * 60);
     var FW_COLORS = ["#ff5d8f", "#ff3df5", "#c46bff", "#ffd60a", "#ff2d55", "#ff7a00"];
     var RAINBOW = ["#ff2d2d", "#ff8a00", "#ffd60a", "#2ecc40", "#00b4ff", "#9b5bff", "#ff5d8f"];
     function rnd(a, b) { return a + Math.random() * (b - a); }
     function pick(arr) { return arr[(Math.random() * arr.length) | 0]; }
 
     // 牡丹大烟花：长尾丝状粒子，慢速展开、余烬 lingering
-    function peony(x, y, at, col, big, hero) {
-      // hero 主角花：粒子尺寸×2、留存时间×2
+    function peony(x, y, at, col, big, hero, lifeOv) {
+      // hero 主角花：粒子尺寸×2；大烟花统一红色，留存与标书雨同步收尾
       var cnt = Math.floor((hero ? rnd(280, 420) : big ? rnd(230, 360) : rnd(80, 140)) * (small ? 0.5 : 1));
       var vMax = hero ? (small ? 4.2 : 5.6) : big ? (small ? 4.0 : 5.6) : (small ? 2.2 : 3.0);
+      var base = (big || hero) ? "#ff2d55" : col;
       for (var i = 0; i < cnt; i++) {
         var a = Math.random() * 6.283, sp = vMax * (0.25 + Math.random() * 0.75) * (0.8 + Math.random() * 0.4);
+        var life = lifeOv || Math.floor(rnd(hero ? 200 : big ? 130 : 80, hero ? 320 : big ? 220 : 130));
+        life = Math.min(life, Math.max(50, endFrame - at));
         P.push({ t: "fw", x: x, y: y, px: x, py: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
-          born: at, life: Math.floor(rnd(hero ? 200 : big ? 100 : 70, hero ? 320 : big ? 160 : 110)),
-          col: Math.random() < (hero ? 0.35 : 0.25) ? "#fff6d8" : col,
+          born: at, life: life,
+          col: Math.random() < (hero ? 0.35 : 0.25) ? "#fff6d8" : base,
           r: rnd(hero ? 4.8 : 2.4, hero ? 8.8 : big ? 4.4 : 3.4) });
       }
     }
@@ -1777,32 +1782,41 @@
       for (var i = 0; i < cnt; i++) {
         var a = Math.random() * 6.283, sp = rnd(0.3, small ? 1.8 : 2.4);
         P.push({ t: "cr", x: x, y: y, px: x, py: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
-          born: at, life: Math.floor(rnd(60, 110)), ph: rnd(0, 6.28), r: rnd(1.4, 2.4) });
+          born: at, life: Math.min(Math.floor(rnd(60, 110)), Math.max(40, endFrame - at)), ph: rnd(0, 6.28), r: rnd(1.4, 2.4) });
       }
     }
 
-    // 排程：3 朵主角花（粒子×2、留存×2）分早/中/晚三段独唱；
-    // 普通花与闪裂避开主角花的时间窗，节奏有主次、不再同步一片
-    var heroTimes = [Math.floor(rnd(35, 70)), Math.floor(rnd(165, 210)), Math.floor(rnd(240, 280))];
-    var HERO_COLS = ["#ffd60a", "#ff3df5", "#ff2d55"];
+    // 排程：3 朵主角花（粒子×2、统一红色）按标书时长排布，各自留存到标书收尾同刻；
+    // 普通花与闪裂避开主角花时间窗，节奏有主次
+    var heroTimes = [
+      Math.floor(endFrame * 0.10) + Math.floor(rnd(0, 15)),
+      Math.floor(endFrame * 0.38) + Math.floor(rnd(0, 15)),
+      Math.floor(endFrame * 0.56) + Math.floor(rnd(0, 15))
+    ];
     function nearHero(t, gap) {
       for (var h = 0; h < heroTimes.length; h++) if (Math.abs(t - heroTimes[h]) < gap) return true;
       return false;
     }
+    var heroLife = [
+      Math.max(120, endFrame - heroTimes[0] - Math.floor(rnd(20, 80))),
+      Math.max(120, endFrame - heroTimes[1] - Math.floor(rnd(10, 50))),
+      Math.max(120, endFrame - heroTimes[2] - Math.floor(rnd(0, 20)))
+    ];
     for (var hh = 0; hh < 3; hh++) {
       var hx = rnd(0.15, 0.85) * W, hy = rnd(0.08, 0.42) * H;
       var hrise = Math.floor(rnd(30, 48));
       var hsx = hx + rnd(-50, 50);
       P.push({ t: "rock", x: hsx, y: H + 12, px: hsx, py: H + 12, x0: hsx, y0: H + 12, tx: hx, ty: hy,
         born: Math.max(0, heroTimes[hh] - hrise), life: hrise, col: "#ffd60a" });
-      peony(hx, hy, heroTimes[hh], HERO_COLS[hh], true, true);
+      peony(hx, hy, heroTimes[hh], "#ff2d55", true, true, heroLife[hh]);
       crackle(hx + rnd(-60, 60), hy + rnd(-40, 40), heroTimes[hh] + 20);
     }
     var bigs = small ? 12 : 24;
+    var atMax = Math.floor(endFrame * 0.8);
     for (var b = 0; b < bigs; b++) {
       var bx = rnd(0.05, 0.95) * W, by = rnd(0.06, 0.5) * H;
-      var at = Math.floor(rnd(0, 450)), ntries = 0;
-      while (nearHero(at, 100) && ntries < 30) { at = Math.floor(rnd(0, 450)); ntries++; }
+      var at = Math.floor(rnd(0, atMax)), ntries = 0;
+      while (nearHero(at, 40) && ntries < 30) { at = Math.floor(rnd(0, atMax)); ntries++; }
       var rise = Math.floor(rnd(24, 40));
       var sx = bx + rnd(-40, 40);
       var col = pick(FW_COLORS);
@@ -1815,14 +1829,15 @@
       }
     }
     var crs = small ? 14 : 30;
+    var ctMax = Math.floor(endFrame * 0.85);
     for (var c3 = 0; c3 < crs; c3++) {
-      var ct = Math.floor(rnd(40, 460)), ctries = 0;
-      while (nearHero(ct, 70) && ctries < 30) { ct = Math.floor(rnd(40, 460)); ctries++; }
+      var ct = Math.floor(rnd(40, ctMax)), ctries = 0;
+      while (nearHero(ct, 35) && ctries < 30) { ct = Math.floor(rnd(40, ctMax)); ctries++; }
       crackle(rnd(0.05, 0.95) * W, rnd(0.08, 0.6) * H, ct);
     }
 
     // 彩带：底部空压彩虹炮——左右 2 门炮各 4 轮齐射，碎纸片锥形喷出后缓慢翻转飘落
-    var CANNONS = [0.12, 0.88], VOLLEYS = [0, 60, 140, 220];
+    var CANNONS = [0.12, 0.88], VOLLEYS = [0, Math.floor(endFrame * 0.14), Math.floor(endFrame * 0.32), Math.floor(endFrame * 0.52)];
     for (var vi = 0; vi < VOLLEYS.length; vi++) {
       for (var ci = 0; ci < CANNONS.length; ci++) {
         var cx2 = CANNONS[ci] * W + rnd(-30, 30), v0 = VOLLEYS[vi] + vi * 10;
@@ -1854,7 +1869,7 @@
     function tick() {
       if (!running) return;
       frame++;
-      if (frame > 600) { running = false; return; }
+      if (frame > endFrame) { running = false; return; }
       ctx.clearRect(0, 0, W, H);
       var i, p, age;
       for (i = 0; i < P.length; i++) {
@@ -1944,7 +1959,7 @@
       host.appendChild(card);
     }
     // canvas 特效层：大烟花 + 彩带喷泉（卡片已先生成，压在特效之上）
-    startWinFx(host);
+    startWinFx(host, Math.ceil(lastEnd * 1000));
     // "恭喜中标"红色大字：文字直接渲染，自动弹出 → 定格 → 淡出
     var cg = document.createElement("div");
     cg.className = "win-congrats";
@@ -1956,7 +1971,7 @@
       host.classList.add("bg-off");
       if (cg.parentNode) cg.parentNode.removeChild(cg);
     }, Math.ceil(lastEnd * 1000) + 40);
-    setTimeout(function () { if (host.parentNode) host.parentNode.removeChild(host); }, 10100);
+    setTimeout(function () { if (host.parentNode) host.parentNode.removeChild(host); }, Math.ceil(lastEnd * 1000) + 250);
   }
   function checkWinRain(d) {
     var wins = (d && d.wins) || [];
