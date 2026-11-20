@@ -1766,10 +1766,11 @@
       var cnt = Math.floor((hero ? rnd(280, 420) : big ? rnd(230, 360) : rnd(80, 140)) * (small ? 0.5 : 1));
       var vMax = hero ? (small ? 4.2 : 5.6) : big ? (small ? 4.0 : 5.6) : (small ? 2.2 : 3.0);
       var base = (big || hero) ? "#ff2d55" : col;
+      var maxLife = Math.max(50, endFrame - at);
       for (var i = 0; i < cnt; i++) {
         var a = Math.random() * 6.283, sp = vMax * (0.25 + Math.random() * 0.75) * (0.8 + Math.random() * 0.4);
-        var life = lifeOv || Math.floor(rnd(hero ? 200 : big ? 130 : 80, hero ? 320 : big ? 220 : 130));
-        life = Math.min(life, Math.max(50, endFrame - at));
+        // 大烟花不提前散：大牡丹留存到收尾前 0-40 帧，小花瓣保留短留存
+        var life = lifeOv || (big ? maxLife - Math.floor(rnd(0, 40)) : Math.min(maxLife, Math.floor(rnd(80, 130))));
         P.push({ t: "fw", x: x, y: y, px: x, py: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
           born: at, life: life,
           col: Math.random() < (hero ? 0.35 : 0.25) ? "#fff6d8" : base,
@@ -1797,10 +1798,11 @@
       for (var h = 0; h < heroTimes.length; h++) if (Math.abs(t - heroTimes[h]) < gap) return true;
       return false;
     }
+    // 主角花留存到特效结束帧，与标书/蒙版/字样同刻消失
     var heroLife = [
-      Math.max(120, endFrame - heroTimes[0] - Math.floor(rnd(20, 80))),
-      Math.max(120, endFrame - heroTimes[1] - Math.floor(rnd(10, 50))),
-      Math.max(120, endFrame - heroTimes[2] - Math.floor(rnd(0, 20)))
+      Math.max(120, endFrame - heroTimes[0]),
+      Math.max(120, endFrame - heroTimes[1]),
+      Math.max(120, endFrame - heroTimes[2])
     ];
     for (var hh = 0; hh < 3; hh++) {
       var hx = rnd(0.15, 0.85) * W, hy = rnd(0.08, 0.42) * H;
