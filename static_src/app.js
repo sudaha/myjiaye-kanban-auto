@@ -1759,14 +1759,16 @@
     function pick(arr) { return arr[(Math.random() * arr.length) | 0]; }
 
     // 牡丹大烟花：长尾丝状粒子，慢速展开、余烬 lingering
-    function peony(x, y, at, col, big) {
-      var cnt = Math.floor((big ? rnd(230, 360) : rnd(80, 140)) * (small ? 0.5 : 1));
-      var vMax = big ? (small ? 4.0 : 5.6) : (small ? 2.2 : 3.0);
+    function peony(x, y, at, col, big, hero) {
+      // hero 主角花：粒子尺寸×2、留存时间×2
+      var cnt = Math.floor((hero ? rnd(280, 420) : big ? rnd(230, 360) : rnd(80, 140)) * (small ? 0.5 : 1));
+      var vMax = hero ? (small ? 4.2 : 5.6) : big ? (small ? 4.0 : 5.6) : (small ? 2.2 : 3.0);
       for (var i = 0; i < cnt; i++) {
         var a = Math.random() * 6.283, sp = vMax * (0.25 + Math.random() * 0.75) * (0.8 + Math.random() * 0.4);
         P.push({ t: "fw", x: x, y: y, px: x, py: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
-          born: at, life: Math.floor(rnd(big ? 180 : 120, big ? 300 : 190)),
-          col: Math.random() < 0.25 ? "#fff6d8" : col, r: rnd(2.4, big ? 4.4 : 3.4) });
+          born: at, life: Math.floor(rnd(hero ? 360 : big ? 180 : 120, hero ? 600 : big ? 300 : 190)),
+          col: Math.random() < (hero ? 0.35 : 0.25) ? "#fff6d8" : col,
+          r: rnd(hero ? 4.8 : 2.4, hero ? 8.8 : big ? 4.4 : 3.4) });
       }
     }
     // 闪裂星光：细碎闪烁小点，慢速飘散
@@ -1779,11 +1781,28 @@
       }
     }
 
-    // 排程：28 朵牡丹（部分双朵同开制造满屏时刻）+ 34 处闪裂，11.7 秒内此起彼伏
-    var bigs = small ? 14 : 28;
+    // 排程：3 朵主角花（粒子×2、留存×2）分早/中/晚三段独唱；
+    // 普通花与闪裂避开主角花的时间窗，节奏有主次、不再同步一片
+    var heroTimes = [Math.floor(rnd(70, 140)), Math.floor(rnd(330, 420)), Math.floor(rnd(520, 600))];
+    var HERO_COLS = ["#ffd60a", "#ff3df5", "#ff2d55"];
+    function nearHero(t, gap) {
+      for (var h = 0; h < heroTimes.length; h++) if (Math.abs(t - heroTimes[h]) < gap) return true;
+      return false;
+    }
+    for (var hh = 0; hh < 3; hh++) {
+      var hx = rnd(0.15, 0.85) * W, hy = rnd(0.08, 0.42) * H;
+      var hrise = Math.floor(rnd(40, 64));
+      var hsx = hx + rnd(-50, 50);
+      P.push({ t: "rock", x: hsx, y: H + 12, px: hsx, py: H + 12, x0: hsx, y0: H + 12, tx: hx, ty: hy,
+        born: Math.max(0, heroTimes[hh] - hrise), life: hrise, col: "#ffd60a" });
+      peony(hx, hy, heroTimes[hh], HERO_COLS[hh], true, true);
+      crackle(hx + rnd(-60, 60), hy + rnd(-40, 40), heroTimes[hh] + 20);
+    }
+    var bigs = small ? 12 : 24;
     for (var b = 0; b < bigs; b++) {
       var bx = rnd(0.05, 0.95) * W, by = rnd(0.06, 0.5) * H;
-      var at = Math.floor(rnd(0, 700));
+      var at = Math.floor(rnd(0, 700)), ntries = 0;
+      while (nearHero(at, 150) && ntries < 30) { at = Math.floor(rnd(0, 700)); ntries++; }
       var rise = Math.floor(rnd(34, 60));
       var sx = bx + rnd(-40, 40);
       var col = pick(FW_COLORS);
@@ -1795,9 +1814,11 @@
           pick(FW_COLORS), false);
       }
     }
-    var crs = small ? 16 : 34;
+    var crs = small ? 14 : 30;
     for (var c3 = 0; c3 < crs; c3++) {
-      crackle(rnd(0.05, 0.95) * W, rnd(0.08, 0.6) * H, Math.floor(rnd(60, 780)));
+      var ct = Math.floor(rnd(60, 780)), ctries = 0;
+      while (nearHero(ct, 100) && ctries < 30) { ct = Math.floor(rnd(60, 780)); ctries++; }
+      crackle(rnd(0.05, 0.95) * W, rnd(0.08, 0.6) * H, ct);
     }
 
     // 彩带：底部空压彩虹炮——左右 2 门炮各 4 轮齐射，碎纸片锥形喷出后缓慢翻转飘落
@@ -1833,7 +1854,7 @@
     function tick() {
       if (!running) return;
       frame++;
-      if (frame > 960) { running = false; return; }
+      if (frame > 1200) { running = false; return; }
       ctx.clearRect(0, 0, W, H);
       var i, p, age;
       for (i = 0; i < P.length; i++) {
@@ -1930,7 +1951,7 @@
     document.body.appendChild(host);
     // 标书最晚约 10.9s 全部落出屏幕，届时立刻撤除红色蒙版，烟花继续
     setTimeout(function () { host.classList.add("bg-off"); }, 11000);
-    setTimeout(function () { if (host.parentNode) host.parentNode.removeChild(host); }, 16800);
+    setTimeout(function () { if (host.parentNode) host.parentNode.removeChild(host); }, 20100);
   }
   function checkWinRain(d) {
     var wins = (d && d.wins) || [];
