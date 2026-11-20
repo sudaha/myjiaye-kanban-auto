@@ -1837,6 +1837,16 @@
       while (nearHero(ct, 35) && ctries < 30) { ct = Math.floor(rnd(40, ctMax)); ctries++; }
       crackle(rnd(0.05, 0.95) * W, rnd(0.08, 0.6) * H, ct);
     }
+    // 谢幕齐放：最后 1.5 秒 3 朵大红依次炸开，粒子熄灭时间精确 = 结束帧，与标书出画同帧消失
+    var finale = [endFrame - 90, endFrame - 70, endFrame - 50];
+    for (var fj = 0; fj < 3; fj++) {
+      var fx = rnd(0.2, 0.8) * W, fy = rnd(0.08, 0.38) * H;
+      var frise = 22;
+      var fsx = fx + rnd(-40, 40);
+      P.push({ t: "rock", x: fsx, y: H + 12, px: fsx, py: H + 12, x0: fsx, y0: H + 12, tx: fx, ty: fy,
+        born: finale[fj] - frise, life: frise, col: "#ffd60a" });
+      peony(fx, fy, finale[fj], "#ff2d55", true, true, endFrame - finale[fj]);
+    }
 
     // 彩带：底部空压彩虹炮——左右 2 门炮各 4 轮齐射，碎纸片锥形喷出后缓慢翻转飘落
     var CANNONS = [0.12, 0.88], VOLLEYS = [0, Math.floor(endFrame * 0.14), Math.floor(endFrame * 0.32), Math.floor(endFrame * 0.52)];
@@ -1905,13 +1915,14 @@
         } else if (q.t === "fw") {
           if (a3 > q.life) { P.splice(i--, 1); continue; }
           q.px = q.x; q.py = q.y;
-          q.vx *= 0.993; q.vy = q.vy * 0.993 + 0.02;
+          q.vx *= 0.997; q.vy = q.vy * 0.997 + 0.015;
           q.x += q.vx; q.y += q.vy;
           var spd = Math.sqrt(q.vx * q.vx + q.vy * q.vy);
           var ln = Math.min(46, Math.max(8, spd * 6));
           var ux = spd > 0.01 ? q.vx / spd : 0, uy = spd > 0.01 ? q.vy / spd : 0;
-          // 亮度前中期保持，临近结束帧才散——视觉上与标书雨同刻消失
-          ctx.globalAlpha = Math.min(1, Math.pow(1 - a3 / q.life, 0.55) * 1.35);
+          // 亮度保持到寿命最后 18% 才熄灭——火球活性持续到结束帧，与标书出画同刻消失
+          var frac = 1 - a3 / q.life;
+          ctx.globalAlpha = frac > 0.18 ? 1 : Math.max(0, frac / 0.18);
           ctx.strokeStyle = q.col; ctx.lineWidth = q.r; ctx.lineCap = "round";
           ctx.beginPath(); ctx.moveTo(q.x, q.y); ctx.lineTo(q.x - ux * ln, q.y - uy * ln); ctx.stroke();
         } else if (q.t === "cr") {

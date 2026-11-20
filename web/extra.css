@@ -435,15 +435,18 @@
   background: radial-gradient(ellipse at 50% -10%, rgba(223,60,36,.16), rgba(110,15,8,.30)); }
 /* 红色蒙版：标书全部落出屏幕后立即撤除（JS 加 .bg-off），烟花继续播放 */
 .win-rain.bg-off { background: transparent; }
-/* "恭喜中标"红字 + 金色长方形横丝带：自动弹出定格，消失由 JS 在标书落出屏幕时同步移除；
-   z-index 1 = 落在烟花之上、标书卡片之下 */
+/* "恭喜中标"红字 + 金色丝缎窄带（中央高光线模拟缎面反光，非底框色块）：自动弹出定格，
+   消失由 JS 在标书落出屏幕时同步移除；z-index 1 = 落在烟花之上、标书卡片之下 */
 .win-congrats { position: absolute; left: 50%; top: 32%; transform: translate(-50%, -50%);
   z-index: 1; font: 900 92px/1.15 'Microsoft YaHei', 'PingFang SC', sans-serif; letter-spacing: .08em;
   color: #ff2231; white-space: nowrap; pointer-events: none;
-  background: linear-gradient(180deg, #ffe98a 0%, #ffd84d 30%, #f5b800 62%, #d99a00 100%);
-  padding: 42px 112px; box-shadow: 0 8px 28px rgba(110,70,0,.4), inset 0 0 0 2px rgba(255,240,190,.9);
+  background: linear-gradient(180deg, #8f5e06 0%, #e6b422 16%, #ffe98a 40%, #fff6c8 50%, #ffd84d 60%, #d99a00 84%, #8f5e06 100%);
+  padding: 14px 84px;
+  /* 两端燕尾缺口 = 经典缎带造型，区别于矩形底框；drop-shadow 随缺口轮廓投影 */
+  clip-path: polygon(0 0, 100% 0, calc(100% - 22px) 50%, 100% 100%, 0 100%, 22px 50%);
+  filter: drop-shadow(0 4px 14px rgba(120,80,0,.45));
   animation: winCongratsPop 1.4s ease-out 0s both; }
-@media (max-width: 640px) { .win-congrats { font-size: 52px; padding: 18px 48px; } }
+@media (max-width: 640px) { .win-congrats { font-size: 52px; padding: 10px 52px; clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 50%, 100% 100%, 0 100%, 14px 50%); } }
 /* 只负责弹出定格；消失由 JS 在标书落出屏幕时同步移除元素 */
 @keyframes winCongratsPop {
   0% { opacity: 0; transform: translate(-50%, -50%) scale(.3); }
