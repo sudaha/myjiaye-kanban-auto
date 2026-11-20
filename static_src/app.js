@@ -477,8 +477,10 @@
             (it.notice_type ? '<span class="tag">' + esc(it.notice_type) + "</span>" : "") +
             (it.region ? '<span class="tag">' + esc(it.region) + "</span>" : "")
           : '<span><b>' + (plat === "zycg" ? "投标截止" : "截止") + '</b> ' + esc((it.end_time && it.end_time !== "null" ? it.end_time : "未公示").slice(0, 16)) + "</span>" +
-            (it.category ? '<span class="tag cat">' + esc(it.category) + "</span>" : "") +
-            ((plat === "poly" || plat === "rail") && it.notice_type_name ? '<span class="tag">' + esc(it.notice_type_name) + "</span>" : "") +
+             (it.category ? '<span class="tag cat">' + esc(it.category) + "</span>" : "") +
+             ((plat === "rail" && it.attachments && it.attachments.length)
+               ? '<span class="tag att-tag" title="站内已缓存附件，点开可在线浏览/下载">附件×' + it.attachments.length + "</span>" : "") +
+             ((plat === "poly" || plat === "rail") && it.notice_type_name ? '<span class="tag">' + esc(it.notice_type_name) + "</span>" : "") +
             railSource +
             zycgSourceTag +
             '<span class="badge ' + (on ? "on" : "off") + '">' + (on ? "进行中" : "已截止") + "</span>" +
@@ -681,6 +683,32 @@
       '<div class="d-actions"><a class="btn primary" href="' + esc(d.source_url) + '" target="_blank">打开保利原页</a></div>';
   }
 
+  function fmtSize(n) {
+    if (n == null) return "";
+    if (n >= 1048576) return (n / 1048576).toFixed(1) + " MB";
+    if (n >= 1024) return (n / 1024).toFixed(1) + " KB";
+    return n + " B";
+  }
+  function railAttachHtml(d) {
+    var atts = d.attachments || [];
+    if (!atts.length) {
+      return '<div class="d-sec">附件</div><div class="scope-box muted">' + esc(d.attachment_status || "该公告无附件") + "</div>";
+    }
+    var rows = atts.map(function (a) {
+      var isPdf = /\.pdf$/i.test(a.name || "");
+      var isOffice = /\.(docx?|xlsx?|pptx?)$/i.test(a.name || "");
+      var viewHref = isPdf ? esc(a.path)
+        : (isOffice ? "https://view.officeapps.live.com/op/view.aspx?src=" + encodeURIComponent(location.protocol + "//" + location.host + "/" + a.path) : "");
+      var viewBtn = viewHref
+        ? '<a class="btn ghost att-view" href="' + viewHref + '" target="_blank" rel="noopener">在线浏览</a>'
+        : "";
+      return '<li class="att-item"><span class="att-name" title="' + esc(a.name) + '">' + esc(a.name) + "</span>" +
+        '<span class="att-size">' + fmtSize(a.size) + "</span>" +
+        '<span class="att-ops">' + viewBtn +
+        '<a class="btn ghost att-dl" href="' + esc(a.path) + '" download="' + esc(a.name) + '">下载</a></span></li>';
+    }).join("");
+    return '<div class="d-sec">附件（站内缓存 · ' + atts.length + ' 个）</div><ul class="att-list">' + rows + "</ul>";
+  }
   function detailRail(d) {
     var on = d.is_end === 0;
     var brand = d.brand_scope || d.brands || "附件需登录核验品牌要求";
@@ -698,8 +726,8 @@
       '<div class="d-sec">项目来源</div><div class="scope-box">' +
         (String(d.id || "").indexOf("mall_") === 0 ? "国铁商城批量采购专区" : "国铁采购平台公开招投标") + "</div>" +
       '<div class="d-sec">品牌适配判断</div><div class="scope-box">' + esc(brand) + "</div>" +
-      '<div class="d-sec">公告正文</div><div class="scope-box rail-detail">' + esc(d.detail_text || d.digest || "正文待补采") + "</div>" +
-      '<div class="d-sec">附件</div><div class="scope-box muted">' + esc(d.attachment_status || "附件下载需登录国铁采购平台") + "</div>" +
+       '<div class="d-sec">公告正文</div><div class="scope-box rail-detail">' + esc(d.detail_text || d.digest || "正文待补采") + "</div>" +
+       railAttachHtml(d) +
       '<div class="d-actions"><a class="btn primary" href="' + esc(d.source_url) + '" target="_blank" rel="noopener noreferrer">打开国铁原公告</a>' +
       '<a class="btn ghost" href="https://mall.95306.cn/mall-view/negotiationArea/home" target="_blank" rel="noopener noreferrer">登录国铁商城批量采购专区</a></div>';
   }

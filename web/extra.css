@@ -269,6 +269,12 @@
 .pick-warn { margin: 12px 0; padding: 10px 14px; background: #fff7e6; border: 1px solid #ffd591; border-left: 4px solid #fa8c16; border-radius: 8px; font-size: 13px; color: #874d00; line-height: 1.7; }
 /* 单独委托详情：官网风控拦截时的复制兜底提示 */
 .wt-tip { margin-top: 10px; font-size: 12px; color: var(--muted); line-height: 1.7; }
+/* 附件列表项：文件名 + 大小 + 操作按钮 */
+.att-item { display: flex; align-items: center; gap: 10px; }
+.att-name { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.att-size { flex: 0 0 auto; color: var(--muted); font-size: 12px; }
+.att-ops { flex: 0 0 auto; display: flex; gap: 8px; }
+.tag.att-tag { color: #0b6b52; background: #eaf7f1; border: 1px solid #bfe5d6; font-weight: 700; }
 /* 国铁卡片：标题下规格/品牌速览 */
 .spec-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 16px; margin: 6px 0 0; font-size: 12px; color: #5b6770; line-height: 1.7; }
 .spec-line b { font-weight: 700; color: #44505a; margin-right: 5px; }

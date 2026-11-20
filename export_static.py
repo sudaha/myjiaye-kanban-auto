@@ -432,8 +432,32 @@ def _parse_mall_brief(d):
     return out
 
 
+def _load_rail_mall_attachments():
+    """国铁商城批采附件缓存（登录 Chrome 内页 base64 下载落盘）。
+    返回 {本地uuid: {"projId": 前12位, "attachments": [{"name","path","size"}]}}，path 为 dist 相对 pdf/rail/mall/..."""
+    p = os.path.join(BASE, "data", "rail_mall_attachments.json")
+    try:
+        d = json.load(open(p, encoding="utf-8"))
+    except Exception:
+        return {}
+    out = {}
+    for k, v in (d.get("items") or {}).items():
+        atts = []
+        proj = str(v.get("projId") or "")[:12]
+        for a in v.get("attachments") or []:
+            local = a.get("local") or ""
+            if not local or not os.path.isfile(os.path.join(BASE, local)):
+                continue
+            pub = "pdf/rail/mall/%s/%s" % (proj, os.path.basename(local))
+            atts.append({"name": os.path.basename(local), "path": pub, "size": a.get("size")})
+        if atts:
+            out[k] = {"projId": proj, "attachments": atts}
+    return out
+
+
 def export_rail(out):
     data = {"items": [], "updated_at": "", "source_status": {}}
+    mall_atts = _load_rail_mall_attachments()
     if os.path.isfile(RAIL_JSON):
         with open(RAIL_JSON, "r", encoding="utf-8") as f:
             data = json.load(f)
@@ -486,19 +510,34 @@ def export_rail(out):
             "brand_list": brand_list,
             "spec_brief": brief.get("spec_brief") or "",
         }
-        if it["id"]:
-            items.append(it)
-            write_json(os.path.join(out, "data", "rail", "detail", it["id"] + ".json"), dict(
-                it, detail_text=d.get("detail_text") or d.get("digest") or "",
-                digest=d.get("digest") or "", brand_scope=d.get("brand_scope") or "",
-                matched_keywords=d.get("matched_keywords") or [],
-                project_type_name=d.get("project_type_name") or "",
-                source_url=d.get("detail_url") or "",
-                attachment_status=("商城批采详情已在登录态采集；附件以源站为准" if is_mall else "附件下载需登录国铁采购平台"),
-                mall_category=d.get("mall_category") or "",
-                brand_name_list=d.get("brand_name_list") or [],
-                rounds=d.get("rounds"), attachments=d.get("attachments") or [],
-            ))
+        # 商城批采附件（站内缓存，可在线浏览/下载）；公开公告附件需登录国铁平台，保持原提示
+        atts = mall_atts.get(str(d.get("uuid"))) if is_mall else None
+        it["attachments"] = (atts or {}).get("attachments") or []
+        it["attachment_status"] = (
+            ("站内已缓存 %d 个附件，详情内可直接浏览/下载" % len(it["attachments"]))
+            if it["attachments"]
+            else ("该公告无附件" if is_mall else "附件下载需登录国铁采购平台"))
+        items.append(it)
+        write_json(os.path.join(out, "data", "rail", "detail", "%s.json" % rid), dict(
+            it,
+            detail_url=d.get("detail_url") or "",
+            detail_text=d.get("detail_text") or "",
+            digest=d.get("digest") or "",
+            source_url=d.get("detail_url") or "",
+            projId=d.get("projId") or d.get("contentId") or raw_id,
+            rounds=d.get("rounds") or [],
+        ))
+    # 商城批采附件二进制 → dist/pdf/rail/mall/<projId12>/<文件名>
+    att_n = 0
+    for it in items:
+        for a in it.get("attachments") or []:
+            rel = a["path"][len("pdf/rail/mall/"):]
+            src = os.path.join(BASE, "data", "rail_mall_files", rel.replace("/", os.sep))
+            dst = os.path.join(out, a["path"].replace("/", os.sep))
+            if os.path.isfile(src):
+                os.makedirs(os.path.dirname(dst), exist_ok=True)
+                shutil.copy2(src, dst)
+                att_n += 1
     items.sort(key=lambda x: (x["publish_date"], x["id"]), reverse=True)
     cats = sorted({x["category"] for x in items if x["category"]})
     active = sum(1 for x in items if x["is_end"] == 0)
@@ -516,10 +555,10 @@ def export_rail(out):
         "new_count": 0, "new_days": [], "last_fetch": max(data.get("updated_at") or "", mall_data.get("updated_at") or ""),
         "source_status": {
             "cg95306": "公开可采集：无需key、无需登录；附件下载需登录",
-            "mall95306_batch": "已用UKey/SSO登录态采集：无需API key；登录失效时沿用上次数据",
+            "mall95306_batch": "已用UKey/SSO登录态采集：无需API key；附件已站内缓存；登录失效时沿用上次数据",
         }, "refresh_seconds": 86400,
     })
-    return len(items), 0
+    return len(items), att_n
 
 
 def main():
