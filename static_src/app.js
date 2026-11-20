@@ -1764,7 +1764,7 @@
     function peony(x, y, at, col, big, hero, lifeOv) {
       // hero 主角花：粒子尺寸×2；大烟花统一红色；小烟花整体放大 2 倍（数量/展开速度/粒径）
       var cnt = Math.floor((hero ? rnd(280, 420) : big ? rnd(230, 360) : rnd(120, 220)) * (small ? 0.5 : 1));
-      var vMax = hero ? (small ? 2.7 : 3.3) : big ? (small ? 2.7 : 3.3) : (small ? 2.8 : 3.4);
+      var vMax = hero ? (small ? 2.3 : 2.8) : big ? (small ? 2.3 : 2.8) : (small ? 2.8 : 3.4);
       var base = (big || hero) ? "#ff2d55" : col;
       var maxLife = Math.max(50, endFrame - at);
       for (var i = 0; i < cnt; i++) {
@@ -1772,7 +1772,8 @@
         // 大花（3 朵主角）留存至结束帧、与"恭喜中标"字样同帧消失；小烟花短留存
         var life = lifeOv || (big ? maxLife : Math.min(maxLife, Math.floor(rnd(50, 85))));
         P.push({ t: "fw", x: x, y: y, px: x, py: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
-          born: at, life: life, large: !!(big || hero), drift: (big || hero) ? rnd(-0.22, 0.22) : 0, ph: rnd(0, 6.28),
+          born: at, life: life, large: !!(big || hero), dirx: Math.cos(a), diry: Math.sin(a),
+          drift: (big || hero) ? rnd(-0.22, 0.22) : 0, ph: rnd(0, 6.28),
           col: Math.random() < (hero ? 0.35 : 0.25) ? "#fff6d8" : base,
           r: hero ? rnd(4.8, 8.8) : big ? rnd(2.4, 4.4) : rnd(4.8, 6.8) });
       }
@@ -1907,23 +1908,33 @@
         } else if (q.t === "fw") {
           if (a3 > q.life) { P.splice(i--, 1); continue; }
           q.px = q.x; q.py = q.y;
+          var moveX, moveY;
           if (q.large) {
-            // 大烟花：低速绽放，重力随进度平滑增强并自然转为缓降；微风横移持续到结束，尾段不定格
-            var lp = a3 / q.life;
-            q.vx = q.vx * 0.992 + q.drift * 0.008;
-            q.vy = q.vy * 0.992 + 0.012 + lp * 0.032;
-            if (q.vy > 0.9) q.vy = 0.9;
-            q.x += q.vx + Math.sin(frame * 0.025 + q.ph) * 0.08;
-            q.y += q.vy;
+            // 大烟花：慢速绽放且不定格。基础速度渐减，径向外扩 + 缓降组成实际位移。
+            var lp = Math.min(1, a3 / q.life);
+            var spread = 0.55 - lp * 0.25;
+            var fall = 0.18 + lp * 1.05;
+            q.vx *= 0.982;
+            q.vy *= 0.982;
+            moveX = q.vx + q.dirx * spread + q.drift + Math.sin(frame * 0.025 + q.ph) * 0.12;
+            moveY = q.vy + q.diry * spread + fall;
+            // 任意方向的分量可能互相抵消；对实际位移设可见下限，从算法上消除尾段静止点。
+            var moveSpd = Math.sqrt(moveX * moveX + moveY * moveY);
+            if (moveSpd < 0.9) {
+              if (moveSpd < 0.01) { moveX = q.dirx * 0.3; moveY = 0.85; moveSpd = Math.sqrt(moveX * moveX + moveY * moveY); }
+              moveX = moveX / moveSpd * 0.9;
+              moveY = moveY / moveSpd * 0.9;
+            }
           } else {
             // 小烟花：保留扩散感但整体降速，避免高速粒子铺满画面
             q.vx *= 0.99;
             q.vy = q.vy * 0.99 + 0.012;
-            q.x += q.vx; q.y += q.vy;
+            moveX = q.vx; moveY = q.vy;
           }
-          var spd = Math.sqrt(q.vx * q.vx + q.vy * q.vy);
+          q.x += moveX; q.y += moveY;
+          var spd = Math.sqrt(moveX * moveX + moveY * moveY);
           var ln = Math.min(46, Math.max(8, spd * 6));
-          var ux = spd > 0.01 ? q.vx / spd : 0, uy = spd > 0.01 ? q.vy / spd : 0;
+          var ux = spd > 0.01 ? moveX / spd : 0, uy = spd > 0.01 ? moveY / spd : 0;
           // 整体无渐隐：全亮度保持到寿命结束帧，同刻熄灭
           ctx.globalAlpha = 1;
           ctx.strokeStyle = q.col; ctx.lineWidth = q.r; ctx.lineCap = "round";
