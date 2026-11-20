@@ -1752,22 +1752,22 @@
 
     // 牡丹大烟花：长尾丝状粒子，慢速展开、余烬 lingering
     function peony(x, y, at, col, big) {
-      var cnt = Math.floor((big ? rnd(180, 300) : rnd(60, 110)) * (small ? 0.5 : 1));
+      var cnt = Math.floor((big ? rnd(200, 320) : rnd(70, 120)) * (small ? 0.5 : 1));
       var vMax = big ? (small ? 4.6 : 6.8) : (small ? 2.6 : 3.6);
       for (var i = 0; i < cnt; i++) {
         var a = Math.random() * 6.283, sp = vMax * (0.25 + Math.random() * 0.75) * (0.8 + Math.random() * 0.4);
         P.push({ t: "fw", x: x, y: y, px: x, py: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
           born: at, life: Math.floor(rnd(big ? 140 : 90, big ? 220 : 140)),
-          col: Math.random() < 0.25 ? "#fff6d8" : col, r: rnd(1.2, big ? 2.6 : 2) });
+          col: Math.random() < 0.25 ? "#fff6d8" : col, r: rnd(1.7, big ? 3.3 : 2.6) });
       }
     }
     // 闪裂星光：细碎闪烁小点，慢速飘散
     function crackle(x, y, at) {
-      var cnt = Math.floor(rnd(36, 64) * (small ? 0.5 : 1));
+      var cnt = Math.floor(rnd(46, 80) * (small ? 0.5 : 1));
       for (var i = 0; i < cnt; i++) {
         var a = Math.random() * 6.283, sp = rnd(0.4, small ? 2.2 : 3);
         P.push({ t: "cr", x: x, y: y, px: x, py: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
-          born: at, life: Math.floor(rnd(70, 140)), ph: rnd(0, 6.28), r: rnd(0.8, 1.6) });
+          born: at, life: Math.floor(rnd(70, 140)), ph: rnd(0, 6.28), r: rnd(1.1, 2) });
       }
     }
 
@@ -1818,23 +1818,23 @@
         var a2 = Math.random() * 6.283, sp2 = rnd(4, 13);
         P.push({ t: "txt", x: cx, y: cy, px: cx, py: cy, vx: Math.cos(a2) * sp2, vy: Math.sin(a2) * sp2,
           tx: ox + tp[0], ty: oy + tp[1], born: 110, p1: 60, p2: 110, p3: 260, p4: 70,
-          col: k % 5 === 0 ? "#ffffff" : "#ffd60a", r: small ? 2 : 2.8, ph: rnd(0, 6.28), sx: 0, sy: 0 });
+          col: k % 5 === 0 ? "#ff3d2e" : "#ffd60a", r: small ? 2.4 : 3.4, ph: rnd(0, 6.28), sx: 0, sy: 0 });
       }
     })();
 
     // 彩带：底部空压彩虹炮——左/中/右 3 门炮各 3 轮齐射，碎纸片锥形喷出后翻转飘落
-    var CANNONS = [0.10, 0.5, 0.90], VOLLEYS = [0, 90, 210];
+    var CANNONS = [0.12, 0.88], VOLLEYS = [0, 80, 190, 300];
     for (var vi = 0; vi < VOLLEYS.length; vi++) {
       for (var ci = 0; ci < CANNONS.length; ci++) {
-        var cx2 = CANNONS[ci] * W + rnd(-30, 30), v0 = VOLLEYS[vi] + vi * 20;
-        var per = small ? 34 : 66;
+        var cx2 = CANNONS[ci] * W + rnd(-30, 30), v0 = VOLLEYS[vi] + vi * 10;
+        var per = small ? 30 : 60;
         for (var k2 = 0; k2 < per; k2++) {
           var ca = -1.5708 + rnd(-0.62, 0.62), cs = rnd(small ? 9 : 12, small ? 17 : 22);
           P.push({ t: "cf", x: cx2, y: H + 12, px: cx2, py: H + 12,
             vx: Math.cos(ca) * cs * (0.55 + Math.random() * 0.5), vy: Math.sin(ca) * cs,
             born: v0 + Math.floor(rnd(0, 26)), life: Math.floor(rnd(300, 460)),
             rot: rnd(0, 360), vr: rnd(-14, 14), wob: rnd(0.6, 2), ph: rnd(0, 6.28),
-            col: pick(RAINBOW), s: rnd(3.5, 7), ratio: rnd(0.5, 0.85), al: 0 });
+            col: pick(RAINBOW), s: rnd(4.5, 8.5), ratio: rnd(0.5, 0.85), al: 0 });
         }
       }
     }
