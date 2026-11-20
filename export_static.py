@@ -399,7 +399,9 @@ def export_rail(out):
         # 国铁模块只展示当前可参与的核心IT硬件；已截止及打印扫描/一体机不导出到前端。
         if (d.get("category") or "") in excluded_categories:
             continue
-        is_open = (is_mall and end and end >= now) or (not is_mall and d.get("is_open") == 1)
+        # 公开源 is_open 是采集时点的标记，导出时再按当前时间复核一次，防止快照里混入已截止项目
+        end_ok = bool(end) and end >= now
+        is_open = (is_mall and end_ok) or (not is_mall and d.get("is_open") == 1 and (not end or end_ok))
         if not is_open:
             continue
         # 两个来源 id 空间不同，加来源前缀避免碰撞；详情与卡片仍使用同一前缀ID。
