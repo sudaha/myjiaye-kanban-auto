@@ -1916,9 +1916,9 @@
           var spd = Math.sqrt(q.vx * q.vx + q.vy * q.vy);
           var ln = Math.min(46, Math.max(8, spd * 6));
           var ux = spd > 0.01 ? q.vx / spd : 0, uy = spd > 0.01 ? q.vy / spd : 0;
-          // 真实烟花感：亮度随寿命平滑渐隐至熄灭；大牡丹余烬衰得慢、小烟花衰得快
+          // 长留存渐隐：大牡丹幂 0.4 余烬持久、小烟花幂 1.0 线性淡出
           var frac = 1 - a3 / q.life;
-          ctx.globalAlpha = Math.pow(frac, q.hold ? 0.85 : 1.5);
+          ctx.globalAlpha = Math.pow(frac, q.hold ? 0.4 : 1.0);
           ctx.strokeStyle = q.col; ctx.lineWidth = q.r; ctx.lineCap = "round";
           ctx.beginPath(); ctx.moveTo(q.x, q.y); ctx.lineTo(q.x - ux * ln, q.y - uy * ln); ctx.stroke();
         } else if (q.t === "cr") {
