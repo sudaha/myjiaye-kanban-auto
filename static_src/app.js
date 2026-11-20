@@ -1752,9 +1752,10 @@
     var ctx = cv.getContext("2d");
     if (!ctx) return;
     var small = W < 640;
-    var P = [], frame = 0, running = true;
-    // 整场特效与标书雨同步结束（endFrame 由最后一张标书的落地时刻折算）
-    var endFrame = Math.round((endMs || 7000) / 1000 * 60);
+    var P = [], frame = 0, running = true, startT = 0, lastT = 0;
+    var frameMs = 1000 / 60;
+    // 排程仍以 60fps 虚拟帧表达，但播放进度由真实时间戳驱动，不受 60/120/144Hz 刷新率影响
+    var endFrame = Math.round((endMs || 7000) / frameMs);
     var FW_COLORS = ["#ff5d8f", "#ff3df5", "#c46bff", "#ffd60a", "#ff2d55", "#ff7a00"];
     var RAINBOW = ["#ff2d2d", "#ff8a00", "#ffd60a", "#2ecc40", "#00b4ff", "#9b5bff", "#ff5d8f"];
     function rnd(a, b) { return a + Math.random() * (b - a); }
@@ -1871,10 +1872,18 @@
       ctx.restore();
     }
 
-    function tick() {
+    function tick(ts) {
       if (!running) return;
-      frame++;
-      if (frame > endFrame) { running = false; return; }
+      if (!startT) { startT = ts; lastT = ts; }
+      var elapsed = ts - startT;
+      var dt = Math.min(3, Math.max(0.1, (ts - lastT) / frameMs));
+      lastT = ts;
+      frame = elapsed / frameMs;
+      if (elapsed >= (endMs || 7000)) {
+        running = false;
+        ctx.clearRect(0, 0, W, H);
+        return;
+      }
       ctx.clearRect(0, 0, W, H);
       var i, p, age;
       for (i = 0; i < P.length; i++) {
@@ -1882,10 +1891,10 @@
         if (p.t !== "cf" || frame < p.born) continue;
         age = frame - p.born;
         if (age > p.life || p.y > H + 60) { P.splice(i--, 1); continue; }
-        p.vy += 0.12; p.vx *= 0.995; p.vy *= 0.98;
-        p.x += p.vx + Math.sin(frame * 0.06 * p.wob + p.ph) * 2.2;
-        p.y += p.vy;
-        p.rot += p.vr;
+        p.vy += 0.12 * dt; p.vx *= Math.pow(0.995, dt); p.vy *= Math.pow(0.98, dt);
+        p.x += (p.vx + Math.sin(frame * 0.06 * p.wob + p.ph) * 2.2) * dt;
+        p.y += p.vy * dt;
+        p.rot += p.vr * dt;
         p.al = age < 8 ? age / 8 : (age > p.life - 60 ? Math.max(0, (p.life - age) / 60) : 1);
         drawCf(p);
       }
@@ -1903,8 +1912,12 @@
           ctx.globalAlpha = 0.95;
           ctx.strokeStyle = q.col; ctx.lineWidth = 2.2;
           ctx.beginPath(); ctx.moveTo(q.px, q.py); ctx.lineTo(q.x, q.y); ctx.stroke();
-          if (frame % 2 === 0) P.push({ t: "em", x: q.x + rnd(-2, 2), y: q.y + rnd(0, 6), px: 0, py: 0,
-            vx: rnd(-0.4, 0.4), vy: rnd(0, 0.6), born: frame, life: 16, r: rnd(1, 1.8) });
+          var emitFrame = Math.floor(frame / 2);
+          if (q.emitFrame !== emitFrame) {
+            q.emitFrame = emitFrame;
+            P.push({ t: "em", x: q.x + rnd(-2, 2), y: q.y + rnd(0, 6), px: 0, py: 0,
+              vx: rnd(-0.4, 0.4), vy: rnd(0, 0.6), born: frame, life: 16, r: rnd(1, 1.8) });
+          }
         } else if (q.t === "fw") {
           if (a3 > q.life) { P.splice(i--, 1); continue; }
           q.px = q.x; q.py = q.y;
@@ -1914,22 +1927,23 @@
             var lp = Math.min(1, a3 / q.life);
             var spread = 0.55 - lp * 0.25;
             var fall = 0.18 + lp * 1.05;
-            q.vx *= 0.982;
-            q.vy *= 0.982;
-            moveX = q.vx + q.dirx * spread + q.drift + Math.sin(frame * 0.025 + q.ph) * 0.12;
-            moveY = q.vy + q.diry * spread + fall;
+            q.vx *= Math.pow(0.982, dt);
+            q.vy *= Math.pow(0.982, dt);
+            moveX = (q.vx + q.dirx * spread + q.drift + Math.sin(frame * 0.025 + q.ph) * 0.12) * dt;
+            moveY = (q.vy + q.diry * spread + fall) * dt;
             // 任意方向的分量可能互相抵消；对实际位移设可见下限，从算法上消除尾段静止点。
             var moveSpd = Math.sqrt(moveX * moveX + moveY * moveY);
-            if (moveSpd < 0.9) {
-              if (moveSpd < 0.01) { moveX = q.dirx * 0.3; moveY = 0.85; moveSpd = Math.sqrt(moveX * moveX + moveY * moveY); }
-              moveX = moveX / moveSpd * 0.9;
-              moveY = moveY / moveSpd * 0.9;
+            var minMove = 0.9 * dt;
+            if (moveSpd < minMove) {
+              if (moveSpd < 0.01) { moveX = q.dirx * 0.3 * dt; moveY = 0.85 * dt; moveSpd = Math.sqrt(moveX * moveX + moveY * moveY); }
+              moveX = moveX / moveSpd * minMove;
+              moveY = moveY / moveSpd * minMove;
             }
           } else {
             // 小烟花：保留扩散感但整体降速，避免高速粒子铺满画面
-            q.vx *= 0.99;
-            q.vy = q.vy * 0.99 + 0.012;
-            moveX = q.vx; moveY = q.vy;
+            q.vx *= Math.pow(0.99, dt);
+            q.vy = q.vy * Math.pow(0.99, dt) + 0.012 * dt;
+            moveX = q.vx * dt; moveY = q.vy * dt;
           }
           q.x += moveX; q.y += moveY;
           var spd = Math.sqrt(moveX * moveX + moveY * moveY);
@@ -1941,15 +1955,15 @@
           ctx.beginPath(); ctx.moveTo(q.x, q.y); ctx.lineTo(q.x - ux * ln, q.y - uy * ln); ctx.stroke();
         } else if (q.t === "cr") {
           if (a3 > q.life) { P.splice(i--, 1); continue; }
-          q.vx *= 0.98; q.vy += 0.012;
-          q.x += q.vx; q.y += q.vy;
+          q.vx *= Math.pow(0.98, dt); q.vy += 0.012 * dt;
+          q.x += q.vx * dt; q.y += q.vy * dt;
           ctx.globalAlpha = 0.35 + 0.65 * Math.abs(Math.sin(frame * 0.45 + q.ph));
           ctx.fillStyle = "#fff6d8";
           ctx.beginPath(); ctx.arc(q.x, q.y, q.r, 0, 6.29); ctx.fill();
         } else if (q.t === "em") {
           if (a3 > q.life) { P.splice(i--, 1); continue; }
-          q.vy += 0.05;
-          q.x += q.vx; q.y += q.vy;
+          q.vy += 0.05 * dt;
+          q.x += q.vx * dt; q.y += q.vy * dt;
           ctx.globalAlpha = 0.8;
           ctx.fillStyle = "#ffd60a";
           ctx.beginPath(); ctx.arc(q.x, q.y, q.r, 0, 6.29); ctx.fill();
