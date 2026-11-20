@@ -1769,8 +1769,8 @@
       var maxLife = Math.max(50, endFrame - at);
       for (var i = 0; i < cnt; i++) {
         var a = Math.random() * 6.283, sp = vMax * (0.25 + Math.random() * 0.75) * (0.8 + Math.random() * 0.4);
-        // 大/主角花留存对齐结束帧；小烟花短留存（0.8-1.4 秒）快速淡出，避免画面堆叠
-        var life = lifeOv || (big ? maxLife - Math.floor(rnd(0, 40)) : Math.min(maxLife, Math.floor(rnd(50, 85))));
+        // 大花留存至结束帧、与"恭喜中标"字样同帧消失；小烟花短留存快速淡出
+        var life = lifeOv || (big ? maxLife : Math.min(maxLife, Math.floor(rnd(50, 85))));
         P.push({ t: "fw", x: x, y: y, px: x, py: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
           born: at, life: life, hold: !!(big || hero),
           col: Math.random() < (hero ? 0.35 : 0.25) ? "#fff6d8" : base,
@@ -1787,12 +1787,13 @@
       }
     }
 
-    // 排程：3 朵主角花（粒子×2、统一红色）按标书时长排布，各自留存到标书收尾同刻；
-    // 普通花与闪裂避开主角花时间窗，节奏有主次
+    // 排程：前 3 秒（p2start=180 帧）小烟花开场；3 秒后 3 朵主角大红花 + 大花登场，
+    // 全部大花熄灭帧 = 结束帧，与"恭喜中标"字样同刻消失；小烟花只在前 3 秒
+    var p2start = 180;
     var heroTimes = [
-      Math.floor(endFrame * 0.10) + Math.floor(rnd(0, 15)),
-      Math.floor(endFrame * 0.38) + Math.floor(rnd(0, 15)),
-      Math.floor(endFrame * 0.56) + Math.floor(rnd(0, 15))
+      p2start + Math.floor(rnd(0, 15)),
+      Math.floor(endFrame * 0.52) + Math.floor(rnd(0, 15)),
+      Math.floor(endFrame * 0.68) + Math.floor(rnd(0, 15))
     ];
     function nearHero(t, gap) {
       for (var h = 0; h < heroTimes.length; h++) if (Math.abs(t - heroTimes[h]) < gap) return true;
@@ -1800,9 +1801,9 @@
     }
     // 主角花留存到特效结束帧，与标书/蒙版/字样同刻消失
     var heroLife = [
-      Math.max(120, endFrame - heroTimes[0]),
-      Math.max(120, endFrame - heroTimes[1]),
-      Math.max(120, endFrame - heroTimes[2])
+      Math.max(50, endFrame - heroTimes[0]),
+      Math.max(50, endFrame - heroTimes[1]),
+      Math.max(50, endFrame - heroTimes[2])
     ];
     for (var hh = 0; hh < 3; hh++) {
       var hx = rnd(0.15, 0.85) * W, hy = rnd(0.08, 0.42) * H;
@@ -1817,14 +1818,20 @@
     var atMax = Math.floor(endFrame * 0.8);
     for (var b = 0; b < bigs; b++) {
       var bx = rnd(0.05, 0.95) * W, by = rnd(0.06, 0.5) * H;
-      var at = Math.floor(rnd(0, atMax)), ntries = 0;
-      while (nearHero(at, 40) && ntries < 30) { at = Math.floor(rnd(0, atMax)); ntries++; }
+      var isBig = b % 3 === 0;
+      var at, ntries = 0;
+      if (isBig) {
+        at = Math.floor(rnd(p2start, atMax));
+        while (nearHero(at, 40) && ntries < 30) { at = Math.floor(rnd(p2start, atMax)); ntries++; }
+      } else {
+        at = Math.floor(rnd(0, p2start));
+      }
       var rise = Math.floor(rnd(24, 40));
       var sx = bx + rnd(-40, 40);
       var col = pick(FW_COLORS);
       P.push({ t: "rock", x: sx, y: H + 12, px: sx, py: H + 12, x0: sx, y0: H + 12, tx: bx, ty: by,
         born: Math.max(0, at - rise), life: rise, col: "#ffe9a8" });
-      peony(bx, by, at, col, b % 3 === 0);
+      peony(bx, by, at, col, isBig);
     }
     var crs = small ? 14 : 30;
     var ctMax = Math.floor(endFrame * 0.85);
