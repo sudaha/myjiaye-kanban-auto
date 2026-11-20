@@ -16,7 +16,7 @@
     return h === "poly" || h === "rail" || h === "picker" || h === "docs" || h === "records" ? h : "zycg";
   }
   var plat = platFromHash();
-  var state = { page: 1, pageSize: 20, total: 0, filters: {}, items: [], loaded: false, picked: {}, availableDates: {}, dateMonth: null, railSource: "" };
+  var state = { page: 1, pageSize: 20, total: 0, filters: {}, items: [], loaded: false, picked: {}, availableDates: {}, dateMonth: null, railSource: "", zycgSource: "" };
   var picker = {
     products: null,          // data/products.json 的 products 数组
     meta: null,              // 库元信息（updated_at / product_count）
@@ -71,6 +71,7 @@
     var noList = isPicker || isDocs || isRecords;
     $("filterbar").classList.toggle("hide", noList);
     if ($("rail-source-status")) $("rail-source-status").classList.toggle("hide", p !== "rail");
+    if ($("zycg-source-status")) $("zycg-source-status").classList.toggle("hide", p !== "zycg");
     $("f-it-wrap").classList.toggle("hide", p !== "poly");
     $("batchbar").classList.toggle("hide", p !== "zycg" && p !== "poly");
     if ($("btn-zip")) $("btn-zip").textContent = p === "poly" ? "⬇ 打包下载选中项目资料" : "⬇ 打包下载选中 PDF";
@@ -245,6 +246,7 @@
     }
     if (f.category && it.category !== f.category) return false;
     if (plat === "rail" && state.railSource && String(it.id || "").indexOf(state.railSource) !== 0) return false;
+    if (plat === "zycg" && state.zycgSource && it.source !== state.zycgSource) return false;
     if (f.brand && String(it.brands || "").toLowerCase().indexOf(f.brand.toLowerCase()) < 0) return false;
     // 按发布日期（平台上架日）精确选某一天；无上架日的旧数据退回标书落款日
     if (f.date && String(it.pub_date || it.publish_date || "").slice(0, 10) !== f.date) return false;
@@ -265,6 +267,13 @@
         if ($("rail-source-all")) $("rail-source-all").textContent = state.items.length;
         if ($("rail-source-cg")) $("rail-source-cg").textContent = cgN;
         if ($("rail-source-mall")) $("rail-source-mall").textContent = mallN;
+      }
+      if (plat === "zycg") {
+        var xjN = state.items.filter(function (it) { return it.source !== "委托"; }).length;
+        var wtN = state.items.filter(function (it) { return it.source === "委托"; }).length;
+        if ($("zycg-source-all")) $("zycg-source-all").textContent = state.items.length;
+        if ($("zycg-source-xj")) $("zycg-source-xj").textContent = xjN;
+        if ($("zycg-source-wt")) $("zycg-source-wt").textContent = wtN;
       }
       if (plat === "zycg" || plat === "poly" || plat === "rail") initAvailableDates();
     });
@@ -329,8 +338,8 @@
 
   function cardHtml(it) {
     var on = it.is_end === 0;
-    var pickable = plat === "zycg" || plat === "poly";
-    var participatable = pickable || plat === "rail";
+    var pickable = (plat === "zycg" || plat === "poly") && it.source !== "委托";
+    var participatable = plat === "zycg" || plat === "poly" || plat === "rail";
     var checked = pickable && state.picked[it.id];
     var isBid = plat === "bid";
     var joined = participatable && recJoined(it.platform, it.id);
@@ -339,6 +348,8 @@
           ? '<span class="tag rail-mall-tag">国铁商城批量采购专区</span>'
           : '<span class="tag">国铁采购平台公开招投标</span>')
       : "";
+    var zycgSourceTag = plat === "zycg" && it.source === "委托"
+      ? '<span class="tag rail-mall-tag">单独委托项目</span>' : "";
     return '<div class="card' + (pickable ? " pickable" : "") + (checked ? " picked" : "") + '" data-id="' + it.id + '">' +
       (pickable ? '<input type="checkbox" class="pick" data-id="' + it.id + '"' + (checked ? " checked" : "") + ">" : "") +
       '<div class="row1">' +
@@ -357,11 +368,12 @@
             (it.category ? '<span class="tag cat">' + esc(it.category) + "</span>" : "") +
             ((plat === "poly" || plat === "rail") && it.notice_type_name ? '<span class="tag">' + esc(it.notice_type_name) + "</span>" : "") +
             railSource +
+            zycgSourceTag +
             '<span class="badge ' + (on ? "on" : "off") + '">' + (on ? "进行中" : "已截止") + "</span>" +
             (joined ? '<span class="join-tag">已参与投标</span>' : "")) +
         (participatable
           ? '<button type="button" class="join-btn' + (joined ? " joined" : "") + '" data-id="' + esc(it.id) + '" title="' + (joined ? "点击取消参与" : "点击参与投标") + '">' + (joined ? "取消参与" : "＋ 参与投标") + "</button>" : "") +
-        (plat === "zycg" ? '<button type="button" class="quick-pick" data-id="' + esc(it.id) + '">一键技术选型</button>' : "") +
+        (plat === "zycg" && it.source !== "委托" ? '<button type="button" class="quick-pick" data-id="' + esc(it.id) + '">一键技术选型</button>' : "") +
       "</div>" +
     "</div>";
   }
@@ -370,6 +382,14 @@
   function showDetail(id) {
     $("overlay").classList.add("show");
     document.body.style.overflow = "hidden";
+    var hit = null;
+    for (var _i = 0; _i < state.items.length; _i++) {
+      if (String(state.items[_i].id) === String(id)) { hit = state.items[_i]; break; }
+    }
+    if (hit && hit.source === "委托") {
+      $("d-body").innerHTML = detailBid(hit);
+      return;
+    }
     if (plat === "bid") {
       var it = null;
       for (var i = 0; i < state.items.length; i++) {
@@ -414,7 +434,7 @@
         metaIt("公告类型", esc(d.notice_type || "—")) +
         metaIt("地区", esc(d.region || "—")) +
         metaIt("发布时间", esc(d.publish_date || "—")) +
-        metaIt("数据来源", esc(d.source || "—")) +
+        metaIt("数据来源", esc(d.source === "委托" ? "央采主站·单独委托项目" : (d.source || "—"))) +
       "</div>" +
       '<div class="d-actions">' +
         '<a class="btn primary" href="' + esc(d.url) + '" target="_blank">打开原公告（查看预算 / 品目 / 联系方式）</a>' +
@@ -1968,9 +1988,18 @@
   });
   Array.prototype.forEach.call(document.querySelectorAll(".rail-source-btn"), function (b) {
     b.addEventListener("click", function () {
+      if (b.classList.contains("zycg-source-btn")) return;  // 央采子来源单独处理
       state.railSource = b.dataset.source || "";
       state.page = 1;
-      document.querySelectorAll(".rail-source-btn").forEach(function (x) { x.classList.toggle("on", x === b); });
+      document.querySelectorAll(".rail-source-btn").forEach(function (x) { if (!x.classList.contains("zycg-source-btn")) x.classList.toggle("on", x === b); });
+      loadList();
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll(".zycg-source-btn"), function (b) {
+    b.addEventListener("click", function () {
+      state.zycgSource = b.dataset.source || "";
+      state.page = 1;
+      document.querySelectorAll(".zycg-source-btn").forEach(function (x) { x.classList.toggle("on", x === b); });
       loadList();
     });
   });

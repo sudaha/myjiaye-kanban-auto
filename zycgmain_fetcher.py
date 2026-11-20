@@ -26,8 +26,8 @@ SITE_ID = "6f5243ee-d4d9-4b69-abbd-1e40576ccd7d"
 CHANNEL = "d0e7c5f4-b93e-4478-b7fe-61110bb47fd5"
 PAGE_URL = "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/cggg/index.html"
 API = ("https://www.zycg.gov.cn/freecms/rest/v1/notice/selectInfoMore.do?&siteId=%s"
-       "&channel=%s&currPage=%%d&pageSize=50&title=&implementWay=1"
-       "&noticeType=1,2,3,31,32,52,57,61" % (SITE_ID, CHANNEL))
+       "&channel=%s&currPage=%%d&pageSize=12&title=&implementWay=1"
+       "&noticeType=1" % (SITE_ID, CHANNEL))
 
 IT_CTX = re.compile(
     r"服务器|台式|笔记本|计算机|电脑|PC|工作站|一体机|交换机|路由器|防火墙|网关|"

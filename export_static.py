@@ -86,6 +86,57 @@ HEADERS = """/index.html
 
 
 # ---------------- 央采 ----------------
+_WT_CATS = [
+    ("服务器", ("服务器", "算力", "小型机", "刀片")),
+    ("台式机", ("台式", "计算机", "电脑", "PC", "终端", "工作站")),
+    ("笔记本", ("笔记本", "便携")),
+    ("网络", ("交换机", "路由器", "网关", "网络设备")),
+    ("网络安全", ("防火墙", "入侵", "安全网关", "堡垒机", "日志审计", "上网行为")),
+    ("存储", ("存储", "磁盘阵列", "NAS", "硬盘", "备份一体机", "磁带库")),
+    ("视频会议", ("视频会议", "会议系统", "音视频")),
+]
+
+
+def _weituo_category(title):
+    for cat, words in _WT_CATS:
+        if any(w in title for w in words):
+            return cat
+    return "信息技术"
+
+
+def _load_weituo_items():
+    """单独委托项目：来自 data/zycgmain_items.json（zycgmain_fetcher.py 已筛 IT 硬件）。"""
+    p = os.path.join(BASE, "data", "zycgmain_items.json")
+    if not os.path.isfile(p):
+        return []
+    try:
+        d = json.load(open(p, encoding="utf-8"))
+    except Exception:
+        return []
+    out = []
+    for it in d.get("items") or []:
+        title = it.get("title") or ""
+        if not title:
+            continue
+        out.append({
+            "id": "wt-%s" % it.get("id", md5hex(it.get("url") or "")[:16]),
+            "platform": "zycg", "source": "委托",
+            "title": title,
+            "org_name": it.get("buyer") or "",
+            "purchase_company": it.get("buyer") or "",
+            "budget_amount": None, "budget_num": None,
+            "end_time": "", "publish_date": (it.get("date") or "").replace(".", "-"),
+            "pub_date": (it.get("date") or "").replace(".", "-"),
+            "category": _weituo_category(title),
+            "brands": "", "is_end": 0,
+            "enquiry_no": "", "has_pdf": False, "pdf_path": None,
+            "url": it.get("url") or "",
+            "notice_type": it.get("notice_type") or "",
+            "is_new": False,
+        })
+    return out
+
+
 def export_zycg(out):
     conn = sqlite3.connect(DB_FILE)
     conn.row_factory = sqlite3.Row
@@ -119,7 +170,7 @@ def export_zycg(out):
                         "pdf_local": local if has_pdf else None,
                         "pdf_path": ("pdf/zycg/" + local) if has_pdf else None}
         items.append({
-            "id": d["id"], "platform": "zycg",
+            "id": d["id"], "platform": "zycg", "source": "询价",
             "title": d["title"], "enquiry_name": d["enquiry_name"],
             "org_name": d["org_name"], "purchase_company": d["purchase_company"],
             "budget_amount": d["budget_amount"], "budget_num": budget,
@@ -148,7 +199,12 @@ def export_zycg(out):
         it["is_new"] = it["id"] in new_ids
     new_days = sorted({day_of(it) for it in items if it["id"] in new_ids}, reverse=True)
 
+    # 单独委托项目（央采主站 www.zycg.gov.cn 招标采购公告，IT 硬件已筛）并入央采子来源。
+    items.extend(_load_weituo_items())
+
     for it in items:
+        if it.get("source") == "委托":
+            continue  # 单独委托项目无富详情/PDF，仅列表+原文链接
         rr = raw[it["id"]]
         d = rr["d"]
         write_json(os.path.join(out, "data", "zycg", "detail", "%s.json" % d["id"]), {
@@ -192,6 +248,8 @@ def export_zycg(out):
         dst = os.path.join(out, "pdf", "zycg")
         os.makedirs(dst, exist_ok=True)
         for it in items:
+            if it.get("source") == "委托":
+                continue
             name = raw[it["id"]]["pdf_local"]
             if name:
                 shutil.copy2(os.path.join(ZYCG_PDF, name), os.path.join(dst, name))
