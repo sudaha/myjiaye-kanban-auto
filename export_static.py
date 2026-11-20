@@ -104,6 +104,16 @@ def _weituo_category(title):
     return "信息技术"
 
 
+def _load_weituo_details():
+    """单独委托公告要点缓存（官网正文快照）：官网风控拦截打不开时，详情弹层内展示。"""
+    p = os.path.join(BASE, "data", "zycgmain_details.json")
+    try:
+        d = json.load(open(p, encoding="utf-8"))
+        return d.get("details") or {}
+    except Exception:
+        return {}
+
+
 def _load_weituo_items():
     """单独委托项目：来自 data/zycgmain_items.json（zycgmain_fetcher.py 已筛 IT 硬件）。"""
     p = os.path.join(BASE, "data", "zycgmain_items.json")
@@ -113,6 +123,7 @@ def _load_weituo_items():
         d = json.load(open(p, encoding="utf-8"))
     except Exception:
         return []
+    details = _load_weituo_details()
     out = []
     for it in d.get("items") or []:
         title = it.get("title") or ""
@@ -136,6 +147,7 @@ def _load_weituo_items():
             "url": it.get("url") or "",
             "notice_type": it.get("notice_type") or "",
             "is_new": False,
+            "wt_detail": details.get(it.get("id")),
         })
     return out
 

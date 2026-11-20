@@ -267,6 +267,8 @@
 .date-day.available:hover small.cat, .date-day.selected small.cat { color: #fff; }
 /* 选型助手：覆盖率不足时的降级推荐警示条 */
 .pick-warn { margin: 12px 0; padding: 10px 14px; background: #fff7e6; border: 1px solid #ffd591; border-left: 4px solid #fa8c16; border-radius: 8px; font-size: 13px; color: #874d00; line-height: 1.7; }
+/* 单独委托详情：官网风控拦截时的复制兜底提示 */
+.wt-tip { margin-top: 10px; font-size: 12px; color: var(--muted); line-height: 1.7; }
 @media (max-width: 900px) {
   .date-pop { width: auto; }
   .date-week, .date-grid { gap: 4px; }

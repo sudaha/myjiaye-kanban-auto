@@ -411,6 +411,7 @@
     }
     if (hit && hit.source === "委托") {
       $("d-body").innerHTML = detailBid(hit);
+      bindZycgDetailLinks($("d-body"));
       return;
     }
     if (plat === "bid") {
@@ -419,6 +420,7 @@
         if (state.items[i].id === id) { it = state.items[i]; break; }
       }
       $("d-body").innerHTML = it ? detailBid(it) : '<div class="empty">项目未找到</div>';
+      bindZycgDetailLinks($("d-body"));
       return;
     }
     $("d-body").innerHTML = '<div class="loading">加载中…</div>';
@@ -454,10 +456,49 @@
         if (b.dataset.wtUrl) openOfficialNoReferrer(b.dataset.wtUrl);
       });
     });
+    // 复制公告链接兜底：官网风控拦掉跨站/冷启动访问时，用户可粘贴到地址栏直接打开
+    (root || document).querySelectorAll(".wt-copy-link").forEach(function (b) {
+      b.addEventListener("pointerdown", function (e) { e.stopPropagation(); });
+      b.addEventListener("click", function (e) {
+        e.preventDefault(); e.stopPropagation();
+        if (b.dataset.wtUrl) copyText(b.dataset.wtUrl, b);
+      });
+    });
+  }
+  function copyText(t, btn) {
+    function done() {
+      if (!btn) return;
+      var old = btn.textContent;
+      btn.textContent = "已复制 ✓";
+      setTimeout(function () { btn.textContent = old; }, 1500);
+    }
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = t;
+      ta.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+      ta.remove();
+      if (!ok) window.prompt("手动复制下方链接：", t);
+      done();
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(t).then(done, fallback);
+    } else fallback();
   }
   function metaIt(k, v) { return '<div class="it"><div class="k">' + k + '</div><div class="v">' + v + "</div></div>"; }
 
   function detailBid(d) {
+    // 单独委托详情：站内缓存的公告要点（来自官网正文快照），官网打不开时也能看预算/品目/联系方式
+    var wt = d.wt_detail;
+    var wtRows = wt ? [
+      ["项目编号", wt.code], ["预算金额", wt.budget], ["最高限价", wt.max_price],
+      ["采购需求", wt.procurement], ["投标截止", wt.deadline],
+      ["联系方式", wt.contacts], ["投标要点", wt.notes]
+    ].filter(function (r) { return r[1]; })
+      .map(function (r) { return metaIt(r[0], esc(r[1])); }).join("") : "";
     return '<div class="d-title">' + esc(d.title) + "</div>" +
       '<div class="d-meta">' +
         metaIt("采购人", esc(d.org_name || "—")) +
@@ -468,9 +509,13 @@
         (d.source === "委托" ? metaIt("采集日期", esc(d.seen_date || d.pub_date || "—")) : "") +
         metaIt("数据来源", esc(d.source === "委托" ? "央采主站·单独委托项目" : (d.source || "—"))) +
       "</div>" +
+      (wt ? '<div class="d-sec">公告要点（站内缓存自官网正文' + (wt.cached_at ? " · " + wt.cached_at : "") + "）</div>" +
+        '<div class="d-meta">' + wtRows + "</div>" : "") +
       '<div class="d-actions">' +
         '<button type="button" class="btn primary wt-open-orig" data-wt-url="' + esc(d.url) + '">打开原公告（查看预算 / 品目 / 联系方式）</button>' +
-      "</div>";
+        '<button type="button" class="btn ghost wt-copy-link" data-wt-url="' + esc(d.url) + '">复制公告链接</button>' +
+      "</div>" +
+      '<div class="wt-tip">若新标签页仍提示「文件被删除 / 访问错误」：这是央采官网对该次访问的风控拦截（公告本身在线），点「复制公告链接」→ 浏览器空白新标签页 → 粘贴到地址栏回车打开。</div>';
   }
 
   function detailZycg(d) {
@@ -1216,6 +1261,7 @@
     a.href = url;
     a.target = "_blank";
     a.rel = "noopener noreferrer";
+    a.referrerPolicy = "no-referrer";
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -1596,7 +1642,8 @@
       box.innerHTML = '<div class="analysis-head"><div class="title">' + esc(entr.title || "") + "</div>" +
         '<div class="pnl-meta">采购公司：' + esc(entr.buyer || "-") + " · 品类：" + esc(entr.category || "-") + "</div>" +
         '<div class="analysis-actions">' + (entr.url
-          ? '<a class="btn ghost" href="' + esc(entr.url) + '" target="_blank" rel="noopener noreferrer">打开原招标公告</a>'
+          ? '<a class="btn ghost" href="' + esc(entr.url) + '" target="_blank" rel="noopener noreferrer">打开原招标公告</a>' +
+            '<button type="button" class="btn ghost wt-copy-link" data-wt-url="' + esc(entr.url) + '">复制链接</button>'
           : "") + "</div></div>" +
         '<div class="pick-empty">该公告为「单独委托招标」公告，无电子询价品目明细与技术附件，不支持一键选型。' +
         "如已获取参数文本，可切到「粘贴需求文本」模式录入后获取选型推荐。</div>";
