@@ -246,5 +246,67 @@
   });
 })();
 </script>
+
+<!-- 滚轮因果诊断面板：仅 ?diag=wheel 时激活 -->
+<style>
+  #wheel-diag { position: fixed; top: 12px; right: 12px; z-index: 100000;
+    background: #10231e; color: #eafff7; padding: 10px 12px; border-radius: 10px;
+    font: 12px/1.7 monospace; pointer-events: none; box-shadow: 0 8px 30px rgba(0,0,0,.4);
+    max-width: 340px; white-space: nowrap; }
+  #wheel-diag b { color: #7dffb8; }
+</style>
+<script>
+(function () {
+  if (location.search.indexOf("diag=wheel") < 0) return;
+  var W = window, D = W.document;
+  var dn = 0, up = 0, dnMoved = 0, upMoved = 0, maxReached = 0;
+  var wheelTs = 0, wheelDir = 0, movedSince = false;
+  var panel = D.createElement("div");
+  panel.id = "wheel-diag";
+  panel.innerHTML = "<b>滚轮因果诊断（主页实测）</b><br>" +
+    "向下: <span id=\"wd-dn\">0</span> 次，实际带动滚动 <span id=\"wd-dnm\">0</span> 次<br>" +
+    "向上: <span id=\"wd-up\">0</span> 次，实际带动滚动 <span id=\"wd-upm\">0</span> 次<br>" +
+    "当前: <span id=\"wd-y\">0</span> px / 最深: <span id=\"wd-max\">0</span> px<br>" +
+    "页面总高: <span id=\"wd-sh\">-</span> / 视口: <span id=\"wd-ih\">-</span><br>" +
+    "滚动容器: <span id=\"wd-se\">-</span><br>" +
+    "光标下: <span id=\"wd-el\">-</span><br>" +
+    "该元素: <span id=\"wd-ov\">-</span> / <span id=\"wd-osb\">-</span>";
+  D.body.appendChild(panel);
+  function set(id, v) { var el = D.getElementById(id); if (el) el.textContent = v; }
+  W.addEventListener("wheel", function (e) {
+    if (e.deltaY > 0) dn++; else if (e.deltaY < 0) up++;
+    wheelDir = e.deltaY > 0 ? 1 : (e.deltaY < 0 ? -1 : 0);
+    wheelTs = Date.now(); movedSince = false;
+    set("wd-dn", dn); set("wd-up", up);
+  }, { passive: true });
+  W.addEventListener("scroll", function () {
+    var y = W.scrollY;
+    if (y > maxReached) maxReached = y;
+    set("wd-y", Math.round(y)); set("wd-max", Math.round(maxReached));
+    if (!movedSince && wheelDir !== 0 && Date.now() - wheelTs < 300) {
+      movedSince = true;
+      if (wheelDir > 0) dnMoved++; else upMoved++;
+      set("wd-dnm", dnMoved); set("wd-upm", upMoved);
+    }
+  }, { passive: true });
+  var cx = 0, cy = 0;
+  W.addEventListener("mousemove", function (e) {
+    cx = e.clientX; cy = e.clientY;
+    try {
+      var el = D.elementFromPoint(cx, cy);
+      if (!el) { set("wd-el", "(无)"); set("wd-ov", "-"); set("wd-osb", "-"); return; }
+      var cs = W.getComputedStyle(el);
+      var label = el.tagName.toLowerCase() + (el.id ? "#" + el.id : "") +
+        (typeof el.className === "string" && el.className ? "." + el.className.trim().split(/\s+/).slice(0, 2).join(".") : "");
+      set("wd-el", label);
+      set("wd-ov", "overflow-y:" + cs.overflowY + " 高" + el.scrollHeight + "/" + el.clientHeight);
+      set("wd-osb", "overscroll:" + (cs.overscrollBehaviorY || cs.overscrollBehavior || "-") + " 位置:" + cs.position);
+    } catch (err) { set("wd-el", "err"); }
+  }, { passive: true });
+  var se = D.scrollingElement || D.documentElement;
+  set("wd-se", se.tagName.toLowerCase() + (se.id ? "#" + se.id : "") + " (overflow-y:" + W.getComputedStyle(se).overflowY + ")");
+  setInterval(function () { set("wd-sh", D.documentElement.scrollHeight); set("wd-ih", W.innerHeight); }, 500);
+})();
+</script>
 </body>
 </html>
