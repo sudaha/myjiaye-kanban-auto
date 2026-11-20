@@ -416,3 +416,17 @@
   .rec-cfg input { width: 120px; }
   .rec-filters select { flex: 1 1 auto; }
 }
+
+/* 全站中标喜讯滚动�?*/
+.win-ticker { width: 100%; display: flex; align-items: stretch; overflow: hidden; background: linear-gradient(90deg,#fff8e8,#fffdf8,#fff3d2); border-bottom: 1px solid #efd18d; box-shadow: 0 2px 8px rgba(117,72,0,.08); }
+.win-ticker.hide { display: none; }
+.win-ticker-label { flex: 0 0 auto; display: flex; align-items: center; padding: 9px 18px; color: #fff; background: linear-gradient(135deg,#b51f24,#df3c24); font-size: 14px; font-weight: 800; letter-spacing: 1px; }
+.win-ticker-window { flex: 1; min-width: 0; overflow: hidden; display: flex; align-items: center; }
+.win-ticker-track { display: flex; align-items: center; gap: 70px; width: max-content; white-space: nowrap; animation: winTickerScroll calc(var(--win-count,1) * 10s + 16s) linear infinite; padding-left: 100%; }
+.win-ticker:hover .win-ticker-track { animation-play-state: paused; }
+.win-ticker-item { display: inline-flex; align-items: center; color: #7b3200; font-size: 13px; font-weight: 700; }
+.win-ticker-item::before { content: "喜报"; display: inline-block; margin-right: 10px; padding: 2px 7px; border-radius: 999px; color: #b51f24; background: #fff0c8; border: 1px solid #efce78; font-size: 11px; }
+@keyframes winTickerScroll { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+@media (prefers-reduced-motion: reduce) { .win-ticker-track { animation: none; padding-left: 12px; } }
+@media (max-width: 640px) { .win-ticker-label { padding: 8px 10px; font-size: 12px; } .win-ticker-track { gap: 45px; } .win-ticker-item { font-size: 12px; } }
+

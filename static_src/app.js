@@ -1662,20 +1662,52 @@
   }
   bindPicker();
 
+  // ---------- 全站中标喜讯（官方成交结果 + 当前浏览器手动中标） ----------
+  var publicWins = [];
+  function winText(w) {
+    var amount = Number(w.amount) > 0 ? "，中标金额 " + money(Number(w.amount)) + " 元" : "";
+    var products = (w.products || []).slice(0, 2).join("、");
+    return "热烈祝贺 " + (w.company || "我司") + " 成功中标「" + (w.title || "采购项目") + "」" + amount + (products ? "，品牌型号：" + products : "");
+  }
+  function renderWinTicker() {
+    var box = $("win-ticker"), track = $("win-ticker-track");
+    if (!box || !track) return;
+    var merged = publicWins.slice();
+    recState.items.forEach(function (r) {
+      if (r.manualResult === "win") merged.push({
+        id: "manual_" + r.id, company: recState.ourCompany || "我司", title: r.title,
+        amount: r.budget || 0, products: []
+      });
+    });
+    var seen = {}, rows = [];
+    merged.forEach(function (w) { var k = w.id || winText(w); if (!seen[k]) { seen[k] = true; rows.push(w); } });
+    box.classList.toggle("hide", rows.length === 0);
+    track.innerHTML = rows.map(function (w) { return '<span class="win-ticker-item">' + esc(winText(w)) + "</span>"; }).join("");
+    track.style.setProperty("--win-count", Math.max(1, rows.length));
+  }
+  function loadWinTicker() {
+    getJSON("data/wins.json").then(function (d) {
+      publicWins = (d && d.wins) || [];
+      renderWinTicker();
+    }).catch(function () { publicWins = []; renderWinTicker(); });
+  }
+
   // ---------- 参与投标记录 ----------
   var REC_KEY = "jiaye_bid_records_v1";
-  var recState = { ourCompany: "佳业", items: [], deals: null, dealsMap: null };
+  var OUR_COMPANY_NAMES = ["北京佳业同创科技有限公司", "北京智鑫盛通科技有限公司"];
+  var recState = { ourCompany: OUR_COMPANY_NAMES.join("、"), items: [], deals: null, dealsMap: null };
   var recKwTimer = null;
 
   function recLoad() {
     try {
       var raw = JSON.parse(localStorage.getItem(REC_KEY) || "{}");
-      recState.ourCompany = raw.ourCompany || "佳业";
+      recState.ourCompany = raw.ourCompany || OUR_COMPANY_NAMES.join("、");
       recState.items = Array.isArray(raw.items) ? raw.items : [];
-    } catch (e) { recState.ourCompany = "佳业"; recState.items = []; }
+    } catch (e) { recState.ourCompany = OUR_COMPANY_NAMES.join("、"); recState.items = []; }
   }
   function recSave() {
     try { localStorage.setItem(REC_KEY, JSON.stringify({ ourCompany: recState.ourCompany, items: recState.items })); } catch (e) {}
+    renderWinTicker();
   }
   function recKey(platform, id) { return platform + "_" + id; }
   function recFind(platform, id) {
@@ -1744,9 +1776,8 @@
     return recState.dealsMap[normTitle(rec.title)] || [];
   }
   function recCompanyWon(supplier) {
-    var ours = (recState.ourCompany || "").trim();
-    if (!ours) return false;
-    return String(supplier || "").indexOf(ours) >= 0;
+    var s = String(supplier || "").trim();
+    return OUR_COMPANY_NAMES.indexOf(s) >= 0;
   }
   function recResultOf(rec) {
     if (rec.manualResult === "win") return "win";
@@ -1805,8 +1836,7 @@
 
       var html = "";
       html += '<div class="rec-head">' +
-        '<label class="rec-cfg">我方公司名称 <input id="rec-company" type="text" value="' + esc(recState.ourCompany) + '" placeholder="如：佳业"></label>' +
-        '<div class="rec-note">自动判定中标：成交公告中标供应商含「我方公司名称」即记为「我方中标」，否则「未中标」；无法匹配到成交结果的项目为「待出结果」。</div>' +
+        '<div class="rec-note"><b>我方中标识别主体：</b>' + esc(OUR_COMPANY_NAMES.join("、")) + '。系统按工商全称精确匹配官方成交结果；匹配成功自动标记「我方中标」并发布全站滚动喜报。</div>' +
         "</div>";
 
       html += '<div class="rec-stats">' +
@@ -1892,12 +1922,6 @@
 
       box.innerHTML = html;
       // 绑定
-      var comp = $("rec-company");
-      if (comp) comp.addEventListener("change", function () {
-        recState.ourCompany = comp.value.trim() || "佳业";
-        recSave();
-        renderRecords();
-      });
       if ($("rec-cat")) $("rec-cat").addEventListener("change", renderRecords);
       if ($("rec-mon")) $("rec-mon").addEventListener("change", renderRecords);
       if ($("rec-kw")) $("rec-kw").addEventListener("input", function (e) {
@@ -2007,6 +2031,7 @@
 
   recLoad();
   recUpdateBadge();
+  loadWinTicker();
   setPlatform(plat, false);
   loadCategoryBadges();
 })();

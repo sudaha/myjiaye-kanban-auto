@@ -466,6 +466,17 @@ def main():
         write_json(os.path.join(out, "data", "deals.json"),
                    json.load(open(deals_src, encoding="utf-8")))
 
+    # 官方成交结果严格匹配我方工商全称后，自动生成全站滚动喜报。
+    try:
+        import build_wins
+        build_wins.main()
+    except Exception as e:
+        print("[warn] 喜报生成失败，沿用上次数据: %s" % e)
+    wins_src = os.path.join(BASE, "data", "wins.json")
+    if os.path.isfile(wins_src):
+        write_json(os.path.join(out, "data", "wins.json"),
+                   json.load(open(wins_src, encoding="utf-8")))
+
     if BID_SECTION:
         out, manifest = export_bid(out)
     else:
