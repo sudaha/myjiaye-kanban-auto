@@ -1748,24 +1748,34 @@
     function rnd(a, b) { return a + Math.random() * (b - a); }
     function pick(arr) { return arr[(Math.random() * arr.length) | 0]; }
 
-    // 大烟花：数量×3、半径更大、全屏分散燃放
-    var bursts = small ? 26 : 50;
-    for (var b = 0; b < bursts; b++) {
-      var bx = rnd(0.03, 0.97) * W, by = rnd(0.03, 0.72) * H;
-      var at = Math.floor(rnd(0, 320));
-      var col = pick(PALETTE);
-      var cnt = Math.floor(rnd(90, 160) * (small ? 0.55 : 1));
+    // 大烟花：火箭升空 → 高空炸开（35% 概率二次补炸），全屏分散燃放
+    var bursts = small ? 45 : 95;
+    function burstParts(x, y, at, col, cnt) {
       for (var i = 0; i < cnt; i++) {
-        var a = Math.random() * 6.283, sp = rnd(1.6, small ? 5.5 : 9);
-        P.push({ t: "fw", x: bx, y: by, px: bx, py: by, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
-          born: at, life: Math.floor(rnd(55, 100)), col: col, r: rnd(1.2, 2.8) });
+        var a = Math.random() * 6.283, sp = rnd(1.4, small ? 5.5 : 9.5);
+        P.push({ t: "fw", x: x, y: y, px: x, py: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
+          born: at, life: Math.floor(rnd(80, 140)), col: col, r: rnd(1.3, 3) });
+      }
+    }
+    for (var b = 0; b < bursts; b++) {
+      var bx = rnd(0.04, 0.96) * W, by = rnd(0.05, 0.62) * H;
+      var at = Math.floor(rnd(0, 640));
+      var rise = Math.floor(rnd(28, 46));
+      var sx = bx + rnd(-70, 70);
+      var col = pick(PALETTE);
+      P.push({ t: "rock", x: sx, y: H + 12, px: sx, py: H + 12, x0: sx, y0: H + 12, tx: bx, ty: by,
+        born: Math.max(0, at - rise), life: rise, col: "#fff3c4" });
+      burstParts(bx, by, at, col, Math.floor(rnd(140, 220) * (small ? 0.5 : 1)));
+      if (Math.random() < 0.35) {
+        burstParts(bx + rnd(-45, 45), by + rnd(-35, 35), at + 20, pick(PALETTE),
+          Math.floor(rnd(70, 120) * (small ? 0.5 : 1)));
       }
     }
 
     // "恭喜中标"文字烟花：中心大爆 → 粒子汇聚成字形 → 发光定格 → 消散
     (function () {
       var off = document.createElement("canvas");
-      var fs = Math.min(W * 0.14, 160);
+      var fs = Math.min(W * 0.2, 200);
       off.width = Math.ceil(fs * 4.9); off.height = Math.ceil(fs * 1.4);
       var oc = off.getContext("2d");
       if (!oc) return;
@@ -1774,34 +1784,34 @@
       oc.textAlign = "center"; oc.textBaseline = "middle";
       oc.fillText("恭喜中标", off.width / 2, off.height / 2);
       var img = oc.getImageData(0, 0, off.width, off.height).data;
-      var pts = [], step = small ? 6 : 4;
+      var pts = [], step = small ? 7 : 4;
       for (var y = 0; y < off.height; y += step) {
         for (var x = 0; x < off.width; x += step) {
           if (img[(y * off.width + x) * 4 + 3] > 128) pts.push([x, y]);
         }
       }
       if (!pts.length) return;
-      var n = Math.min(pts.length, small ? 340 : 620);
+      var n = Math.min(pts.length, small ? 420 : 780);
       var cx = W / 2, cy = H * 0.38, ox = cx - off.width / 2, oy = cy - off.height / 2;
       for (var k = 0; k < n; k++) {
         var tp = pick(pts);
-        var a2 = Math.random() * 6.283, sp2 = rnd(4, 12);
+        var a2 = Math.random() * 6.283, sp2 = rnd(4, 13);
         P.push({ t: "txt", x: cx, y: cy, px: cx, py: cy, vx: Math.cos(a2) * sp2, vy: Math.sin(a2) * sp2,
-          tx: ox + tp[0], ty: oy + tp[1], born: 70, p1: 55, p2: 95, p3: 95,
-          col: k % 3 === 0 ? "#ff5d3a" : "#ffd60a", r: small ? 1.7 : 2.3, ph: rnd(0, 6.28), sx: 0, sy: 0 });
+          tx: ox + tp[0], ty: oy + tp[1], born: 100, p1: 60, p2: 110, p3: 240, p4: 60,
+          col: k % 5 === 0 ? "#ffffff" : "#ffd60a", r: small ? 2 : 2.8, ph: rnd(0, 6.28), sx: 0, sy: 0 });
       }
     })();
 
     // 彩带：16 种形状、尺寸×2、底部喷泉射向顶部
     var SHAPES = ["rect", "ribbon", "circle", "square", "diamond", "tri", "star", "heart", "ring", "coin", "spark", "curl", "cross", "para", "semi", "flag"];
-    var N = small ? 170 : 330;
+    var N = small ? 220 : 520;
     for (var c2 = 0; c2 < N; c2++) {
       var zone = Math.random(), x0 = zone < 0.42 ? rnd(0.02, 0.34) * W : (zone < 0.84 ? rnd(0.66, 0.98) * W : rnd(0.4, 0.6) * W);
       P.push({ t: "cf", shape: pick(SHAPES), x: x0, y: H + 12, px: x0, py: H + 12,
-        vx: rnd(-1.7, 1.7), vy: -rnd(small ? 7.5 : 9.5, small ? 13.5 : 17),
-        born: Math.floor(rnd(0, 160)), life: Math.floor(rnd(170, 300)),
+        vx: rnd(-1.7, 1.7), vy: -rnd(small ? 8.5 : 10.5, small ? 14 : 18),
+        born: Math.floor(rnd(0, 600)), life: Math.floor(rnd(240, 420)),
         rot: rnd(0, 360), vr: rnd(-9, 9), wob: rnd(0.5, 1.7), ph: rnd(0, 6.28),
-        col: pick(PALETTE), s: rnd(7, 16), al: 0 });
+        col: pick(PALETTE), s: rnd(8, 18), al: 0 });
     }
 
     function drawCf(p) {
@@ -1850,7 +1860,7 @@
     function tick() {
       if (!running) return;
       frame++;
-      if (frame > 500) { running = false; return; }
+      if (frame > 1000) { running = false; return; }
       ctx.clearRect(0, 0, W, H);
       var i, p, age;
       for (i = 0; i < P.length; i++) {
@@ -1858,7 +1868,7 @@
         if (p.t !== "cf" || frame < p.born) continue;
         age = frame - p.born;
         if (age > p.life || p.y > H + 60) { P.splice(i--, 1); continue; }
-        p.vy += 0.16; p.vx *= 0.995;
+        p.vy += 0.14; p.vx *= 0.995;
         p.x += p.vx + Math.sin(frame * 0.06 * p.wob + p.ph) * 0.9;
         p.y += p.vy;
         p.rot += p.vr;
@@ -1870,16 +1880,25 @@
         var q = P[i];
         if (q.t === "cf" || frame < q.born) continue;
         var a3 = frame - q.born;
-        if (q.t === "fw") {
+        if (q.t === "rock") {
+          if (a3 > q.life) { P.splice(i--, 1); continue; }
+          var rt = a3 / q.life, rp = 1 - Math.pow(1 - rt, 1.9);
+          q.px = q.x; q.py = q.y;
+          q.x = q.x0 + (q.tx - q.x0) * rp;
+          q.y = q.y0 + (q.ty - q.y0) * rp;
+          ctx.globalAlpha = 0.95;
+          ctx.strokeStyle = q.col; ctx.lineWidth = 2.2;
+          ctx.beginPath(); ctx.moveTo(q.px, q.py); ctx.lineTo(q.x, q.y); ctx.stroke();
+        } else if (q.t === "fw") {
           if (a3 > q.life) { P.splice(i--, 1); continue; }
           q.px = q.x; q.py = q.y;
-          q.vx *= 0.984; q.vy = q.vy * 0.984 + 0.05;
+          q.vx *= 0.986; q.vy = q.vy * 0.986 + 0.045;
           q.x += q.vx; q.y += q.vy;
           ctx.globalAlpha = 1 - a3 / q.life;
           ctx.strokeStyle = q.col; ctx.lineWidth = q.r;
           ctx.beginPath(); ctx.moveTo(q.px, q.py); ctx.lineTo(q.x, q.y); ctx.stroke();
         } else {
-          var total = q.p1 + q.p2 + q.p3 + 45;
+          var total = q.p1 + q.p2 + q.p3 + q.p4;
           if (a3 > total) { P.splice(i--, 1); continue; }
           if (a3 <= q.p1) {
             q.px = q.x; q.py = q.y;
@@ -1901,7 +1920,7 @@
             ctx.fillStyle = q.col;
             ctx.beginPath(); ctx.arc(q.tx, q.ty, q.r + 0.4, 0, 6.29); ctx.fill();
           } else {
-            var t4 = (a3 - q.p1 - q.p2 - q.p3) / 45;
+            var t4 = (a3 - q.p1 - q.p2 - q.p3) / q.p4;
             ctx.globalAlpha = 1 - t4;
             ctx.fillStyle = q.col;
             ctx.beginPath(); ctx.arc(q.tx, q.ty, (q.r + 0.4) * (1 + t4 * 0.6), 0, 6.29); ctx.fill();
@@ -1929,7 +1948,7 @@
       var card = document.createElement("div");
       card.className = "win-rain-card";
       card.style.left = (8 + Math.random() * 60).toFixed(1) + "%";
-      card.style.animationDelay = (i * 0.28 + Math.random() * 0.2).toFixed(2) + "s";
+      card.style.animationDelay = (i * 0.45 + Math.random() * 0.25).toFixed(2) + "s";
       var amount = Number(w.amount) > 0 ? "，中标金额 " + money(Number(w.amount)) + " 元" : "";
       var products = (w.products || []).slice(0, 2).join("、");
       card.innerHTML = '<span class="r-tag">喜　报</span>' +
@@ -1940,7 +1959,7 @@
     // canvas 特效层：大烟花 + "恭喜中标"文字烟花 + 彩带喷泉（卡片已先生成，压在特效之上）
     startWinFx(host);
     document.body.appendChild(host);
-    setTimeout(function () { if (host.parentNode) host.parentNode.removeChild(host); }, 8600);
+    setTimeout(function () { if (host.parentNode) host.parentNode.removeChild(host); }, 16500);
   }
   function checkWinRain(d) {
     var wins = (d && d.wins) || [];

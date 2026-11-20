@@ -436,7 +436,7 @@
 .win-rain-card { position: absolute; top: -200px; width: 320px; max-width: 82vw; padding: 16px 18px 18px; box-sizing: border-box;
   background: linear-gradient(160deg,#fffaf0,#ffedd0); border: 2px solid #d9482f; border-radius: 12px;
   box-shadow: 0 12px 34px rgba(90,10,0,.32); opacity: 0;
-  animation: winRainFall 5s linear forwards; will-change: transform; }
+  animation: winRainFall 7.5s linear forwards; will-change: transform; }
 .win-rain-card .r-tag { display: inline-block; margin-bottom: 8px; padding: 3px 11px; border-radius: 999px;
   background: linear-gradient(135deg,#b51f24,#df3c24); color: #fff; font-size: 13px; font-weight: 800; letter-spacing: 3px; }
 .win-rain-card .r-title { font-size: 15px; font-weight: 700; color: #5b2300; line-height: 1.6; }
