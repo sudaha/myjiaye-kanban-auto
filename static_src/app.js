@@ -1764,7 +1764,7 @@
     function peony(x, y, at, col, big, hero, lifeOv) {
       // hero 主角花：粒子尺寸×2；大烟花统一红色；小烟花整体放大 2 倍（数量/展开速度/粒径）
       var cnt = Math.floor((hero ? rnd(280, 420) : big ? rnd(230, 360) : rnd(120, 220)) * (small ? 0.5 : 1));
-      var vMax = hero ? (small ? 3.0 : 3.8) : big ? (small ? 3.0 : 3.8) : (small ? 2.8 : 3.4);
+      var vMax = hero ? (small ? 2.7 : 3.3) : big ? (small ? 2.7 : 3.3) : (small ? 2.8 : 3.4);
       var base = (big || hero) ? "#ff2d55" : col;
       var maxLife = Math.max(50, endFrame - at);
       for (var i = 0; i < cnt; i++) {
@@ -1772,7 +1772,7 @@
         // 大花（3 朵主角）留存至结束帧、与"恭喜中标"字样同帧消失；小烟花短留存
         var life = lifeOv || (big ? maxLife : Math.min(maxLife, Math.floor(rnd(50, 85))));
         P.push({ t: "fw", x: x, y: y, px: x, py: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
-          born: at, life: life, large: !!(big || hero),
+          born: at, life: life, large: !!(big || hero), drift: (big || hero) ? rnd(-0.22, 0.22) : 0, ph: rnd(0, 6.28),
           col: Math.random() < (hero ? 0.35 : 0.25) ? "#fff6d8" : base,
           r: hero ? rnd(4.8, 8.8) : big ? rnd(2.4, 4.4) : rnd(4.8, 6.8) });
       }
@@ -1790,10 +1790,17 @@
     // 排程：前 3 秒（p2start=180 帧）小烟花开场；3 秒后仅 3 朵主角大红花登场（全部大烟花），
     // 大花熄灭帧 = 结束帧，与"恭喜中标"字样同刻消失
     var p2start = 180;
+    // 3 秒后才依次发射大烟花；升空约 1.1-1.4 秒，再缓慢绽放
+    var heroLaunch = [p2start, p2start + 36, p2start + 72];
+    var heroRise = [
+      Math.floor(rnd(66, 82)),
+      Math.floor(rnd(66, 82)),
+      Math.floor(rnd(66, 82))
+    ];
     var heroTimes = [
-      p2start + Math.floor(rnd(0, 15)),
-      Math.floor(endFrame * 0.52) + Math.floor(rnd(0, 15)),
-      Math.floor(endFrame * 0.68) + Math.floor(rnd(0, 15))
+      heroLaunch[0] + heroRise[0],
+      heroLaunch[1] + heroRise[1],
+      heroLaunch[2] + heroRise[2]
     ];
     function nearHero(t, gap) {
       for (var h = 0; h < heroTimes.length; h++) if (Math.abs(t - heroTimes[h]) < gap) return true;
@@ -1807,10 +1814,10 @@
     ];
     for (var hh = 0; hh < 3; hh++) {
       var hx = rnd(0.15, 0.85) * W, hy = rnd(0.08, 0.42) * H;
-      var hrise = Math.floor(rnd(30, 48));
+      var hrise = heroRise[hh];
       var hsx = hx + rnd(-50, 50);
       P.push({ t: "rock", x: hsx, y: H + 12, px: hsx, py: H + 12, x0: hsx, y0: H + 12, tx: hx, ty: hy,
-        born: Math.max(0, heroTimes[hh] - hrise), life: hrise, col: "#ffd60a" });
+        born: heroLaunch[hh], life: hrise, col: "#ffd60a" });
       peony(hx, hy, heroTimes[hh], "#ff2d55", true, true, heroLife[hh]);
       crackle(hx + rnd(-60, 60), hy + rnd(-40, 40), heroTimes[hh] + 20);
     }
@@ -1901,15 +1908,19 @@
           if (a3 > q.life) { P.splice(i--, 1); continue; }
           q.px = q.x; q.py = q.y;
           if (q.large) {
-            // 大烟花：炸开后动能逐步衰减，约 2 秒转为下落，随后以低终端速度缓慢飘落
-            q.vx *= 0.985;
-            q.vy = q.vy * 0.985 + 0.012;
+            // 大烟花：低速绽放，重力随进度平滑增强并自然转为缓降；微风横移持续到结束，尾段不定格
+            var lp = a3 / q.life;
+            q.vx = q.vx * 0.992 + q.drift * 0.008;
+            q.vy = q.vy * 0.992 + 0.012 + lp * 0.032;
+            if (q.vy > 0.9) q.vy = 0.9;
+            q.x += q.vx + Math.sin(frame * 0.025 + q.ph) * 0.08;
+            q.y += q.vy;
           } else {
             // 小烟花：保留扩散感但整体降速，避免高速粒子铺满画面
             q.vx *= 0.99;
             q.vy = q.vy * 0.99 + 0.012;
+            q.x += q.vx; q.y += q.vy;
           }
-          q.x += q.vx; q.y += q.vy;
           var spd = Math.sqrt(q.vx * q.vx + q.vy * q.vy);
           var ln = Math.min(46, Math.max(8, spd * 6));
           var ux = spd > 0.01 ? q.vx / spd : 0, uy = spd > 0.01 ? q.vy / spd : 0;
