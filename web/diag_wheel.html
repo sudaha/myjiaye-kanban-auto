@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>滚轮诊断 · 佳业采购雷达</title>
+<style>
+  html, body { margin: 0; padding: 0; }
+  body { font: 14px/1.7 "Microsoft YaHei", sans-serif; background: #f6faf9; color: #1a2333; }
+  .bar { position: sticky; top: 0; z-index: 9; background: #0f9d8f; color: #fff;
+    padding: 14px 20px; font-size: 15px; font-weight: 700; }
+  .box { max-width: 780px; margin: 20px auto 60px; padding: 0 20px; }
+  .row { background: #fff; border: 1px solid #d8e5e0; border-radius: 10px;
+    padding: 12px 16px; margin: 10px 0; font-size: 15px; }
+  .row b { color: #0f7b5f; }
+  .row .warn { color: #d4380d; }
+  .filler { height: 2400px; margin-top: 16px;
+    background: repeating-linear-gradient(180deg, #eef7f4, #eef7f4 96px, #dceee6 96px, #dceee6 97px);
+    border-radius: 10px; }
+</style>
+</head>
+<body>
+<div class="bar">滚轮诊断页 — 请先往下滚到灰色区域，然后转动鼠标滚轮 5~10 次</div>
+<div class="box">
+  <div class="row">① 页面收到的滚轮事件：<b id="n">0</b> 次（最近一次 deltaY：<b id="dy">—</b>）</div>
+  <div class="row">② 本页实际滚动位置：<b id="sy">0</b> px</div>
+  <div class="row">③ 你浏览器中的主页版本：<b id="ver">检测中…</b></div>
+  <div class="row">④ 结论提示：<b id="tip">转动滚轮后自动给出</b></div>
+  <div class="filler"></div>
+</div>
+<script>
+(function () {
+  var n = 0, warned = false;
+  function sy() { document.getElementById("sy").textContent = Math.round(window.scrollY); }
+  window.addEventListener("wheel", function (e) {
+    n++;
+    document.getElementById("n").textContent = n;
+    document.getElementById("dy").textContent = e.deltaY;
+    setTimeout(sy, 50);
+    if (n === 5) judge();
+  }, { passive: true });
+  window.addEventListener("scroll", sy, { passive: true });
+  function judge() {
+    var tip = document.getElementById("tip");
+    if (n >= 5 && window.scrollY < 5) {
+      tip.innerHTML = '<span class="warn">滚轮有事件但页面不动 —— 有程序在阻止滚动（请截图本页发我）</span>';
+    } else if (window.scrollY >= 5) {
+      tip.textContent = "滚轮工作正常 —— 如果主页还是滚不动，看下面 ③ 的版本检测结果";
+    } else if (!warned) {
+      warned = true;
+      tip.innerHTML = '<span class="warn">还没收到滚轮事件 —— 请确认鼠标已对准页面空白处再滚；仍为 0 说明事件没进浏览器（换百度试试）</span>';
+    }
+  }
+  fetch("/?t=" + Date.now(), { cache: "no-store" }).then(function (r) { return r.text(); }).then(function (t) {
+    var v = document.getElementById("ver");
+    if (t.indexOf('document.body.style.overflow = "hidden"') >= 0) {
+      v.innerHTML = '<span class="warn">仍是旧版（登录门会锁滚轮）！请对主页按 Ctrl+F5 强制刷新后重试</span>';
+    } else if (t.indexOf("jiaye_auth_guest_v1") >= 0) {
+      v.textContent = "新版正常（登录门已不锁滚轮，密码 guest，每个新标签页需先输密码进入）";
+    } else {
+      v.textContent = "新版正常（未检测到登录门）";
+    }
+  }).catch(function () {
+    document.getElementById("ver").textContent = "检测失败（不影响滚轮测试）";
+  });
+})();
+</script>
+</body>
+</html>
