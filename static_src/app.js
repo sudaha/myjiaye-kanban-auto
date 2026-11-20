@@ -1689,8 +1689,8 @@
     var products = (w.products || []).slice(0, 2).join("、");
     return "热烈祝贺 " + (w.company || "我司") + " 成功中标「" + (w.title || "采购项目") + "」" + amount + (products ? "，品牌型号：" + products : "");
   }
-  // 2026-11-20 前已入库的历史中标：正式展示时先不显示，出现新中标后开始滚动展示；
-  // 带 ?winspreview=1 访问可临时用这 7 条历史数据预览慢速滚动效果
+  // 顶部滚动条默认只展示"中标日期 = 今天"的喜讯，当天滚动一天、次日自动隐藏；
+  // 带 ?winspreview=1 或 ?rain=1 访问可不受日期限制预览全部数据
   var HISTORICAL_WIN_IDS = [
     "北京佳业同创科技有限公司_818208",
     "北京佳业同创科技有限公司_813484",
@@ -1706,9 +1706,17 @@
     // 预览模式（?winspreview=1 或 ?rain=1）下历史中标也进滚动条，与标书雨展示同一批
     var preview = /[?&](winspreview|rain)=1/.test(location.search);
     var pub = (over && over.length) ? over.slice() : publicWins;
-    var merged = pub.filter(function (w) { return preview || HISTORICAL_WIN_IDS.indexOf(w.id) < 0; });
+    // 默认只滚动"中标日期 = 今天"的喜讯；当天无中标则整条隐藏（预览模式不受限）
+    function ymd(d) { return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
+    var todayStr = ymd(new Date());
+    var merged = pub.filter(function (w) {
+      return preview || (HISTORICAL_WIN_IDS.indexOf(w.id) < 0 && String(w.date || "").slice(0, 10) === todayStr);
+    });
     recState.items.forEach(function (r) {
-      if (r.manualResult === "win") merged.push({
+      if (r.manualResult !== "win") return;
+      var wStr = r.winMarkedAt ? ymd(new Date(r.winMarkedAt)) : "";
+      if (!preview && wStr !== todayStr) return;
+      merged.push({
         id: "manual_" + r.id, company: recState.ourCompany || "我司", title: r.title,
         amount: r.budget || 0, products: []
       });
@@ -2258,8 +2266,11 @@
           for (var i = 0; i < recState.items.length; i++) if (recState.items[i].id === s.dataset.id) { rec = recState.items[i]; break; }
           if (!rec) return;
           rec.manualResult = s.value === "auto" ? null : s.value;
+          if (rec.manualResult === "win") rec.winMarkedAt = rec.winMarkedAt || Date.now();
+          else delete rec.winMarkedAt;
           recSave();
           renderRecords();
+          renderWinTicker();
         });
       });
       Array.prototype.forEach.call(box.querySelectorAll(".rec-view"), function (b) {
