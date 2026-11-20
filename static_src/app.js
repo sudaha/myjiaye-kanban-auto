@@ -1689,8 +1689,8 @@
     var products = (w.products || []).slice(0, 2).join("、");
     return "热烈祝贺 " + (w.company || "我司") + " 成功中标「" + (w.title || "采购项目") + "」" + amount + (products ? "，品牌型号：" + products : "");
   }
-  // 顶部滚动条默认只展示"中标日期 = 今天"的喜讯，当天滚动一天、次日自动隐藏；
-  // 带 ?winspreview=1 或 ?rain=1 访问可不受日期限制预览全部数据
+  // 正式逻辑：顶部滚动条只展示"中标日期 = 今天"的喜讯，当天滚动一天、次日自动隐藏；
+  // 测试预览参数已关闭，任何 URL 都不能绕过当天日期过滤
   var HISTORICAL_WIN_IDS = [
     "北京佳业同创科技有限公司_818208",
     "北京佳业同创科技有限公司_813484",
@@ -1703,19 +1703,17 @@
   function renderWinTicker(over) {
     var box = $("win-ticker"), track = $("win-ticker-track");
     if (!box || !track) return;
-    // 预览模式（?winspreview=1 或 ?rain=1）下历史中标也进滚动条，与标书雨展示同一批
-    var preview = /[?&](winspreview|rain)=1/.test(location.search);
     var pub = (over && over.length) ? over.slice() : publicWins;
-    // 默认只滚动"中标日期 = 今天"的喜讯；当天无中标则整条隐藏（预览模式不受限）
+    // 只滚动"中标日期 = 今天"的喜讯；当天无中标则整条隐藏
     function ymd(d) { return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2); }
     var todayStr = ymd(new Date());
     var merged = pub.filter(function (w) {
-      return preview || (HISTORICAL_WIN_IDS.indexOf(w.id) < 0 && String(w.date || "").slice(0, 10) === todayStr);
+      return HISTORICAL_WIN_IDS.indexOf(w.id) < 0 && String(w.date || "").slice(0, 10) === todayStr;
     });
     recState.items.forEach(function (r) {
       if (r.manualResult !== "win") return;
       var wStr = r.winMarkedAt ? ymd(new Date(r.winMarkedAt)) : "";
-      if (!preview && wStr !== todayStr) return;
+       if (wStr !== todayStr) return;
       merged.push({
         id: "manual_" + r.id, company: recState.ourCompany || "我司", title: r.title,
         amount: r.budget || 0, products: []
@@ -1727,8 +1725,7 @@
     track.innerHTML = rows.map(function (w) { return '<span class="win-ticker-item">' + esc(winText(w)) + "</span>"; }).join("");
     track.style.setProperty("--win-count", Math.max(1, rows.length));
   }
-  // ---------- 喜报标书雨：出现新中标时全站展示约 3 秒（红包雨式，缓慢下落），历史喜报不重放 ----------
-  var RAIN_SEEN_KEY = "jiaye_wins_seen_v1";
+  // ---------- 喜报标书雨：当天有中标则每次进站播放一次；当天无中标或只有历史喜报则不播放 ----------
   function gateStillOn() {
     try { return !sessionStorage.getItem("jiaye_auth_guest_v1"); } catch (e) { return false; }
   }
@@ -2018,35 +2015,24 @@
   function checkWinRain(d) {
     var wins = (d && d.wins) || [];
     if (!wins.length) return;
-    try {
-      var raw = localStorage.getItem(RAIN_SEEN_KEY);
-      var seen = raw ? JSON.parse(raw) : null;
-      if (!Array.isArray(seen)) {
-        localStorage.setItem(RAIN_SEEN_KEY, JSON.stringify(wins.map(function (w) { return w.id; })));
-        return; // 首次访问只留痕，不重放历史喜报
-      }
-      var seenSet = {};
-      seen.forEach(function (id) { seenSet[id] = true; });
-      var fresh = wins.filter(function (w) { return w.id && !seenSet[w.id]; });
-      if (!fresh.length) return;
-      var playKey = "jiaye_win_rain_played_" + (d.updated_at || fresh[0].id);
-      if (sessionStorage.getItem(playKey)) return;
-      sessionStorage.setItem(playKey, "1");
-      localStorage.setItem(RAIN_SEEN_KEY, JSON.stringify(wins.map(function (w) { return w.id; })));
-      playRainAfterGate(fresh);
-    } catch (e) { /* 存储不可用时静默跳过 */ }
+    function ymd(d2) { return d2.getFullYear() + "-" + ("0" + (d2.getMonth() + 1)).slice(-2) + "-" + ("0" + d2.getDate()).slice(-2); }
+    var todayStr = ymd(new Date());
+    var todayWins = wins.filter(function (w) {
+      return HISTORICAL_WIN_IDS.indexOf(w.id) < 0 && String(w.date || "").slice(0, 10) === todayStr;
+    });
+    recState.items.forEach(function (r) {
+      if (r.manualResult !== "win" || !r.winMarkedAt || ymd(new Date(r.winMarkedAt)) !== todayStr) return;
+      todayWins.push({ id: "manual_" + r.id, company: recState.ourCompany || "我司", title: r.title, amount: r.budget || 0, products: [] });
+    });
+    if (!todayWins.length) return;
+    // 每次重新进站/刷新页面播放一次；SPA 内部切换不会重复调用 loadWinTicker
+    playRainAfterGate(todayWins.slice(0, 8));
   }
   function loadWinTicker() {
     getJSON("data/wins.json").then(function (d) {
       publicWins = (d && d.wins) || [];
-      if (/[?&]rain=1/.test(location.search)) {
-        // ?rain=1 手动预览：标书雨 + 顶部滚动条同步展示中标
-        playRainAfterGate(publicWins.slice(0, 8));
-        renderWinTicker(publicWins);
-      } else {
-        checkWinRain(d);
-        renderWinTicker();
-      }
+      checkWinRain(d);
+      renderWinTicker();
       return;
     }).catch(function () { publicWins = []; renderWinTicker(); });
   }
