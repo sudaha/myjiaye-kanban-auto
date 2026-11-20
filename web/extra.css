@@ -435,12 +435,15 @@
   background: radial-gradient(ellipse at 50% -10%, rgba(223,60,36,.16), rgba(110,15,8,.30)); }
 /* 红色蒙版：标书全部落出屏幕后立即撤除（JS 加 .bg-off），烟花继续播放 */
 .win-rain.bg-off { background: transparent; }
-/* "恭喜中标"红色大字：自动弹出 → 定格 → 淡出（替代原粒子拼字） */
+/* "恭喜中标"红字 + 金色长方形横丝带：自动弹出定格，消失由 JS 在标书落出屏幕时同步移除；
+   z-index 1 = 落在烟花之上、标书卡片之下 */
 .win-congrats { position: absolute; left: 50%; top: 32%; transform: translate(-50%, -50%);
-  z-index: 3; font: 900 92px/1.15 'Microsoft YaHei', 'PingFang SC', sans-serif; letter-spacing: .05em;
-  color: #ff2231; text-shadow: 0 0 16px rgba(255,60,80,.7), 0 0 48px rgba(255,60,80,.45);
-  white-space: nowrap; pointer-events: none; animation: winCongratsPop 1.4s ease-out 0s both; }
-@media (max-width: 640px) { .win-congrats { font-size: 52px; } }
+  z-index: 1; font: 900 92px/1.15 'Microsoft YaHei', 'PingFang SC', sans-serif; letter-spacing: .08em;
+  color: #ff2231; white-space: nowrap; pointer-events: none;
+  background: linear-gradient(180deg, #ffd84d 0%, #ffc42e 45%, #f0a500 100%);
+  padding: 10px 56px; box-shadow: 0 6px 24px rgba(110,70,0,.35), inset 0 0 0 2px rgba(255,236,170,.9);
+  animation: winCongratsPop 1.4s ease-out 0s both; }
+@media (max-width: 640px) { .win-congrats { font-size: 52px; padding: 6px 28px; } }
 /* 只负责弹出定格；消失由 JS 在标书落出屏幕时同步移除元素 */
 @keyframes winCongratsPop {
   0% { opacity: 0; transform: translate(-50%, -50%) scale(.3); }
