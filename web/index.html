@@ -226,7 +226,7 @@
   var gate = document.getElementById("gate");
   if (sessionStorage.getItem(KEY)) { gate.classList.add("gate-hide"); return; }
   gate.classList.remove("gate-hide");
-  document.body.style.overflow = "hidden";
+  // 门本身 position:fixed 铺满视口且不透明，无需锁 body 滚动；锁住会导致鼠标滚轮完全失效
   document.getElementById("gate-form").addEventListener("submit", function (e) {
     e.preventDefault();
     var pw = document.getElementById("gate-pw").value;
@@ -237,7 +237,7 @@
       if (hex === HASH) {
         sessionStorage.setItem(KEY, "1");
         gate.classList.add("gate-hide");
-        document.body.style.overflow = "";
+        window.scrollTo(0, 0);
       } else {
         err.classList.remove("hide");
         document.getElementById("gate-pw").value = "";

@@ -1692,22 +1692,79 @@
   function renderWinTicker() {
     var box = $("win-ticker"), track = $("win-ticker-track");
     if (!box || !track) return;
-    var merged = publicWins.slice();
+    // 历史订单不再滚动：只静态展示最新一条中标，参与投标记录中手动标记的中标作补充
+    var latest = null;
+    publicWins.forEach(function (w) { if (!latest || String(w.date || "") > String(latest.date || "")) latest = w; });
+    var rows = [];
+    if (latest) rows.push(latest);
     recState.items.forEach(function (r) {
-      if (r.manualResult === "win") merged.push({
+      if (r.manualResult === "win") rows.push({
         id: "manual_" + r.id, company: recState.ourCompany || "我司", title: r.title,
         amount: r.budget || 0, products: []
       });
     });
-    var seen = {}, rows = [];
-    merged.forEach(function (w) { var k = w.id || winText(w); if (!seen[k]) { seen[k] = true; rows.push(w); } });
-    box.classList.toggle("hide", rows.length === 0);
-    track.innerHTML = rows.map(function (w) { return '<span class="win-ticker-item">' + esc(winText(w)) + "</span>"; }).join("");
-    track.style.setProperty("--win-count", Math.max(1, rows.length));
+    var seen = {}, uniq = [];
+    rows.forEach(function (w) { var k = w.id || winText(w); if (!seen[k]) { seen[k] = true; uniq.push(w); } });
+    box.classList.toggle("hide", uniq.length === 0);
+    track.innerHTML = uniq.map(function (w) { return '<span class="win-ticker-item">' + esc(winText(w)) + "</span>"; }).join("");
+  }
+  // ---------- 喜报标书雨：出现新中标时全站展示约 3 秒（红包雨式，缓慢下落），历史喜报不重放 ----------
+  var RAIN_SEEN_KEY = "jiaye_wins_seen_v1";
+  function gateStillOn() {
+    try { return !sessionStorage.getItem("jiaye_auth_guest_v1"); } catch (e) { return false; }
+  }
+  function playWinRain(list) {
+    var host = document.createElement("div");
+    host.className = "win-rain";
+    var n = Math.min(list.length, 8);
+    for (var i = 0; i < n; i++) {
+      var w = list[i];
+      var card = document.createElement("div");
+      card.className = "win-rain-card";
+      card.style.left = (5 + Math.random() * 68).toFixed(1) + "%";
+      card.style.animationDelay = (i * 0.12 + Math.random() * 0.2).toFixed(2) + "s";
+      var amount = Number(w.amount) > 0 ? "，中标金额 " + money(Number(w.amount)) + " 元" : "";
+      var products = (w.products || []).slice(0, 2).join("、");
+      card.innerHTML = '<span class="r-tag">喜　报</span>' +
+        '<div class="r-title">热烈祝贺 ' + esc(w.company || "我司") + ' 中标「' + esc(w.title || "采购项目") + "」</div>" +
+        '<div class="r-meta">' + esc(amount + (products ? "　品牌型号：" + products : "")) + "</div>";
+      host.appendChild(card);
+    }
+    document.body.appendChild(host);
+    setTimeout(function () { if (host.parentNode) host.parentNode.removeChild(host); }, 3500);
+  }
+  function checkWinRain(d) {
+    var wins = (d && d.wins) || [];
+    if (!wins.length) return;
+    try {
+      var raw = localStorage.getItem(RAIN_SEEN_KEY);
+      var seen = raw ? JSON.parse(raw) : null;
+      if (!Array.isArray(seen)) {
+        localStorage.setItem(RAIN_SEEN_KEY, JSON.stringify(wins.map(function (w) { return w.id; })));
+        return; // 首次访问只留痕，不重放历史喜报
+      }
+      var seenSet = {};
+      seen.forEach(function (id) { seenSet[id] = true; });
+      var fresh = wins.filter(function (w) { return w.id && !seenSet[w.id]; });
+      if (!fresh.length) return;
+      var playKey = "jiaye_win_rain_played_" + (d.updated_at || fresh[0].id);
+      if (sessionStorage.getItem(playKey)) return;
+      sessionStorage.setItem(playKey, "1");
+      localStorage.setItem(RAIN_SEEN_KEY, JSON.stringify(wins.map(function (w) { return w.id; })));
+      var fire = function () { playWinRain(fresh); };
+      if (gateStillOn()) {
+        // 登录门未通过时先等待进入页面后再展示，避免喜报雨被门遮住
+        var t = setInterval(function () { if (!gateStillOn()) { clearInterval(t); fire(); } }, 400);
+        setTimeout(function () { clearInterval(t); }, 60000);
+      } else {
+        fire();
+      }
+    } catch (e) { /* 存储不可用时静默跳过 */ }
   }
   function loadWinTicker() {
     getJSON("data/wins.json").then(function (d) {
       publicWins = (d && d.wins) || [];
+      checkWinRain(d);
       renderWinTicker();
     }).catch(function () { publicWins = []; renderWinTicker(); });
   }

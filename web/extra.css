@@ -417,16 +417,33 @@
   .rec-filters select { flex: 1 1 auto; }
 }
 
-/* 全站中标喜讯滚动�?*/
+/* 全站中标喜讯滚动�?*/
 .win-ticker { width: 100%; display: flex; align-items: stretch; overflow: hidden; background: linear-gradient(90deg,#fff8e8,#fffdf8,#fff3d2); border-bottom: 1px solid #efd18d; box-shadow: 0 2px 8px rgba(117,72,0,.08); }
 .win-ticker.hide { display: none; }
 .win-ticker-label { flex: 0 0 auto; display: flex; align-items: center; padding: 9px 18px; color: #fff; background: linear-gradient(135deg,#b51f24,#df3c24); font-size: 14px; font-weight: 800; letter-spacing: 1px; }
 .win-ticker-window { flex: 1; min-width: 0; overflow: hidden; display: flex; align-items: center; }
-.win-ticker-track { display: flex; align-items: center; gap: 70px; width: max-content; white-space: nowrap; animation: winTickerScroll calc(var(--win-count,1) * 10s + 16s) linear infinite; padding-left: 100%; }
+.win-ticker-track { display: flex; align-items: center; gap: 40px; width: max-content; max-width: 100%; white-space: nowrap; padding-left: 12px; }
 .win-ticker:hover .win-ticker-track { animation-play-state: paused; }
 .win-ticker-item { display: inline-flex; align-items: center; color: #7b3200; font-size: 13px; font-weight: 700; }
 .win-ticker-item::before { content: "喜报"; display: inline-block; margin-right: 10px; padding: 2px 7px; border-radius: 999px; color: #b51f24; background: #fff0c8; border: 1px solid #efce78; font-size: 11px; }
 @keyframes winTickerScroll { from { transform: translateX(0); } to { transform: translateX(-100%); } }
-@media (prefers-reduced-motion: reduce) { .win-ticker-track { animation: none; padding-left: 12px; } }
-@media (max-width: 640px) { .win-ticker-label { padding: 8px 10px; font-size: 12px; } .win-ticker-track { gap: 45px; } .win-ticker-item { font-size: 12px; } }
+@media (max-width: 640px) { .win-ticker-label { padding: 8px 10px; font-size: 12px; } .win-ticker-track { gap: 30px; } .win-ticker-item { font-size: 12px; } }
+
+/* 喜报标书雨：出现新中标时全站展示约 3 秒（红包雨式，缓慢下落） */
+.win-rain { position: fixed; inset: 0; z-index: 9998; overflow: hidden; pointer-events: none;
+  background: radial-gradient(ellipse at 50% -10%, rgba(223,60,36,.14), rgba(110,15,8,.28)); }
+.win-rain-card { position: absolute; top: -150px; width: 230px; padding: 12px 14px 14px; box-sizing: border-box;
+  background: linear-gradient(160deg,#fffaf0,#ffedd0); border: 2px solid #d9482f; border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(90,10,0,.30); opacity: 0;
+  animation: winRainFall 2.2s ease-in forwards; will-change: transform; }
+.win-rain-card .r-tag { display: inline-block; margin-bottom: 6px; padding: 2px 9px; border-radius: 999px;
+  background: linear-gradient(135deg,#b51f24,#df3c24); color: #fff; font-size: 12px; font-weight: 800; letter-spacing: 3px; }
+.win-rain-card .r-title { font-size: 13px; font-weight: 700; color: #5b2300; line-height: 1.55; }
+.win-rain-card .r-meta { margin-top: 6px; font-size: 12px; color: #8a5a2b; line-height: 1.5; }
+@keyframes winRainFall {
+  0% { transform: translateY(0) rotate(-7deg); opacity: 0; }
+  12% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { transform: translateY(calc(100vh + 180px)) rotate(7deg); opacity: 0; }
+}
 
