@@ -1792,8 +1792,8 @@
     // 排程：前 3 秒（p2start=180 帧）小烟花开场；3 秒后仅 3 朵主角大红花登场（全部大烟花），
     // 大花熄灭帧 = 结束帧，与"恭喜中标"字样同刻消失
     var p2start = 180;
-    // 3 秒后才依次发射大烟花；升空约 1.1-1.4 秒，再缓慢绽放
-    var heroLaunch = [p2start, p2start + 36, p2start + 72];
+    // 大烟花整段提前约 1 秒：2 秒后依次发射；升空约 1.1-1.4 秒，再缓慢绽放
+    var heroLaunch = [p2start - 60, p2start - 24, p2start + 12];
     var heroRise = [
       Math.floor(rnd(66, 82)),
       Math.floor(rnd(66, 82)),
