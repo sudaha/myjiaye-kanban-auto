@@ -1764,7 +1764,7 @@
     function peony(x, y, at, col, big, hero, lifeOv) {
       // hero 主角花：粒子尺寸×2；大烟花统一红色，留存与标书雨同步收尾
       var cnt = Math.floor((hero ? rnd(280, 420) : big ? rnd(230, 360) : rnd(80, 140)) * (small ? 0.5 : 1));
-      var vMax = hero ? (small ? 4.2 : 5.6) : big ? (small ? 4.0 : 5.6) : (small ? 2.2 : 3.0);
+      var vMax = hero ? (small ? 4.0 : 5.2) : big ? (small ? 3.8 : 5.2) : (small ? 2.0 : 2.6);
       var base = (big || hero) ? "#ff2d55" : col;
       var maxLife = Math.max(50, endFrame - at);
       for (var i = 0; i < cnt; i++) {
@@ -1905,12 +1905,13 @@
         } else if (q.t === "fw") {
           if (a3 > q.life) { P.splice(i--, 1); continue; }
           q.px = q.x; q.py = q.y;
-          q.vx *= 0.985; q.vy = q.vy * 0.985 + 0.03;
+          q.vx *= 0.993; q.vy = q.vy * 0.993 + 0.02;
           q.x += q.vx; q.y += q.vy;
           var spd = Math.sqrt(q.vx * q.vx + q.vy * q.vy);
           var ln = Math.min(46, Math.max(8, spd * 6));
           var ux = spd > 0.01 ? q.vx / spd : 0, uy = spd > 0.01 ? q.vy / spd : 0;
-          ctx.globalAlpha = Math.min(1, (1 - a3 / q.life) * 1.3);
+          // 亮度前中期保持，临近结束帧才散——视觉上与标书雨同刻消失
+          ctx.globalAlpha = Math.min(1, Math.pow(1 - a3 / q.life, 0.55) * 1.35);
           ctx.strokeStyle = q.col; ctx.lineWidth = q.r; ctx.lineCap = "round";
           ctx.beginPath(); ctx.moveTo(q.x, q.y); ctx.lineTo(q.x - ux * ln, q.y - uy * ln); ctx.stroke();
         } else if (q.t === "cr") {
