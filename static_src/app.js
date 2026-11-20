@@ -1700,11 +1700,12 @@
     "北京智鑫盛通科技有限公司_800747",
     "北京佳业同创科技有限公司_800644"
   ];
-  function renderWinTicker() {
+  function renderWinTicker(over) {
     var box = $("win-ticker"), track = $("win-ticker-track");
     if (!box || !track) return;
     var preview = /[?&]winspreview=1/.test(location.search);
-    var merged = publicWins.filter(function (w) { return preview || HISTORICAL_WIN_IDS.indexOf(w.id) < 0; });
+    var pub = (over && over.length) ? over.slice() : publicWins;
+    var merged = pub.filter(function (w) { return preview || HISTORICAL_WIN_IDS.indexOf(w.id) < 0; });
     recState.items.forEach(function (r) {
       if (r.manualResult === "win") merged.push({
         id: "manual_" + r.id, company: recState.ourCompany || "我司", title: r.title,
@@ -1753,16 +1754,19 @@
         '<div class="r-meta">' + esc(amount + (products ? "　品牌型号：" + products : "")) + "</div>";
       host.appendChild(card);
     }
-    // 烟花：更大、更久、炸满顶部
-    var sparks = small ? 10 : 16;
+    // 烟花：大面积炸满全屏（16 朵 × 24 粒子）
+    var sparks = small ? 12 : 24;
     var fwSpots = small
-      ? [{ l: "8%", t: "10%", d: 0.1 }, { l: "90%", t: "12%", d: 0.9 }, { l: "50%", t: "6%", d: 1.8 },
-         { l: "20%", t: "30%", d: 2.7 }, { l: "80%", t: "32%", d: 3.6 }]
-      : [{ l: "6%", t: "10%", d: 0.1 }, { l: "20%", t: "22%", d: 0.5 }, { l: "34%", t: "8%", d: 0.9 },
-         { l: "50%", t: "18%", d: 1.3 }, { l: "66%", t: "7%", d: 1.7 }, { l: "80%", t: "24%", d: 2.1 },
-         { l: "94%", t: "12%", d: 2.5 }, { l: "12%", t: "38%", d: 3.1 }, { l: "50%", t: "30%", d: 3.7 },
-         { l: "88%", t: "40%", d: 4.3 }];
-    var vivid = ["#ffd60a", "#ff2d55", "#ff7a00", "#00e5ff", "#ff3df5", "#ff5d8f"];
+      ? [{ l: "10%", t: "10%", d: 0 }, { l: "90%", t: "12%", d: 0.5 }, { l: "50%", t: "6%", d: 1 },
+         { l: "25%", t: "35%", d: 1.5 }, { l: "78%", t: "38%", d: 2 }, { l: "50%", t: "20%", d: 2.5 },
+         { l: "15%", t: "60%", d: 3 }, { l: "85%", t: "62%", d: 3.5 }]
+      : [{ l: "4%", t: "12%", d: 0 }, { l: "18%", t: "6%", d: 0.3 }, { l: "33%", t: "14%", d: 0.6 },
+         { l: "49%", t: "5%", d: 0.9 }, { l: "64%", t: "13%", d: 1.2 }, { l: "80%", t: "6%", d: 1.5 },
+         { l: "95%", t: "14%", d: 1.8 }, { l: "12%", t: "40%", d: 2.1 }, { l: "38%", t: "34%", d: 2.4 },
+         { l: "62%", t: "36%", d: 2.7 }, { l: "88%", t: "42%", d: 3 }, { l: "50%", t: "22%", d: 3.3 },
+         { l: "25%", t: "62%", d: 3.6 }, { l: "75%", t: "64%", d: 3.9 }, { l: "8%", t: "80%", d: 4.2 },
+         { l: "92%", t: "78%", d: 4.5 }];
+    var vivid = ["#ffd60a", "#ff2d55", "#ff7a00", "#00e5ff", "#ff3df5", "#ff5d8f", "#7cff4f"];
     fwSpots.forEach(function (s) {
       var fw = document.createElement("div");
       fw.className = "fw";
@@ -1770,33 +1774,52 @@
       for (var k = 0; k < sparks; k++) {
         var p = document.createElement("span");
         p.className = "fw-p";
-        p.style.setProperty("--a", (k * 360 / sparks) + "deg");
-        p.style.setProperty("--dist", Math.round((small ? 80 : 110) + Math.random() * (small ? 50 : 70)) + "px");
+        p.style.setProperty("--a", (k * 360 / sparks + Math.random() * 12) + "deg");
+        p.style.setProperty("--dist", Math.round((small ? 90 : 150) + Math.random() * (small ? 60 : 110)) + "px");
         p.style.background = vivid[(Math.random() * vivid.length) | 0];
         p.style.animationDelay = s.d.toFixed(2) + "s";
         fw.appendChild(p);
       }
       host.appendChild(fw);
     });
-    // 万花筒彩带：从页面底部两侧向上喷发，旋转升空
-    var ribbons = small ? 14 : 26;
-    var colors = [["#e53950", "#ff8a3c"], ["#f7b733", "#fc4a1a"], ["#ff5d8f", "#ff9a9e"],
-                  ["#38bfa8", "#a8ff78"], ["#5b7cfa", "#9b5bff"]];
-    for (var r2 = 0; r2 < ribbons; r2++) {
+    // 恭喜中标大字（情绪价值）
+    var cg = document.createElement("div");
+    cg.className = "win-congrats";
+    cg.textContent = "恭 喜 中 标";
+    host.appendChild(cg);
+    // 彩带：6 种形状碎彩，底部喷泉式射向顶部（数量约为之前 6 倍、尺寸缩小 2-3 倍）
+    var N = small ? 90 : 160;
+    var shapes = ["cf-rect", "cf-dot", "cf-diamond", "cf-tri", "cf-ring", "cf-rect"];
+    var cols = ["#ffd60a", "#ff2d55", "#ff7a00", "#00e5ff", "#ff3df5", "#7cff4f", "#ff5d8f", "#5b7cfa"];
+    for (var r2 = 0; r2 < N; r2++) {
       var c = document.createElement("span");
-      c.className = "confetti";
-      c.style.left = (r2 % 2 === 0 ? 3 + Math.random() * 22 : 75 + Math.random() * 22).toFixed(1) + "%";
-      var col = colors[r2 % colors.length];
-      c.style.background = "linear-gradient(180deg," + col[0] + "," + col[1] + ")";
-      c.style.width = (6 + Math.random() * 5).toFixed(1) + "px";
-      c.style.height = Math.round(60 + Math.random() * 70) + "px";
-      c.style.setProperty("--h", "-" + Math.round(35 + Math.random() * 50) + "vh");
+      var sh = shapes[(Math.random() * shapes.length) | 0];
+      c.className = "confetti " + sh;
+      var col = cols[(Math.random() * cols.length) | 0];
+      var s = 4 + Math.random() * 4;
+      if (sh === "cf-tri") {
+        c.style.borderBottomColor = col;
+      } else if (sh === "cf-ring") {
+        c.style.borderTopColor = col;
+        c.style.borderRightColor = col;
+        c.style.borderBottomColor = col;
+        c.style.borderLeftColor = col;
+      } else {
+        c.style.background = col;
+      }
+      c.style.width = s.toFixed(1) + "px";
+      c.style.height = (sh === "cf-dot" ? s : s * (1.2 + Math.random() * 1.6)).toFixed(1) + "px";
+      var m = Math.random() < 0.5;
+      c.style.left = (m ? 2 + Math.random() * 30 : 68 + Math.random() * 30).toFixed(1) + "%";
+      c.style.setProperty("--dy", "-" + Math.round(200 + Math.random() * (window.innerHeight * 0.75)) + "px");
+      c.style.setProperty("--dx", Math.round((Math.random() * 2 - 1) * 45) + "px");
+      c.style.setProperty("--rr", Math.round(360 + Math.random() * 720) + "deg");
       c.style.animationDelay = (Math.random() * 2.5).toFixed(2) + "s";
-      c.style.animationDuration = (3.5 + Math.random() * 1.5).toFixed(2) + "s";
+      c.style.animationDuration = (3.2 + Math.random() * 1.8).toFixed(2) + "s";
       host.appendChild(c);
     }
     document.body.appendChild(host);
-    setTimeout(function () { if (host.parentNode) host.parentNode.removeChild(host); }, 8000);
+    setTimeout(function () { if (host.parentNode) host.parentNode.removeChild(host); }, 8600);
   }
   function checkWinRain(d) {
     var wins = (d && d.wins) || [];
@@ -1823,11 +1846,14 @@
     getJSON("data/wins.json").then(function (d) {
       publicWins = (d && d.wins) || [];
       if (/[?&]rain=1/.test(location.search)) {
-        playRainAfterGate(publicWins.slice(0, 8)); // ?rain=1 手动预览标书雨
+        // ?rain=1 手动预览：标书雨 + 顶部滚动条同步展示中标
+        playRainAfterGate(publicWins.slice(0, 8));
+        renderWinTicker(publicWins);
       } else {
         checkWinRain(d);
+        renderWinTicker();
       }
-      renderWinTicker();
+      return;
     }).catch(function () { publicWins = []; renderWinTicker(); });
   }
 
