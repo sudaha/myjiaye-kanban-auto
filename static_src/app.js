@@ -1928,12 +1928,14 @@
     var n = Math.min(list.length, 8);
     var want = Math.max(n, 7), cards = [];
     for (var c2 = 0; c2 < want; c2++) cards.push(list[c2 % n]);
+    var lastEnd = 0;
     for (var i = 0; i < cards.length; i++) {
       var w = cards[i];
       var card = document.createElement("div");
       card.className = "win-rain-card";
       card.style.left = (8 + Math.random() * 60).toFixed(1) + "%";
       card.style.animationDelay = (i * 0.45 + Math.random() * 0.25).toFixed(2) + "s";
+      lastEnd = Math.max(lastEnd, parseFloat(card.style.animationDelay) + 7.5);
       var amount = Number(w.amount) > 0 ? "，中标金额 " + money(Number(w.amount)) + " 元" : "";
       var products = (w.products || []).slice(0, 2).join("、");
       card.innerHTML = '<span class="r-tag">喜　报</span>' +
@@ -1949,8 +1951,11 @@
     cg.textContent = "恭喜中标";
     host.appendChild(cg);
     document.body.appendChild(host);
-    // 标书最晚约 10.9s 全部落出屏幕，届时立刻撤除红色蒙版，烟花继续
-    setTimeout(function () { host.classList.add("bg-off"); }, 11000);
+    // 标书最后一张落出屏幕的瞬间：红色蒙版与"恭喜中标"同步撤除，烟花继续
+    setTimeout(function () {
+      host.classList.add("bg-off");
+      if (cg.parentNode) cg.parentNode.removeChild(cg);
+    }, Math.ceil(lastEnd * 1000) + 40);
     setTimeout(function () { if (host.parentNode) host.parentNode.removeChild(host); }, 20100);
   }
   function checkWinRain(d) {
