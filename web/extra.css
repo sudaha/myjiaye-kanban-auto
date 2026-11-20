@@ -265,6 +265,8 @@
 .date-day small.cat { left: 2px; right: 2px; bottom: 5px; text-align: center; font-size: 11px; font-weight: 800; color: #0b6b52; white-space: nowrap; letter-spacing: .02em; }
 .date-day small.cat i { font-style: normal; opacity: .5; margin: 0 2px; }
 .date-day.available:hover small.cat, .date-day.selected small.cat { color: #fff; }
+/* 选型助手：覆盖率不足时的降级推荐警示条 */
+.pick-warn { margin: 12px 0; padding: 10px 14px; background: #fff7e6; border: 1px solid #ffd591; border-left: 4px solid #fa8c16; border-radius: 8px; font-size: 13px; color: #874d00; line-height: 1.7; }
 @media (max-width: 900px) {
   .date-pop { width: auto; }
   .date-week, .date-grid { gap: 4px; }

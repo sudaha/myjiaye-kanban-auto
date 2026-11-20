@@ -1255,7 +1255,7 @@
     });
   }
 
-  function pickCardHtml(x, unitBudget) {
+  function pickCardHtml(x, unitBudget, extraHtml) {
     var p = x.p;
     var cls = x.s.score >= 60 ? "hit-good" : (x.s.score >= 30 ? "hit-mid" : "hit-low");
     var price = p.price_med == null ? '<span class="muted">暂无历史成交价</span>' : ((p.price_min === p.price_max)
@@ -1279,19 +1279,20 @@
       (x.s.hits.length ? '<div class="pc-hits">' +
         x.s.hits.map(function (h) { return '<span class="chip">' + esc(h) + "</span>"; }).join("") + "</div>" : "") +
       '<div class="pc-meta">最近成交 ' + (p.last_date || "-") +
-      (p.suppliers && p.suppliers.length
+       (p.suppliers && p.suppliers.length
         ? " · 供应商：" + esc(p.suppliers[0]) + (p.suppliers.length > 1 ? " 等 " + p.suppliers.length + " 家" : "") : "") +
-      src + "</div></div>";
+      src + "</div>" + (extraHtml || "") + "</div>";
   }
 
-  function pickResultsHtml(req, pool, unitBudget) {
+  // topN：降级推荐（覆盖率<100%）时限制在 5-10 款；withCompliance：每款附逐项符合性表（未归类条款标注待核验）
+  function pickResultsHtml(req, pool, unitBudget, topN, withCompliance) {
     if (!pool.length) {
       return '<div class="pick-empty">机型库中没有对应品类的成交记录，试试放宽品类或关键词</div>';
     }
     var scored = pool.map(function (p) { return { p: p, s: scoreProduct(p, req) }; })
       .filter(function (x) { return x.s.score >= 20; })
       .sort(function (a, b) { return b.s.score - a.s.score || b.p.deals - a.p.deals; })
-      .slice(0, 20);
+      .slice(0, topN || 20);
     var head;
     if (scored.length) {
       head = "命中 " + scored.length + " 个机型（候选池 " + pool.length + " 个，按匹配度排序）";
@@ -1304,7 +1305,12 @@
       });
     }
     return '<div class="pick-group">' + head + "</div>" +
-      scored.map(function (x) { return pickCardHtml(x, unitBudget); }).join("");
+      scored.map(function (x) {
+        var extra = withCompliance
+          ? complianceHtml(complianceOf(req, x.p.model || x.p.name, (picker.modelSpecs || {})[x.p.model] || {}))
+          : "";
+        return pickCardHtml(x, unitBudget, extra);
+      }).join("");
   }
 
   function loadPickerStatus() {
@@ -1471,7 +1477,9 @@
       var ev = evidence[need.key];
       return ev
         ? { need: need, status: "pass", note: "规格证据：" + ev }
-        : { need: need, status: "verify", note: "公开资料未覆盖此项，不能判定满足，须取得厂商彩页/检测报告核验" };
+        : { need: need, status: "verify", note: need.key.indexOf("raw.") === 0
+          ? "原文未归类、未参与打分，属没把握项，必须人工对照采购附件核验"
+          : "公开资料未覆盖此项，不能判定满足，须取得厂商彩页/检测报告核验" };
     });
     return {
       rows: rows,
@@ -1556,7 +1564,8 @@
     var audit = req.audit || { fragments: tech.length, covered: tech.length, raw: 0, coverage: tech.length ? 100 : 0 };
     var gate = audit.coverage === 100 && audit.raw === 0
       ? '<span class="coverage-ok">归类覆盖率 100% · 未归类 0 · 允许生成推荐</span>'
-      : '<span class="coverage-bad">归类覆盖率 ' + audit.coverage + "% · 未归类保留 " + audit.raw + " · 已停止推荐（原文未删除，仅待补充属性字典）</span>";
+      : '<span class="coverage-bad">归类覆盖率 ' + audit.coverage + "% · 未归类保留 " + audit.raw +
+        " · 已降级推荐：未归类条款未参与打分，逐款标注「待核验」（原文未删除，补充属性字典后自动恢复完整推荐）</span>";
     return '<div class="tech-box"><div class="tech-title">采购附件全量技术要求（' + tech.length +
       " 个统一属性；原文逐条保留，绝不删除）</div>" +
       '<div class="coverage-audit">原文分片 ' + audit.fragments + " 条（全部保留）· 已归类 " + audit.covered +
@@ -1599,18 +1608,24 @@
         html += '<div class="pick-group">品目 ' + (idx + 1) + "：" + esc(p.productName || "未命名") +
           (p.enquiryNum ? " × " + esc(p.enquiryNum) + " " + esc(p.unit || "") : "") + "</div>" +
           tendencyHtml(req) + techHtml(req);
-        if ((req.audit || {}).coverage === 100 && (req.audit || {}).raw === 0) {
-          if (req.explicitModels.length) {
-            html += '<div class="pick-group">优先推荐：采购附件明确型号（按参数吻合度与历史成交证据排序）</div>' +
-              req.explicitModels.map(function (m) { return explicitModelCard(m, req, unitB); }).join("");
-          }
-          var pool = pickPool(req).filter(function (x) {
-            return req.explicitModels.indexOf(x.model) < 0;
-          });
-          html += '<div class="pick-group">同品牌 / 同品类备选（需逐项核验技术条款）</div>' + pickResultsHtml(req, pool, unitB);
-        } else {
-          html += '<div class="pick-empty">原文采集覆盖率不足100%，已停止推荐，避免因漏项造成错误选型。</div>';
-        }
+         if (req.explicitModels.length) {
+           html += '<div class="pick-group">优先推荐：采购附件明确型号（按参数吻合度与历史成交证据排序）</div>' +
+             req.explicitModels.map(function (m) { return explicitModelCard(m, req, unitB); }).join("");
+         }
+         var pool = pickPool(req).filter(function (x) {
+           return req.explicitModels.indexOf(x.model) < 0;
+         });
+         var audit = req.audit || {};
+         if (audit.coverage === 100 && audit.raw === 0) {
+           html += '<div class="pick-group">同品牌 / 同品类备选（需逐项核验技术条款）</div>' + pickResultsHtml(req, pool, unitB);
+         } else {
+           // 覆盖率不足 100%：不再停止推荐——按已归类属性降级推荐前 10 款，
+           // 未归类条款未参与打分，逐款列入符合性表并标注「待核验·未参与打分」
+           html += '<div class="pick-warn">原文归类覆盖率 ' + audit.coverage + "%（未归类保留 " + audit.raw +
+             ' 条）：以下降级推荐仅按已归类属性打分，未归类条款未参与打分，已逐款列入符合性表标注「待核验」。投标前须人工对照采购附件逐条核验，避免漏项造成错误选型。</div>' +
+             '<div class="pick-group">同品牌 / 同品类降级备选（覆盖率 ' + audit.coverage + "% · 最多 10 款 · 未归类项已标注）</div>" +
+             pickResultsHtml(req, pool, unitB, 10, true);
+         }
       });
       box.innerHTML = html;
       bindZycgDetailLinks(box);
