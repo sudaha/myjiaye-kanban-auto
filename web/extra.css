@@ -448,40 +448,7 @@
   90% { opacity: 1; }
   100% { transform: translateY(calc(100vh + 230px)) rotate(-5deg); opacity: 0; }
 }
-/* 烟花：大面积炸满全屏 */
-.fw { position: absolute; width: 0; height: 0; }
-.fw-p { position: absolute; left: -4px; top: -4px; width: 8px; height: 8px; border-radius: 50%;
-  background: #ffd60a; opacity: 0; animation: fwBurst 1.7s ease-out both; }
-@keyframes fwBurst {
-  0% { transform: rotate(var(--a)) translateY(0) scale(1); opacity: 1; }
-  100% { transform: rotate(var(--a)) translateY(var(--dist, 160px)) scale(.4); opacity: 0; }
-}
-/* 恭喜中标大字：随烟花绽放 */
-.win-congrats { position: absolute; left: 50%; top: 40%; transform: translate(-50%,-50%) scale(.5);
-  opacity: 0; white-space: nowrap; font-size: 56px; font-weight: 900; letter-spacing: 14px;
-  background: linear-gradient(180deg,#ffd60a 20%,#ff2d55 85%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  text-shadow: 0 0 28px rgba(255,60,80,.45);
-  animation: congratsPop 2.2s .4s cubic-bezier(.34,1.56,.64,1) both; }
-@keyframes congratsPop {
-  0% { opacity: 0; transform: translate(-50%,-50%) scale(.5); }
-  16% { opacity: 1; transform: translate(-50%,-50%) scale(1.12); }
-  30% { transform: translate(-50%,-50%) scale(1); }
-  78% { opacity: 1; transform: translate(-50%,-50%) scale(1); }
-  100% { opacity: 0; transform: translate(-50%,-50%) scale(1.1); }
-}
-/* 彩带：6 种形状碎彩，底部喷泉式射向顶部 */
-.confetti { position: absolute; bottom: -20px; opacity: 0; animation: confUp 4s cubic-bezier(.22,.61,.36,1) both; }
-.confetti.cf-rect { border-radius: 2px; }
-.confetti.cf-dot { border-radius: 50%; }
-.confetti.cf-diamond { border-radius: 2px; }
-.confetti.cf-tri { width: 0 !important; height: 0 !important; border-left: 5px solid transparent;
-  border-right: 5px solid transparent; border-bottom: 9px solid #ffd60a; background: none !important; }
-.confetti.cf-ring { border-radius: 50%; background: transparent !important; border: 2px solid #ffd60a; }
-@keyframes confUp {
-  0% { transform: translate(0,0) rotate(0deg); opacity: 0; }
-  6% { opacity: 1; }
-  70% { opacity: 1; }
-  100% { transform: translate(var(--dx, 0px), var(--dy, -60vh)) rotate(var(--rr, 540deg)); opacity: 0; }
-}
+/* 烟花 / 恭喜中标 / 彩带：canvas 粒子渲染，卡片压在特效之上 */
+.win-fx { position: absolute; inset: 0; z-index: 1; }
+.win-rain-card { z-index: 2; }
 

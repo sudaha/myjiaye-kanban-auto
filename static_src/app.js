@@ -1732,6 +1732,189 @@
       playWinRain(list);
     }
   }
+  // ---------- 喜报 FX：canvas 烟花（含"恭喜中标"文字烟花）+ 彩带喷泉 ----------
+  function startWinFx(host) {
+    var cv = document.createElement("canvas");
+    cv.className = "win-fx";
+    var W = window.innerWidth, H = window.innerHeight;
+    cv.width = W; cv.height = H;
+    cv.style.width = W + "px"; cv.style.height = H + "px";
+    host.insertBefore(cv, host.firstChild);
+    var ctx = cv.getContext("2d");
+    if (!ctx) return;
+    var small = W < 640;
+    var P = [], frame = 0, running = true;
+    var PALETTE = ["#ffd60a", "#ff2d55", "#ff7a00", "#00e5ff", "#ff3df5", "#7cff4f", "#ff5d8f", "#5b7cfa", "#fff176", "#ff9e40"];
+    function rnd(a, b) { return a + Math.random() * (b - a); }
+    function pick(arr) { return arr[(Math.random() * arr.length) | 0]; }
+
+    // 大烟花：数量×3、半径更大、全屏分散燃放
+    var bursts = small ? 26 : 50;
+    for (var b = 0; b < bursts; b++) {
+      var bx = rnd(0.03, 0.97) * W, by = rnd(0.03, 0.72) * H;
+      var at = Math.floor(rnd(0, 320));
+      var col = pick(PALETTE);
+      var cnt = Math.floor(rnd(90, 160) * (small ? 0.55 : 1));
+      for (var i = 0; i < cnt; i++) {
+        var a = Math.random() * 6.283, sp = rnd(1.6, small ? 5.5 : 9);
+        P.push({ t: "fw", x: bx, y: by, px: bx, py: by, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
+          born: at, life: Math.floor(rnd(55, 100)), col: col, r: rnd(1.2, 2.8) });
+      }
+    }
+
+    // "恭喜中标"文字烟花：中心大爆 → 粒子汇聚成字形 → 发光定格 → 消散
+    (function () {
+      var off = document.createElement("canvas");
+      var fs = Math.min(W * 0.14, 160);
+      off.width = Math.ceil(fs * 4.9); off.height = Math.ceil(fs * 1.4);
+      var oc = off.getContext("2d");
+      if (!oc) return;
+      oc.fillStyle = "#fff";
+      oc.font = "900 " + fs + "px 'Microsoft YaHei','PingFang SC',sans-serif";
+      oc.textAlign = "center"; oc.textBaseline = "middle";
+      oc.fillText("恭喜中标", off.width / 2, off.height / 2);
+      var img = oc.getImageData(0, 0, off.width, off.height).data;
+      var pts = [], step = small ? 6 : 4;
+      for (var y = 0; y < off.height; y += step) {
+        for (var x = 0; x < off.width; x += step) {
+          if (img[(y * off.width + x) * 4 + 3] > 128) pts.push([x, y]);
+        }
+      }
+      if (!pts.length) return;
+      var n = Math.min(pts.length, small ? 340 : 620);
+      var cx = W / 2, cy = H * 0.38, ox = cx - off.width / 2, oy = cy - off.height / 2;
+      for (var k = 0; k < n; k++) {
+        var tp = pick(pts);
+        var a2 = Math.random() * 6.283, sp2 = rnd(4, 12);
+        P.push({ t: "txt", x: cx, y: cy, px: cx, py: cy, vx: Math.cos(a2) * sp2, vy: Math.sin(a2) * sp2,
+          tx: ox + tp[0], ty: oy + tp[1], born: 70, p1: 55, p2: 95, p3: 95,
+          col: k % 3 === 0 ? "#ff5d3a" : "#ffd60a", r: small ? 1.7 : 2.3, ph: rnd(0, 6.28), sx: 0, sy: 0 });
+      }
+    })();
+
+    // 彩带：16 种形状、尺寸×2、底部喷泉射向顶部
+    var SHAPES = ["rect", "ribbon", "circle", "square", "diamond", "tri", "star", "heart", "ring", "coin", "spark", "curl", "cross", "para", "semi", "flag"];
+    var N = small ? 170 : 330;
+    for (var c2 = 0; c2 < N; c2++) {
+      var zone = Math.random(), x0 = zone < 0.42 ? rnd(0.02, 0.34) * W : (zone < 0.84 ? rnd(0.66, 0.98) * W : rnd(0.4, 0.6) * W);
+      P.push({ t: "cf", shape: pick(SHAPES), x: x0, y: H + 12, px: x0, py: H + 12,
+        vx: rnd(-1.7, 1.7), vy: -rnd(small ? 7.5 : 9.5, small ? 13.5 : 17),
+        born: Math.floor(rnd(0, 160)), life: Math.floor(rnd(170, 300)),
+        rot: rnd(0, 360), vr: rnd(-9, 9), wob: rnd(0.5, 1.7), ph: rnd(0, 6.28),
+        col: pick(PALETTE), s: rnd(7, 16), al: 0 });
+    }
+
+    function drawCf(p) {
+      var s = p.s, sh = p.shape;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * 0.01745);
+      ctx.globalAlpha = p.al;
+      ctx.fillStyle = p.col;
+      if (sh === "rect") { ctx.fillRect(-s * 0.5, -s * 0.8, s, s * 1.6); }
+      else if (sh === "ribbon") { ctx.fillRect(-s * 0.22, -s * 1.5, s * 0.44, s * 3); }
+      else if (sh === "circle") { ctx.beginPath(); ctx.arc(0, 0, s * 0.55, 0, 6.29); ctx.fill(); }
+      else if (sh === "square") { ctx.fillRect(-s * 0.5, -s * 0.5, s, s); }
+      else if (sh === "diamond") { ctx.beginPath(); ctx.moveTo(0, -s * 0.7); ctx.lineTo(s * 0.5, 0); ctx.lineTo(0, s * 0.7); ctx.lineTo(-s * 0.5, 0); ctx.closePath(); ctx.fill(); }
+      else if (sh === "tri") { ctx.beginPath(); ctx.moveTo(0, -s * 0.7); ctx.lineTo(s * 0.65, s * 0.5); ctx.lineTo(-s * 0.65, s * 0.5); ctx.closePath(); ctx.fill(); }
+      else if (sh === "star") {
+        ctx.beginPath();
+        for (var j = 0; j < 10; j++) {
+          var rr = (j % 2 === 0) ? s * 0.75 : s * 0.34;
+          var aa = -1.5708 + j * 0.6283;
+          if (j === 0) ctx.moveTo(Math.cos(aa) * rr, Math.sin(aa) * rr); else ctx.lineTo(Math.cos(aa) * rr, Math.sin(aa) * rr);
+        }
+        ctx.closePath(); ctx.fill();
+      }
+      else if (sh === "heart") {
+        ctx.beginPath();
+        ctx.moveTo(0, s * 0.55);
+        ctx.bezierCurveTo(-s * 0.95, -s * 0.1, -s * 0.45, -s * 0.75, 0, -s * 0.25);
+        ctx.bezierCurveTo(s * 0.45, -s * 0.75, s * 0.95, -s * 0.1, 0, s * 0.55);
+        ctx.fill();
+      }
+      else if (sh === "ring") { ctx.lineWidth = Math.max(2, s * 0.22); ctx.strokeStyle = p.col; ctx.beginPath(); ctx.arc(0, 0, s * 0.5, 0, 6.29); ctx.stroke(); }
+      else if (sh === "coin") { ctx.beginPath(); ctx.arc(0, 0, s * 0.6, 0, 6.29); ctx.fill();
+        ctx.globalAlpha = p.al * 0.75; ctx.strokeStyle = "#b8860b"; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.arc(0, 0, s * 0.36, 0, 6.29); ctx.stroke(); }
+      else if (sh === "spark") { ctx.fillRect(-s * 0.12, -s * 1.3, s * 0.24, s * 2.6); }
+      else if (sh === "curl") { ctx.lineWidth = Math.max(2, s * 0.2); ctx.strokeStyle = p.col; ctx.beginPath(); ctx.arc(0, 0, s * 0.55, 0, 4.4); ctx.stroke(); }
+      else if (sh === "cross") { ctx.fillRect(-s * 0.55, -s * 0.18, s * 1.1, s * 0.36); ctx.fillRect(-s * 0.18, -s * 0.55, s * 0.36, s * 1.1); }
+      else if (sh === "para") { ctx.beginPath(); ctx.moveTo(-s * 0.5, s * 0.3); ctx.lineTo(-s * 0.2, -s * 0.3); ctx.lineTo(s * 0.5, -s * 0.3); ctx.lineTo(s * 0.2, s * 0.3); ctx.closePath(); ctx.fill(); }
+      else if (sh === "semi") { ctx.beginPath(); ctx.arc(0, 0, s * 0.6, 0, Math.PI); ctx.fill(); }
+      else { ctx.fillRect(-s * 0.06, -s * 0.6, s * 0.12, s * 1.2);
+        ctx.beginPath(); ctx.moveTo(s * 0.06, -s * 0.6); ctx.lineTo(s * 0.62, -s * 0.34); ctx.lineTo(s * 0.06, -s * 0.08); ctx.closePath(); ctx.fill(); }
+      ctx.restore();
+    }
+
+    function tick() {
+      if (!running) return;
+      frame++;
+      if (frame > 500) { running = false; return; }
+      ctx.clearRect(0, 0, W, H);
+      var i, p, age;
+      for (i = 0; i < P.length; i++) {
+        p = P[i];
+        if (p.t !== "cf" || frame < p.born) continue;
+        age = frame - p.born;
+        if (age > p.life || p.y > H + 60) { P.splice(i--, 1); continue; }
+        p.vy += 0.16; p.vx *= 0.995;
+        p.x += p.vx + Math.sin(frame * 0.06 * p.wob + p.ph) * 0.9;
+        p.y += p.vy;
+        p.rot += p.vr;
+        p.al = age < 12 ? age / 12 : (age > p.life - 40 ? Math.max(0, (p.life - age) / 40) : 1);
+        drawCf(p);
+      }
+      ctx.globalCompositeOperation = "lighter";
+      for (i = 0; i < P.length; i++) {
+        var q = P[i];
+        if (q.t === "cf" || frame < q.born) continue;
+        var a3 = frame - q.born;
+        if (q.t === "fw") {
+          if (a3 > q.life) { P.splice(i--, 1); continue; }
+          q.px = q.x; q.py = q.y;
+          q.vx *= 0.984; q.vy = q.vy * 0.984 + 0.05;
+          q.x += q.vx; q.y += q.vy;
+          ctx.globalAlpha = 1 - a3 / q.life;
+          ctx.strokeStyle = q.col; ctx.lineWidth = q.r;
+          ctx.beginPath(); ctx.moveTo(q.px, q.py); ctx.lineTo(q.x, q.y); ctx.stroke();
+        } else {
+          var total = q.p1 + q.p2 + q.p3 + 45;
+          if (a3 > total) { P.splice(i--, 1); continue; }
+          if (a3 <= q.p1) {
+            q.px = q.x; q.py = q.y;
+            q.vx *= 0.965; q.vy = q.vy * 0.965 + 0.02;
+            q.x += q.vx; q.y += q.vy;
+            ctx.globalAlpha = 0.95;
+            ctx.strokeStyle = q.col; ctx.lineWidth = q.r;
+            ctx.beginPath(); ctx.moveTo(q.px, q.py); ctx.lineTo(q.x, q.y); ctx.stroke();
+          } else if (a3 <= q.p1 + q.p2) {
+            if (!q.sx) { q.sx = q.x; q.sy = q.y; }
+            var t2 = (a3 - q.p1) / q.p2, e = 1 - Math.pow(1 - t2, 3);
+            q.x = q.sx + (q.tx - q.sx) * e;
+            q.y = q.sy + (q.ty - q.sy) * e;
+            ctx.globalAlpha = 1;
+            ctx.fillStyle = q.col;
+            ctx.beginPath(); ctx.arc(q.x, q.y, q.r, 0, 6.29); ctx.fill();
+          } else if (a3 <= q.p1 + q.p2 + q.p3) {
+            ctx.globalAlpha = 0.7 + 0.3 * Math.sin(frame * 0.25 + q.ph);
+            ctx.fillStyle = q.col;
+            ctx.beginPath(); ctx.arc(q.tx, q.ty, q.r + 0.4, 0, 6.29); ctx.fill();
+          } else {
+            var t4 = (a3 - q.p1 - q.p2 - q.p3) / 45;
+            ctx.globalAlpha = 1 - t4;
+            ctx.fillStyle = q.col;
+            ctx.beginPath(); ctx.arc(q.tx, q.ty, (q.r + 0.4) * (1 + t4 * 0.6), 0, 6.29); ctx.fill();
+          }
+        }
+      }
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = "source-over";
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
   function playWinRain(list) {
     if (!list || !list.length) return;
     var host = document.createElement("div");
@@ -1754,70 +1937,8 @@
         '<div class="r-meta">' + esc(amount + (products ? "　品牌型号：" + products : "")) + "</div>";
       host.appendChild(card);
     }
-    // 烟花：大面积炸满全屏（16 朵 × 24 粒子）
-    var sparks = small ? 12 : 24;
-    var fwSpots = small
-      ? [{ l: "10%", t: "10%", d: 0 }, { l: "90%", t: "12%", d: 0.5 }, { l: "50%", t: "6%", d: 1 },
-         { l: "25%", t: "35%", d: 1.5 }, { l: "78%", t: "38%", d: 2 }, { l: "50%", t: "20%", d: 2.5 },
-         { l: "15%", t: "60%", d: 3 }, { l: "85%", t: "62%", d: 3.5 }]
-      : [{ l: "4%", t: "12%", d: 0 }, { l: "18%", t: "6%", d: 0.3 }, { l: "33%", t: "14%", d: 0.6 },
-         { l: "49%", t: "5%", d: 0.9 }, { l: "64%", t: "13%", d: 1.2 }, { l: "80%", t: "6%", d: 1.5 },
-         { l: "95%", t: "14%", d: 1.8 }, { l: "12%", t: "40%", d: 2.1 }, { l: "38%", t: "34%", d: 2.4 },
-         { l: "62%", t: "36%", d: 2.7 }, { l: "88%", t: "42%", d: 3 }, { l: "50%", t: "22%", d: 3.3 },
-         { l: "25%", t: "62%", d: 3.6 }, { l: "75%", t: "64%", d: 3.9 }, { l: "8%", t: "80%", d: 4.2 },
-         { l: "92%", t: "78%", d: 4.5 }];
-    var vivid = ["#ffd60a", "#ff2d55", "#ff7a00", "#00e5ff", "#ff3df5", "#ff5d8f", "#7cff4f"];
-    fwSpots.forEach(function (s) {
-      var fw = document.createElement("div");
-      fw.className = "fw";
-      fw.style.left = s.l; fw.style.top = s.t;
-      for (var k = 0; k < sparks; k++) {
-        var p = document.createElement("span");
-        p.className = "fw-p";
-        p.style.setProperty("--a", (k * 360 / sparks + Math.random() * 12) + "deg");
-        p.style.setProperty("--dist", Math.round((small ? 90 : 150) + Math.random() * (small ? 60 : 110)) + "px");
-        p.style.background = vivid[(Math.random() * vivid.length) | 0];
-        p.style.animationDelay = s.d.toFixed(2) + "s";
-        fw.appendChild(p);
-      }
-      host.appendChild(fw);
-    });
-    // 恭喜中标大字（情绪价值）
-    var cg = document.createElement("div");
-    cg.className = "win-congrats";
-    cg.textContent = "恭 喜 中 标";
-    host.appendChild(cg);
-    // 彩带：6 种形状碎彩，底部喷泉式射向顶部（数量约为之前 6 倍、尺寸缩小 2-3 倍）
-    var N = small ? 90 : 160;
-    var shapes = ["cf-rect", "cf-dot", "cf-diamond", "cf-tri", "cf-ring", "cf-rect"];
-    var cols = ["#ffd60a", "#ff2d55", "#ff7a00", "#00e5ff", "#ff3df5", "#7cff4f", "#ff5d8f", "#5b7cfa"];
-    for (var r2 = 0; r2 < N; r2++) {
-      var c = document.createElement("span");
-      var sh = shapes[(Math.random() * shapes.length) | 0];
-      c.className = "confetti " + sh;
-      var col = cols[(Math.random() * cols.length) | 0];
-      var s = 4 + Math.random() * 4;
-      if (sh === "cf-tri") {
-        c.style.borderBottomColor = col;
-      } else if (sh === "cf-ring") {
-        c.style.borderTopColor = col;
-        c.style.borderRightColor = col;
-        c.style.borderBottomColor = col;
-        c.style.borderLeftColor = col;
-      } else {
-        c.style.background = col;
-      }
-      c.style.width = s.toFixed(1) + "px";
-      c.style.height = (sh === "cf-dot" ? s : s * (1.2 + Math.random() * 1.6)).toFixed(1) + "px";
-      var m = Math.random() < 0.5;
-      c.style.left = (m ? 2 + Math.random() * 30 : 68 + Math.random() * 30).toFixed(1) + "%";
-      c.style.setProperty("--dy", "-" + Math.round(200 + Math.random() * (window.innerHeight * 0.75)) + "px");
-      c.style.setProperty("--dx", Math.round((Math.random() * 2 - 1) * 45) + "px");
-      c.style.setProperty("--rr", Math.round(360 + Math.random() * 720) + "deg");
-      c.style.animationDelay = (Math.random() * 2.5).toFixed(2) + "s";
-      c.style.animationDuration = (3.2 + Math.random() * 1.8).toFixed(2) + "s";
-      host.appendChild(c);
-    }
+    // canvas 特效层：大烟花 + "恭喜中标"文字烟花 + 彩带喷泉（卡片已先生成，压在特效之上）
+    startWinFx(host);
     document.body.appendChild(host);
     setTimeout(function () { if (host.parentNode) host.parentNode.removeChild(host); }, 8600);
   }
