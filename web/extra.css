@@ -248,22 +248,29 @@
 .notice-date-picker { position: relative; flex: 0 0 auto; }
 .date-trigger { min-width: 150px; height: 40px; padding: 0 14px; border: 1px solid var(--line); border-radius: 9px; background: #fff; color: var(--ink); cursor: pointer; font: inherit; }
 .date-trigger:hover { border-color: var(--brand); color: var(--brand); }
-.date-pop { position: absolute; z-index: 80; top: calc(100% + 8px); right: 0; width: 320px; padding: 14px; background: #fff; border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 14px 40px rgba(28,43,52,.18); }
+/* 日期弹窗加大：格子 56px 高、分类标注 11px 粗体，确保"询/托/批/招+条数"清晰可读 */
+.date-pop { position: absolute; z-index: 80; top: calc(100% + 8px); right: 0; width: 812px; max-width: calc(100vw - 24px); padding: 14px; background: #fff; border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 14px 40px rgba(28,43,52,.18); }
 .date-head { display: grid; grid-template-columns: 36px 1fr 36px; align-items: center; gap: 8px; margin-bottom: 10px; }
-.date-head b { text-align: center; font-size: 15px; }
+.date-head b { text-align: center; font-size: 16px; }
 .date-head button { width: 34px; height: 30px; border: 1px solid var(--line); background: #fff; border-radius: 7px; cursor: pointer; font-size: 20px; }
-.date-week, .date-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.date-week, .date-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
 .date-week span { text-align: center; color: var(--muted); font-size: 12px; padding: 5px 0; }
-.date-day { position: relative; height: 38px; border: 0; border-radius: 8px; background: transparent; font: inherit; }
+.date-day { position: relative; height: 56px; border: 0; border-radius: 10px; background: transparent; font: inherit; font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: center; padding-bottom: 12px; box-sizing: border-box; }
 .date-day.unavailable { color: #c2c8ce; cursor: not-allowed; background: #f6f7f8; }
 .date-day.outside { opacity: .48; }
 .date-day.available { color: #155f4e; background: #eaf7f1; font-weight: 700; cursor: pointer; border: 1px solid #bfe5d6; }
 .date-day.available:hover { color: #fff; background: var(--brand); border-color: var(--brand); }
 .date-day.selected { color: #fff; background: var(--brand); border-color: var(--brand); }
 .date-day small { position: absolute; right: 3px; bottom: 1px; font-size: 8px; font-weight: 400; }
-.date-day small.cat { left: 2px; right: 2px; bottom: 2px; text-align: center; font-size: 8.5px; font-weight: 700; color: #0b6b52; white-space: nowrap; }
-.date-day small.cat i { font-style: normal; opacity: .5; margin: 0 1px; }
+.date-day small.cat { left: 2px; right: 2px; bottom: 5px; text-align: center; font-size: 11px; font-weight: 800; color: #0b6b52; white-space: nowrap; letter-spacing: .02em; }
+.date-day small.cat i { font-style: normal; opacity: .5; margin: 0 2px; }
 .date-day.available:hover small.cat, .date-day.selected small.cat { color: #fff; }
+@media (max-width: 900px) {
+  .date-pop { width: auto; }
+  .date-week, .date-grid { gap: 4px; }
+  .date-day { height: 46px; font-size: 13px; padding-bottom: 9px; }
+  .date-day small.cat { font-size: 8px; bottom: 3px; }
+}
 .date-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; font-size: 11px; color: var(--muted); }
 .date-foot button { border: 0; color: var(--brand); background: transparent; cursor: pointer; }
 
