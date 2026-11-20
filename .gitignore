@@ -10,14 +10,13 @@ ccgp_kw_1.html
 ccgp_kw_2.html
 cggg_page.html
 
-# 招标公告·新源（模块暂时下线，抓取器代码保留）
+# 招标公告·新源（政采网仍下线；zycgmain 已并入央采「单独委托项目」）
 data/ccgp_items.json
-data/zycgmain_items.json
 data/zycgmain_cursor.json
 data/mall_deals.json
 
-# ����Ƕ��ʽ��������CI �Դ� Python��
+# ����Ƕ��ʽ��������CI �Դ� Python��
 python/
 
-# ������ OSS ƾ֤���Ͻ���⣩
+# ������ OSS ƾ֤���Ͻ���⣩
 oss_config.json
