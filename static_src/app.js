@@ -16,7 +16,7 @@
     return h === "poly" || h === "rail" || h === "picker" || h === "docs" || h === "records" ? h : "zycg";
   }
   var plat = platFromHash();
-  var state = { page: 1, pageSize: 20, total: 0, filters: {}, items: [], loaded: false, picked: {}, availableDates: {}, dateMonth: null, railSource: "", zycgSource: "" };
+  var state = { page: 1, pageSize: 20, total: 0, filters: {}, items: [], loaded: false, picked: {}, availableDates: {}, dateBreakdown: {}, dateMonth: null, railSource: "", zycgSource: "" };
   var picker = {
     products: null,          // data/products.json 的 products 数组
     meta: null,              // 库元信息（updated_at / product_count）
@@ -179,11 +179,28 @@
   // 口径按分类（export_static.py 已统一进 pub_date）：央采询价=发布日期、单独委托=采集日期、
   // 国铁/保利=公告发布日期；旧数据回退 publish_date
   function itemDay(it) { return String(it.pub_date || it.publish_date || "").slice(0, 10); }
+  // 日期弹窗里每个日期按分类标注条数：央采=询/托，国铁=批/招，保利单一来源显示总数
+  var DATE_SRC_SHORT = {
+    zycg: { "询价": ["询", "询价"], "委托": ["托", "单独委托"] },
+    rail: { "mall.95306.cn批量采购专区": ["批", "商城批采"], "cg.95306.cn公开采购公告": ["招", "公开招投标"] }
+  };
+  function dateSegParts(iso) {
+    var SHORT = DATE_SRC_SHORT[plat];
+    var bd = (state.dateBreakdown || {})[iso] || {};
+    var parts = [];
+    if (SHORT) Object.keys(SHORT).forEach(function (s) { if (bd[s]) parts.push({ short: SHORT[s][0] + bd[s], full: SHORT[s][1] + bd[s] + "条" }); });
+    return parts;
+  }
   function initAvailableDates() {
     state.availableDates = {};
+    state.dateBreakdown = {};
     state.items.forEach(function (it) {
       var d = itemDay(it);
-      if (d) state.availableDates[d] = (state.availableDates[d] || 0) + 1;
+      if (d) {
+        state.availableDates[d] = (state.availableDates[d] || 0) + 1;
+        var s = it.source || "其他";
+        (state.dateBreakdown[d] = state.dateBreakdown[d] || {})[s] = (state.dateBreakdown[d][s] || 0) + 1;
+      }
     });
     var days = Object.keys(state.availableDates).sort();
     var anchor = ($("f-date") && $("f-date").value) || days[days.length - 1] || new Date().toISOString().slice(0, 10);
@@ -207,16 +224,20 @@
       else if (day > total) { day -= total; cm = m + 1; outside = true; if (cm > 11) { cm = 0; cy++; } }
       var iso = dateISO(cy, cm, day), count = state.availableDates[iso] || 0;
       var selected = $("f-date") && $("f-date").value === iso;
+      var segs = count ? dateSegParts(iso) : [];
+      var segHtml = count ? '<small class="cat">' + (segs.length ? segs.map(function (p) { return p.short; }).join("<i>·</i>") : count) + "</small>" : "";
+      var segTitle = count ? (segs.length ? segs.map(function (p) { return p.full; }).join(" / ") : count + "条公告") : "";
       cells.push('<button type="button" class="date-day' + (outside ? " outside" : "") +
         (count ? " available" : " unavailable") + (selected ? " selected" : "") + '" data-date="' + iso + '"' +
-        (count ? ' title="' + iso + ' · ' + count + '条公告"' : ' disabled title="该日无公告"') + '>' +
-        day + (count ? '<small>' + count + "</small>" : "") + "</button>");
+        (count ? ' title="' + iso + ' · ' + segTitle + '"' : ' disabled title="该日无公告"') + '>' +
+        day + segHtml + "</button>");
     }
     $("date-grid").innerHTML = cells.join("");
     $("date-grid").querySelectorAll(".date-day.available").forEach(function (b) {
       b.addEventListener("click", function () {
         $("f-date").value = b.dataset.date;
-        $("f-date-btn").textContent = b.dataset.date + "（" + state.availableDates[b.dataset.date] + "条）";
+        var btnSegs = dateSegParts(b.dataset.date);
+        $("f-date-btn").textContent = b.dataset.date + "（" + (btnSegs.length ? btnSegs.map(function (p) { return p.short; }).join("·") : state.availableDates[b.dataset.date] + "条") + "）";
         $("date-pop").classList.add("hide");
         state.filters = currentFilters(); state.page = 1; loadList();
       });
