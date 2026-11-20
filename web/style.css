@@ -6,8 +6,9 @@
   --radius:12px;
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;overflow-x:hidden;width:100%;overscroll-behavior:none}
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,body{margin:0;padding:0;width:100%}
+/* overflow-x/overscroll 只留在 html：写在 body 上会把 body 变成滚动容器并切断滚轮向 html 的传递（桌面滚轮失效） */
+html{overflow-x:hidden;overscroll-behavior:none;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{
   font-family:"Microsoft YaHei","PingFang SC","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
   background:var(--bg); color:var(--ink); line-height:1.5; -webkit-font-smoothing:antialiased;
