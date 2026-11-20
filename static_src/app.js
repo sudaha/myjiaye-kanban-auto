@@ -1734,13 +1734,14 @@
   function playWinRain(list) {
     var host = document.createElement("div");
     host.className = "win-rain";
+    var small = window.innerWidth < 640;
     var n = Math.min(list.length, 8);
     for (var i = 0; i < n; i++) {
       var w = list[i];
       var card = document.createElement("div");
       card.className = "win-rain-card";
-      card.style.left = (5 + Math.random() * 68).toFixed(1) + "%";
-      card.style.animationDelay = (i * 0.12 + Math.random() * 0.2).toFixed(2) + "s";
+      card.style.left = (8 + Math.random() * 60).toFixed(1) + "%";
+      card.style.animationDelay = (i * 0.28 + Math.random() * 0.2).toFixed(2) + "s";
       var amount = Number(w.amount) > 0 ? "，中标金额 " + money(Number(w.amount)) + " 元" : "";
       var products = (w.products || []).slice(0, 2).join("、");
       card.innerHTML = '<span class="r-tag">喜　报</span>' +
@@ -1748,8 +1749,45 @@
         '<div class="r-meta">' + esc(amount + (products ? "　品牌型号：" + products : "")) + "</div>";
       host.appendChild(card);
     }
+    // 烟花：两侧错落绽放
+    var sparks = small ? 8 : 12;
+    var fwSpots = small
+      ? [{ l: "10%", t: "16%", d: 0.2 }, { l: "88%", t: "20%", d: 1.2 }, { l: "50%", t: "10%", d: 2.4 }]
+      : [{ l: "8%", t: "18%", d: 0.2 }, { l: "92%", t: "14%", d: 0.7 }, { l: "14%", t: "42%", d: 1.5 },
+         { l: "86%", t: "46%", d: 2.1 }, { l: "50%", t: "10%", d: 2.9 }, { l: "90%", t: "70%", d: 3.6 },
+         { l: "10%", t: "74%", d: 4.2 }];
+    fwSpots.forEach(function (s) {
+      var fw = document.createElement("div");
+      fw.className = "fw";
+      fw.style.left = s.l; fw.style.top = s.t;
+      for (var k = 0; k < sparks; k++) {
+        var p = document.createElement("span");
+        p.className = "fw-p";
+        p.style.setProperty("--a", (k * 360 / sparks) + "deg");
+        p.style.setProperty("--dist", Math.round(70 + Math.random() * 55) + "px");
+        p.style.animationDelay = s.d.toFixed(2) + "s";
+        fw.appendChild(p);
+      }
+      host.appendChild(fw);
+    });
+    // 万花筒彩带：左右两侧旋转飘落
+    var ribbons = small ? 8 : 14;
+    var colors = [["#e53950", "#ff8a3c"], ["#f7b733", "#fc4a1a"], ["#ff5d8f", "#ff9a9e"],
+                  ["#38bfa8", "#a8ff78"], ["#5b7cfa", "#9b5bff"]];
+    for (var r2 = 0; r2 < ribbons; r2++) {
+      var c = document.createElement("span");
+      c.className = "confetti";
+      c.style.left = (r2 % 2 === 0 ? 2 + Math.random() * 14 : 84 + Math.random() * 14).toFixed(1) + "%";
+      var col = colors[r2 % colors.length];
+      c.style.background = "linear-gradient(180deg," + col[0] + "," + col[1] + ")";
+      c.style.width = (5 + Math.random() * 5).toFixed(1) + "px";
+      c.style.height = Math.round(50 + Math.random() * 70) + "px";
+      c.style.animationDelay = (Math.random() * 3).toFixed(2) + "s";
+      c.style.animationDuration = (3.2 + Math.random() * 1.8).toFixed(2) + "s";
+      host.appendChild(c);
+    }
     document.body.appendChild(host);
-    setTimeout(function () { if (host.parentNode) host.parentNode.removeChild(host); }, 3500);
+    setTimeout(function () { if (host.parentNode) host.parentNode.removeChild(host); }, 8200);
   }
   function checkWinRain(d) {
     var wins = (d && d.wins) || [];
