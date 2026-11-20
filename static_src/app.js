@@ -1722,6 +1722,15 @@
   function gateStillOn() {
     try { return !sessionStorage.getItem("jiaye_auth_guest_v1"); } catch (e) { return false; }
   }
+  // 登录门未通过时先等进入页面再放雨，避免被门（z-index 更高）遮住
+  function playRainAfterGate(list) {
+    if (gateStillOn()) {
+      var t = setInterval(function () { if (!gateStillOn()) { clearInterval(t); playWinRain(list); } }, 400);
+      setTimeout(function () { clearInterval(t); }, 60000);
+    } else {
+      playWinRain(list);
+    }
+  }
   function playWinRain(list) {
     var host = document.createElement("div");
     host.className = "win-rain";
@@ -1760,20 +1769,17 @@
       if (sessionStorage.getItem(playKey)) return;
       sessionStorage.setItem(playKey, "1");
       localStorage.setItem(RAIN_SEEN_KEY, JSON.stringify(wins.map(function (w) { return w.id; })));
-      var fire = function () { playWinRain(fresh); };
-      if (gateStillOn()) {
-        // 登录门未通过时先等待进入页面后再展示，避免喜报雨被门遮住
-        var t = setInterval(function () { if (!gateStillOn()) { clearInterval(t); fire(); } }, 400);
-        setTimeout(function () { clearInterval(t); }, 60000);
-      } else {
-        fire();
-      }
+      playRainAfterGate(fresh);
     } catch (e) { /* 存储不可用时静默跳过 */ }
   }
   function loadWinTicker() {
     getJSON("data/wins.json").then(function (d) {
       publicWins = (d && d.wins) || [];
-      checkWinRain(d);
+      if (/[?&]rain=1/.test(location.search)) {
+        playRainAfterGate(publicWins.slice(0, 8)); // ?rain=1 手动预览标书雨
+      } else {
+        checkWinRain(d);
+      }
       renderWinTicker();
     }).catch(function () { publicWins = []; renderWinTicker(); });
   }
