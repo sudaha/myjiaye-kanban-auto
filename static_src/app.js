@@ -1766,7 +1766,7 @@
       for (var i = 0; i < cnt; i++) {
         var a = Math.random() * 6.283, sp = vMax * (0.25 + Math.random() * 0.75) * (0.8 + Math.random() * 0.4);
         P.push({ t: "fw", x: x, y: y, px: x, py: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
-          born: at, life: Math.floor(rnd(hero ? 360 : big ? 180 : 120, hero ? 600 : big ? 300 : 190)),
+          born: at, life: Math.floor(rnd(hero ? 200 : big ? 100 : 70, hero ? 320 : big ? 160 : 110)),
           col: Math.random() < (hero ? 0.35 : 0.25) ? "#fff6d8" : col,
           r: rnd(hero ? 4.8 : 2.4, hero ? 8.8 : big ? 4.4 : 3.4) });
       }
@@ -1777,13 +1777,13 @@
       for (var i = 0; i < cnt; i++) {
         var a = Math.random() * 6.283, sp = rnd(0.3, small ? 1.8 : 2.4);
         P.push({ t: "cr", x: x, y: y, px: x, py: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
-          born: at, life: Math.floor(rnd(90, 170)), ph: rnd(0, 6.28), r: rnd(1.4, 2.4) });
+          born: at, life: Math.floor(rnd(60, 110)), ph: rnd(0, 6.28), r: rnd(1.4, 2.4) });
       }
     }
 
     // 排程：3 朵主角花（粒子×2、留存×2）分早/中/晚三段独唱；
     // 普通花与闪裂避开主角花的时间窗，节奏有主次、不再同步一片
-    var heroTimes = [Math.floor(rnd(70, 140)), Math.floor(rnd(330, 420)), Math.floor(rnd(520, 600))];
+    var heroTimes = [Math.floor(rnd(35, 70)), Math.floor(rnd(165, 210)), Math.floor(rnd(240, 280))];
     var HERO_COLS = ["#ffd60a", "#ff3df5", "#ff2d55"];
     function nearHero(t, gap) {
       for (var h = 0; h < heroTimes.length; h++) if (Math.abs(t - heroTimes[h]) < gap) return true;
@@ -1791,7 +1791,7 @@
     }
     for (var hh = 0; hh < 3; hh++) {
       var hx = rnd(0.15, 0.85) * W, hy = rnd(0.08, 0.42) * H;
-      var hrise = Math.floor(rnd(40, 64));
+      var hrise = Math.floor(rnd(30, 48));
       var hsx = hx + rnd(-50, 50);
       P.push({ t: "rock", x: hsx, y: H + 12, px: hsx, py: H + 12, x0: hsx, y0: H + 12, tx: hx, ty: hy,
         born: Math.max(0, heroTimes[hh] - hrise), life: hrise, col: "#ffd60a" });
@@ -1801,9 +1801,9 @@
     var bigs = small ? 12 : 24;
     for (var b = 0; b < bigs; b++) {
       var bx = rnd(0.05, 0.95) * W, by = rnd(0.06, 0.5) * H;
-      var at = Math.floor(rnd(0, 700)), ntries = 0;
-      while (nearHero(at, 150) && ntries < 30) { at = Math.floor(rnd(0, 700)); ntries++; }
-      var rise = Math.floor(rnd(34, 60));
+      var at = Math.floor(rnd(0, 450)), ntries = 0;
+      while (nearHero(at, 100) && ntries < 30) { at = Math.floor(rnd(0, 450)); ntries++; }
+      var rise = Math.floor(rnd(24, 40));
       var sx = bx + rnd(-40, 40);
       var col = pick(FW_COLORS);
       P.push({ t: "rock", x: sx, y: H + 12, px: sx, py: H + 12, x0: sx, y0: H + 12, tx: bx, ty: by,
@@ -1816,13 +1816,13 @@
     }
     var crs = small ? 14 : 30;
     for (var c3 = 0; c3 < crs; c3++) {
-      var ct = Math.floor(rnd(60, 780)), ctries = 0;
-      while (nearHero(ct, 100) && ctries < 30) { ct = Math.floor(rnd(60, 780)); ctries++; }
+      var ct = Math.floor(rnd(40, 460)), ctries = 0;
+      while (nearHero(ct, 70) && ctries < 30) { ct = Math.floor(rnd(40, 460)); ctries++; }
       crackle(rnd(0.05, 0.95) * W, rnd(0.08, 0.6) * H, ct);
     }
 
     // 彩带：底部空压彩虹炮——左右 2 门炮各 4 轮齐射，碎纸片锥形喷出后缓慢翻转飘落
-    var CANNONS = [0.12, 0.88], VOLLEYS = [0, 80, 190, 300];
+    var CANNONS = [0.12, 0.88], VOLLEYS = [0, 60, 140, 220];
     for (var vi = 0; vi < VOLLEYS.length; vi++) {
       for (var ci = 0; ci < CANNONS.length; ci++) {
         var cx2 = CANNONS[ci] * W + rnd(-30, 30), v0 = VOLLEYS[vi] + vi * 10;
@@ -1831,7 +1831,7 @@
           var ca = -1.5708 + rnd(-0.62, 0.62), cs = rnd(small ? 8 : 10, small ? 14 : 17);
           P.push({ t: "cf", x: cx2, y: H + 12, px: cx2, py: H + 12,
             vx: Math.cos(ca) * cs * (0.55 + Math.random() * 0.5), vy: Math.sin(ca) * cs,
-            born: v0 + Math.floor(rnd(0, 26)), life: Math.floor(rnd(360, 520)),
+            born: v0 + Math.floor(rnd(0, 26)), life: Math.floor(rnd(240, 320)),
             rot: rnd(0, 360), vr: rnd(-14, 14), wob: rnd(0.6, 2), ph: rnd(0, 6.28),
             col: pick(RAINBOW), s: rnd(4.5, 8.5), ratio: rnd(0.5, 0.85), al: 0 });
         }
@@ -1854,7 +1854,7 @@
     function tick() {
       if (!running) return;
       frame++;
-      if (frame > 1200) { running = false; return; }
+      if (frame > 600) { running = false; return; }
       ctx.clearRect(0, 0, W, H);
       var i, p, age;
       for (i = 0; i < P.length; i++) {
@@ -1934,8 +1934,8 @@
       var card = document.createElement("div");
       card.className = "win-rain-card";
       card.style.left = (8 + Math.random() * 60).toFixed(1) + "%";
-      card.style.animationDelay = (i * 0.45 + Math.random() * 0.25).toFixed(2) + "s";
-      lastEnd = Math.max(lastEnd, parseFloat(card.style.animationDelay) + 7.5);
+      card.style.animationDelay = (i * 0.28 + Math.random() * 0.2).toFixed(2) + "s";
+      lastEnd = Math.max(lastEnd, parseFloat(card.style.animationDelay) + 5.2);
       var amount = Number(w.amount) > 0 ? "，中标金额 " + money(Number(w.amount)) + " 元" : "";
       var products = (w.products || []).slice(0, 2).join("、");
       card.innerHTML = '<span class="r-tag">喜　报</span>' +
@@ -1956,7 +1956,7 @@
       host.classList.add("bg-off");
       if (cg.parentNode) cg.parentNode.removeChild(cg);
     }, Math.ceil(lastEnd * 1000) + 40);
-    setTimeout(function () { if (host.parentNode) host.parentNode.removeChild(host); }, 20100);
+    setTimeout(function () { if (host.parentNode) host.parentNode.removeChild(host); }, 10100);
   }
   function checkWinRain(d) {
     var wins = (d && d.wins) || [];

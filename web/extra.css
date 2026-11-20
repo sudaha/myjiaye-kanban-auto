@@ -439,7 +439,7 @@
 .win-congrats { position: absolute; left: 50%; top: 32%; transform: translate(-50%, -50%);
   z-index: 3; font: 900 92px/1.15 'Microsoft YaHei', 'PingFang SC', sans-serif; letter-spacing: .05em;
   color: #ff2231; text-shadow: 0 0 16px rgba(255,60,80,.7), 0 0 48px rgba(255,60,80,.45);
-  white-space: nowrap; pointer-events: none; animation: winCongratsPop 1.4s ease-out 1.8s both; }
+  white-space: nowrap; pointer-events: none; animation: winCongratsPop 1.4s ease-out 1.2s both; }
 @media (max-width: 640px) { .win-congrats { font-size: 52px; } }
 /* 只负责弹出定格；消失由 JS 在标书落出屏幕时同步移除元素 */
 @keyframes winCongratsPop {
@@ -450,7 +450,7 @@
 .win-rain-card { position: absolute; top: -200px; width: 320px; max-width: 82vw; padding: 16px 18px 18px; box-sizing: border-box;
   background: linear-gradient(160deg,#fffaf0,#ffedd0); border: 2px solid #d9482f; border-radius: 12px;
   box-shadow: 0 12px 34px rgba(90,10,0,.32); opacity: 0;
-  animation: winRainFall 7.5s linear forwards; will-change: transform; }
+  animation: winRainFall 5.2s linear forwards; will-change: transform; }
 .win-rain-card .r-tag { display: inline-block; margin-bottom: 8px; padding: 3px 11px; border-radius: 999px;
   background: linear-gradient(135deg,#b51f24,#df3c24); color: #fff; font-size: 13px; font-weight: 800; letter-spacing: 3px; }
 .win-rain-card .r-title { font-size: 15px; font-weight: 700; color: #5b2300; line-height: 1.6; }
