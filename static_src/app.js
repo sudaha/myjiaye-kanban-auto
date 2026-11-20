@@ -1760,22 +1760,22 @@
 
     // 牡丹大烟花：长尾丝状粒子，慢速展开、余烬 lingering
     function peony(x, y, at, col, big) {
-      var cnt = Math.floor((big ? rnd(200, 320) : rnd(70, 120)) * (small ? 0.5 : 1));
-      var vMax = big ? (small ? 4.6 : 6.8) : (small ? 2.6 : 3.6);
+      var cnt = Math.floor((big ? rnd(230, 360) : rnd(80, 140)) * (small ? 0.5 : 1));
+      var vMax = big ? (small ? 4.0 : 5.6) : (small ? 2.2 : 3.0);
       for (var i = 0; i < cnt; i++) {
         var a = Math.random() * 6.283, sp = vMax * (0.25 + Math.random() * 0.75) * (0.8 + Math.random() * 0.4);
         P.push({ t: "fw", x: x, y: y, px: x, py: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
-          born: at, life: Math.floor(rnd(big ? 140 : 90, big ? 220 : 140)),
-          col: Math.random() < 0.25 ? "#fff6d8" : col, r: rnd(1.7, big ? 3.3 : 2.6) });
+          born: at, life: Math.floor(rnd(big ? 180 : 120, big ? 300 : 190)),
+          col: Math.random() < 0.25 ? "#fff6d8" : col, r: rnd(1.9, big ? 3.6 : 2.9) });
       }
     }
     // 闪裂星光：细碎闪烁小点，慢速飘散
     function crackle(x, y, at) {
-      var cnt = Math.floor(rnd(46, 80) * (small ? 0.5 : 1));
+      var cnt = Math.floor(rnd(50, 84) * (small ? 0.5 : 1));
       for (var i = 0; i < cnt; i++) {
-        var a = Math.random() * 6.283, sp = rnd(0.4, small ? 2.2 : 3);
+        var a = Math.random() * 6.283, sp = rnd(0.3, small ? 1.8 : 2.4);
         P.push({ t: "cr", x: x, y: y, px: x, py: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
-          born: at, life: Math.floor(rnd(70, 140)), ph: rnd(0, 6.28), r: rnd(1.1, 2) });
+          born: at, life: Math.floor(rnd(90, 170)), ph: rnd(0, 6.28), r: rnd(1.1, 2) });
       }
     }
 
@@ -1821,26 +1821,28 @@
       if (!pts.length) return;
       var n = Math.min(pts.length, small ? 420 : 780);
       var cx = W / 2, cy = H * 0.38, ox = cx - off.width / 2, oy = cy - off.height / 2;
+      // 上金下红渐变，还原第一版红色字样
+      var TXT_GRAD = ["#ffd60a", "#ffc42e", "#ff8a3d", "#ff5a4d", "#ff2d55"];
       for (var k = 0; k < n; k++) {
         var tp = pick(pts);
         var a2 = Math.random() * 6.283, sp2 = rnd(4, 13);
         P.push({ t: "txt", x: cx, y: cy, px: cx, py: cy, vx: Math.cos(a2) * sp2, vy: Math.sin(a2) * sp2,
           tx: ox + tp[0], ty: oy + tp[1], born: 110, p1: 60, p2: 110, p3: 260, p4: 70,
-          col: k % 5 === 0 ? "#ff3d2e" : "#ffd60a", r: small ? 2.4 : 3.4, ph: rnd(0, 6.28), sx: 0, sy: 0 });
+          col: TXT_GRAD[Math.min(4, Math.floor((tp[1] / off.height) * 5))], r: small ? 2.4 : 3.4, ph: rnd(0, 6.28), sx: 0, sy: 0 });
       }
     })();
 
-    // 彩带：底部空压彩虹炮——左/中/右 3 门炮各 3 轮齐射，碎纸片锥形喷出后翻转飘落
+    // 彩带：底部空压彩虹炮——左右 2 门炮各 4 轮齐射，碎纸片锥形喷出后缓慢翻转飘落
     var CANNONS = [0.12, 0.88], VOLLEYS = [0, 80, 190, 300];
     for (var vi = 0; vi < VOLLEYS.length; vi++) {
       for (var ci = 0; ci < CANNONS.length; ci++) {
         var cx2 = CANNONS[ci] * W + rnd(-30, 30), v0 = VOLLEYS[vi] + vi * 10;
         var per = small ? 30 : 60;
         for (var k2 = 0; k2 < per; k2++) {
-          var ca = -1.5708 + rnd(-0.62, 0.62), cs = rnd(small ? 9 : 12, small ? 17 : 22);
+          var ca = -1.5708 + rnd(-0.62, 0.62), cs = rnd(small ? 8 : 10, small ? 14 : 17);
           P.push({ t: "cf", x: cx2, y: H + 12, px: cx2, py: H + 12,
             vx: Math.cos(ca) * cs * (0.55 + Math.random() * 0.5), vy: Math.sin(ca) * cs,
-            born: v0 + Math.floor(rnd(0, 26)), life: Math.floor(rnd(300, 460)),
+            born: v0 + Math.floor(rnd(0, 26)), life: Math.floor(rnd(360, 520)),
             rot: rnd(0, 360), vr: rnd(-14, 14), wob: rnd(0.6, 2), ph: rnd(0, 6.28),
             col: pick(RAINBOW), s: rnd(4.5, 8.5), ratio: rnd(0.5, 0.85), al: 0 });
         }
@@ -1871,8 +1873,8 @@
         if (p.t !== "cf" || frame < p.born) continue;
         age = frame - p.born;
         if (age > p.life || p.y > H + 60) { P.splice(i--, 1); continue; }
-        p.vy += 0.3; p.vx *= 0.995; p.vy *= 0.992;
-        p.x += p.vx + Math.sin(frame * 0.06 * p.wob + p.ph) * 1.4;
+        p.vy += 0.12; p.vx *= 0.995; p.vy *= 0.98;
+        p.x += p.vx + Math.sin(frame * 0.06 * p.wob + p.ph) * 2.2;
         p.y += p.vy;
         p.rot += p.vr;
         p.al = age < 8 ? age / 8 : (age > p.life - 60 ? Math.max(0, (p.life - age) / 60) : 1);
@@ -1900,7 +1902,7 @@
           q.vx *= 0.985; q.vy = q.vy * 0.985 + 0.03;
           q.x += q.vx; q.y += q.vy;
           var spd = Math.sqrt(q.vx * q.vx + q.vy * q.vy);
-          var ln = Math.min(36, Math.max(6, spd * 4));
+          var ln = Math.min(46, Math.max(8, spd * 6));
           var ux = spd > 0.01 ? q.vx / spd : 0, uy = spd > 0.01 ? q.vy / spd : 0;
           ctx.globalAlpha = Math.min(1, (1 - a3 / q.life) * 1.3);
           ctx.strokeStyle = q.col; ctx.lineWidth = q.r; ctx.lineCap = "round";
