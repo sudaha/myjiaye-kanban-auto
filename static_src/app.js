@@ -486,7 +486,8 @@
          (participatable
            ? '<button type="button" class="join-btn' + (joined ? " joined" : "") + '" data-id="' + esc(it.id) + '" title="' + (joined ? "点击取消参与" : "点击参与投标") + '">' + (joined ? "取消参与" : "＋ 参与投标") + "</button>" : "") +
          (plat === "zycg" && it.source !== "委托" ? '<button type="button" class="quick-pick" data-id="' + esc(it.id) + '">一键技术选型</button>' : "") +
-         (plat === "rail" && String(it.id || "").indexOf("mall_") === 0
+         // 放弃项目按钮：央采询价招投标（询价+委托）、国铁商城批采招投标（批采+公招）、保利集团招标 全覆盖（2026-11-20 用户要求）
+         (participatable
            ? '<button type="button" class="abandon-btn' + (abandoned ? " off" : "") + '" data-id="' + esc(it.id) + '" title="' + (abandoned ? "点击恢复（云端同步）" : "核查后不适合参与，标记放弃并同步云端，其他成员刷新后同样可见") + '">' + (abandoned ? "已放弃·点击恢复" : "放弃项目") + "</button>" : "") +
        "</div>" +
     "</div>";
