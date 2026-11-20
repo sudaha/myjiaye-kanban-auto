@@ -1732,12 +1732,16 @@
     }
   }
   function playWinRain(list) {
+    if (!list || !list.length) return;
     var host = document.createElement("div");
     host.className = "win-rain";
     var small = window.innerWidth < 640;
+    // 标书卡片保底 7 张：新中标不足 7 条时复制同款补齐，避免孤零零一张
     var n = Math.min(list.length, 8);
-    for (var i = 0; i < n; i++) {
-      var w = list[i];
+    var want = Math.max(n, 7), cards = [];
+    for (var c2 = 0; c2 < want; c2++) cards.push(list[c2 % n]);
+    for (var i = 0; i < cards.length; i++) {
+      var w = cards[i];
       var card = document.createElement("div");
       card.className = "win-rain-card";
       card.style.left = (8 + Math.random() * 60).toFixed(1) + "%";
@@ -1749,13 +1753,16 @@
         '<div class="r-meta">' + esc(amount + (products ? "　品牌型号：" + products : "")) + "</div>";
       host.appendChild(card);
     }
-    // 烟花：两侧错落绽放
-    var sparks = small ? 8 : 12;
+    // 烟花：更大、更久、炸满顶部
+    var sparks = small ? 10 : 16;
     var fwSpots = small
-      ? [{ l: "10%", t: "16%", d: 0.2 }, { l: "88%", t: "20%", d: 1.2 }, { l: "50%", t: "10%", d: 2.4 }]
-      : [{ l: "8%", t: "18%", d: 0.2 }, { l: "92%", t: "14%", d: 0.7 }, { l: "14%", t: "42%", d: 1.5 },
-         { l: "86%", t: "46%", d: 2.1 }, { l: "50%", t: "10%", d: 2.9 }, { l: "90%", t: "70%", d: 3.6 },
-         { l: "10%", t: "74%", d: 4.2 }];
+      ? [{ l: "8%", t: "10%", d: 0.1 }, { l: "90%", t: "12%", d: 0.9 }, { l: "50%", t: "6%", d: 1.8 },
+         { l: "20%", t: "30%", d: 2.7 }, { l: "80%", t: "32%", d: 3.6 }]
+      : [{ l: "6%", t: "10%", d: 0.1 }, { l: "20%", t: "22%", d: 0.5 }, { l: "34%", t: "8%", d: 0.9 },
+         { l: "50%", t: "18%", d: 1.3 }, { l: "66%", t: "7%", d: 1.7 }, { l: "80%", t: "24%", d: 2.1 },
+         { l: "94%", t: "12%", d: 2.5 }, { l: "12%", t: "38%", d: 3.1 }, { l: "50%", t: "30%", d: 3.7 },
+         { l: "88%", t: "40%", d: 4.3 }];
+    var vivid = ["#ffd60a", "#ff2d55", "#ff7a00", "#00e5ff", "#ff3df5", "#ff5d8f"];
     fwSpots.forEach(function (s) {
       var fw = document.createElement("div");
       fw.className = "fw";
@@ -1764,30 +1771,32 @@
         var p = document.createElement("span");
         p.className = "fw-p";
         p.style.setProperty("--a", (k * 360 / sparks) + "deg");
-        p.style.setProperty("--dist", Math.round(70 + Math.random() * 55) + "px");
+        p.style.setProperty("--dist", Math.round((small ? 80 : 110) + Math.random() * (small ? 50 : 70)) + "px");
+        p.style.background = vivid[(Math.random() * vivid.length) | 0];
         p.style.animationDelay = s.d.toFixed(2) + "s";
         fw.appendChild(p);
       }
       host.appendChild(fw);
     });
-    // 万花筒彩带：左右两侧旋转飘落
-    var ribbons = small ? 8 : 14;
+    // 万花筒彩带：从页面底部两侧向上喷发，旋转升空
+    var ribbons = small ? 14 : 26;
     var colors = [["#e53950", "#ff8a3c"], ["#f7b733", "#fc4a1a"], ["#ff5d8f", "#ff9a9e"],
                   ["#38bfa8", "#a8ff78"], ["#5b7cfa", "#9b5bff"]];
     for (var r2 = 0; r2 < ribbons; r2++) {
       var c = document.createElement("span");
       c.className = "confetti";
-      c.style.left = (r2 % 2 === 0 ? 2 + Math.random() * 14 : 84 + Math.random() * 14).toFixed(1) + "%";
+      c.style.left = (r2 % 2 === 0 ? 3 + Math.random() * 22 : 75 + Math.random() * 22).toFixed(1) + "%";
       var col = colors[r2 % colors.length];
       c.style.background = "linear-gradient(180deg," + col[0] + "," + col[1] + ")";
-      c.style.width = (5 + Math.random() * 5).toFixed(1) + "px";
-      c.style.height = Math.round(50 + Math.random() * 70) + "px";
-      c.style.animationDelay = (Math.random() * 3).toFixed(2) + "s";
-      c.style.animationDuration = (3.2 + Math.random() * 1.8).toFixed(2) + "s";
+      c.style.width = (6 + Math.random() * 5).toFixed(1) + "px";
+      c.style.height = Math.round(60 + Math.random() * 70) + "px";
+      c.style.setProperty("--h", "-" + Math.round(35 + Math.random() * 50) + "vh");
+      c.style.animationDelay = (Math.random() * 2.5).toFixed(2) + "s";
+      c.style.animationDuration = (3.5 + Math.random() * 1.5).toFixed(2) + "s";
       host.appendChild(c);
     }
     document.body.appendChild(host);
-    setTimeout(function () { if (host.parentNode) host.parentNode.removeChild(host); }, 8200);
+    setTimeout(function () { if (host.parentNode) host.parentNode.removeChild(host); }, 8000);
   }
   function checkWinRain(d) {
     var wins = (d && d.wins) || [];

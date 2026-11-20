@@ -448,22 +448,21 @@
   90% { opacity: 1; }
   100% { transform: translateY(calc(100vh + 230px)) rotate(-5deg); opacity: 0; }
 }
-/* 烟花：两侧错落绽放 */
+/* 烟花：大颗粒、鲜艳色、炸满顶部 */
 .fw { position: absolute; width: 0; height: 0; }
-.fw-p { position: absolute; left: -3px; top: -3px; width: 6px; height: 6px; border-radius: 50%;
-  background: #ffd54a; opacity: 0; animation: fwBurst 1.15s ease-out forwards; }
-.fw-p:nth-child(3n) { background: #ff5d8f; }
-.fw-p:nth-child(3n+1) { background: #ff9a3c; }
+.fw-p { position: absolute; left: -4px; top: -4px; width: 7px; height: 7px; border-radius: 50%;
+  background: #ffd60a; opacity: 0; animation: fwBurst 1.6s ease-out forwards; }
 @keyframes fwBurst {
   0% { transform: rotate(var(--a)) translateY(0) scale(1); opacity: 1; }
-  100% { transform: rotate(var(--a)) translateY(var(--dist, 90px)) scale(.3); opacity: 0; }
+  100% { transform: rotate(var(--a)) translateY(var(--dist, 120px)) scale(.35); opacity: 0; }
 }
-/* 万花筒彩带：左右两侧旋转飘落 */
-.confetti { position: absolute; top: -160px; border-radius: 4px; opacity: 0;
-  animation: confFall 4s linear forwards; }
-@keyframes confFall {
+/* 万花筒彩带：从页面底部向上喷发，升空旋转后缓缓淡出 */
+.confetti { position: absolute; bottom: -24px; border-radius: 4px; opacity: 0;
+  animation: confUp 4s cubic-bezier(.22,.61,.36,1) forwards; }
+@keyframes confUp {
   0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-  6% { opacity: .95; }
-  100% { transform: translateY(calc(100vh + 180px)) rotate(540deg); opacity: .85; }
+  8% { opacity: 1; }
+  72% { transform: translateY(var(--h, -60vh)) rotate(420deg); opacity: 1; }
+  100% { transform: translateY(calc(var(--h, -60vh) * .7)) rotate(600deg); opacity: 0; }
 }
 
