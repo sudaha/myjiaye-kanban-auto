@@ -1766,7 +1766,7 @@
         var a = Math.random() * 6.283, sp = vMax * (0.25 + Math.random() * 0.75) * (0.8 + Math.random() * 0.4);
         P.push({ t: "fw", x: x, y: y, px: x, py: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
           born: at, life: Math.floor(rnd(big ? 180 : 120, big ? 300 : 190)),
-          col: Math.random() < 0.25 ? "#fff6d8" : col, r: rnd(1.9, big ? 3.6 : 2.9) });
+          col: Math.random() < 0.25 ? "#fff6d8" : col, r: rnd(2.4, big ? 4.4 : 3.4) });
       }
     }
     // 闪裂星光：细碎闪烁小点，慢速飘散
@@ -1775,7 +1775,7 @@
       for (var i = 0; i < cnt; i++) {
         var a = Math.random() * 6.283, sp = rnd(0.3, small ? 1.8 : 2.4);
         P.push({ t: "cr", x: x, y: y, px: x, py: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
-          born: at, life: Math.floor(rnd(90, 170)), ph: rnd(0, 6.28), r: rnd(1.1, 2) });
+          born: at, life: Math.floor(rnd(90, 170)), ph: rnd(0, 6.28), r: rnd(1.4, 2.4) });
       }
     }
 
@@ -1828,7 +1828,7 @@
         var a2 = Math.random() * 6.283, sp2 = rnd(4, 13);
         P.push({ t: "txt", x: cx, y: cy, px: cx, py: cy, vx: Math.cos(a2) * sp2, vy: Math.sin(a2) * sp2,
           tx: ox + tp[0], ty: oy + tp[1], born: 110, p1: 60, p2: 110, p3: 260, p4: 70,
-          col: TXT_GRAD[Math.min(4, Math.floor((tp[1] / off.height) * 5))], r: small ? 2.4 : 3.4, ph: rnd(0, 6.28), sx: 0, sy: 0 });
+          col: TXT_GRAD[Math.min(4, Math.floor((tp[1] / off.height) * 5))], r: small ? 2.8 : 4, ph: rnd(0, 6.28), sx: 0, sy: 0 });
       }
     })();
 
@@ -1895,7 +1895,7 @@
           ctx.strokeStyle = q.col; ctx.lineWidth = 2.2;
           ctx.beginPath(); ctx.moveTo(q.px, q.py); ctx.lineTo(q.x, q.y); ctx.stroke();
           if (frame % 2 === 0) P.push({ t: "em", x: q.x + rnd(-2, 2), y: q.y + rnd(0, 6), px: 0, py: 0,
-            vx: rnd(-0.4, 0.4), vy: rnd(0, 0.6), born: frame, life: 16, r: rnd(0.7, 1.4) });
+            vx: rnd(-0.4, 0.4), vy: rnd(0, 0.6), born: frame, life: 16, r: rnd(1, 1.8) });
         } else if (q.t === "fw") {
           if (a3 > q.life) { P.splice(i--, 1); continue; }
           q.px = q.x; q.py = q.y;
@@ -1983,6 +1983,8 @@
     // canvas 特效层：大烟花 + "恭喜中标"文字烟花 + 彩带喷泉（卡片已先生成，压在特效之上）
     startWinFx(host);
     document.body.appendChild(host);
+    // 标书最晚约 10.9s 全部落出屏幕，届时立刻撤除红色蒙版，烟花继续
+    setTimeout(function () { host.classList.add("bg-off"); }, 11000);
     setTimeout(function () { if (host.parentNode) host.parentNode.removeChild(host); }, 16800);
   }
   function checkWinRain(d) {

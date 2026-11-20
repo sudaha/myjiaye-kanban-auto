@@ -432,10 +432,9 @@
 
 /* 喜报标书雨：卡片慢速下落（可看清内容）+ 两侧烟花与万花筒彩带 */
 .win-rain { position: fixed; inset: 0; z-index: 9998; overflow: hidden; pointer-events: none;
-  background: radial-gradient(ellipse at 50% -10%, rgba(223,60,36,.16), rgba(110,15,8,.30));
-  animation: winRainOut 16s linear forwards; }
-/* 红色蒙版：全程保留，末尾随烟花一起淡出，不留残影 */
-@keyframes winRainOut { 0%, 72% { opacity: 1; } 100% { opacity: 0; } }
+  background: radial-gradient(ellipse at 50% -10%, rgba(223,60,36,.16), rgba(110,15,8,.30)); }
+/* 红色蒙版：标书全部落出屏幕后立即撤除（JS 加 .bg-off），烟花继续播放 */
+.win-rain.bg-off { background: transparent; }
 .win-rain-card { position: absolute; top: -200px; width: 320px; max-width: 82vw; padding: 16px 18px 18px; box-sizing: border-box;
   background: linear-gradient(160deg,#fffaf0,#ffedd0); border: 2px solid #d9482f; border-radius: 12px;
   box-shadow: 0 12px 34px rgba(90,10,0,.32); opacity: 0;
