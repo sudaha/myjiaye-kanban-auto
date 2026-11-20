@@ -1763,16 +1763,16 @@
     // 牡丹大烟花：长尾丝状粒子，慢速展开、余烬 lingering
     function peony(x, y, at, col, big, hero, lifeOv) {
       // hero 主角花：粒子尺寸×2；大烟花统一红色，留存与标书雨同步收尾
-      var cnt = Math.floor((hero ? rnd(280, 420) : big ? rnd(230, 360) : rnd(80, 140)) * (small ? 0.5 : 1));
+      var cnt = Math.floor((hero ? rnd(280, 420) : big ? rnd(230, 360) : rnd(60, 110)) * (small ? 0.5 : 1));
       var vMax = hero ? (small ? 4.0 : 5.2) : big ? (small ? 3.8 : 5.2) : (small ? 2.0 : 2.6);
       var base = (big || hero) ? "#ff2d55" : col;
       var maxLife = Math.max(50, endFrame - at);
       for (var i = 0; i < cnt; i++) {
         var a = Math.random() * 6.283, sp = vMax * (0.25 + Math.random() * 0.75) * (0.8 + Math.random() * 0.4);
-        // 大烟花不提前散：大牡丹留存到收尾前 0-40 帧，小花瓣保留短留存
-        var life = lifeOv || (big ? maxLife - Math.floor(rnd(0, 40)) : Math.min(maxLife, Math.floor(rnd(80, 130))));
+        // 大/主角花留存对齐结束帧；小烟花短留存（0.8-1.4 秒）快速淡出，避免画面堆叠
+        var life = lifeOv || (big ? maxLife - Math.floor(rnd(0, 40)) : Math.min(maxLife, Math.floor(rnd(50, 85))));
         P.push({ t: "fw", x: x, y: y, px: x, py: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
-          born: at, life: life,
+          born: at, life: life, hold: !!(big || hero),
           col: Math.random() < (hero ? 0.35 : 0.25) ? "#fff6d8" : base,
           r: rnd(hero ? 4.8 : 2.4, hero ? 8.8 : big ? 4.4 : 3.4) });
       }
@@ -1825,10 +1825,6 @@
       P.push({ t: "rock", x: sx, y: H + 12, px: sx, py: H + 12, x0: sx, y0: H + 12, tx: bx, ty: by,
         born: Math.max(0, at - rise), life: rise, col: "#ffe9a8" });
       peony(bx, by, at, col, b % 3 === 0);
-      if (b % 4 === 1) {
-        peony(bx + rnd(-120, 120), by + rnd(-80, 80), at + Math.floor(rnd(10, 30)),
-          pick(FW_COLORS), false);
-      }
     }
     var crs = small ? 14 : 30;
     var ctMax = Math.floor(endFrame * 0.85);
@@ -1920,9 +1916,9 @@
           var spd = Math.sqrt(q.vx * q.vx + q.vy * q.vy);
           var ln = Math.min(46, Math.max(8, spd * 6));
           var ux = spd > 0.01 ? q.vx / spd : 0, uy = spd > 0.01 ? q.vy / spd : 0;
-          // 亮度保持到寿命最后 18% 才熄灭——火球活性持续到结束帧，与标书出画同刻消失
+          // 大/主角花亮度保持到最后 18% 才熄灭（与标书同刻消失）；小烟花线性快速淡出防堆叠
           var frac = 1 - a3 / q.life;
-          ctx.globalAlpha = frac > 0.18 ? 1 : Math.max(0, frac / 0.18);
+          ctx.globalAlpha = q.hold ? (frac > 0.18 ? 1 : Math.max(0, frac / 0.18)) : Math.max(0, frac);
           ctx.strokeStyle = q.col; ctx.lineWidth = q.r; ctx.lineCap = "round";
           ctx.beginPath(); ctx.moveTo(q.x, q.y); ctx.lineTo(q.x - ux * ln, q.y - uy * ln); ctx.stroke();
         } else if (q.t === "cr") {
