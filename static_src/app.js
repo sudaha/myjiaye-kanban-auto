@@ -1401,7 +1401,8 @@
         (it.budget_num ? " · " + money(it.budget_num) + "元" : "") +
         " · " + (it.is_end === 0 ? "进行中" : "已截止") + "</span>" +
         '<span class="pnl-tags">' + esc(NOTICE_CAT_LABELS[it.category] || it.category || "") +
-        (it.brands ? " · " + esc(it.brands) : "") + "</span></button>";
+        (it.brands ? " · " + esc(it.brands) : "") +
+        (it.source === "委托" ? " · 委托·无附件" : "") + "</span></button>";
     }).join("") : '<div class="pick-empty">没有匹配公告</div>';
     list.querySelectorAll(".pnl-item").forEach(function (b) {
       b.addEventListener("click", function () {
@@ -1429,8 +1430,9 @@
     var oldValue = $("pick-notice").value;
     $("pick-notice").innerHTML = items.length
       ? items.map(function (it) {
-          return '<option value="' + it.id + '">' + (it.is_end === 0 ? "【进行中】" : "【已截止】") +
-            esc(it.title || it.enquiry_name) + " · " + esc(it.org_name || it.purchase_company || "") + "</option>";
+           return '<option value="' + it.id + '">' + (it.is_end === 0 ? "【进行中】" : "【已截止】") +
+             esc(it.title || it.enquiry_name) + " · " + esc(it.org_name || it.purchase_company || "") +
+             (it.source === "委托" ? "（委托·无附件）" : "") + "</option>";
         }).join("")
       : '<option value="">该类型下暂无公告</option>';
     if (oldValue && items.some(function (it) { return String(it.id) === String(oldValue); })) $("pick-notice").value = oldValue;
@@ -1578,6 +1580,21 @@
     if (!id) { box.innerHTML = '<div class="pick-empty">请先选择一条公告</div>'; return; }
     $("pick-notice").value = id;
     renderNoticeList(picker.noticeFiltered || []);
+    // 单独委托公告没有电子询价品目与附件（导出时不生成详情 JSON），不做一键选型，避免 404 误报
+    var entr = (picker.zycgList || []).filter(function (x) {
+      return String(x.id) === String(id) && x.source === "委托";
+    })[0];
+    if (entr) {
+      box.innerHTML = '<div class="analysis-head"><div class="title">' + esc(entr.title || "") + "</div>" +
+        '<div class="pnl-meta">采购公司：' + esc(entr.buyer || "-") + " · 品类：" + esc(entr.category || "-") + "</div>" +
+        '<div class="analysis-actions">' + (entr.url
+          ? '<a class="btn ghost" href="' + esc(entr.url) + '" target="_blank" rel="noopener noreferrer">打开原招标公告</a>'
+          : "") + "</div></div>" +
+        '<div class="pick-empty">该公告为「单独委托招标」公告，无电子询价品目明细与技术附件，不支持一键选型。' +
+        "如已获取参数文本，可切到「粘贴需求文本」模式录入后获取选型推荐。</div>";
+      bindZycgDetailLinks(box);
+      return;
+    }
     box.innerHTML = '<div class="loading">正在读取采购附件并分析技术参数…</div>';
     Promise.all([ensureProducts(), ensureModelSpecs(), getJSON("data/zycg/detail/" + id + ".json")]).then(function (all) {
       var d = all[2], prods = d.products || [];
