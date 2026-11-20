@@ -1760,21 +1760,21 @@
     function rnd(a, b) { return a + Math.random() * (b - a); }
     function pick(arr) { return arr[(Math.random() * arr.length) | 0]; }
 
-    // 牡丹大烟花：长尾丝状粒子，慢速展开、余烬 lingering
+    // 牡丹烟花：长尾丝状粒子，慢速展开；仅 3 朵主角大花留存至结束帧
     function peony(x, y, at, col, big, hero, lifeOv) {
-      // hero 主角花：粒子尺寸×2；大烟花统一红色，留存与标书雨同步收尾
-      var cnt = Math.floor((hero ? rnd(280, 420) : big ? rnd(230, 360) : rnd(60, 110)) * (small ? 0.5 : 1));
-      var vMax = hero ? (small ? 4.0 : 5.2) : big ? (small ? 3.8 : 5.2) : (small ? 2.0 : 2.6);
+      // hero 主角花：粒子尺寸×2；大烟花统一红色；小烟花整体放大 2 倍（数量/展开速度/粒径）
+      var cnt = Math.floor((hero ? rnd(280, 420) : big ? rnd(230, 360) : rnd(120, 220)) * (small ? 0.5 : 1));
+      var vMax = hero ? (small ? 4.0 : 5.2) : big ? (small ? 3.8 : 5.2) : (small ? 4.0 : 5.2);
       var base = (big || hero) ? "#ff2d55" : col;
       var maxLife = Math.max(50, endFrame - at);
       for (var i = 0; i < cnt; i++) {
         var a = Math.random() * 6.283, sp = vMax * (0.25 + Math.random() * 0.75) * (0.8 + Math.random() * 0.4);
-        // 大花留存至结束帧、与"恭喜中标"字样同帧消失；小烟花短留存快速淡出
+        // 大花（3 朵主角）留存至结束帧、与"恭喜中标"字样同帧消失；小烟花短留存
         var life = lifeOv || (big ? maxLife : Math.min(maxLife, Math.floor(rnd(50, 85))));
         P.push({ t: "fw", x: x, y: y, px: x, py: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
-          born: at, life: life, hold: !!(big || hero),
+          born: at, life: life,
           col: Math.random() < (hero ? 0.35 : 0.25) ? "#fff6d8" : base,
-          r: rnd(hero ? 4.8 : 2.4, hero ? 8.8 : big ? 4.4 : 3.4) });
+          r: hero ? rnd(4.8, 8.8) : big ? rnd(2.4, 4.4) : rnd(4.8, 6.8) });
       }
     }
     // 闪裂星光：细碎闪烁小点，慢速飘散
@@ -1787,8 +1787,8 @@
       }
     }
 
-    // 排程：前 3 秒（p2start=180 帧）小烟花开场；3 秒后 3 朵主角大红花 + 大花登场，
-    // 全部大花熄灭帧 = 结束帧，与"恭喜中标"字样同刻消失；小烟花只在前 3 秒
+    // 排程：前 3 秒（p2start=180 帧）小烟花开场；3 秒后仅 3 朵主角大红花登场（全部大烟花），
+    // 大花熄灭帧 = 结束帧，与"恭喜中标"字样同刻消失
     var p2start = 180;
     var heroTimes = [
       p2start + Math.floor(rnd(0, 15)),
@@ -1814,24 +1814,16 @@
       peony(hx, hy, heroTimes[hh], "#ff2d55", true, true, heroLife[hh]);
       crackle(hx + rnd(-60, 60), hy + rnd(-40, 40), heroTimes[hh] + 20);
     }
-    var bigs = small ? 12 : 24;
-    var atMax = Math.floor(endFrame * 0.8);
-    for (var b = 0; b < bigs; b++) {
+    var smalls = small ? 12 : 24;
+    for (var b = 0; b < smalls; b++) {
       var bx = rnd(0.05, 0.95) * W, by = rnd(0.06, 0.5) * H;
-      var isBig = b % 3 === 0;
-      var at, ntries = 0;
-      if (isBig) {
-        at = Math.floor(rnd(p2start, atMax));
-        while (nearHero(at, 40) && ntries < 30) { at = Math.floor(rnd(p2start, atMax)); ntries++; }
-      } else {
-        at = Math.floor(rnd(0, p2start));
-      }
+      var at = Math.floor(rnd(0, p2start));
       var rise = Math.floor(rnd(24, 40));
       var sx = bx + rnd(-40, 40);
       var col = pick(FW_COLORS);
       P.push({ t: "rock", x: sx, y: H + 12, px: sx, py: H + 12, x0: sx, y0: H + 12, tx: bx, ty: by,
         born: Math.max(0, at - rise), life: rise, col: "#ffe9a8" });
-      peony(bx, by, at, col, isBig);
+      peony(bx, by, at, col, false, false);
     }
     var crs = small ? 14 : 30;
     var ctMax = Math.floor(endFrame * 0.85);
@@ -1839,16 +1831,6 @@
       var ct = Math.floor(rnd(40, ctMax)), ctries = 0;
       while (nearHero(ct, 35) && ctries < 30) { ct = Math.floor(rnd(40, ctMax)); ctries++; }
       crackle(rnd(0.05, 0.95) * W, rnd(0.08, 0.6) * H, ct);
-    }
-    // 谢幕齐放：最后 1.5 秒 3 朵大红依次炸开，粒子熄灭时间精确 = 结束帧，与标书出画同帧消失
-    var finale = [endFrame - 90, endFrame - 70, endFrame - 50];
-    for (var fj = 0; fj < 3; fj++) {
-      var fx = rnd(0.2, 0.8) * W, fy = rnd(0.08, 0.38) * H;
-      var frise = 22;
-      var fsx = fx + rnd(-40, 40);
-      P.push({ t: "rock", x: fsx, y: H + 12, px: fsx, py: H + 12, x0: fsx, y0: H + 12, tx: fx, ty: fy,
-        born: finale[fj] - frise, life: frise, col: "#ffd60a" });
-      peony(fx, fy, finale[fj], "#ff2d55", true, true, endFrame - finale[fj]);
     }
 
     // 彩带：底部空压彩虹炮——左右 2 门炮各 4 轮齐射，碎纸片锥形喷出后缓慢翻转飘落
@@ -1923,23 +1905,22 @@
           var spd = Math.sqrt(q.vx * q.vx + q.vy * q.vy);
           var ln = Math.min(46, Math.max(8, spd * 6));
           var ux = spd > 0.01 ? q.vx / spd : 0, uy = spd > 0.01 ? q.vy / spd : 0;
-          // 长留存渐隐：大牡丹幂 0.4 余烬持久、小烟花幂 1.0 线性淡出
-          var frac = 1 - a3 / q.life;
-          ctx.globalAlpha = Math.pow(frac, q.hold ? 0.4 : 1.0);
+          // 整体无渐隐：全亮度保持到寿命结束帧，同刻熄灭
+          ctx.globalAlpha = 1;
           ctx.strokeStyle = q.col; ctx.lineWidth = q.r; ctx.lineCap = "round";
           ctx.beginPath(); ctx.moveTo(q.x, q.y); ctx.lineTo(q.x - ux * ln, q.y - uy * ln); ctx.stroke();
         } else if (q.t === "cr") {
           if (a3 > q.life) { P.splice(i--, 1); continue; }
           q.vx *= 0.98; q.vy += 0.012;
           q.x += q.vx; q.y += q.vy;
-          ctx.globalAlpha = (0.35 + 0.65 * Math.abs(Math.sin(frame * 0.45 + q.ph))) * (1 - a3 / q.life);
+          ctx.globalAlpha = 0.35 + 0.65 * Math.abs(Math.sin(frame * 0.45 + q.ph));
           ctx.fillStyle = "#fff6d8";
           ctx.beginPath(); ctx.arc(q.x, q.y, q.r, 0, 6.29); ctx.fill();
         } else if (q.t === "em") {
           if (a3 > q.life) { P.splice(i--, 1); continue; }
           q.vy += 0.05;
           q.x += q.vx; q.y += q.vy;
-          ctx.globalAlpha = (1 - a3 / q.life) * 0.8;
+          ctx.globalAlpha = 0.8;
           ctx.fillStyle = "#ffd60a";
           ctx.beginPath(); ctx.arc(q.x, q.y, q.r, 0, 6.29); ctx.fill();
         }
