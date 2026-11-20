@@ -3,66 +3,91 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>滚轮诊断 · 佳业采购雷达</title>
+<title>滚轮诊断 v2 · 佳业采购雷达</title>
 <style>
   html, body { margin: 0; padding: 0; }
   body { font: 14px/1.7 "Microsoft YaHei", sans-serif; background: #f6faf9; color: #1a2333; }
   .bar { position: sticky; top: 0; z-index: 9; background: #0f9d8f; color: #fff;
     padding: 14px 20px; font-size: 15px; font-weight: 700; }
-  .box { max-width: 780px; margin: 20px auto 60px; padding: 0 20px; }
+  .box { max-width: 840px; margin: 20px auto 60px; padding: 0 20px; }
   .row { background: #fff; border: 1px solid #d8e5e0; border-radius: 10px;
     padding: 12px 16px; margin: 10px 0; font-size: 15px; }
   .row b { color: #0f7b5f; }
   .row .warn { color: #d4380d; }
-  .filler { height: 2400px; margin-top: 16px;
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid2 .row { margin: 0; }
+  button.t { padding: 8px 14px; margin-right: 10px; border: 1px solid #0f9d8f;
+    background: #fff; color: #0f7b5f; border-radius: 8px; font-size: 14px; cursor: pointer; font-weight: 700; }
+  button.t:hover { background: #eaf8f1; }
+  .filler { height: 6000px; margin-top: 16px;
     background: repeating-linear-gradient(180deg, #eef7f4, #eef7f4 96px, #dceee6 96px, #dceee6 97px);
     border-radius: 10px; }
+  @media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
-<div class="bar">滚轮诊断页 — 请先往下滚到灰色区域，然后转动鼠标滚轮 5~10 次</div>
+<div class="bar">滚轮诊断 v2 — 滚到下方灰色区域：先向下滚 10 下，再向上滚 10 下，然后点两个按钮各一次，最后截图</div>
 <div class="box">
-  <div class="row">① 页面收到的滚轮事件：<b id="n">0</b> 次（最近一次 deltaY：<b id="dy">—</b>）</div>
-  <div class="row">② 本页实际滚动位置：<b id="sy">0</b> px</div>
-  <div class="row">③ 你浏览器中的主页版本：<b id="ver">检测中…</b></div>
-  <div class="row">④ 结论提示：<b id="tip">转动滚轮后自动给出</b></div>
+  <div class="grid2">
+    <div class="row">① 向下滚轮事件：<b id="dn">0</b> 次</div>
+    <div class="row">② 向上滚轮事件：<b id="up">0</b> 次</div>
+    <div class="row">③ 页面到达的最大深度：<b id="maxsy">0</b> px（当前 <b id="sy">0</b> px）</div>
+    <div class="row">④ 页面总高 <b id="sh">-</b> / 视口高 <b id="ih">-</b> px</div>
+    <div class="row">⑤ 被预先拦截的事件：<b id="pd">0</b> 次（&gt;0 = 有程序拦截了滚轮）</div>
+    <div class="row">⑥ 滚动属性 html:<b id="ovh">-</b> / body:<b id="ovb">-</b></div>
+  </div>
+  <div class="row">
+    <button class="t" id="t1">对照测试：程序向下滚 500px</button>
+    <button class="t" id="t2">回顶部</button>
+    <span style="color:#687385">（若按钮能让页面滚动而滚轮不能 = 滚轮默认动作被拦截）</span>
+  </div>
+  <div class="row">⑦ 自动结论：<b id="tip">滚满 15 次后给出</b></div>
   <div class="filler"></div>
 </div>
 <script>
 (function () {
-  var n = 0, warned = false;
-  function sy() { document.getElementById("sy").textContent = Math.round(window.scrollY); }
-  window.addEventListener("wheel", function (e) {
-    n++;
-    document.getElementById("n").textContent = n;
-    document.getElementById("dy").textContent = e.deltaY;
-    setTimeout(sy, 50);
-    if (n === 5) judge();
-  }, { passive: true });
-  window.addEventListener("scroll", sy, { passive: true });
-  function judge() {
-    var tip = document.getElementById("tip");
-    if (n >= 5 && window.scrollY < 5) {
-      tip.innerHTML = '<span class="warn">滚轮有事件但页面不动 —— 有程序在阻止滚动（请截图本页发我）</span>';
-    } else if (window.scrollY >= 5) {
-      tip.textContent = "滚轮工作正常 —— 如果主页还是滚不动，看下面 ③ 的版本检测结果";
-    } else if (!warned) {
-      warned = true;
-      tip.innerHTML = '<span class="warn">还没收到滚轮事件 —— 请确认鼠标已对准页面空白处再滚；仍为 0 说明事件没进浏览器（换百度试试）</span>';
-    }
+  var dn = 0, up = 0, pd = 0, maxSy = 0, prog = 0;
+  function refresh() {
+    document.getElementById("sy").textContent = Math.round(window.scrollY);
+    if (window.scrollY > maxSy) { maxSy = Math.round(window.scrollY); document.getElementById("maxsy").textContent = maxSy; }
+    document.getElementById("sh").textContent = document.documentElement.scrollHeight;
+    document.getElementById("ih").textContent = window.innerHeight;
+    document.getElementById("ovh").textContent = getComputedStyle(document.documentElement).overflowY;
+    document.getElementById("ovb").textContent = getComputedStyle(document.body).overflowY;
   }
-  fetch("/?t=" + Date.now(), { cache: "no-store" }).then(function (r) { return r.text(); }).then(function (t) {
-    var v = document.getElementById("ver");
-    if (t.indexOf('document.body.style.overflow = "hidden"') >= 0) {
-      v.innerHTML = '<span class="warn">仍是旧版（登录门会锁滚轮）！请对主页按 Ctrl+F5 强制刷新后重试</span>';
-    } else if (t.indexOf("jiaye_auth_guest_v1") >= 0) {
-      v.textContent = "新版正常（登录门已不锁滚轮，密码 guest，每个新标签页需先输密码进入）";
-    } else {
-      v.textContent = "新版正常（未检测到登录门）";
-    }
-  }).catch(function () {
-    document.getElementById("ver").textContent = "检测失败（不影响滚轮测试）";
+  window.addEventListener("wheel", function (e) {
+    if (e.deltaY > 0) dn++;
+    else if (e.deltaY < 0) up++;
+    if (e.defaultPrevented) pd++;
+    document.getElementById("dn").textContent = dn;
+    document.getElementById("up").textContent = up;
+    document.getElementById("pd").textContent = pd;
+    setTimeout(function () { refresh(); judge(); }, 60);
+  }, { passive: true });
+  window.addEventListener("scroll", function () { refresh(); judge(); }, { passive: true });
+  document.getElementById("t1").addEventListener("click", function () {
+    prog++; window.scrollBy(0, 500);
+    setTimeout(function () { refresh(); judge(); }, 150);
   });
+  document.getElementById("t2").addEventListener("click", function () {
+    window.scrollTo(0, 0);
+    setTimeout(refresh, 150);
+  });
+  function judge() {
+    var t = document.getElementById("tip");
+    var total = dn + up;
+    if (total < 15 && prog === 0) { t.textContent = "继续（向下/向上各滚几次，共至少 15 次）"; return; }
+    var msgs = [];
+    if (dn === 0) msgs.push("没收到任何“向下”滚轮事件 —— 滚轮实际只在向上转：检查鼠标滚轮是否卡滞、系统/鼠标驱动的滚动方向是否反转，或换一个鼠标试试");
+    else if (maxSy < 5) msgs.push("有向下事件但页面没往下走：" + (pd > 0 ? pd + " 次事件被提前拦截（多为浏览器扩展）—— 请用无痕模式再测一次" : "看⑥的滚动属性是否 hidden"));
+    if (up === 0) msgs.push("没收到任何“向上”滚轮事件 —— 滚轮实际只在向下转？");
+    var oh = getComputedStyle(document.documentElement).overflowY, ob = getComputedStyle(document.body).overflowY;
+    if ((oh === "hidden" || ob === "hidden") && maxSy < 5) msgs.push("页面滚动属性是 hidden（html:" + oh + " / body:" + ob + "）—— 浏览器用户样式表或扩展强制了不可滚动，请用无痕模式验证");
+    if (prog > 0 && maxSy >= 400 && dn > 0) msgs.push("程序滚动可以但滚轮不动 —— 基本确定是扩展/驱动层拦截滚轮默认动作，无痕模式复测即可确认");
+    if (!msgs.length) msgs.push("上下滚轮与页面滚动都正常 —— 若主页仍不能滚，请告诉我卡在什么状态（停在登录门？进入后滚不动？）");
+    t.innerHTML = "<span class='warn'>" + msgs.join("；") + "</span>";
+  }
+  refresh();
 })();
 </script>
 </body>
