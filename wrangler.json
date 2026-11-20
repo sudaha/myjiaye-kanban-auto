@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "myjiaye-kanban",
+  "compatibility_date": "2025-08-01",
+  "pages_build_output_dir": "dist",
+  "kv_namespaces": [
+    {
+      "binding": "ABANDONED",
+      "id": "cda50a1583d64c36aa1431331ed9df7f",
+      "preview_id": "cda50a1583d64c36aa1431331ed9df7f"
+    }
+  ]
+}

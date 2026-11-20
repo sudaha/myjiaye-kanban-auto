@@ -16,7 +16,10 @@
     return h === "poly" || h === "rail" || h === "picker" || h === "docs" || h === "records" ? h : "zycg";
   }
   var plat = platFromHash();
-  var state = { page: 1, pageSize: 20, total: 0, filters: {}, items: [], loaded: false, picked: {}, availableDates: {}, dateBreakdown: {}, dateMonth: null, railSource: "", zycgSource: "" };
+  var state = { page: 1, pageSize: 20, total: 0, filters: {}, items: [], loaded: false, picked: {}, availableDates: {}, dateBreakdown: {}, dateMonth: null, railSource: "", zycgSource: "", abandoned: {} };
+  // 我方重点品牌（国铁商城已上传/有授权的品牌口径，2026-11-20）：卡片品牌行据此提示能否参与
+  var FOCUS_BRANDS = ["华为", "联想", "清华同方", "软通华方", "紫光"];
+  var ABANDON_TOKEN = "jiaye-abandon-95306"; // 与 functions/api/abandon.js 保持一致的轻量写口令
   var picker = {
     products: null,          // data/products.json 的 products 数组
     meta: null,              // 库元信息（updated_at / product_count）
@@ -299,7 +302,64 @@
         if ($("zycg-source-wt")) $("zycg-source-wt").textContent = wtN;
       }
       if (plat === "zycg" || plat === "poly" || plat === "rail") initAvailableDates();
+      // 渲染前等云端放弃名单就绪，保证卡片「已放弃」标记与其他成员一致
+      return ensureAbandoned();
     });
+  }
+
+  // ---------- 放弃项目：Cloudflare KV 云端同步（全员可见） ----------
+  var abandonedLoaded = false;
+  function ensureAbandoned() {
+    if (abandonedLoaded) return Promise.resolve();
+    abandonedLoaded = true;
+    return fetch("api/abandon?v=" + encodeURIComponent(DATA_V), { cache: "no-store" })
+      .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+      .then(function (d) { state.abandoned = d.items || {}; })
+      .catch(function () { state.abandoned = state.abandoned || {}; }); // API 不可用时降级为纯本地标记
+  }
+  function toast(msg) {
+    var t = $("toast");
+    if (!t) return;
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function () { t.classList.remove("show"); }, 2200);
+  }
+  function openConfirmBox(q, sub, onOk) {
+    var mask = $("confirm-mask");
+    if (!mask) { onOk(); return; }
+    $("confirm-q").textContent = q;
+    $("confirm-sub").textContent = sub || "";
+    mask.classList.add("show");
+    var okB = $("confirm-ok"), cB = $("confirm-cancel");
+    function close() {
+      mask.classList.remove("show");
+      okB.onclick = null; cB.onclick = null;
+      mask.removeEventListener("click", onMask);
+    }
+    function onMask(e) { if (e.target === mask) close(); }
+    okB.onclick = function () { close(); onOk(); };
+    cB.onclick = close;
+    mask.addEventListener("click", onMask);
+  }
+  function abandonCommit(it, restore) {
+    var prev = state.abandoned[it.id];
+    if (!restore) state.abandoned[it.id] = { title: it.title, at: new Date().toISOString().slice(0, 16).replace("T", " ") };
+    else delete state.abandoned[it.id];
+    fetch("api/abandon", {
+      method: "POST",
+      headers: { "content-type": "application/json", "x-abandon-token": ABANDON_TOKEN },
+      body: JSON.stringify({ id: it.id, platform: plat, title: it.title, action: restore ? "restore" : "abandon" })
+    }).then(function (r) { return r.json().then(function (d) { if (!r.ok || !d.ok) throw new Error("HTTP " + r.status); }); })
+      .then(function () {
+        toast(restore ? "已恢复参与列表（已同步云端）" : "已放弃该项目（已同步云端，其他成员刷新可见）");
+        loadList();
+      })
+      .catch(function () {
+        if (restore) { if (prev) state.abandoned[it.id] = prev; } else delete state.abandoned[it.id];
+        toast("云端同步失败，本次未生效，请重试");
+        loadList();
+      });
   }
 
   function loadList() {
@@ -326,9 +386,9 @@
       $("pg-info").textContent = state.page + " / " + pages;
       $("pg-prev").disabled = state.page <= 1;
       $("pg-next").disabled = state.page >= pages;
-      Array.prototype.forEach.call(list.querySelectorAll(".card"), function (el) {
+       Array.prototype.forEach.call(list.querySelectorAll(".card"), function (el) {
         el.addEventListener("click", function (e) {
-          if (e.target && (e.target.classList.contains("pick") || e.target.closest(".quick-pick") || e.target.closest(".join-btn"))) return;
+          if (e.target && (e.target.classList.contains("pick") || e.target.closest(".quick-pick") || e.target.closest(".join-btn") || e.target.closest(".abandon-btn"))) return;
           showDetail(el.dataset.id);
         });
       });
@@ -353,6 +413,17 @@
           if (it) recToggle(it);
         });
       });
+      // 放弃项目：首次点击弹二次确认；已放弃的点击直接恢复（云端同步）
+      Array.prototype.forEach.call(list.querySelectorAll(".abandon-btn"), function (b) {
+        b.addEventListener("click", function (e) {
+          e.preventDefault(); e.stopPropagation();
+          var it = null;
+          for (var i = 0; i < state.items.length; i++) if (String(state.items[i].id) === String(b.dataset.id)) { it = state.items[i]; break; }
+          if (!it) return;
+          if (state.abandoned[it.id]) { abandonCommit(it, true); return; }
+          openConfirmBox("是否确认放弃此项目？", it.title, function () { abandonCommit(it, false); });
+        });
+      });
       syncPickUI();
     }).catch(function (e) {
       list.innerHTML = '<div class="empty">数据加载失败：' + esc(e.message) + "</div>";
@@ -366,6 +437,23 @@
     var checked = pickable && state.picked[it.id];
     var isBid = plat === "bid";
     var joined = participatable && recJoined(it.platform, it.id);
+    var abandoned = !!(state.abandoned && state.abandoned[it.id]);
+    // 国铁卡片：标题下规格速览（品目×数量 / 品牌限定 / 商品描述摘要），快速判断能否参与
+    var specLine = "";
+    if (plat === "rail") {
+      var sp = [];
+      if (it.item_brief) sp.push('<span><b>品目</b>' + esc(it.item_brief) + "</span>");
+      if (it.brand_list) {
+        var freeBrand = /未限定|不限品牌|无品牌/.test(it.brand_list);
+        var hitFocus = FOCUS_BRANDS.filter(function (f) { return it.brand_list.indexOf(f) >= 0; });
+        var focusTag = freeBrand ? "" : (hitFocus.length
+          ? '<i class="focus-hit">含我方重点品牌：' + esc(hitFocus.join("、")) + "</i>"
+          : '<i class="focus-miss">无我方重点品牌</i>');
+        sp.push('<span class="' + (freeBrand ? "free" : "limit") + '"><b>品牌</b>' + esc(it.brand_list) + " " + focusTag + "</span>");
+      }
+      if (it.spec_brief) sp.push('<span class="spec-brief" title="' + esc(it.spec_brief) + '">' + esc(it.spec_brief) + "</span>");
+      if (sp.length) specLine = '<div class="spec-line">' + sp.join("") + "</div>";
+    }
     var railSource = plat === "rail"
       ? (String(it.id || "").indexOf("mall_") === 0
           ? '<span class="tag rail-mall-tag">国铁商城批量采购专区</span>'
@@ -373,13 +461,14 @@
       : "";
     var zycgSourceTag = plat === "zycg" && it.source === "委托"
       ? '<span class="tag rail-mall-tag">单独委托项目</span>' : "";
-    return '<div class="card' + (pickable ? " pickable" : "") + (checked ? " picked" : "") + '" data-id="' + it.id + '">' +
+    return '<div class="card' + (pickable ? " pickable" : "") + (checked ? " picked" : "") + (abandoned ? " abandoned" : "") + '" data-id="' + it.id + '">' +
       (pickable ? '<input type="checkbox" class="pick" data-id="' + it.id + '"' + (checked ? " checked" : "") + ">" : "") +
       '<div class="row1">' +
          '<div class="title">' + esc(it.title || it.enquiry_name) +
            ((plat === "zycg" || plat === "poly") && it.is_new ? '<span class="newtag">新</span>' : "") + "</div>" +
-        (isBid ? "" : '<div class="budget">' + budgetText(it) + "</div>") +
-      "</div>" +
+         (isBid ? "" : '<div class="budget">' + budgetText(it) + "</div>") +
+       "</div>" +
+       specLine +
       '<div class="row2">' +
         '<span><b>' + (isBid ? "采购人" : "采购方") + '</b> ' + esc(it.org_name || it.purchase_company || "—") + "</span>" +
          '<span><b>发布</b> ' + esc(((it.pub_date || it.publish_date) || "—").slice(0, 16)) + "</span>" +
@@ -394,10 +483,12 @@
             zycgSourceTag +
             '<span class="badge ' + (on ? "on" : "off") + '">' + (on ? "进行中" : "已截止") + "</span>" +
             (joined ? '<span class="join-tag">已参与投标</span>' : "")) +
-        (participatable
-          ? '<button type="button" class="join-btn' + (joined ? " joined" : "") + '" data-id="' + esc(it.id) + '" title="' + (joined ? "点击取消参与" : "点击参与投标") + '">' + (joined ? "取消参与" : "＋ 参与投标") + "</button>" : "") +
-        (plat === "zycg" && it.source !== "委托" ? '<button type="button" class="quick-pick" data-id="' + esc(it.id) + '">一键技术选型</button>' : "") +
-      "</div>" +
+         (participatable
+           ? '<button type="button" class="join-btn' + (joined ? " joined" : "") + '" data-id="' + esc(it.id) + '" title="' + (joined ? "点击取消参与" : "点击参与投标") + '">' + (joined ? "取消参与" : "＋ 参与投标") + "</button>" : "") +
+         (plat === "zycg" && it.source !== "委托" ? '<button type="button" class="quick-pick" data-id="' + esc(it.id) + '">一键技术选型</button>' : "") +
+         (plat === "rail" && String(it.id || "").indexOf("mall_") === 0
+           ? '<button type="button" class="abandon-btn' + (abandoned ? " off" : "") + '" data-id="' + esc(it.id) + '" title="' + (abandoned ? "点击恢复（云端同步）" : "核查后不适合参与，标记放弃并同步云端，其他成员刷新后同样可见") + '">' + (abandoned ? "已放弃·点击恢复" : "放弃项目") + "</button>" : "") +
+       "</div>" +
     "</div>";
   }
 

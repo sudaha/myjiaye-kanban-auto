@@ -269,6 +269,34 @@
 .pick-warn { margin: 12px 0; padding: 10px 14px; background: #fff7e6; border: 1px solid #ffd591; border-left: 4px solid #fa8c16; border-radius: 8px; font-size: 13px; color: #874d00; line-height: 1.7; }
 /* 单独委托详情：官网风控拦截时的复制兜底提示 */
 .wt-tip { margin-top: 10px; font-size: 12px; color: var(--muted); line-height: 1.7; }
+/* 国铁卡片：标题下规格/品牌速览 */
+.spec-line { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 16px; margin: 6px 0 0; font-size: 12px; color: #5b6770; line-height: 1.7; }
+.spec-line b { font-weight: 700; color: #44505a; margin-right: 5px; }
+.spec-line .limit { color: #b3402a; font-weight: 700; }
+.spec-line .free { color: #0b6b52; }
+.spec-line i { font-style: normal; font-size: 11px; font-weight: 700; margin-left: 6px; padding: 1px 7px; border-radius: 999px; }
+.spec-line .focus-hit { color: #0b6b52; background: #eaf7f1; }
+.spec-line .focus-miss { color: #8a6d1a; background: #fff7e6; }
+.spec-line .spec-brief { flex: 1 1 100%; color: #8a949e; }
+/* 放弃项目按钮 + 已放弃卡片 */
+.abandon-btn { margin-left: 8px; padding: 5px 10px; border: 1px solid #d8a290; border-radius: 7px; background: #fff; color: #b3572a; cursor: pointer; font: inherit; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.abandon-btn:hover { background: #b3572a; border-color: #b3572a; color: #fff; }
+.abandon-btn.off { border-color: #c6ccd2; color: #7a8590; background: #f3f5f7; }
+.abandon-btn.off:hover { border-color: #0b6b52; color: #0b6b52; background: #fff; }
+.card.abandoned { opacity: .55; }
+.card.abandoned .title { text-decoration: line-through; text-decoration-color: #b3572a; }
+/* 二次确认小弹窗 */
+.confirm-mask { position: fixed; inset: 0; z-index: 300; background: rgba(15,23,30,.45); display: none; align-items: center; justify-content: center; }
+.confirm-mask.show { display: flex; }
+.confirm-box { width: 380px; max-width: calc(100vw - 40px); background: #fff; border-radius: 12px; padding: 20px 22px; box-shadow: 0 18px 50px rgba(0,0,0,.28); }
+.confirm-box .cq { font-size: 15px; font-weight: 800; margin-bottom: 8px; }
+.confirm-box .cs { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 16px; word-break: break-all; }
+.confirm-box .ca { display: flex; justify-content: flex-end; gap: 10px; }
+.btn.danger { background: #c0392b; border-color: #c0392b; color: #fff; }
+.btn.danger:hover { background: #a53125; }
+/* 轻提示 */
+.toast { position: fixed; left: 50%; bottom: 34px; transform: translateX(-50%) translateY(8px); z-index: 400; background: #1f2d36; color: #fff; font-size: 13px; padding: 9px 18px; border-radius: 999px; opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; box-shadow: 0 10px 30px rgba(0,0,0,.3); max-width: calc(100vw - 40px); }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 @media (max-width: 900px) {
   .date-pop { width: auto; }
   .date-week, .date-grid { gap: 4px; }

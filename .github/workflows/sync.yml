@@ -37,9 +37,10 @@ jobs:
       - name: deploy to Cloudflare Pages
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-        run: |
-          npm install -g wrangler
-          wrangler pages deploy dist --project-name=myjiaye-kanban
+         run: |
+           npm install -g wrangler
+           # 输出目录与 KV 绑定（放弃项目云同步）由仓库根 wrangler.json 提供
+           wrangler pages deploy --project-name=myjiaye-kanban
 
       # 新 PDF / 数据库 / 新增基线回写仓库，供下次运行与 PDF 下载
       - name: commit new data back to repo

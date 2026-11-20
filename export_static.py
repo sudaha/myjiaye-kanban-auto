@@ -14,6 +14,7 @@ import datetime
 import hashlib
 import json
 import os
+import re
 import shutil
 import sqlite3
 import sys
@@ -393,6 +394,44 @@ def export_poly(out):
 
 
 # ---------------- 国铁商城批采 / 国铁采购平台 ----------------
+def _parse_mall_brief(d):
+    """从商城批采详情正文提取卡片速览：品目×数量、品牌行、商品描述摘要。
+    正文为单行长文本且含 --> 占位符，必须按字段锚点精确切分，不能按行清洗。"""
+    t = d.get("detail_text") or ""
+    out = {"item_brief": "", "brand_line": "", "spec_brief": "", "brand_empty": False}
+    if not t:
+        return out
+    # 先剥掉“（参数要求）: 1111”类占位噪声，再把 --> 占位换成空格（正文是单行长文本，不能按行清洗）
+    clean = re.sub(r"[（(](参数要求|规格要求|性能要求|其他要求|资质要求|信誉评价要求|质量要求)[）)]\s*[:：]\s*1111", " ", t)
+    clean = clean.replace("-->", " ")
+    names = re.findall(r"物资名称[:：]\s*([A-Za-z0-9\u4e00-\u9fa5（）()\-·]+)", clean)
+    qtys = re.findall(r"计划采购数量[:：]\s*(\d+)", clean)
+    units = re.findall(r"计量单位[^:：\n]{0,12}[:：]\s*([A-Za-z\u4e00-\u9fa5]+)", clean)
+    if names:
+        parts = []
+        for i, nm in enumerate(names[:3]):
+            q = ""
+            # 品名自带“30台”这类数量尾巴时不再叠加，避免“台式机30台×30台”
+            if i < len(qtys) and not re.search(r"\d+\s*[台套件个]$", nm):
+                unit = units[i] if i < len(units) else ""
+                q = "×%s%s" % (qtys[i], unit)
+            parts.append(nm + q)
+        out["item_brief"] = "、".join(parts) + (" 等%d项" % len(names) if len(names) > 3 else "")
+    if "品牌" in clean:
+        m = re.search(r"品牌[:：]\s*([^\s：:]+(?:[,，、/]\s*[^\s：:]+)*)", clean)
+        b = (m.group(1) if m else "").strip()
+        # 品牌字段为空时正则会把下一段标签（计划采购数量…）吞进来，需按标签词排除
+        if b and not re.search(r"数量|单位|金额|描述|名称|采购", b):
+            out["brand_line"] = b
+        else:
+            out["brand_empty"] = True
+    descs = re.findall(r"商品描述[:：]\s*(.+?)\s*(?:物资名称[:：]|三、|$)", clean, re.S)
+    if descs:
+        s = re.sub(r"\s+", "", descs[0])
+        out["spec_brief"] = s[:90] + ("…" if len(s) > 90 else "")
+    return out
+
+
 def export_rail(out):
     data = {"items": [], "updated_at": "", "source_status": {}}
     if os.path.isfile(RAIL_JSON):
@@ -423,6 +462,12 @@ def export_rail(out):
         raw_id = str(d.get("uuid") or d.get("id") or "")
         source_prefix = "mall_" if "mall.95306.cn" in (d.get("source") or "") else "cg_"
         rid = source_prefix + raw_id
+        # 卡片标题下规格速览：商城批采解析品目/品牌/商品描述；公开公告只有品牌范围
+        brief = _parse_mall_brief(d) if is_mall else {}
+        brand_list = (",".join(d.get("brand_name_list") or [])
+                      or brief.get("brand_line")
+                      or ("不限品牌" if brief.get("brand_empty") else "")
+                      or d.get("brand_scope") or "")
         it = {
             "id": rid, "source_id": raw_id, "platform": "rail",
             "title": d.get("title") or "", "enquiry_name": d.get("title") or "",
@@ -437,6 +482,9 @@ def export_rail(out):
             "bid_type_name": d.get("bid_type_name") or "",
             "source": d.get("source") or "国铁采购平台",
             "source_access": d.get("source_access") or "",
+            "item_brief": brief.get("item_brief") or "",
+            "brand_list": brand_list,
+            "spec_brief": brief.get("spec_brief") or "",
         }
         if it["id"]:
             items.append(it)
@@ -494,6 +542,10 @@ def main():
         if os.path.isfile(src):
             shutil.copy2(src, os.path.join(out, name))
     shutil.copy2(os.path.join(STATIC_SRC, "app.js"), os.path.join(out, "app.js"))
+    # Pages Functions（放弃项目云端同步 API），KV 绑定见仓库根 wrangler.json
+    fn_dir = os.path.join(BASE, "functions")
+    if os.path.isdir(fn_dir):
+        shutil.copytree(fn_dir, os.path.join(out, "functions"), dirs_exist_ok=True)
     logo = os.path.join(WEB, "jiaye_logo.jpg")
     if os.path.isfile(logo):
         shutil.copy2(logo, os.path.join(out, "jiaye_logo.jpg"))
