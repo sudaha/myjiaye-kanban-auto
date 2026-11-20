@@ -1703,7 +1703,8 @@
   function renderWinTicker(over) {
     var box = $("win-ticker"), track = $("win-ticker-track");
     if (!box || !track) return;
-    var preview = /[?&]winspreview=1/.test(location.search);
+    // 预览模式（?winspreview=1 或 ?rain=1）下历史中标也进滚动条，与标书雨展示同一批
+    var preview = /[?&](winspreview|rain)=1/.test(location.search);
     var pub = (over && over.length) ? over.slice() : publicWins;
     var merged = pub.filter(function (w) { return preview || HISTORICAL_WIN_IDS.indexOf(w.id) < 0; });
     recState.items.forEach(function (r) {
