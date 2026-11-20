@@ -176,8 +176,8 @@
   }
 
   // ---------- 公告日期选择器：仅实际有公告的日期可点 ----------
-  // 口径按分类（export_static.py 已统一进 pub_date）：央采询价=发布日期、单独委托=采集日期、
-  // 国铁/保利=公告发布日期；旧数据回退 publish_date
+  // 口径统一为公告自身发布日期（export_static.py 已进 pub_date）：央采询价=发布日期、
+  // 单独委托=公告发布日期（seen_date 采集日期仅在详情弹层展示）、国铁/保利=公告发布日期
   function itemDay(it) { return String(it.pub_date || it.publish_date || "").slice(0, 10); }
   // 日期弹窗里每个日期按分类标注条数：央采=电询/单托，国铁=批采/公招，保利单一来源显示总数
   var DATE_SRC_SHORT = {
@@ -271,7 +271,7 @@
     if (plat === "rail" && state.railSource && String(it.id || "").indexOf(state.railSource) !== 0) return false;
     if (plat === "zycg" && state.zycgSource && it.source !== state.zycgSource) return false;
     if (f.brand && String(it.brands || "").toLowerCase().indexOf(f.brand.toLowerCase()) < 0) return false;
-    // 按分类口径日期精确选某一天（询价=发布日期 / 委托=采集日期 / 国铁保利=公告发布日）；无 pub_date 的旧数据退回 publish_date
+    // 按公告发布日期精确选某一天（含询价/委托/国铁/保利，口径统一为公告自身发布日）；无 pub_date 的旧数据退回 publish_date
     if (f.date && String(it.pub_date || it.publish_date || "").slice(0, 10) !== f.date) return false;
     if (f.status === "进行中" && it.is_end !== 0) return false;
     if (f.status === "已截止" && it.is_end !== 1) return false;
@@ -382,7 +382,7 @@
       "</div>" +
       '<div class="row2">' +
         '<span><b>' + (isBid ? "采购人" : "采购方") + '</b> ' + esc(it.org_name || it.purchase_company || "—") + "</span>" +
-         '<span><b>' + (it.source === "委托" ? "采集" : "发布") + '</b> ' + esc(((it.pub_date || it.publish_date) || "—").slice(0, 16)) + "</span>" +
+         '<span><b>发布</b> ' + esc(((it.pub_date || it.publish_date) || "—").slice(0, 16)) + "</span>" +
         (isBid
           ? '<span class="tag cat">' + esc(it.source || "") + "</span>" +
             (it.notice_type ? '<span class="tag">' + esc(it.notice_type) + "</span>" : "") +
@@ -446,6 +446,14 @@
         e.preventDefault(); e.stopPropagation(); openZycgDetail(b.dataset.noticeId);
       });
     });
+    // 单独委托原公告：去掉 Referer 再打开（央采 WAF 拦截带外部 Referer 的跨站访问会 403）
+    (root || document).querySelectorAll(".wt-open-orig").forEach(function (b) {
+      b.addEventListener("pointerdown", function (e) { e.stopPropagation(); });
+      b.addEventListener("click", function (e) {
+        e.preventDefault(); e.stopPropagation();
+        if (b.dataset.wtUrl) openOfficialNoReferrer(b.dataset.wtUrl);
+      });
+    });
   }
   function metaIt(k, v) { return '<div class="it"><div class="k">' + k + '</div><div class="v">' + v + "</div></div>"; }
 
@@ -461,7 +469,7 @@
         metaIt("数据来源", esc(d.source === "委托" ? "央采主站·单独委托项目" : (d.source || "—"))) +
       "</div>" +
       '<div class="d-actions">' +
-        '<a class="btn primary" href="' + esc(d.url) + '" target="_blank">打开原公告（查看预算 / 品目 / 联系方式）</a>' +
+        '<button type="button" class="btn primary wt-open-orig" data-wt-url="' + esc(d.url) + '">打开原公告（查看预算 / 品目 / 联系方式）</button>' +
       "</div>";
   }
 
