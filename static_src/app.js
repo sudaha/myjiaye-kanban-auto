@@ -1800,38 +1800,6 @@
       crackle(rnd(0.05, 0.95) * W, rnd(0.08, 0.6) * H, Math.floor(rnd(60, 780)));
     }
 
-    // "恭喜中标"文字烟花：中心大爆 → 粒子汇聚成字形 → 发光定格 → 消散
-    (function () {
-      var off = document.createElement("canvas");
-      var fs = Math.min(W * 0.2, 200);
-      off.width = Math.ceil(fs * 4.9); off.height = Math.ceil(fs * 1.4);
-      var oc = off.getContext("2d");
-      if (!oc) return;
-      oc.fillStyle = "#fff";
-      oc.font = "900 " + fs + "px 'Microsoft YaHei','PingFang SC',sans-serif";
-      oc.textAlign = "center"; oc.textBaseline = "middle";
-      oc.fillText("恭喜中标", off.width / 2, off.height / 2);
-      var img = oc.getImageData(0, 0, off.width, off.height).data;
-      var pts = [], step = small ? 7 : 4;
-      for (var y = 0; y < off.height; y += step) {
-        for (var x = 0; x < off.width; x += step) {
-          if (img[(y * off.width + x) * 4 + 3] > 128) pts.push([x, y]);
-        }
-      }
-      if (!pts.length) return;
-      var n = Math.min(pts.length, small ? 420 : 780);
-      var cx = W / 2, cy = H * 0.38, ox = cx - off.width / 2, oy = cy - off.height / 2;
-      // 上金下红渐变，还原第一版红色字样
-      var TXT_GRAD = ["#ffd60a", "#ffc42e", "#ff8a3d", "#ff5a4d", "#ff2d55"];
-      for (var k = 0; k < n; k++) {
-        var tp = pick(pts);
-        var a2 = Math.random() * 6.283, sp2 = rnd(4, 13);
-        P.push({ t: "txt", x: cx, y: cy, px: cx, py: cy, vx: Math.cos(a2) * sp2, vy: Math.sin(a2) * sp2,
-          tx: ox + tp[0], ty: oy + tp[1], born: 110, p1: 60, p2: 110, p3: 260, p4: 70,
-          col: TXT_GRAD[Math.min(4, Math.floor((tp[1] / off.height) * 5))], r: small ? 2.8 : 4, ph: rnd(0, 6.28), sx: 0, sy: 0 });
-      }
-    })();
-
     // 彩带：底部空压彩虹炮——左右 2 门炮各 4 轮齐射，碎纸片锥形喷出后缓慢翻转飘落
     var CANNONS = [0.12, 0.88], VOLLEYS = [0, 80, 190, 300];
     for (var vi = 0; vi < VOLLEYS.length; vi++) {
@@ -1921,34 +1889,6 @@
           ctx.globalAlpha = (1 - a3 / q.life) * 0.8;
           ctx.fillStyle = "#ffd60a";
           ctx.beginPath(); ctx.arc(q.x, q.y, q.r, 0, 6.29); ctx.fill();
-        } else {
-          var total = q.p1 + q.p2 + q.p3 + q.p4;
-          if (a3 > total) { P.splice(i--, 1); continue; }
-          if (a3 <= q.p1) {
-            q.px = q.x; q.py = q.y;
-            q.vx *= 0.965; q.vy = q.vy * 0.965 + 0.02;
-            q.x += q.vx; q.y += q.vy;
-            ctx.globalAlpha = 0.95;
-            ctx.strokeStyle = q.col; ctx.lineWidth = q.r;
-            ctx.beginPath(); ctx.moveTo(q.px, q.py); ctx.lineTo(q.x, q.y); ctx.stroke();
-          } else if (a3 <= q.p1 + q.p2) {
-            if (!q.sx) { q.sx = q.x; q.sy = q.y; }
-            var t2 = (a3 - q.p1) / q.p2, e = 1 - Math.pow(1 - t2, 3);
-            q.x = q.sx + (q.tx - q.sx) * e;
-            q.y = q.sy + (q.ty - q.sy) * e;
-            ctx.globalAlpha = 1;
-            ctx.fillStyle = q.col;
-            ctx.beginPath(); ctx.arc(q.x, q.y, q.r, 0, 6.29); ctx.fill();
-          } else if (a3 <= q.p1 + q.p2 + q.p3) {
-            ctx.globalAlpha = 0.7 + 0.3 * Math.sin(frame * 0.25 + q.ph);
-            ctx.fillStyle = q.col;
-            ctx.beginPath(); ctx.arc(q.tx, q.ty, q.r + 0.4, 0, 6.29); ctx.fill();
-          } else {
-            var t4 = (a3 - q.p1 - q.p2 - q.p3) / q.p4;
-            ctx.globalAlpha = 1 - t4;
-            ctx.fillStyle = q.col;
-            ctx.beginPath(); ctx.arc(q.tx, q.ty, (q.r + 0.4) * (1 + t4 * 0.6), 0, 6.29); ctx.fill();
-          }
         }
       }
       ctx.globalAlpha = 1;
@@ -1980,8 +1920,13 @@
         '<div class="r-meta">' + esc(amount + (products ? "　品牌型号：" + products : "")) + "</div>";
       host.appendChild(card);
     }
-    // canvas 特效层：大烟花 + "恭喜中标"文字烟花 + 彩带喷泉（卡片已先生成，压在特效之上）
+    // canvas 特效层：大烟花 + 彩带喷泉（卡片已先生成，压在特效之上）
     startWinFx(host);
+    // "恭喜中标"红色大字：文字直接渲染，自动弹出 → 定格 → 淡出
+    var cg = document.createElement("div");
+    cg.className = "win-congrats";
+    cg.textContent = "恭喜中标";
+    host.appendChild(cg);
     document.body.appendChild(host);
     // 标书最晚约 10.9s 全部落出屏幕，届时立刻撤除红色蒙版，烟花继续
     setTimeout(function () { host.classList.add("bg-off"); }, 11000);
