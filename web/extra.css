@@ -422,7 +422,8 @@
 .win-ticker.hide { display: none; }
 .win-ticker-label { flex: 0 0 auto; display: flex; align-items: center; padding: 9px 18px; color: #fff; background: linear-gradient(135deg,#b51f24,#df3c24); font-size: 14px; font-weight: 800; letter-spacing: 1px; }
 .win-ticker-window { flex: 1; min-width: 0; overflow: hidden; display: flex; align-items: center; }
-.win-ticker-track { display: flex; align-items: center; gap: 40px; width: max-content; max-width: 100%; white-space: nowrap; padding-left: 12px; }
+/* 慢速滚动：原时长 (10s/条+16s) 放慢约一倍 */
+.win-ticker-track { display: flex; align-items: center; gap: 70px; width: max-content; white-space: nowrap; padding-left: 100%; animation: winTickerScroll calc(var(--win-count,1) * 18s + 30s) linear infinite; }
 .win-ticker:hover .win-ticker-track { animation-play-state: paused; }
 .win-ticker-item { display: inline-flex; align-items: center; color: #7b3200; font-size: 13px; font-weight: 700; }
 .win-ticker-item::before { content: "喜报"; display: inline-block; margin-right: 10px; padding: 2px 7px; border-radius: 999px; color: #b51f24; background: #fff0c8; border: 1px solid #efce78; font-size: 11px; }

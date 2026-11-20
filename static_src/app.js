@@ -1689,24 +1689,33 @@
     var products = (w.products || []).slice(0, 2).join("、");
     return "热烈祝贺 " + (w.company || "我司") + " 成功中标「" + (w.title || "采购项目") + "」" + amount + (products ? "，品牌型号：" + products : "");
   }
+  // 2026-11-20 前已入库的历史中标：正式展示时先不显示，出现新中标后开始滚动展示；
+  // 带 ?winspreview=1 访问可临时用这 7 条历史数据预览慢速滚动效果
+  var HISTORICAL_WIN_IDS = [
+    "北京佳业同创科技有限公司_818208",
+    "北京佳业同创科技有限公司_813484",
+    "北京智鑫盛通科技有限公司_808592",
+    "北京智鑫盛通科技有限公司_806171",
+    "北京佳业同创科技有限公司_804054",
+    "北京智鑫盛通科技有限公司_800747",
+    "北京佳业同创科技有限公司_800644"
+  ];
   function renderWinTicker() {
     var box = $("win-ticker"), track = $("win-ticker-track");
     if (!box || !track) return;
-    // 历史订单不再滚动：只静态展示最新一条中标，参与投标记录中手动标记的中标作补充
-    var latest = null;
-    publicWins.forEach(function (w) { if (!latest || String(w.date || "") > String(latest.date || "")) latest = w; });
-    var rows = [];
-    if (latest) rows.push(latest);
+    var preview = /[?&]winspreview=1/.test(location.search);
+    var merged = publicWins.filter(function (w) { return preview || HISTORICAL_WIN_IDS.indexOf(w.id) < 0; });
     recState.items.forEach(function (r) {
-      if (r.manualResult === "win") rows.push({
+      if (r.manualResult === "win") merged.push({
         id: "manual_" + r.id, company: recState.ourCompany || "我司", title: r.title,
         amount: r.budget || 0, products: []
       });
     });
-    var seen = {}, uniq = [];
-    rows.forEach(function (w) { var k = w.id || winText(w); if (!seen[k]) { seen[k] = true; uniq.push(w); } });
-    box.classList.toggle("hide", uniq.length === 0);
-    track.innerHTML = uniq.map(function (w) { return '<span class="win-ticker-item">' + esc(winText(w)) + "</span>"; }).join("");
+    var seen = {}, rows = [];
+    merged.forEach(function (w) { var k = w.id || winText(w); if (!seen[k]) { seen[k] = true; rows.push(w); } });
+    box.classList.toggle("hide", rows.length === 0);
+    track.innerHTML = rows.map(function (w) { return '<span class="win-ticker-item">' + esc(winText(w)) + "</span>"; }).join("");
+    track.style.setProperty("--win-count", Math.max(1, rows.length));
   }
   // ---------- 喜报标书雨：出现新中标时全站展示约 3 秒（红包雨式，缓慢下落），历史喜报不重放 ----------
   var RAIN_SEEN_KEY = "jiaye_wins_seen_v1";
