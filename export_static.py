@@ -242,7 +242,11 @@ def export_zycg(out):
     for it in items:
         if it["category"] and it["category"] not in cats:
             cats.append(it["category"])
-    latest = max(((it["pub_date"] or it["publish_date"] or "") for it in items), default="")
+    latest = max(((it["pub_date"] or it["publish_date"] or "")[:10] for it in items), default="")
+    # "最新日期"与官网口径一致：条目发标日期 与 官网列表进行中集合上架日期（mkt_list_latest）取最大
+    list_latest = (meta.get("mkt_list_latest") or "")[:10]
+    if list_latest > latest:
+        latest = list_latest
     active = sum(1 for it in items if it["is_end"] == 0)
 
     write_json(os.path.join(out, "data", "zycg", "list.json"),

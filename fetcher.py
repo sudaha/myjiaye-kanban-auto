@@ -295,6 +295,13 @@ def run_fetch(db_file, pdf_dir, flag=0, seed_days=14, verbose=True):
             con.close()
             if verbose and res.rowcount:
                 print("[fetch] 复核结束/撤项 %d 条（已不在官网进行中列表）" % res.rowcount)
+    # 官网列表 shortPublistTime = 进行中集合的上架日期（2026-11-23 起接口语义，通常=抓取当天）。
+    # 落 meta 供导出"最新日期"用，站点口径与官网页面显示一致（条目本身仍保留原始发标日期）。
+    if new_items:
+        dates = [(_norm_pub_date(r.get("shortPublistTime")) or "")[:10] for r in new_items]
+        dates = [d for d in dates if d]
+        if dates:
+            db.set_meta(db_file, "mkt_list_latest", max(dates))
     db.set_meta(db_file, "max_notice_id", max_id)
     db.set_meta(db_file, "last_fetch", time.strftime("%Y-%m-%d %H:%M:%S"))
     if verbose:
