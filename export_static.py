@@ -163,6 +163,9 @@ def export_zycg(out):
             meta[r["key"]] = r["value"]
     except Exception:
         pass
+    # 官网列表上架日期（进行中集合每日刷新，通常=抓取当天）。作为进行中询价的"公告日期"，
+    # 使日历/日期筛选/排序与官网页面显示一致；详情弹层另保留原始发标日期（publish_date）。
+    list_latest = (meta.get("mkt_list_latest") or "")[:10]
     items = []
     raw = {}
     for r in rows:
@@ -191,28 +194,31 @@ def export_zycg(out):
             "org_name": d["org_name"], "purchase_company": d["purchase_company"],
             "budget_amount": d["budget_amount"], "budget_num": budget,
             "end_time": d["end_time"], "publish_date": d["publish_date"],
-            "pub_date": (d.get("pub_date") or ""),
+            "pub_date": (list_latest if d["is_end"] == 0 else (d.get("pub_date") or "")),
             "category": d["category"], "brands": d["brands"],
             "is_end": d["is_end"], "enquiry_no": d["enquiry_no"],
             "has_pdf": has_pdf,
             "pdf_path": ("pdf/zycg/" + local) if has_pdf else None,
         })
     # 2026-11-23 起：官网列表 = 当前进行中询价集合（发标日期分散）。
-    # 进行中（is_end=0）全部展示，与官网口径一致；已结束沿用"最近 3 个发布日期"（2026-11-17 规则）。
-    days = sorted({(it["pub_date"] or it["publish_date"] or "")[:10] for it in items if (it["pub_date"] or it["publish_date"])}
+    # 进行中（is_end=0）全部展示，与官网口径一致；已结束沿用"最近 3 个发标日期"（2026-11-17 轮换规则）。
+    # 窗口只取已结束项的原始发标日期，避免进行中项的合成上架日（=今天）占用窗口槽位。
+    days = sorted({(it["publish_date"] or "")[:10] for it in items
+                   if it.get("is_end") != 0 and it.get("publish_date")}
                  , reverse=True)
     keep_days = set(days[:3])
     items = [it for it in items
              if it.get("is_end") == 0
-             or (it["pub_date"] or it["publish_date"] or "")[:10] in keep_days]
+             or (it["publish_date"] or "")[:10] in keep_days]
 
-    # 「新」标注：发布日期 = 今天（北京时间）的条目整天标新，次日导出自动取消
+    # 「新」标注：原始发标日期(publish_date) = 今天（北京时间）的条目整天标新，次日导出自动取消。
+    # 不能用 pub_date——进行中项的 pub_date 是官网上架日（每日刷新=当天），会把 38 条全标成新。
     today_bj = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=8)).strftime("%Y-%m-%d")
 
     def day_of(it):
         return (it["pub_date"] or it["publish_date"] or "")[:10]
 
-    new_ids = {it["id"] for it in items if day_of(it) == today_bj}
+    new_ids = {it["id"] for it in items if (it["publish_date"] or "")[:10] == today_bj}
     for it in items:
         it["is_new"] = it["id"] in new_ids
     new_days = sorted({day_of(it) for it in items if it["id"] in new_ids}, reverse=True)
@@ -231,7 +237,7 @@ def export_zycg(out):
             "org_name": d["org_name"], "purchase_company": d["purchase_company"],
             "budget_amount": d["budget_amount"], "budget_num": it["budget_num"],
             "end_time": d["end_time"], "publish_date": d["publish_date"],
-            "pub_date": (d.get("pub_date") or ""),
+            "pub_date": (list_latest if d["is_end"] == 0 else (d.get("pub_date") or "")),
             "category": d["category"], "brands": d["brands"], "is_end": d["is_end"],
             "enquiry_no": d["enquiry_no"], "pdf_url": d["pdf_url"],
             "pdf_path": rr["pdf_path"], "products": rr["products"],
