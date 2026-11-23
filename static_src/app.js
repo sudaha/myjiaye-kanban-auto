@@ -867,7 +867,7 @@
       '<p>导出时间：' + esc(new Date().toLocaleString("zh-CN")) + '</p></body></html>';
   }
 
-  function fetchPdf(url, timeoutMs) {
+  function fetchPdfFetch(url, timeoutMs) {
     return new Promise(function (resolve, reject) {
       var ctrl = new AbortController();
       var timer = setTimeout(function () { ctrl.abort(); }, timeoutMs);
@@ -880,6 +880,26 @@
         clearTimeout(timer); reject(e);
       });
     });
+  }
+  // XHR 通道：部分浏览器扩展（如 Smart Nexus/生意助手）会 patch window.fetch 挂起响应正文，
+  // XMLHttpRequest 是独立 API 通道，可绕开该类干扰
+  function fetchPdfXhr(url, timeoutMs) {
+    return new Promise(function (resolve, reject) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", url, true);
+      xhr.responseType = "arraybuffer";
+      xhr.timeout = timeoutMs;
+      xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) resolve(xhr.response);
+        else reject(new Error("HTTP " + xhr.status));
+      };
+      xhr.onerror = function () { reject(new Error("xhr network error")); };
+      xhr.ontimeout = function () { reject(new Error("xhr timeout")); };
+      xhr.send();
+    });
+  }
+  function fetchPdf(url, timeoutMs) {
+    return fetchPdfFetch(url, timeoutMs).catch(function () { return fetchPdfXhr(url, timeoutMs); });
   }
   function fetchWithRetry(url, tries) {
     return fetchPdf(url, 25000).catch(function (e) {
@@ -899,10 +919,11 @@
     }
     var btn = $("btn-zip");
     btn.disabled = true;
-    var out = [], okItems = [], i = 0, failed = 0;
+    var out = [], okItems = [], i = 0, failed = 0, direct = 0;
     function finish() {
       if (!out.length) {
-        $("zip-progress").textContent = "打包失败：0 份成功" + (failed ? "（" + failed + " 份下载失败，请重试）" : "");
+        $("zip-progress").textContent = "打包失败：0 份成功" +
+          (direct ? "（已为 " + direct + " 份触发浏览器直接下载，请查看下载面板）" : (failed ? "（" + failed + " 份下载失败，请重试）" : ""));
         btn.disabled = false;
         return;
       }
@@ -916,6 +937,7 @@
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(function () { URL.revokeObjectURL(a.href); }, 5000);
       $("zip-progress").textContent = "完成：" + okItems.length + " 个项目" +
+        (direct ? "（" + direct + " 份已改直接下载，见下载面板）" : "") +
         (failed ? "（" + failed + " 份失败已跳过）" : "") + (noPdf ? "（另有 " + noPdf + " 项无 PDF）" : "");
       btn.disabled = false;
     }
@@ -933,16 +955,36 @@
         return;
       }
       var pdfUrl = it.pdf_path || "pdf/zycg/" + it.id + ".pdf";
-      fetchWithRetry(pdfUrl, 2).then(function (buf) {
-        out.push({
-          name: catFolder(it) + "/" + pdfFileName(it),
-          data: new Uint8Array(buf)
+      var tip = "打包中 " + (i + 1) + "/" + picked.length + "：" + (it.title || "").slice(0, 16);
+      // 三通道兜底 fetch→XHR→fetch重试（扩展 patch fetch 挂起正文时可切换通道），
+      // 全失败则触发浏览器原生直接下载（独立于页面 JS 的下载通道），不阻塞其余条目打包
+      fetchPdfFetch(pdfUrl, 15000)
+        .catch(function () {
+          $("zip-progress").textContent = tip + "（fetch 受阻，切换 XHR 通道…）";
+          return fetchPdfXhr(pdfUrl, 15000);
+        })
+        .catch(function () {
+          $("zip-progress").textContent = tip + "（XHR 受阻，重试中…）";
+          return fetchPdfFetch(pdfUrl, 15000);
+        })
+        .then(function (buf) {
+          out.push({
+            name: catFolder(it) + "/" + pdfFileName(it),
+            data: new Uint8Array(buf)
+          });
+          okItems.push(it);
+          i++; next();
+        })
+        .catch(function () {
+          $("zip-progress").textContent = tip + "（改浏览器直接下载…）";
+          try {
+            var a2 = document.createElement("a");
+            a2.href = pdfUrl; a2.download = pdfFileName(it);
+            document.body.appendChild(a2); a2.click(); a2.remove();
+            direct++;
+          } catch (e2) { failed++; }
+          i++; next();
         });
-        okItems.push(it);
-        i++; next();
-      }).catch(function () {
-        failed++; i++; next();
-      });
     }
     next();
   }
