@@ -211,14 +211,23 @@ def export_zycg(out):
              if it.get("is_end") == 0
              or (it["publish_date"] or "")[:10] in keep_days]
 
-    # 「新」标注：原始发标日期(publish_date) = 今天（北京时间）的条目整天标新，次日导出自动取消。
-    # 不能用 pub_date——进行中项的 pub_date 是官网上架日（每日刷新=当天），会把 38 条全标成新。
+    # 「新」标注：以 fetcher 写入的 data/new_ids.json 为准（进行中集合与上次快照的差集=新出现的项目，
+    # 当日累积、整天有效）；兜底并入原始发标日期(publish_date)=今天的条目。
     today_bj = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=8)).strftime("%Y-%m-%d")
 
     def day_of(it):
         return (it["pub_date"] or it["publish_date"] or "")[:10]
 
-    new_ids = {it["id"] for it in items if (it["publish_date"] or "")[:10] == today_bj}
+    file_new = set()
+    try:
+        with open(os.path.join(BASE, "data", "new_ids.json"), encoding="utf-8") as fh:
+            nd = json.load(fh)
+        if isinstance(nd, dict) and nd.get("date") == today_bj:
+            file_new = {str(i) for i in nd.get("ids") or []}
+    except Exception:
+        pass
+    new_ids = {it["id"] for it in items if str(it["id"]) in file_new}
+    new_ids |= {it["id"] for it in items if (it["publish_date"] or "")[:10] == today_bj}
     for it in items:
         it["is_new"] = it["id"] in new_ids
     new_days = sorted({day_of(it) for it in items if it["id"] in new_ids}, reverse=True)

@@ -302,6 +302,38 @@ def run_fetch(db_file, pdf_dir, flag=0, seed_days=14, verbose=True):
         dates = [d for d in dates if d]
         if dates:
             db.set_meta(db_file, "mkt_list_latest", max(dates))
+    # 「新项目」标注：当前进行中集合 vs 上次快照 → 新出现的项目；首次运行（无快照）视为
+    # 当前列表整体为新（相对用户上次看到的冻结看板）。当日结果累积写 data/new_ids.json，
+    # 导出按 date=当天 读取，「新」标整天有效、次日自动清除。
+    if new_items:
+        cur_ids = {str(r["id"]) for r in new_items if r.get("id") is not None}
+        prev_snap = None
+        try:
+            c2 = db.connect(db_file)
+            row = c2.execute("SELECT v FROM meta WHERE k = 'in_prog_ids'").fetchone()
+            c2.close()
+            if row and row[0]:
+                prev_snap = set(json.loads(row[0]))
+        except Exception:
+            prev_snap = None
+        diff = cur_ids - prev_snap if prev_snap is not None else cur_ids
+        db.set_meta(db_file, "in_prog_ids", json.dumps(sorted(cur_ids)))
+        nd_file = os.path.join(os.path.dirname(db_file) or ".", "new_ids.json")
+        today_s = time.strftime("%Y-%m-%d")
+        try:
+            with open(nd_file, encoding="utf-8") as fh:
+                nd = json.load(fh)
+        except Exception:
+            nd = {}
+        if isinstance(nd, dict) and nd.get("date") == today_s:
+            nd["ids"] = sorted(set(nd.get("ids") or []) | diff)
+        else:
+            nd = {"date": today_s, "ids": sorted(diff)}
+        with open(nd_file, "w", encoding="utf-8") as fh:
+            json.dump(nd, fh, ensure_ascii=False)
+        if verbose and diff:
+            shown = ", ".join(sorted(diff)[:8]) + ("..." if len(diff) > 8 else "")
+            print("[fetch] 新增进行中 %d 条: %s" % (len(diff), shown))
     db.set_meta(db_file, "max_notice_id", max_id)
     db.set_meta(db_file, "last_fetch", time.strftime("%Y-%m-%d %H:%M:%S"))
     if verbose:
