@@ -1,8 +1,26 @@
 {
  "source": "zycgmain",
- "updated_at": "2026-11-20T09:46:32+08:00",
- "count": 89,
+ "updated_at": "2026-11-23T15:18:46+08:00",
+ "count": 95,
  "items": [
+  {
+   "id": "aa1a8cf7-e6e4-11f1-9615-fa163ee0ead6",
+   "title": "北京大学人民医院网络及安全类设备存储器服务器负载均衡设备采购项目招标公告",
+   "buyer": "北京大学人民医院(北京大学第二临床医学院)",
+   "date": "2026-11-23",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/33c3f283-af7e-481c-8ebc-1a63c472ee95.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-23"
+  },
+  {
+   "id": "1d921e33-e6db-11f1-9615-fa163ee0ead6",
+   "title": "山西省气象信息中心面向短临预报的华北区域气象大数据云平台支撑算力及存储扩充采购项目招标公告",
+   "buyer": "山西省气象信息中心(山西省气象档案馆)",
+   "date": "2026-11-23",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/6810c81c-dfc7-434e-b6b7-c1c90e3d1f59.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-23"
+  },
   {
    "id": "a8d376cd-e479-11f1-9615-fa163ee0ead6",
    "title": "国家统计局上海调查总队网络及会议室智能改造采购项目招标公告",
@@ -20,6 +38,42 @@
    "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/f31ce172-25e5-4b91-b140-fa9a7db3a038.html",
    "notice_type": "招标采购公告",
    "seen_date": "2026-11-20"
+  },
+  {
+   "id": "9d637808-e4ae-11f1-9615-fa163ee0ead6",
+   "title": "中山大学附属第一医院软硬件集中采购项目招标公告",
+   "buyer": "中山大学附属第一医院",
+   "date": "2026-11-20",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/63aebd0b-0491-412c-9a26-0dbc38e8155a.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-23"
+  },
+  {
+   "id": "26bc76d6-e4ad-11f1-9615-fa163ee0ead6",
+   "title": "教育部教育考试院数据中心私有云平台灾备系统采购项目招标公告",
+   "buyer": "教育部教育考试院",
+   "date": "2026-11-20",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/6e0f9fdb-7f91-484d-8f1b-600ac0921ef8.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-23"
+  },
+  {
+   "id": "95566681-e485-11f1-9615-fa163ee0ead6",
+   "title": "中南大学湘雅二医院身心互作项目信息化硬件采购项目招标公告",
+   "buyer": "中南大学湘雅二医院",
+   "date": "2026-11-20",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/e85e9ac7-7fc9-4400-9b66-22d60cf17d3a.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-23"
+  },
+  {
+   "id": "a8751003-e483-11f1-9615-fa163ee0ead6",
+   "title": "中国科学院文献情报中心服务器和交换机采购项目招标公告",
+   "buyer": "中国科学院文献情报中心",
+   "date": "2026-11-20",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/fa73f7a7-ef32-4b71-a6cd-adb789879a7a.html",
+   "notice_type": "招标采购公告",
+   "seen_date": "2026-11-23"
   },
   {
    "id": "06cb56f2-e3c4-11f1-9615-fa163ee0ead6",
