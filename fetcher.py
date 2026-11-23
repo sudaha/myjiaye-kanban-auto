@@ -23,6 +23,18 @@ UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
 TIMEOUT = 25
 
 
+def _norm_pub_date(v):
+    """接口对部分公告把发布日期返回为 unix 时间戳（10 位），统一转成北京时间 'YYYY-MM-DD HH:MM'，
+    否则 3 日期窗口/日历/排序全部错乱（'179...' 字符串排序永远排在 '2026...' 前）。"""
+    s = str(v or "").strip()
+    if s.isdigit() and len(s) in (9, 10, 13):
+        import datetime
+        ts = int(s[:10])
+        return datetime.datetime.fromtimestamp(
+            ts, datetime.timezone(datetime.timedelta(hours=8))).strftime("%Y-%m-%d %H:%M")
+    return s
+
+
 def http_get_json(url, retries=3):
     last = None
     for i in range(retries):
@@ -108,7 +120,7 @@ def fetch_detail(nid):
         "budget_amount": obj.get("budgetAmount"),
         "end_time": obj.get("endTimeStr") or obj.get("endTime"),
         # 发标日期优先取询价通知书 PDF 落款日（attchList.created），缺省才退回平台上架时间
-        "publish_date": pdf_created or data.get("shortPublistTime") or obj.get("shortPublistTime"),
+        "publish_date": _norm_pub_date(pdf_created or data.get("shortPublistTime") or obj.get("shortPublistTime")),
         "is_end": None,  # run_fetch 依据 end_time 计算
         "products": prods,
         "brands": ",".join(all_brands),
@@ -220,7 +232,7 @@ def run_fetch(db_file, pdf_dir, flag=0, seed_days=14, verbose=True):
                 "id": int(nid), "enquiry_no": r.get("enquiryNo"), "title": r.get("noticeTitle"),
                 "enquiry_name": r.get("enquiryName"), "org_name": r.get("orgName"),
                 "purchase_company": r.get("orgName"), "budget_amount": r.get("budgetAmount"),
-                "end_time": r.get("endTime"), "publish_date": r.get("shortPublistTime"),
+                "end_time": r.get("endTime"), "publish_date": _norm_pub_date(r.get("shortPublistTime")),
                 "is_end": 1 if r.get("end") in (True, "true", 1) else 0,
                 "products": [], "brands": "", "pdf_url": None,
             }
@@ -232,7 +244,7 @@ def run_fetch(db_file, pdf_dir, flag=0, seed_days=14, verbose=True):
         d["purchase_company"] = d.get("purchase_company") or r.get("orgName")
         d["budget_amount"] = d.get("budget_amount") or r.get("budgetAmount")
         d["end_time"] = d.get("end_time") or r.get("endTime")
-        d["publish_date"] = d.get("publish_date") or r.get("shortPublistTime")
+        d["publish_date"] = d.get("publish_date") or _norm_pub_date(r.get("shortPublistTime"))
         # 状态：优先按截止时间；无时间则回退列表 end 字段
         if d.get("is_end") in (None,):
             d["is_end"] = _is_end(d.get("end_time")) if d.get("end_time") else (
