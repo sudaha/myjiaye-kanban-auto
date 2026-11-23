@@ -197,12 +197,14 @@ def export_zycg(out):
             "has_pdf": has_pdf,
             "pdf_path": ("pdf/zycg/" + local) if has_pdf else None,
         })
-    # 只保留最近 3 个发布日期的全部条目，更早的不上网页（2026-11-17 用户要求，随同步滚动）
-    days = sorted({(it["pub_date"] or it["publish_date"] or "")[:10] for it in items if (it["pub_date"] or it["publish_date"])},
-                  reverse=True)
+    # 2026-11-23 起：官网列表 = 当前进行中询价集合（发标日期分散）。
+    # 进行中（is_end=0）全部展示，与官网口径一致；已结束沿用"最近 3 个发布日期"（2026-11-17 规则）。
+    days = sorted({(it["pub_date"] or it["publish_date"] or "")[:10] for it in items if (it["pub_date"] or it["publish_date"])}
+                 , reverse=True)
     keep_days = set(days[:3])
     items = [it for it in items
-             if (it["pub_date"] or it["publish_date"] or "")[:10] in keep_days]
+             if it.get("is_end") == 0
+             or (it["pub_date"] or it["publish_date"] or "")[:10] in keep_days]
 
     # 「新」标注：发布日期 = 今天（北京时间）的条目整天标新，次日导出自动取消
     today_bj = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=8)).strftime("%Y-%m-%d")

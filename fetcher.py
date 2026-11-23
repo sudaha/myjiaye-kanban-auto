@@ -279,6 +279,22 @@ def run_fetch(db_file, pdf_dir, flag=0, seed_days=14, verbose=True):
             print("  + %s | %s | %s | %s" % (nid, d.get("publish_date"),
                                               d.get("category"), (d.get("title") or "")[:30]))
         time.sleep(0.6)
+    # 官网列表 = 当前进行中询价集合（2026-11-23 接口语义）：成功抓到非空列表时，
+    # 库内仍标进行中但已不在列表的条目判为已结束/撤项，保证站点与官网口径一致。
+    # 首抓或列表为空（接口异常）不动状态，防误标。
+    if new_items and not first_run:
+        live_ids = {int(r["id"]) for r in new_items if r.get("id") is not None}
+        if live_ids:
+            con = db.connect(db_file)
+            cur = con.cursor()
+            ph = ",".join("?" * len(live_ids))
+            res = cur.execute(
+                "UPDATE announcements SET is_end = 1 WHERE is_end = 0 AND id NOT IN (%s)" % ph,
+                sorted(live_ids))
+            con.commit()
+            con.close()
+            if verbose and res.rowcount:
+                print("[fetch] 复核结束/撤项 %d 条（已不在官网进行中列表）" % res.rowcount)
     db.set_meta(db_file, "max_notice_id", max_id)
     db.set_meta(db_file, "last_fetch", time.strftime("%Y-%m-%d %H:%M:%S"))
     if verbose:

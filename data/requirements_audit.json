@@ -1,0 +1,4690 @@
+{
+  "total_notices": 82,
+  "checked_pdf": 82,
+  "updated": 82,
+  "product_count": 386,
+  "complete_products": 386,
+  "failures": [],
+  "notices": [
+    {
+      "id": 824820,
+      "title": "中国人民银行天津市分行计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "工作区汇聚交换机",
+          "pdf_product_name": "工作区汇聚交换机",
+          "api_length": 958,
+          "full_length": 958,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824819,
+      "title": "LSLAB多功能一体机及配件（询价）采购项目需求公告",
+      "api_products": 2,
+      "pdf_items": 2,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "多功能一体机",
+          "pdf_product_name": "多功能一体机",
+          "api_length": 363,
+          "full_length": 363,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "多功能一体机",
+          "pdf_product_name": "多功能一体机",
+          "api_length": 130,
+          "full_length": 130,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824818,
+      "title": "国家金融监督管理总局安徽监管局计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "核心路由器",
+          "pdf_product_name": "核心路由器",
+          "api_length": 134,
+          "full_length": 134,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824817,
+      "title": "昆明海关技术中心计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "抗拒绝服务攻击防护系统",
+          "pdf_product_name": "抗拒绝服务攻击防护系统",
+          "api_length": 1075,
+          "full_length": 1075,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824815,
+      "title": "中国船级社江苏分社视频会议系统及会议室音频系统（询价）采购项目需求公告",
+      "api_products": 3,
+      "pdf_items": 3,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "视频会议终端主机",
+          "pdf_product_name": "视频会议终端主机",
+          "api_length": 1025,
+          "full_length": 1025,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "视频会议摄像头",
+          "pdf_product_name": "视频会议摄像头",
+          "api_length": 1025,
+          "full_length": 1025,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "视频会议全向麦克风",
+          "pdf_product_name": "视频会议全向麦克风",
+          "api_length": 1025,
+          "full_length": 1025,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824814,
+      "title": "中国科学院信息工程研究所服务器（询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "服务器",
+          "pdf_product_name": "服务器",
+          "api_length": 423,
+          "full_length": 423,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824813,
+      "title": "中国疾病预防控制中心服务器（询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "超融合服务器",
+          "pdf_product_name": "超融合服务器",
+          "api_length": 1230,
+          "full_length": 1230,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824811,
+      "title": "中华人民共和国皇岗海关计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "无线执法记录仪云存储设备",
+          "pdf_product_name": "无线执法记录仪云存储设\n备",
+          "api_length": 1111,
+          "full_length": 1111,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824809,
+      "title": "中国地质调查局海口海洋地质调查中心视频会议系统及会议室音频系统（询价）采购项目需求公告",
+      "api_products": 39,
+      "pdf_items": 39,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "一拖二无线手持麦克风",
+          "pdf_product_name": "一拖二无线手持麦克风",
+          "api_length": 549,
+          "full_length": 549,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "机柜",
+          "pdf_product_name": "机柜",
+          "api_length": 158,
+          "full_length": 158,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "音柱",
+          "pdf_product_name": "音柱",
+          "api_length": 321,
+          "full_length": 321,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 4,
+          "product_name": "专业功率放大器",
+          "pdf_product_name": "专业功率放大器",
+          "api_length": 301,
+          "full_length": 301,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 5,
+          "product_name": "模拟调音台",
+          "pdf_product_name": "模拟调音台",
+          "api_length": 516,
+          "full_length": 516,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 6,
+          "product_name": "数字音频处理器",
+          "pdf_product_name": "数字音频处理器",
+          "api_length": 882,
+          "full_length": 882,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 7,
+          "product_name": "自动反馈抑制器",
+          "pdf_product_name": "自动反馈抑制器",
+          "api_length": 475,
+          "full_length": 475,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 8,
+          "product_name": "电源时序器",
+          "pdf_product_name": "电源时序器",
+          "api_length": 232,
+          "full_length": 232,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 9,
+          "product_name": "有线会议麦克风系统主机",
+          "pdf_product_name": "有线会议麦克风系统主机",
+          "api_length": 554,
+          "full_length": 554,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 10,
+          "product_name": "有线会议麦克风系统主席单元",
+          "pdf_product_name": "有线会议麦克风系统主席\n单元",
+          "api_length": 307,
+          "full_length": 307,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 11,
+          "product_name": "有线会议麦克风系统代表单元",
+          "pdf_product_name": "有线会议麦克风系统代表\n单元",
+          "api_length": 210,
+          "full_length": 210,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 12,
+          "product_name": "防腐蚀壁装支架",
+          "pdf_product_name": "防腐蚀壁装支架",
+          "api_length": 114,
+          "full_length": 114,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 13,
+          "product_name": "4G网络视频录像机",
+          "pdf_product_name": "4G 网络视频录像机",
+          "api_length": 611,
+          "full_length": 611,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 14,
+          "product_name": "硬盘",
+          "pdf_product_name": "硬盘",
+          "api_length": 130,
+          "full_length": 130,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 15,
+          "product_name": "会议交换设备",
+          "pdf_product_name": "会议交换设备",
+          "api_length": 512,
+          "full_length": 512,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 16,
+          "product_name": "视频平台服务器",
+          "pdf_product_name": "视频平台服务器",
+          "api_length": 1117,
+          "full_length": 1117,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 17,
+          "product_name": "系统管理平台",
+          "pdf_product_name": "系统管理平台",
+          "api_length": 1120,
+          "full_length": 1120,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 18,
+          "product_name": "网络键盘",
+          "pdf_product_name": "网络键盘",
+          "api_length": 549,
+          "full_length": 549,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 19,
+          "product_name": "视频处理工作站",
+          "pdf_product_name": "视频处理工作站",
+          "api_length": 191,
+          "full_length": 191,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 20,
+          "product_name": "高分子防腐蚀摄像机",
+          "pdf_product_name": "高分子防腐蚀摄像机",
+          "api_length": 713,
+          "full_length": 713,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 21,
+          "product_name": "防腐蚀藏线盒",
+          "pdf_product_name": "防腐蚀藏线盒",
+          "api_length": 120,
+          "full_length": 120,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 22,
+          "product_name": "防腐蚀摄像机",
+          "pdf_product_name": "防腐蚀摄像机",
+          "api_length": 117,
+          "full_length": 117,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 23,
+          "product_name": "分布式拼控器集群网关",
+          "pdf_product_name": "分布式拼控器集群网关",
+          "api_length": 253,
+          "full_length": 253,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 24,
+          "product_name": "分布式拼控器编码",
+          "pdf_product_name": "分布式拼控器编码",
+          "api_length": 996,
+          "full_length": 996,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 25,
+          "product_name": "LED配件LED模组接收卡DC电源线",
+          "pdf_product_name": "LED 配件LED 模组接收卡DC\n电源线",
+          "api_length": 141,
+          "full_length": 141,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 26,
+          "product_name": "LED配件LED模组级联短网线",
+          "pdf_product_name": "LED 配件LED 模组级联短网\n线",
+          "api_length": 159,
+          "full_length": 159,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 27,
+          "product_name": "LED配件LED模组电源级联AC电源线",
+          "pdf_product_name": "LED 配件LED 模组电源级联\nAC 电源线",
+          "api_length": 144,
+          "full_length": 144,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 28,
+          "product_name": "LED磁铁",
+          "pdf_product_name": "LED 磁铁",
+          "api_length": 85,
+          "full_length": 85,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 29,
+          "product_name": "LED配电柜",
+          "pdf_product_name": "LED 配电柜",
+          "api_length": 330,
+          "full_length": 330,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 30,
+          "product_name": "LED显示单元维护工具",
+          "pdf_product_name": "LED 显示单元维护工具",
+          "api_length": 144,
+          "full_length": 144,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 31,
+          "product_name": "可视化大屏智能管理平台",
+          "pdf_product_name": "可视化大屏智能管理平台",
+          "api_length": 621,
+          "full_length": 621,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 32,
+          "product_name": "HDMI矩阵",
+          "pdf_product_name": "HDMI 矩阵",
+          "api_length": 346,
+          "full_length": 346,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 33,
+          "product_name": "商用显示屏",
+          "pdf_product_name": "商用显示屏",
+          "api_length": 490,
+          "full_length": 490,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 34,
+          "product_name": "商用显示器",
+          "pdf_product_name": "商用显示器",
+          "api_length": 214,
+          "full_length": 214,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 35,
+          "product_name": "LED显示单元",
+          "pdf_product_name": "LED 显示单元",
+          "api_length": 588,
+          "full_length": 588,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 36,
+          "product_name": "大屏支架LED室内",
+          "pdf_product_name": "大屏支架LED 室内",
+          "api_length": 166,
+          "full_length": 166,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 37,
+          "product_name": "LED电源",
+          "pdf_product_name": "LED 电源",
+          "api_length": 154,
+          "full_length": 154,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 38,
+          "product_name": "分布式拼控器解码器",
+          "pdf_product_name": "分布式拼控器解码器",
+          "api_length": 1140,
+          "full_length": 1140,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 39,
+          "product_name": "LED控制器",
+          "pdf_product_name": "LED 控制器",
+          "api_length": 576,
+          "full_length": 576,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824808,
+      "title": "中国人民银行南通市分行计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "万兆光纤交换机",
+          "pdf_product_name": "万兆光纤交换机",
+          "api_length": 701,
+          "full_length": 701,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824807,
+      "title": "中国人民银行辽宁省分行(国家外汇管理局辽宁省分局、中国人民银行辽宁省分行营业管理部)计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "网络接入交换机",
+          "pdf_product_name": "网络接入交换机",
+          "api_length": 876,
+          "full_length": 876,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824806,
+      "title": "眉山市彭山区气象局计算机网络设备(询价）采购项目需求公告",
+      "api_products": 3,
+      "pdf_items": 3,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "路由器",
+          "pdf_product_name": "路由器",
+          "api_length": 582,
+          "full_length": 582,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "防火墙",
+          "pdf_product_name": "防火墙",
+          "api_length": 435,
+          "full_length": 435,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "交换机",
+          "pdf_product_name": "交换机",
+          "api_length": 339,
+          "full_length": 339,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824805,
+      "title": "广州国际旅行卫生保健中心(广州海关口岸门诊部)计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "数据库审计设备",
+          "pdf_product_name": "数据库审计设备",
+          "api_length": 802,
+          "full_length": 802,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824803,
+      "title": "中华人民共和国深圳海事局计算机网络设备(询价）采购项目需求公告",
+      "api_products": 4,
+      "pdf_items": 4,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "数据中心汇聚交换机型号1",
+          "pdf_product_name": "数据中心汇聚交换机型号1",
+          "api_length": 405,
+          "full_length": 405,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "数据中心汇聚交换机型号2",
+          "pdf_product_name": "数据中心汇聚交换机型号2",
+          "api_length": 365,
+          "full_length": 365,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "通信基站网络接入交换机型号1",
+          "pdf_product_name": "通信基站网络接入交换机\n型号1",
+          "api_length": 289,
+          "full_length": 289,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 4,
+          "product_name": "通信基站网络接入交换机型号2",
+          "pdf_product_name": "通信基站网络接入交换机\n型号2",
+          "api_length": 339,
+          "full_length": 339,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824802,
+      "title": "冶金工业信息中心计算机网络设备(询价）采购项目需求公告",
+      "api_products": 4,
+      "pdf_items": 4,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "AI 全闪存存储",
+          "pdf_product_name": "AI 全闪存存储",
+          "api_length": 1064,
+          "full_length": 1064,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "管理交换机",
+          "pdf_product_name": "管理交换机",
+          "api_length": 75,
+          "full_length": 75,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "日志审计",
+          "pdf_product_name": "日志审计",
+          "api_length": 1084,
+          "full_length": 1084,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 4,
+          "product_name": "上网行为",
+          "pdf_product_name": "上网行为",
+          "api_length": 765,
+          "full_length": 765,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824801,
+      "title": "天津大学服务器（询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "服务器",
+          "pdf_product_name": "服务器",
+          "api_length": 1324,
+          "full_length": 1324,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824800,
+      "title": "中国民用航空宁波空中交通管理站计算机网络设备(询价）采购项目需求公告",
+      "api_products": 5,
+      "pdf_items": 5,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "观测楼交换机",
+          "pdf_product_name": "观测楼交换机",
+          "api_length": 805,
+          "full_length": 805,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "内网交换机",
+          "pdf_product_name": "内网交换机",
+          "api_length": 445,
+          "full_length": 445,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "气象局域网核心交换机",
+          "pdf_product_name": "气象局域网核心交换机",
+          "api_length": 747,
+          "full_length": 747,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 4,
+          "product_name": "气象局域网接入交换机",
+          "pdf_product_name": "气象局域网接入交换机",
+          "api_length": 804,
+          "full_length": 804,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 5,
+          "product_name": "接入交换机",
+          "pdf_product_name": "接入交换机",
+          "api_length": 680,
+          "full_length": 680,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824799,
+      "title": "中国人民银行天津市分行计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "管理区汇聚交换机",
+          "pdf_product_name": "管理区汇聚交换机",
+          "api_length": 929,
+          "full_length": 929,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824798,
+      "title": "北京协和医学院计算机网络设备(询价）采购项目需求公告",
+      "api_products": 3,
+      "pdf_items": 3,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "室外AP",
+          "pdf_product_name": "室外AP",
+          "api_length": 212,
+          "full_length": 212,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "室内AP",
+          "pdf_product_name": "室内AP",
+          "api_length": 127,
+          "full_length": 127,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "无线控制器授权",
+          "pdf_product_name": "无线控制器授权",
+          "api_length": 32,
+          "full_length": 32,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824796,
+      "title": "中国康复研究中心服务器（询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "服务器",
+          "pdf_product_name": "服务器",
+          "api_length": 776,
+          "full_length": 776,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824795,
+      "title": "应急管理部研究中心(中国煤炭工业发展研究中心)打印设备及配件（询价）采购项目需求公告",
+      "api_products": 5,
+      "pdf_items": 5,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 59,
+          "full_length": 59,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 50,
+          "full_length": 50,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "粉盒",
+          "pdf_product_name": "粉盒",
+          "api_length": 48,
+          "full_length": 48,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 4,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 63,
+          "full_length": 63,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 5,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 53,
+          "full_length": 53,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824794,
+      "title": "中国科学技术信息研究所服务器（询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "服务器",
+          "pdf_product_name": "服务器",
+          "api_length": 1002,
+          "full_length": 1002,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824793,
+      "title": "山东大学齐鲁医院计算机网络设备(询价）采购项目需求公告",
+      "api_products": 2,
+      "pdf_items": 2,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "数据库安全审计系统",
+          "pdf_product_name": "数据库安全审计系统",
+          "api_length": 1110,
+          "full_length": 1110,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "数据库安全运维系统",
+          "pdf_product_name": "数据库安全运维系统",
+          "api_length": 960,
+          "full_length": 960,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824484,
+      "title": "中国人民警察大学台式计算机及配件（询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "云桌面终端",
+          "pdf_product_name": "云桌面终端",
+          "api_length": 1333,
+          "full_length": 1333,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824483,
+      "title": "呼和浩特铁路公安局包头公安处多功能一体机及配件（询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "多功能打印复印一体机",
+          "pdf_product_name": "多功能打印复印一体机",
+          "api_length": 85,
+          "full_length": 85,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824482,
+      "title": "深圳市福田区消防救援大队视频会议系统及会议室音频系统（询价）采购项目需求公告",
+      "api_products": 6,
+      "pdf_items": 6,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "LED显示屏",
+          "pdf_product_name": "LED 显示屏",
+          "api_length": 1001,
+          "full_length": 1001,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "视频处理器",
+          "pdf_product_name": "视频处理器",
+          "api_length": 920,
+          "full_length": 920,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "双光视频融合终端",
+          "pdf_product_name": "双光视频融合终端",
+          "api_length": 480,
+          "full_length": 480,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 4,
+          "product_name": "调度会控终端",
+          "pdf_product_name": "调度会控终端",
+          "api_length": 473,
+          "full_length": 473,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 5,
+          "product_name": "分布式音视频输入输出一体化节点",
+          "pdf_product_name": "分布式音视频输入输出一\n体化节点",
+          "api_length": 1094,
+          "full_length": 1094,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 6,
+          "product_name": "智能会议网关",
+          "pdf_product_name": "智能会议网关",
+          "api_length": 765,
+          "full_length": 765,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824481,
+      "title": "中国地质图书馆(中国地质调查局地学文献中心)计算机网络设备(询价）采购项目需求公告",
+      "api_products": 3,
+      "pdf_items": 3,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "防火墙",
+          "pdf_product_name": "防火墙",
+          "api_length": 453,
+          "full_length": 453,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "路由器",
+          "pdf_product_name": "路由器",
+          "api_length": 203,
+          "full_length": 203,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "互联交换机",
+          "pdf_product_name": "互联交换机",
+          "api_length": 252,
+          "full_length": 252,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824480,
+      "title": "中国林业科学研究院林业科技信息研究所计算机网络设备(询价）采购项目需求公告",
+      "api_products": 3,
+      "pdf_items": 3,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "负载均衡设备",
+          "pdf_product_name": "负载均衡设备",
+          "api_length": 1098,
+          "full_length": 1098,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "灾备一体机",
+          "pdf_product_name": "灾备一体机",
+          "api_length": 1052,
+          "full_length": 1052,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "DNS设备",
+          "pdf_product_name": "DNS 设备",
+          "api_length": 1078,
+          "full_length": 1078,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824479,
+      "title": "中国人民银行苏州市分行(国家外汇管理局苏州市分局)计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "数据中心核心交换机",
+          "pdf_product_name": "数据中心核心交换机",
+          "api_length": 1006,
+          "full_length": 1006,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824478,
+      "title": "中国城市规划设计研究院（住房和城乡建设部遥感应用中心）计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "网络交换机",
+          "pdf_product_name": "网络交换机",
+          "api_length": 441,
+          "full_length": 441,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824477,
+      "title": "新华通讯社河南分社视频会议系统及会议室音频系统（询价）采购项目需求公告",
+      "api_products": 24,
+      "pdf_items": 24,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "辅助显示屏",
+          "pdf_product_name": "辅助显示屏",
+          "api_length": 832,
+          "full_length": 832,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "返看显示屏",
+          "pdf_product_name": "返看显示屏",
+          "api_length": 894,
+          "full_length": 894,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "LED显示屏",
+          "pdf_product_name": "LED 显示屏",
+          "api_length": 979,
+          "full_length": 979,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 4,
+          "product_name": "LED显示屏处理器",
+          "pdf_product_name": "LED 显示屏处理器",
+          "api_length": 775,
+          "full_length": 775,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 5,
+          "product_name": "数字调音台",
+          "pdf_product_name": "数字调音台",
+          "api_length": 724,
+          "full_length": 724,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 6,
+          "product_name": "8进8出音频矩阵处理器",
+          "pdf_product_name": "8 进8 出音频矩阵处理器",
+          "api_length": 377,
+          "full_length": 377,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 7,
+          "product_name": "其他音箱壁挂支架",
+          "pdf_product_name": "其他音箱壁挂支架",
+          "api_length": 252,
+          "full_length": 252,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 8,
+          "product_name": "天线放大器",
+          "pdf_product_name": "天线放大器",
+          "api_length": 346,
+          "full_length": 346,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 9,
+          "product_name": "数字反馈抑制器",
+          "pdf_product_name": "数字反馈抑制器",
+          "api_length": 654,
+          "full_length": 654,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 10,
+          "product_name": "音箱",
+          "pdf_product_name": "音箱",
+          "api_length": 1032,
+          "full_length": 1032,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 11,
+          "product_name": "双通道功放",
+          "pdf_product_name": "双通道功放",
+          "api_length": 550,
+          "full_length": 550,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 12,
+          "product_name": "补声全频音箱",
+          "pdf_product_name": "补声全频音箱",
+          "api_length": 485,
+          "full_length": 485,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 13,
+          "product_name": "数字会议话筒",
+          "pdf_product_name": "数字会议话筒",
+          "api_length": 359,
+          "full_length": 359,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 14,
+          "product_name": "会议系统主机",
+          "pdf_product_name": "会议系统主机",
+          "api_length": 866,
+          "full_length": 866,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 15,
+          "product_name": "真分集无线话筒",
+          "pdf_product_name": "真分集无线话筒",
+          "api_length": 305,
+          "full_length": 305,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 16,
+          "product_name": "视频会议摄像机",
+          "pdf_product_name": "视频会议摄像机",
+          "api_length": 876,
+          "full_length": 876,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 17,
+          "product_name": "智能矩阵",
+          "pdf_product_name": "智能矩阵",
+          "api_length": 860,
+          "full_length": 860,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 18,
+          "product_name": "HDMI矩阵切换器",
+          "pdf_product_name": "HDMI 矩阵切换器",
+          "api_length": 524,
+          "full_length": 524,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 19,
+          "product_name": "墙面控制面板",
+          "pdf_product_name": "墙面控制面板",
+          "api_length": 222,
+          "full_length": 222,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 20,
+          "product_name": "LED电动平板灯",
+          "pdf_product_name": "LED 电动平板灯",
+          "api_length": 372,
+          "full_length": 372,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 21,
+          "product_name": "电源控制器",
+          "pdf_product_name": "电源控制器",
+          "api_length": 339,
+          "full_length": 339,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 22,
+          "product_name": "视频会议系统全向麦",
+          "pdf_product_name": "视频会议系统全向麦",
+          "api_length": 562,
+          "full_length": 562,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 23,
+          "product_name": "超高清视频会议终端",
+          "pdf_product_name": "超高清视频会议终端",
+          "api_length": 1093,
+          "full_length": 1093,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 24,
+          "product_name": "视频会议终端摄像头",
+          "pdf_product_name": "视频会议终端摄像头",
+          "api_length": 932,
+          "full_length": 932,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824476,
+      "title": "中国科学院上海有机化学研究所服务器（询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "超融合服务器",
+          "pdf_product_name": "超融合服务器",
+          "api_length": 1233,
+          "full_length": 1233,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824473,
+      "title": "对外经济贸易大学计算机网络设备(询价）采购项目需求公告",
+      "api_products": 8,
+      "pdf_items": 8,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "48口PoE交换机",
+          "pdf_product_name": "48 口PoE 交换机",
+          "api_length": 1111,
+          "full_length": 1111,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "48口接入交换机",
+          "pdf_product_name": "48 口接入交换机",
+          "api_length": 951,
+          "full_length": 951,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "24口PoE交换机",
+          "pdf_product_name": "24 口PoE 交换机",
+          "api_length": 1110,
+          "full_length": 1110,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 4,
+          "product_name": "高密AP",
+          "pdf_product_name": "高密AP",
+          "api_length": 801,
+          "full_length": 801,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 5,
+          "product_name": "放装AP",
+          "pdf_product_name": "放装AP",
+          "api_length": 763,
+          "full_length": 763,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 6,
+          "product_name": "面板AP",
+          "pdf_product_name": "面板AP",
+          "api_length": 1078,
+          "full_length": 1078,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 7,
+          "product_name": "无线控制器及授权",
+          "pdf_product_name": "无线控制器及授权",
+          "api_length": 376,
+          "full_length": 376,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 8,
+          "product_name": "汇聚交换机",
+          "pdf_product_name": "汇聚交换机",
+          "api_length": 1178,
+          "full_length": 1178,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824468,
+      "title": "中国人民银行重庆营业管理部（国家外汇管理局重庆外汇管理部）计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "路由器",
+          "pdf_product_name": "路由器",
+          "api_length": 852,
+          "full_length": 852,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824467,
+      "title": "四川测绘地理信息局测绘技术服务中心计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "交换机",
+          "pdf_product_name": "交换机",
+          "api_length": 848,
+          "full_length": 848,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824466,
+      "title": "四川测绘地理信息局测绘技术服务中心服务器（询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "分布式服务器集群",
+          "pdf_product_name": "分布式服务器集群",
+          "api_length": 1238,
+          "full_length": 1238,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824461,
+      "title": "北京市大兴区消防救援支队视频会议系统及会议室音频系统（询价）采购项目需求公告",
+      "api_products": 24,
+      "pdf_items": 24,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "会议代表单元",
+          "pdf_product_name": "显示器专用线缆",
+          "api_length": 71,
+          "full_length": 71,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "无线话筒",
+          "pdf_product_name": "系统集成备品备件",
+          "api_length": 129,
+          "full_length": 129,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "专业音箱",
+          "pdf_product_name": "控制器",
+          "api_length": 483,
+          "full_length": 483,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 4,
+          "product_name": "高清会议摄像机",
+          "pdf_product_name": "显示器专用电源控制器",
+          "api_length": 540,
+          "full_length": 540,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 5,
+          "product_name": "高清视频会议终端",
+          "pdf_product_name": "小间距显示屏",
+          "api_length": 1065,
+          "full_length": 1065,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 6,
+          "product_name": "会议操控终端",
+          "pdf_product_name": "显示屏框架",
+          "api_length": 254,
+          "full_length": 254,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 7,
+          "product_name": "显示器专用线缆",
+          "pdf_product_name": "固定控制终端",
+          "api_length": 718,
+          "full_length": 718,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 8,
+          "product_name": "系统集成备品备件",
+          "pdf_product_name": "电源时序器",
+          "api_length": 648,
+          "full_length": 648,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 9,
+          "product_name": "控制器",
+          "pdf_product_name": "分布式音视频系统一体化\n节点",
+          "api_length": 1079,
+          "full_length": 1079,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 10,
+          "product_name": "显示器专用电源控制器",
+          "pdf_product_name": "可视化中央控制模组",
+          "api_length": 843,
+          "full_length": 843,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 11,
+          "product_name": "小间距显示屏",
+          "pdf_product_name": "液晶显示器",
+          "api_length": 70,
+          "full_length": 70,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 12,
+          "product_name": "显示屏框架",
+          "pdf_product_name": "高清视频处理器",
+          "api_length": 596,
+          "full_length": 596,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 13,
+          "product_name": "固定控制终端",
+          "pdf_product_name": "系统设备机柜",
+          "api_length": 148,
+          "full_length": 148,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 14,
+          "product_name": "电源时序器",
+          "pdf_product_name": "专业功放",
+          "api_length": 321,
+          "full_length": 321,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 15,
+          "product_name": "分布式音视频系统一体化节点",
+          "pdf_product_name": "音频专用线缆",
+          "api_length": 70,
+          "full_length": 70,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 16,
+          "product_name": "可视化中央控制模组",
+          "pdf_product_name": "数字音频处理器",
+          "api_length": 524,
+          "full_length": 524,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 17,
+          "product_name": "液晶显示器",
+          "pdf_product_name": "数字调音台",
+          "api_length": 361,
+          "full_length": 361,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 18,
+          "product_name": "高清视频处理器",
+          "pdf_product_name": "会议主机",
+          "api_length": 722,
+          "full_length": 722,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 19,
+          "product_name": "系统设备机柜",
+          "pdf_product_name": "会议代表单元",
+          "api_length": 403,
+          "full_length": 403,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 20,
+          "product_name": "专业功放",
+          "pdf_product_name": "无线话筒",
+          "api_length": 731,
+          "full_length": 731,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 21,
+          "product_name": "音频专用线缆",
+          "pdf_product_name": "专业音箱",
+          "api_length": 46,
+          "full_length": 46,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 22,
+          "product_name": "数字音频处理器",
+          "pdf_product_name": "高清会议摄像机",
+          "api_length": 353,
+          "full_length": 353,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 23,
+          "product_name": "数字调音台",
+          "pdf_product_name": "高清视频会议终端",
+          "api_length": 1067,
+          "full_length": 1067,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 24,
+          "product_name": "会议主机",
+          "pdf_product_name": "会议操控终端",
+          "api_length": 106,
+          "full_length": 106,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824426,
+      "title": "国家金融监督管理总局内蒙古监管局计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "25G交换机",
+          "pdf_product_name": "25G 交换机",
+          "api_length": 712,
+          "full_length": 712,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824425,
+      "title": "南京大学计算机网络设备(询价）采购项目需求公告",
+      "api_products": 5,
+      "pdf_items": 5,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "POE网络交换机",
+          "pdf_product_name": "POE 网络交换机",
+          "api_length": 53,
+          "full_length": 53,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "POE网络交换机",
+          "pdf_product_name": "POE 网络交换机",
+          "api_length": 54,
+          "full_length": 54,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "POE网络交换机",
+          "pdf_product_name": "POE 网络交换机",
+          "api_length": 54,
+          "full_length": 54,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 4,
+          "product_name": "POE网络交换机",
+          "pdf_product_name": "POE 网络交换机",
+          "api_length": 54,
+          "full_length": 54,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 5,
+          "product_name": "POE网络交换机",
+          "pdf_product_name": "POE 网络交换机",
+          "api_length": 53,
+          "full_length": 53,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824424,
+      "title": "新疆维吾尔自治区消防救援总队计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "多链路聚合路由器",
+          "pdf_product_name": "多链路聚合路由器",
+          "api_length": 560,
+          "full_length": 560,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824414,
+      "title": "武汉大学视频会议系统及会议室音频系统（询价）采购项目需求公告",
+      "api_products": 38,
+      "pdf_items": 38,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "LED视频处理器",
+          "pdf_product_name": "LED 视频处理器",
+          "api_length": 135,
+          "full_length": 135,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "配电柜",
+          "pdf_product_name": "配电柜",
+          "api_length": 126,
+          "full_length": 126,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "玻璃白板",
+          "pdf_product_name": "玻璃白板",
+          "api_length": 96,
+          "full_length": 96,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 4,
+          "product_name": "商用电视",
+          "pdf_product_name": "商用电视",
+          "api_length": 101,
+          "full_length": 101,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 5,
+          "product_name": "投影机",
+          "pdf_product_name": "投影机",
+          "api_length": 451,
+          "full_length": 451,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 6,
+          "product_name": "电动屏幕",
+          "pdf_product_name": "电动屏幕",
+          "api_length": 66,
+          "full_length": 66,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 7,
+          "product_name": "音柱音箱",
+          "pdf_product_name": "音柱音箱",
+          "api_length": 240,
+          "full_length": 240,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 8,
+          "product_name": "天花吸顶音箱",
+          "pdf_product_name": "天花吸顶音箱",
+          "api_length": 260,
+          "full_length": 260,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 9,
+          "product_name": "功率放大器1",
+          "pdf_product_name": "功率放大器1",
+          "api_length": 147,
+          "full_length": 147,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 10,
+          "product_name": "功率放大器2",
+          "pdf_product_name": "功率放大器2",
+          "api_length": 136,
+          "full_length": 136,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 11,
+          "product_name": "反馈抑制器",
+          "pdf_product_name": "反馈抑制器",
+          "api_length": 141,
+          "full_length": 141,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 12,
+          "product_name": "数字音频处理器1",
+          "pdf_product_name": "数字音频处理器1",
+          "api_length": 245,
+          "full_length": 245,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 13,
+          "product_name": "数字音频处理器2",
+          "pdf_product_name": "数字音频处理器2",
+          "api_length": 412,
+          "full_length": 412,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 14,
+          "product_name": "无线手拉手会议代表话筒",
+          "pdf_product_name": "无线手拉手会议代表话筒",
+          "api_length": 218,
+          "full_length": 218,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 15,
+          "product_name": "无线手拉手会议主机",
+          "pdf_product_name": "无线手拉手会议主机",
+          "api_length": 196,
+          "full_length": 196,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 16,
+          "product_name": "全频棒状天线",
+          "pdf_product_name": "全频棒状天线",
+          "api_length": 106,
+          "full_length": 106,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 17,
+          "product_name": "无线会议充电箱",
+          "pdf_product_name": "无线会议充电箱",
+          "api_length": 116,
+          "full_length": 116,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 18,
+          "product_name": "锂电池",
+          "pdf_product_name": "锂电池",
+          "api_length": 179,
+          "full_length": 179,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 19,
+          "product_name": "天线分配器",
+          "pdf_product_name": "天线分配器",
+          "api_length": 142,
+          "full_length": 142,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 20,
+          "product_name": "指向性天线",
+          "pdf_product_name": "指向性天线",
+          "api_length": 104,
+          "full_length": 104,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 21,
+          "product_name": "双通道手持话筒",
+          "pdf_product_name": "双通道手持话筒",
+          "api_length": 144,
+          "full_length": 144,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 22,
+          "product_name": "电容话筒",
+          "pdf_product_name": "电容话筒",
+          "api_length": 130,
+          "full_length": 130,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 23,
+          "product_name": "机柜1",
+          "pdf_product_name": "机柜1",
+          "api_length": 54,
+          "full_length": 54,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 24,
+          "product_name": "机柜2",
+          "pdf_product_name": "机柜2",
+          "api_length": 53,
+          "full_length": 53,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 25,
+          "product_name": "机柜3",
+          "pdf_product_name": "机柜3",
+          "api_length": 54,
+          "full_length": 54,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 26,
+          "product_name": "网络型可编程中央控制主机1",
+          "pdf_product_name": "网络型可编程中央控制主\n机1",
+          "api_length": 373,
+          "full_length": 373,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 27,
+          "product_name": "网络型可编程中央控制主机2",
+          "pdf_product_name": "网络型可编程中央控制主\n机2",
+          "api_length": 332,
+          "full_length": 332,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 28,
+          "product_name": "4寸墙装触摸屏",
+          "pdf_product_name": "4 寸墙装触摸屏",
+          "api_length": 160,
+          "full_length": 160,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 29,
+          "product_name": "高清混合矩阵",
+          "pdf_product_name": "高清混合矩阵",
+          "api_length": 218,
+          "full_length": 218,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 30,
+          "product_name": "无线投屏",
+          "pdf_product_name": "无线投屏",
+          "api_length": 250,
+          "full_length": 250,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 31,
+          "product_name": "视频采集卡",
+          "pdf_product_name": "视频采集卡",
+          "api_length": 96,
+          "full_length": 96,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 32,
+          "product_name": "电源控制器1",
+          "pdf_product_name": "电源控制器1",
+          "api_length": 80,
+          "full_length": 80,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 33,
+          "product_name": "电源控制器2",
+          "pdf_product_name": "电源控制器2",
+          "api_length": 55,
+          "full_length": 55,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 34,
+          "product_name": "会议摄像机",
+          "pdf_product_name": "会议摄像机",
+          "api_length": 176,
+          "full_length": 176,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 35,
+          "product_name": "录播主机",
+          "pdf_product_name": "录播主机",
+          "api_length": 751,
+          "full_length": 751,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 36,
+          "product_name": "中控编程",
+          "pdf_product_name": "中控编程",
+          "api_length": 56,
+          "full_length": 56,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 37,
+          "product_name": "全彩LED显示屏1 核心产品",
+          "pdf_product_name": "全彩LED 显示屏1 核心产\n品",
+          "api_length": 632,
+          "full_length": 632,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 38,
+          "product_name": "主全彩LED显示屏2",
+          "pdf_product_name": "主全彩LED 显示屏2",
+          "api_length": 176,
+          "full_length": 176,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824412,
+      "title": "山南边境管理支队计算机网络设备(询价）采购项目需求公告",
+      "api_products": 2,
+      "pdf_items": 2,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "存储节点",
+          "pdf_product_name": "存储节点",
+          "api_length": 478,
+          "full_length": 478,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "企业级三层交换机",
+          "pdf_product_name": "企业级三层交换机",
+          "api_length": 492,
+          "full_length": 492,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824411,
+      "title": "中国科学技术信息研究所计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "分布式存储",
+          "pdf_product_name": "分布式存储",
+          "api_length": 1172,
+          "full_length": 1172,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824409,
+      "title": "中华人民共和国伊尔克什坦出入境边防检查站视频会议系统及会议室音频系统（询价）采购项目需求公告",
+      "api_products": 6,
+      "pdf_items": 6,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "室内模组",
+          "pdf_product_name": "室内模组",
+          "api_length": 1187,
+          "full_length": 1187,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "视频处理器",
+          "pdf_product_name": "视频处理器",
+          "api_length": 705,
+          "full_length": 705,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "吸顶音响",
+          "pdf_product_name": "吸顶音响",
+          "api_length": 234,
+          "full_length": 234,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 4,
+          "product_name": "功放",
+          "pdf_product_name": "功放",
+          "api_length": 273,
+          "full_length": 273,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 5,
+          "product_name": "音箱线",
+          "pdf_product_name": "音箱线",
+          "api_length": 86,
+          "full_length": 86,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 6,
+          "product_name": "六类网线",
+          "pdf_product_name": "六类网线",
+          "api_length": 186,
+          "full_length": 186,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824408,
+      "title": "中华人民共和国鄂州出入境边防检查站计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "核心路由器",
+          "pdf_product_name": "核心路由器",
+          "api_length": 602,
+          "full_length": 602,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824407,
+      "title": "中华人民共和国凤凰出入境边防检查站打印设备及配件（询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "热敏打印机",
+          "pdf_product_name": "热敏打印机",
+          "api_length": 692,
+          "full_length": 692,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824406,
+      "title": "中华人民共和国美兰出入境边防检查站打印设备及配件（询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "热敏打印机",
+          "pdf_product_name": "热敏打印机",
+          "api_length": 705,
+          "full_length": 705,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824405,
+      "title": "中华人民共和国三亚出入境边防检查站打印设备及配件（询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "热敏打印机",
+          "pdf_product_name": "热敏打印机",
+          "api_length": 691,
+          "full_length": 691,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 824404,
+      "title": "财政部信息网络中心打印设备及配件（询价）采购项目需求公告",
+      "api_products": 45,
+      "pdf_items": 45,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "墨粉",
+          "pdf_product_name": "墨粉",
+          "api_length": 158,
+          "full_length": 158,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "红墨粉",
+          "pdf_product_name": "红墨粉",
+          "api_length": 165,
+          "full_length": 165,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "蓝墨粉",
+          "pdf_product_name": "蓝墨粉",
+          "api_length": 165,
+          "full_length": 165,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 4,
+          "product_name": "黄墨粉",
+          "pdf_product_name": "黄墨粉",
+          "api_length": 165,
+          "full_length": 165,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 5,
+          "product_name": "黑红黄蓝四色墨粉",
+          "pdf_product_name": "黑红黄蓝四色墨粉",
+          "api_length": 156,
+          "full_length": 156,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 6,
+          "product_name": "墨粉",
+          "pdf_product_name": "墨粉",
+          "api_length": 168,
+          "full_length": 168,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 7,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 169,
+          "full_length": 169,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 8,
+          "product_name": "墨粉",
+          "pdf_product_name": "墨粉",
+          "api_length": 168,
+          "full_length": 168,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 9,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 169,
+          "full_length": 169,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 10,
+          "product_name": "墨粉",
+          "pdf_product_name": "墨粉",
+          "api_length": 155,
+          "full_length": 155,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 11,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 155,
+          "full_length": 155,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 12,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 154,
+          "full_length": 154,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 13,
+          "product_name": "墨粉",
+          "pdf_product_name": "墨粉",
+          "api_length": 156,
+          "full_length": 156,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 14,
+          "product_name": "墨粉",
+          "pdf_product_name": "墨粉",
+          "api_length": 154,
+          "full_length": 154,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 15,
+          "product_name": "墨粉",
+          "pdf_product_name": "墨粉",
+          "api_length": 152,
+          "full_length": 152,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 16,
+          "product_name": "黑色硒鼓",
+          "pdf_product_name": "黑色硒鼓",
+          "api_length": 152,
+          "full_length": 152,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 17,
+          "product_name": "红色硒鼓",
+          "pdf_product_name": "红色硒鼓",
+          "api_length": 152,
+          "full_length": 152,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 18,
+          "product_name": "黄色硒鼓",
+          "pdf_product_name": "黄色硒鼓",
+          "api_length": 152,
+          "full_length": 152,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 19,
+          "product_name": "蓝色硒鼓",
+          "pdf_product_name": "蓝色硒鼓",
+          "api_length": 152,
+          "full_length": 152,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 20,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 21,
+          "product_name": "黑红黄蓝墨粉",
+          "pdf_product_name": "黑红黄蓝墨粉",
+          "api_length": 152,
+          "full_length": 152,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 22,
+          "product_name": "黑色硒鼓",
+          "pdf_product_name": "黑色硒鼓",
+          "api_length": 155,
+          "full_length": 155,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 23,
+          "product_name": "黑色硒鼓",
+          "pdf_product_name": "黑色硒鼓",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 24,
+          "product_name": "红色硒鼓",
+          "pdf_product_name": "红色硒鼓",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 25,
+          "product_name": "黄色硒鼓",
+          "pdf_product_name": "黄色硒鼓",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 26,
+          "product_name": "蓝色硒鼓",
+          "pdf_product_name": "蓝色硒鼓",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 27,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 154,
+          "full_length": 154,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 28,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 156,
+          "full_length": 156,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 29,
+          "product_name": "黑红黄蓝四色墨粉",
+          "pdf_product_name": "黑红黄蓝四色墨粉",
+          "api_length": 167,
+          "full_length": 167,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 30,
+          "product_name": "黑红黄蓝四色硒鼓",
+          "pdf_product_name": "黑红黄蓝四色硒鼓",
+          "api_length": 154,
+          "full_length": 154,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 31,
+          "product_name": "黑色彩色一套墨盒",
+          "pdf_product_name": "黑色彩色一套墨盒",
+          "api_length": 150,
+          "full_length": 150,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 32,
+          "product_name": "黑红黄蓝四色墨粉",
+          "pdf_product_name": "黑红黄蓝四色墨粉",
+          "api_length": 154,
+          "full_length": 154,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 33,
+          "product_name": "黑红黄蓝四色墨粉 ",
+          "pdf_product_name": "黑红黄蓝四色墨粉",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 34,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 155,
+          "full_length": 155,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 35,
+          "product_name": "墨粉 ",
+          "pdf_product_name": "墨粉",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 36,
+          "product_name": "黑色硒鼓",
+          "pdf_product_name": "黑色硒鼓",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 37,
+          "product_name": "红色硒鼓",
+          "pdf_product_name": "红色硒鼓",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 38,
+          "product_name": "黄色硒鼓",
+          "pdf_product_name": "黄色硒鼓",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 39,
+          "product_name": "蓝色硒鼓",
+          "pdf_product_name": "蓝色硒鼓",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 40,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 156,
+          "full_length": 156,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 41,
+          "product_name": "黑色墨粉",
+          "pdf_product_name": "黑色墨粉",
+          "api_length": 157,
+          "full_length": 157,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 42,
+          "product_name": "黑红黄蓝四色墨粉",
+          "pdf_product_name": "黑红黄蓝四色墨粉",
+          "api_length": 157,
+          "full_length": 157,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 43,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 158,
+          "full_length": 158,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 44,
+          "product_name": "墨粉",
+          "pdf_product_name": "墨粉",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 45,
+          "product_name": "感光鼓",
+          "pdf_product_name": "感光鼓",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823674,
+      "title": "国家广播电视总局监管中心服务器（询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "服务器",
+          "pdf_product_name": "服务器",
+          "api_length": 734,
+          "full_length": 734,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823673,
+      "title": "教育部教育考试院视频会议系统及会议室音频系统（询价）采购项目需求公告",
+      "api_products": 2,
+      "pdf_items": 2,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "数字话筒接收机",
+          "pdf_product_name": "数字话筒接收机",
+          "api_length": 232,
+          "full_length": 232,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "数字话筒",
+          "pdf_product_name": "数字话筒",
+          "api_length": 282,
+          "full_length": 282,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823672,
+      "title": "中华人民共和国黄埔海关视频会议系统及会议室音频系统（询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "视频会议终端",
+          "pdf_product_name": "视频会议终端",
+          "api_length": 1147,
+          "full_length": 1147,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823671,
+      "title": "中国科学技术馆计算机网络设备(询价）采购项目需求公告",
+      "api_products": 8,
+      "pdf_items": 8,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "POE交换机",
+          "pdf_product_name": "POE 交换机",
+          "api_length": 136,
+          "full_length": 136,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "非POE交换机",
+          "pdf_product_name": "非POE 交换机",
+          "api_length": 114,
+          "full_length": 114,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "48口接入交换机",
+          "pdf_product_name": "48 口接入交换机",
+          "api_length": 114,
+          "full_length": 114,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 4,
+          "product_name": "24口POE交换机",
+          "pdf_product_name": "24 口POE 交换机",
+          "api_length": 115,
+          "full_length": 115,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 5,
+          "product_name": "汇聚交换机",
+          "pdf_product_name": "汇聚交换机",
+          "api_length": 159,
+          "full_length": 159,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 6,
+          "product_name": "网络附属存储",
+          "pdf_product_name": "网络附属存储",
+          "api_length": 104,
+          "full_length": 104,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 7,
+          "product_name": "高密AP",
+          "pdf_product_name": "高密AP",
+          "api_length": 187,
+          "full_length": 187,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 8,
+          "product_name": "无线控制器",
+          "pdf_product_name": "无线控制器",
+          "api_length": 120,
+          "full_length": 120,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823668,
+      "title": "中华人民共和国济南海关计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "网络交换机",
+          "pdf_product_name": "网络交换机",
+          "api_length": 465,
+          "full_length": 465,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823665,
+      "title": "财政部信息网络中心打印设备及配件（询价）采购项目需求公告",
+      "api_products": 37,
+      "pdf_items": 37,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 160,
+          "full_length": 160,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "黑粉盒",
+          "pdf_product_name": "黑粉盒",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "红粉盒",
+          "pdf_product_name": "红粉盒",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 4,
+          "product_name": "黄粉盒",
+          "pdf_product_name": "黄粉盒",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 5,
+          "product_name": "蓝粉盒",
+          "pdf_product_name": "蓝粉盒",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 6,
+          "product_name": "红黑双色粉盒",
+          "pdf_product_name": "红黑双色粉盒",
+          "api_length": 155,
+          "full_length": 155,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 7,
+          "product_name": "黑红黄蓝四色墨粉盒",
+          "pdf_product_name": "黑红黄蓝四色墨粉盒",
+          "api_length": 156,
+          "full_length": 156,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 8,
+          "product_name": "黑粉盒",
+          "pdf_product_name": "黑粉盒",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 9,
+          "product_name": "红粉盒",
+          "pdf_product_name": "红粉盒",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 10,
+          "product_name": "黄粉盒",
+          "pdf_product_name": "黄粉盒",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 11,
+          "product_name": "蓝粉盒",
+          "pdf_product_name": "蓝粉盒",
+          "api_length": 153,
+          "full_length": 153,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 12,
+          "product_name": "墨粉盒",
+          "pdf_product_name": "墨粉盒",
+          "api_length": 155,
+          "full_length": 155,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 13,
+          "product_name": "黑红黄蓝一套四色墨粉",
+          "pdf_product_name": "黑红黄蓝一套四色墨粉",
+          "api_length": 167,
+          "full_length": 167,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 14,
+          "product_name": "墨粉盒",
+          "pdf_product_name": "墨粉盒",
+          "api_length": 156,
+          "full_length": 156,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 15,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 167,
+          "full_length": 167,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 16,
+          "product_name": "墨粉盒",
+          "pdf_product_name": "墨粉盒",
+          "api_length": 154,
+          "full_length": 154,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 17,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 155,
+          "full_length": 155,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 18,
+          "product_name": "墨粉盒",
+          "pdf_product_name": "墨粉盒",
+          "api_length": 154,
+          "full_length": 154,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 19,
+          "product_name": "黑色墨粉盒",
+          "pdf_product_name": "黑色墨粉盒",
+          "api_length": 154,
+          "full_length": 154,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 20,
+          "product_name": "红色墨粉盒",
+          "pdf_product_name": "红色墨粉盒",
+          "api_length": 154,
+          "full_length": 154,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 21,
+          "product_name": "黄色墨粉盒",
+          "pdf_product_name": "黄色墨粉盒",
+          "api_length": 154,
+          "full_length": 154,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 22,
+          "product_name": "蓝色墨粉盒",
+          "pdf_product_name": "蓝色墨粉盒",
+          "api_length": 154,
+          "full_length": 154,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 23,
+          "product_name": "黑色墨粉盒",
+          "pdf_product_name": "黑色墨粉盒",
+          "api_length": 160,
+          "full_length": 160,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 24,
+          "product_name": "红色墨粉盒",
+          "pdf_product_name": "红色墨粉盒",
+          "api_length": 160,
+          "full_length": 160,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 25,
+          "product_name": "黄色墨粉盒",
+          "pdf_product_name": "黄色墨粉盒",
+          "api_length": 160,
+          "full_length": 160,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 26,
+          "product_name": "蓝色墨粉盒",
+          "pdf_product_name": "蓝色墨粉盒",
+          "api_length": 160,
+          "full_length": 160,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 27,
+          "product_name": "黑红黄蓝一套四色粉盒",
+          "pdf_product_name": "黑红黄蓝一套四色粉盒",
+          "api_length": 158,
+          "full_length": 158,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 28,
+          "product_name": "黑红黄蓝一套四色粉盒",
+          "pdf_product_name": "黑红黄蓝一套四色粉盒",
+          "api_length": 154,
+          "full_length": 154,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 29,
+          "product_name": "墨粉盒",
+          "pdf_product_name": "墨粉盒",
+          "api_length": 158,
+          "full_length": 158,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 30,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 157,
+          "full_length": 157,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 31,
+          "product_name": "墨粉盒",
+          "pdf_product_name": "墨粉盒",
+          "api_length": 154,
+          "full_length": 154,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 32,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 156,
+          "full_length": 156,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 33,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 157,
+          "full_length": 157,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 34,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 159,
+          "full_length": 159,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 35,
+          "product_name": "硒鼓",
+          "pdf_product_name": "硒鼓",
+          "api_length": 154,
+          "full_length": 154,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 36,
+          "product_name": "墨粉盒",
+          "pdf_product_name": "墨粉盒",
+          "api_length": 159,
+          "full_length": 159,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 37,
+          "product_name": "黑红黄蓝一套四色粉盒",
+          "pdf_product_name": "黑红黄蓝一套四色粉盒",
+          "api_length": 161,
+          "full_length": 161,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823659,
+      "title": "中华人民共和国桂林出入境边防检查站服务器（询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "服务器",
+          "pdf_product_name": "服务器",
+          "api_length": 685,
+          "full_length": 685,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823657,
+      "title": "冶金工业信息中心服务器（询价）采购项目需求公告",
+      "api_products": 2,
+      "pdf_items": 2,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "推理服务器",
+          "pdf_product_name": "推理服务器",
+          "api_length": 1326,
+          "full_length": 1326,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "计算服务器",
+          "pdf_product_name": "计算服务器",
+          "api_length": 1236,
+          "full_length": 1236,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823656,
+      "title": "昆明海关技术中心计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "日志审计系统  大数据日志管理与分析平台",
+          "pdf_product_name": "日志审计系统 大数据日\n志管理与分析平台",
+          "api_length": 1049,
+          "full_length": 1049,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823655,
+      "title": "中国科学院文献情报中心便携式计算机（询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "便携式计算机",
+          "pdf_product_name": "便携式计算机",
+          "api_length": 395,
+          "full_length": 395,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823654,
+      "title": "中国民用航空西南地区空中交通管理局云南分局计算机网络设备(询价）采购项目需求公告",
+      "api_products": 4,
+      "pdf_items": 4,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "路由器",
+          "pdf_product_name": "网络存储设备",
+          "api_length": 89,
+          "full_length": 89,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "交换机",
+          "pdf_product_name": "网络存储设备",
+          "api_length": 79,
+          "full_length": 79,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "网络存储设备",
+          "pdf_product_name": "路由器",
+          "api_length": 130,
+          "full_length": 130,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 4,
+          "product_name": "网络存储设备",
+          "pdf_product_name": "交换机",
+          "api_length": 94,
+          "full_length": 94,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823652,
+      "title": "中华人民共和国福州机场出入境边防检查站服务器（询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "服务器",
+          "pdf_product_name": "服务器",
+          "api_length": 851,
+          "full_length": 851,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823651,
+      "title": "国家食品安全风险评估中心多功能一体机及配件（询价）采购项目需求公告",
+      "api_products": 3,
+      "pdf_items": 3,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "多功能一体机",
+          "pdf_product_name": "多功能一体机",
+          "api_length": 491,
+          "full_length": 491,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "多功能一体机",
+          "pdf_product_name": "多功能一体机",
+          "api_length": 448,
+          "full_length": 448,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "多功能一体机",
+          "pdf_product_name": "多功能一体机",
+          "api_length": 543,
+          "full_length": 543,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823650,
+      "title": "中华人民共和国温州机场出入境边防检查站视频会议系统及会议室音频系统（询价）采购项目需求公告",
+      "api_products": 2,
+      "pdf_items": 2,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "视频会议终端",
+          "pdf_product_name": "视频会议终端",
+          "api_length": 1166,
+          "full_length": 1166,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "智慧屏",
+          "pdf_product_name": "智慧屏",
+          "api_length": 1112,
+          "full_length": 1112,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823649,
+      "title": "中华人民共和国辽宁出入境边防检查总站服务器（询价）采购项目需求公告",
+      "api_products": 3,
+      "pdf_items": 3,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "服务器1",
+          "pdf_product_name": "服务器1",
+          "api_length": 482,
+          "full_length": 482,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "服务器2",
+          "pdf_product_name": "服务器2",
+          "api_length": 312,
+          "full_length": 312,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "服务器3",
+          "pdf_product_name": "服务器3",
+          "api_length": 472,
+          "full_length": 472,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823648,
+      "title": "中国人民银行哈密市分行(国家外汇管理局哈密市分局)计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "交换机",
+          "pdf_product_name": "交换机",
+          "api_length": 300,
+          "full_length": 300,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823647,
+      "title": "财政部信息网络中心计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "分布式对象存储",
+          "pdf_product_name": "分布式对象存储",
+          "api_length": 1061,
+          "full_length": 1061,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823645,
+      "title": "中国科学院上海应用物理研究所计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "接入交换机",
+          "pdf_product_name": "接入交换机",
+          "api_length": 411,
+          "full_length": 411,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823644,
+      "title": "对外经济贸易大学计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "网络安全日志审计设备",
+          "pdf_product_name": "网络安全日志审计设备",
+          "api_length": 979,
+          "full_length": 979,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823643,
+      "title": "中国科学院微电子研究所计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "微电子所访问控制WebVPN系统",
+          "pdf_product_name": "微电子所访问控制WebVPN\n系统",
+          "api_length": 873,
+          "full_length": 873,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823641,
+      "title": "上海市地震局计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "网络回溯分析系统及配套探针",
+          "pdf_product_name": "网络回溯分析系统及配套\n探针",
+          "api_length": 1061,
+          "full_length": 1061,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823640,
+      "title": "生态环境部华北核与辐射安全监督站采购项目需求公告",
+      "api_products": 33,
+      "pdf_items": 33,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "充电箱",
+          "pdf_product_name": "专业音箱",
+          "api_length": 142,
+          "full_length": 142,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "无线话筒",
+          "pdf_product_name": "支架",
+          "api_length": 75,
+          "full_length": 75,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "新中控终端",
+          "pdf_product_name": "调音台",
+          "api_length": 354,
+          "full_length": 354,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 4,
+          "product_name": "控制器",
+          "pdf_product_name": "电源管理器",
+          "api_length": 286,
+          "full_length": 286,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 5,
+          "product_name": "会议终端",
+          "pdf_product_name": "会议系统主机",
+          "api_length": 1129,
+          "full_length": 1129,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 6,
+          "product_name": "无纸化主机",
+          "pdf_product_name": "AI 会议话筒处理器",
+          "api_length": 539,
+          "full_length": 539,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 7,
+          "product_name": "智能无纸化会议管",
+          "pdf_product_name": "专业功放",
+          "api_length": 387,
+          "full_length": 387,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 8,
+          "product_name": "无纸化流媒体主机",
+          "pdf_product_name": "AI 音频处理器",
+          "api_length": 1109,
+          "full_length": 1109,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 9,
+          "product_name": "无纸化流媒体服务器软件",
+          "pdf_product_name": "会议话筒1",
+          "api_length": 429,
+          "full_length": 429,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 10,
+          "product_name": "无纸化网络主机",
+          "pdf_product_name": "会议话筒2",
+          "api_length": 475,
+          "full_length": 475,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 11,
+          "product_name": "发射器",
+          "pdf_product_name": "发射器",
+          "api_length": 298,
+          "full_length": 298,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 12,
+          "product_name": "AI智慧视频终端",
+          "pdf_product_name": "充电箱",
+          "api_length": 229,
+          "full_length": 229,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 13,
+          "product_name": "摄像机",
+          "pdf_product_name": "无线话筒",
+          "api_length": 880,
+          "full_length": 880,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 14,
+          "product_name": "高清矩阵切换器",
+          "pdf_product_name": "新中控终端",
+          "api_length": 339,
+          "full_length": 339,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 15,
+          "product_name": "HDMI超高清输入卡",
+          "pdf_product_name": "控制器",
+          "api_length": 270,
+          "full_length": 270,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 16,
+          "product_name": "HDMI超高清输出卡",
+          "pdf_product_name": "会议终端",
+          "api_length": 105,
+          "full_length": 105,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 17,
+          "product_name": "网络中控主机",
+          "pdf_product_name": "无纸化主机",
+          "api_length": 569,
+          "full_length": 569,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 18,
+          "product_name": "触摸屏",
+          "pdf_product_name": "智能无纸化会议管",
+          "api_length": 864,
+          "full_length": 864,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 19,
+          "product_name": "中控Pad",
+          "pdf_product_name": "无纸化流媒体主机",
+          "api_length": 339,
+          "full_length": 339,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 20,
+          "product_name": "户内全彩LED屏",
+          "pdf_product_name": "无纸化流媒体服务器软件",
+          "api_length": 451,
+          "full_length": 451,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 21,
+          "product_name": "视频处理器",
+          "pdf_product_name": "无纸化网络主机",
+          "api_length": 162,
+          "full_length": 162,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 22,
+          "product_name": "配电柜",
+          "pdf_product_name": "发射器",
+          "api_length": 232,
+          "full_length": 232,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 23,
+          "product_name": "专业音箱",
+          "pdf_product_name": "AI 智慧视频终端",
+          "api_length": 1059,
+          "full_length": 1059,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 24,
+          "product_name": "支架",
+          "pdf_product_name": "摄像机",
+          "api_length": 456,
+          "full_length": 456,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 25,
+          "product_name": "调音台",
+          "pdf_product_name": "高清矩阵切换器",
+          "api_length": 759,
+          "full_length": 759,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 26,
+          "product_name": "电源管理器",
+          "pdf_product_name": "HDMI 超高清输入卡",
+          "api_length": 240,
+          "full_length": 240,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 27,
+          "product_name": "会议系统主机",
+          "pdf_product_name": "HDMI 超高清输出卡",
+          "api_length": 240,
+          "full_length": 240,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 28,
+          "product_name": "AI会议话筒处理器",
+          "pdf_product_name": "网络中控主机",
+          "api_length": 934,
+          "full_length": 934,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 29,
+          "product_name": "专业功放",
+          "pdf_product_name": "触摸屏",
+          "api_length": 629,
+          "full_length": 629,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 30,
+          "product_name": "AI音频处理器",
+          "pdf_product_name": "中控Pad",
+          "api_length": 73,
+          "full_length": 73,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 31,
+          "product_name": "会议话筒1",
+          "pdf_product_name": "户内全彩LED 屏",
+          "api_length": 951,
+          "full_length": 951,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 32,
+          "product_name": "会议话筒2",
+          "pdf_product_name": "视频处理器",
+          "api_length": 327,
+          "full_length": 327,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 33,
+          "product_name": "发射器",
+          "pdf_product_name": "配电柜",
+          "api_length": 651,
+          "full_length": 651,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823639,
+      "title": "广州民航职业技术学院计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "24口交换机",
+          "pdf_product_name": "24 口交换机",
+          "api_length": 59,
+          "full_length": 59,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823638,
+      "title": "国家广播电视总局呼和浩特地球站计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "日志审计系统",
+          "pdf_product_name": "日志审计系统",
+          "api_length": 695,
+          "full_length": 695,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823636,
+      "title": "中国科学院苏州生物医学工程技术研究所计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "备份一体机",
+          "pdf_product_name": "备份一体机",
+          "api_length": 1095,
+          "full_length": 1095,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823635,
+      "title": "国家市场监督管理总局缺陷产品召回技术中心服务器（询价）采购项目需求公告",
+      "api_products": 3,
+      "pdf_items": 3,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "存储服务器",
+          "pdf_product_name": "存储服务器",
+          "api_length": 799,
+          "full_length": 799,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "大模型推理服务器",
+          "pdf_product_name": "大模型推理服务器",
+          "api_length": 1056,
+          "full_length": 1056,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "大模型推理服务器",
+          "pdf_product_name": "大模型推理服务器",
+          "api_length": 1050,
+          "full_length": 1050,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823633,
+      "title": "中华人民共和国东莞海关计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "NAS",
+          "pdf_product_name": "NAS",
+          "api_length": 57,
+          "full_length": 57,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823632,
+      "title": "中国科学院微电子研究所计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "网络准入系统",
+          "pdf_product_name": "网络准入系统",
+          "api_length": 1071,
+          "full_length": 1071,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823631,
+      "title": "中华人民共和国汕尾出入境边防检查站计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "网络交换机",
+          "pdf_product_name": "网络交换机",
+          "api_length": 949,
+          "full_length": 949,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823630,
+      "title": "哈尔滨铁路公安局视频会议系统及会议室音频系统（询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "视频会议终端",
+          "pdf_product_name": "视频会议终端",
+          "api_length": 933,
+          "full_length": 933,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823629,
+      "title": "生态环境部华南环境科学研究所(生态环境部生态环境应急研究所)服务器（询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "高性能AI服务器",
+          "pdf_product_name": "高性能AI 服务器",
+          "api_length": 732,
+          "full_length": 732,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823628,
+      "title": "北京探矿工程研究所计算机网络设备(询价）采购项目需求公告",
+      "api_products": 5,
+      "pdf_items": 5,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "路由器",
+          "pdf_product_name": "路由器",
+          "api_length": 490,
+          "full_length": 490,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 2,
+          "product_name": "汇聚交换机",
+          "pdf_product_name": "汇聚交换机",
+          "api_length": 453,
+          "full_length": 453,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 3,
+          "product_name": "接入交换机",
+          "pdf_product_name": "接入交换机",
+          "api_length": 301,
+          "full_length": 301,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 4,
+          "product_name": "零信任",
+          "pdf_product_name": "零信任",
+          "api_length": 1067,
+          "full_length": 1067,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        },
+        {
+          "index": 5,
+          "product_name": "waf防火墙",
+          "pdf_product_name": "waf 防火墙",
+          "api_length": 1148,
+          "full_length": 1148,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    },
+    {
+      "id": 823627,
+      "title": "山西省消防救援总队训练和战勤保障支队计算机网络设备(询价）采购项目需求公告",
+      "api_products": 1,
+      "pdf_items": 1,
+      "complete": true,
+      "items": [
+        {
+          "index": 1,
+          "product_name": "支队网络日志审计系统",
+          "pdf_product_name": "支队网络日志审计系统",
+          "api_length": 215,
+          "full_length": 215,
+          "has_product_attributes": true,
+          "has_other_technical": true,
+          "complete": true
+        }
+      ],
+      "status": "updated"
+    }
+  ]
+}
