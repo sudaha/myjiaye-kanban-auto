@@ -1,13 +1,13 @@
 {
-  "date": "2026-11-23",
-  "slot": "15:00",
+  "date": "2026-11-24",
+  "slot": "10:00",
   "items": {
     "rail_mall": "skipped_no_ukey",
     "rail_public": "ok",
-    "poly": "none_new",
-    "win_news": "partial:仅央采电子卖场成交公告已核查(0新增)，保利/国铁无增量采集器未覆盖",
-    "zycgmain": "ok"
+    "poly": "ok",
+    "win_news": "none_new",
+    "zycgmain": "partial"
   },
-  "finished_at": "15:26:10",
+  "finished_at": "11:00:03",
   "deployed": true
 }
