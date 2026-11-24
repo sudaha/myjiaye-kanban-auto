@@ -313,11 +313,11 @@ def run_fetch(db_file, pdf_dir, flag=0, seed_days=14, verbose=True):
         cur_ids = {str(r["id"]) for r in new_items if r.get("id") is not None}
         prev_snap = None
         try:
-            c2 = db.connect(db_file)
-            row = c2.execute("SELECT v FROM meta WHERE k = 'in_prog_ids'").fetchone()
-            c2.close()
-            if row and row[0]:
-                prev_snap = set(json.loads(row[0]))
+            # meta 表列名为 key/value（见 db.py）；用 db.get_meta 读取，避免列名写错导致
+            # 快照读不到、把整个进行中集合误判为“当日新增”。
+            raw_snap = db.get_meta(db_file, "in_prog_ids")
+            if raw_snap:
+                prev_snap = set(json.loads(raw_snap))
         except Exception:
             prev_snap = None
         diff = cur_ids - prev_snap if prev_snap is not None else cur_ids
