@@ -584,6 +584,61 @@ def export_rail(out):
     return len(items), att_n
 
 
+def _consistency_check(out):
+    """导出自检门禁（2026-11-24 起）：口径/日期改动常漏掉部分消费端（表头/日历/筛选/卡片/新标注），
+    每次导出后对 dist 数据做一致性断言，任一失败即 RuntimeError 阻断部署，禁止带病上线。"""
+    from collections import Counter
+    lp = os.path.join(out, "data", "zycg", "list.json")
+    sp = os.path.join(out, "data", "zycg", "status.json")
+    if not (os.path.isfile(lp) and os.path.isfile(sp)):
+        return
+    items = json.load(open(lp, encoding="utf-8")).get("items", [])
+    st = json.load(open(sp, encoding="utf-8"))
+    errs = []
+    date_re = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+    today_bj = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=8)).strftime("%Y-%m-%d")
+    # 1) 日期格式：只允许 YYYY-MM-DD（防 unix 时间戳类脏数据回归，2026-11-23 曾发生 11 条）
+    bad = [i["id"] for i in items
+           if (i.get("publish_date") and not date_re.match(i["publish_date"][:10]))
+           or (i.get("pub_date") and not date_re.match(i["pub_date"][:10]))]
+    if bad:
+        errs.append("日期格式非法 %s: %s" % (bad[:5], bad[0]))
+    # 2) 进行中询价必须带首次上架日（pub_date），否则日历/筛选会丢日期
+    nopub = [i["id"] for i in items if i.get("source") == "询价" and i.get("is_end") == 0 and not i.get("pub_date")]
+    if nopub:
+        errs.append("进行中询价缺首次上架日: %s" % nopub[:5])
+    # 3) 日历 available_dates 必须与条目日期逐日汇总完全一致（防导出两侧脱节）
+    calc = Counter()
+    for i in items:
+        dd = (i.get("pub_date") or i.get("publish_date") or "")[:10]
+        if dd:
+            calc[dd] += 1
+    if dict(calc) != st.get("available_dates", {}):
+        errs.append("日历与条目脱节: 仅日历=%s 仅条目=%s" % (
+            {k: v for k, v in st.get("available_dates", {}).items() if calc.get(k) != v},
+            {k: v for k, v in calc.items() if st.get("available_dates", {}).get(k) != v}))
+    # 4) 表头最新日期 >= 条目最大日期，且不得晚于今天（防时间戳/脏数据顶掉真实日期）
+    item_max = max(calc, default="")
+    if st.get("latest_date", "") < item_max:
+        errs.append("latest_date %s 早于条目最大日期 %s" % (st.get("latest_date"), item_max))
+    if st.get("latest_date", "") and st["latest_date"] > today_bj:
+        errs.append("latest_date %s 是未来日期" % st["latest_date"])
+    future = sorted({(i.get("pub_date") or i.get("publish_date") or "")[:10] for i in items
+                     if date_re.match((i.get("pub_date") or i.get("publish_date") or "")[:10]) and (i.get("pub_date") or i.get("publish_date"))[:10] > today_bj})
+    if future:
+        errs.append("存在未来日期条目: %s" % future[:5])
+    # 5) 新标注计数必须一致
+    new_true = sum(1 for i in items if i.get("is_new"))
+    if st.get("new_count") != new_true:
+        errs.append("new_count=%s 与 is_new 条目数 %d 不一致" % (st.get("new_count"), new_true))
+    # 6) 至少有一条进行中询价（空集说明抓取或过滤异常）
+    if not any(i.get("source") == "询价" and i.get("is_end") == 0 for i in items):
+        errs.append("无进行中询价条目")
+    if errs:
+        raise RuntimeError("导出自检失败（禁止部署）: " + " | ".join(errs))
+    print("[自检] 央采一致性通过：日期格式/首次上架日/日历对齐/最新日期/新标注计数/进行中非空")
+
+
 def main():
     out = sys.argv[1] if len(sys.argv) > 1 else os.path.join(BASE, "dist")
     if os.path.isdir(out):
@@ -672,6 +727,7 @@ def main():
     else:
         manifest = {}
     total_size = sum(v["size"] for v in manifest.values())
+    _consistency_check(out)
     print("输出目录 : %s" % out)
     print("央采     : %d 条公告 / %d 份 PDF" % (n_zycg, p_zycg))
     print("保利     : %d 个项目 / %d 份 PDF" % (n_poly, p_poly))
