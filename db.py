@@ -84,7 +84,7 @@ def upsert_announcement(db_file, a):
     """a: dict with keys matching columns. Upsert by id."""
     cols = [
         "id", "enquiry_no", "title", "enquiry_name", "org_name", "purchase_company",
-        "budget_amount", "end_time", "publish_date", "enquriy_state", "is_end",
+        "budget_amount", "end_time", "publish_date", "pub_date", "enquriy_state", "is_end",
         "category", "brands", "products_json", "pdf_url", "pdf_local", "detail_fetched",
         "created_at", "updated_at",
     ]
@@ -93,7 +93,8 @@ def upsert_announcement(db_file, a):
     a.setdefault("created_at", now)
     with _lock, connect(db_file) as conn:
         placeholders = ", ".join("?" for _ in cols)
-        updates = ", ".join("%s=excluded.%s" % (c, c) for c in cols if c != "id")
+        # pub_date=首次上架日，只在插入时写入；冲突更新不得覆盖（否则每日抓取会把日期刷成当天）
+        updates = ", ".join("%s=excluded.%s" % (c, c) for c in cols if c not in ("id", "pub_date"))
         sql = (
             "INSERT INTO announcements(%s) VALUES(%s) "
             "ON CONFLICT(id) DO UPDATE SET %s" % (", ".join(cols), placeholders, updates)

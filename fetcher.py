@@ -271,6 +271,10 @@ def run_fetch(db_file, pdf_dir, flag=0, seed_days=14, verbose=True):
         d["products"] = prods
         d["products_json"] = json.dumps(prods, ensure_ascii=False)
         d["detail_fetched"] = 1
+        # 公告日期 = 首次上架日（首次进入官网进行中集合被抓到的那天），稳定不变，供日历/日期筛选；
+        # 官网列表上架日（每日刷新成当天）另存 meta mkt_list_latest，只用于表头"最新日期"
+        if int(nid) not in existing:
+            d["pub_date"] = time.strftime("%Y-%m-%d")
         db.upsert_announcement(db_file, d)
         if int(nid) > max_id:
             max_id = int(nid)

@@ -194,7 +194,9 @@ def export_zycg(out):
             "org_name": d["org_name"], "purchase_company": d["purchase_company"],
             "budget_amount": d["budget_amount"], "budget_num": budget,
             "end_time": d["end_time"], "publish_date": d["publish_date"],
-            "pub_date": (list_latest if d["is_end"] == 0 else (d.get("pub_date") or "")),
+            # 公告日期=首次上架日（DB pub_date，fetcher 入库时写入且不被后续抓取覆盖）；
+            # 缺失时进行中项回落官网列表上架日，保证日历不空
+            "pub_date": (d.get("pub_date") or (list_latest if d["is_end"] == 0 else "")),
             "category": d["category"], "brands": d["brands"],
             "is_end": d["is_end"], "enquiry_no": d["enquiry_no"],
             "has_pdf": has_pdf,
