@@ -818,6 +818,36 @@
     }
     return safeName(proj) + "_" + safeName(org) + ext;
   }
+  // Windows 资源管理器内置「压缩(zipped)文件夹」组件对条目名的两条硬限制，任一违反都判定整个压缩包「无效」直接拒开：
+  //   ① 不允许重复条目名；② 单条条目名（含文件夹前缀）不得超过 255 字节（UTF-8）。
+  // .NET/Expand-Archive、Python 都容忍这两者，故「内容看似完好却打不开」。此处按字节上限收紧最终 zip 路径。
+  var MAX_ZIP_NAME_BYTES = 250; // 留 5 字节安全余量（<255）
+  function utf8Bytes(s) { return new TextEncoder().encode(s).length; }
+  function capBytes(s, maxBytes) {
+    if (utf8Bytes(s) <= maxBytes) return s;
+    var out = "", bytes = 0;
+    for (var i = 0; i < s.length; i++) {
+      var code = s.codePointAt(i);
+      var bl = code < 0x80 ? 1 : code < 0x800 ? 2 : code < 0x10000 ? 3 : 4;
+      if (bytes + bl > maxBytes) break;
+      out += String.fromCodePoint(code);
+      bytes += bl;
+      if (code > 0xFFFF) i++;
+    }
+    return out;
+  }
+  // 只对文件名（proj_org）截断，保留文件夹与扩展名；截断后可能产生新同名，交由 makeZipNamer 去重
+  function capZipPath(path, maxBytes) {
+    if (utf8Bytes(path) <= maxBytes) return path;
+    var slash = path.lastIndexOf("/");
+    var folder = path.slice(0, slash + 1);
+    var file = path.slice(slash + 1);
+    var dot = file.lastIndexOf(".");
+    var stem = dot > 0 ? file.slice(0, dot) : file;
+    var ext = dot > 0 ? file.slice(dot) : "";
+    var budget = maxBytes - utf8Bytes(folder) - utf8Bytes(ext);
+    return folder + capBytes(stem, budget) + ext;
+  }
   function buildManifestTxt(list) {
     var today = new Date().toISOString().slice(0, 10);
     var byCat = {};
@@ -829,7 +859,7 @@
     var lines = [];
     lines.push((plat === "poly" ? "中国保利集团招标采购平台 · 项目附件" : "中央政府采购网 · 电子询价 · 需求公告 · 询价通知书PDF") + "（" + today + "）分类归档");
     lines.push("");
-    lines.push("共 " + list.length + " 个项目，按项目类型分文件夹；文件名=采购项目_采购公司。");
+     lines.push("共 " + list.length + " 个项目，按项目类型分文件夹；文件名=采购项目_采购公司（同名自动加序号 _2/_3… 区分；超长名称已截断并附「原名」，压缩包内条目名与下方清单一致）。");
     lines.push("导出时间：" + new Date().toLocaleString("zh-CN"));
     lines.push("");
     cats.forEach(function (c) {
@@ -842,8 +872,13 @@
         var tags = [];
         if (budget) tags.push("预算" + budget + "元");
         if (it.end_time) tags.push("截止" + it.end_time);
-        lines.push("  " + pdfFileName(it).replace(/\.pdf$/, "") +
-          "   [" + (tags.join(" ") || "—") + "]");
+          var fullBase = (plat === "poly" ? safeName(it.title || "保利项目") : pdfFileName(it));
+          var actualBase = (it.__zipName ? it.__zipName : fullBase).split("/").pop();
+          var dispBase = actualBase.replace(/\.(pdf|html)$/i, "");
+          var origBase = fullBase.replace(/\.(pdf|html)$/i, "");
+          var origNote = (dispBase !== origBase) ? "　（原名：" + origBase + "）" : "";
+          lines.push("  " + dispBase + origNote +
+            "   [" + (tags.join(" ") || "—") + "]");
       });
       lines.push("");
     });
@@ -908,11 +943,39 @@
     });
   }
 
-  function downloadZip() {
-    var ids = Object.keys(state.picked);
-    if (!ids.length) return;
-    var picked = state.items.filter(function (it) { return state.picked[it.id] && (plat === "poly" || it.has_pdf); });
-    var noPdf = plat === "poly" ? 0 : ids.length - picked.length;
+   // 打包时同一采购人常有多个「计算机网络设备(询价）采购项目」等重名项目，
+   // 文件名=采购项目_采购公司 会碰撞；且个别长采购人名会使条目名超过 255 字节。
+   // Windows 资源管理器内置 zip 组件对「重复条目名」和「条目名>255字节」都会判定整个压缩包「无效」直接拒开
+   // （Python/Expand-Archive 都容忍，故内容看似完好却打不开）。
+   // 这里：先按 UTF-8 字节上限收紧路径（capZipPath），再为每个条目生成唯一路径（makeZipNamer），
+   // 清单.txt 同步展示最终名（必要时附「原名」）。
+   function makeZipNamer() {
+     var used = {};
+     return function (base) {
+       if (!used[base]) { used[base] = true; return base; }
+       var dot = base.lastIndexOf(".");
+       var stem = dot > 0 ? base.slice(0, dot) : base;
+       var ext = dot > 0 ? base.slice(dot) : "";
+       var n = 2, cand;
+       do { cand = stem + "_" + n + ext; n++; } while (used[cand]);
+       used[cand] = true;
+       return cand;
+     };
+   }
+   function zipBaseName(it) {
+     var base = plat === "poly"
+       ? catFolder(it) + "/" + safeName(it.title || "保利项目") + ".html"
+       : catFolder(it) + "/" + pdfFileName(it);
+     return capZipPath(base, MAX_ZIP_NAME_BYTES);
+   }
+   function downloadZip() {
+     var ids = Object.keys(state.picked);
+     if (!ids.length) return;
+     var picked = state.items.filter(function (it) { return state.picked[it.id] && (plat === "poly" || it.has_pdf); });
+     var noPdf = plat === "poly" ? 0 : ids.length - picked.length;
+     // 先按列表顺序为每个入选项分配唯一 zip 路径，保证 out.push / 直下兜底 / 清单三者同名一致
+     var zipNamer = makeZipNamer();
+     picked.forEach(function (it) { it.__zipName = zipNamer(zipBaseName(it)); });
     if (!picked.length) {
       $("zip-progress").textContent = plat === "poly" ? "没有可打包的项目" : "选中项都没有 PDF 附件";
       return;
@@ -949,7 +1012,7 @@
       if (plat === "poly") {
         getJSON("data/poly/detail/" + it.id + ".json").then(function (d) {
           var html = polyProjectHtml(d);
-          out.push({ name: catFolder(it) + "/" + safeName(it.title || "保利项目") + ".html", data: new TextEncoder().encode(html) });
+          out.push({ name: it.__zipName, data: new TextEncoder().encode(html) });
           okItems.push(it); i++; next();
         }).catch(function () { failed++; i++; next(); });
         return;
@@ -969,7 +1032,7 @@
         })
         .then(function (buf) {
           out.push({
-            name: catFolder(it) + "/" + pdfFileName(it),
+            name: it.__zipName,
             data: new Uint8Array(buf)
           });
           okItems.push(it);
@@ -979,7 +1042,7 @@
           $("zip-progress").textContent = tip + "（改浏览器直接下载…）";
           try {
             var a2 = document.createElement("a");
-            a2.href = pdfUrl; a2.download = pdfFileName(it);
+            a2.href = pdfUrl; a2.download = it.__zipName.split("/").pop();
             document.body.appendChild(a2); a2.click(); a2.remove();
             direct++;
           } catch (e2) { failed++; }
