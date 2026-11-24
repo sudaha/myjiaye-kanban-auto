@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-20T16:24:29+08:00",
+ "updated_at": "2026-11-24T16:36:12+08:00",
  "items": {
   "432a9fe24eda442a87319420a144bf5c": {
    "title": "中国铁路武汉局集团有限公司物资设备采购供应所信创办公计算机批量采购项目公告",
@@ -309,6 +309,283 @@
      "name": "兰州车辆段信创笔记本国铁商城批量专区采购需求.pdf",
      "local": "data/rail_mall_files/aa4934987caf/01_兰州车辆段信创笔记本国铁商城批量专区采购需求.pdf",
      "size": 276284
+    }
+   ]
+  },
+  "fa8b4e7b43394a80814da05d4c48cf84": {
+   "title": "中铁快运股份有限公司济南分公司信创台式电脑批量采购批量采购项目公告",
+   "projId": "96a574d8b07a80511093",
+   "bulletinUuid": "fa8b4e7b43394a80814da05d4c48cf84",
+   "attachments": [
+    {
+     "fileId": "1860266",
+     "associationId": "416079",
+     "attachmentType": "10",
+     "name": "信创台式电脑批量采购 Copy.pdf",
+     "local": "data/rail_mall_files/96a574d8b07a/01_信创台式电脑批量采购 Copy.pdf",
+     "size": 117943
+    }
+   ]
+  },
+  "0726b756f3e545a7a680e8d9bdf3802e": {
+   "title": "中国铁路兰州局集团有限公司天水车站信创台式机批量采购项目公告",
+   "projId": "8bf4121f57e462511074",
+   "bulletinUuid": "0726b756f3e545a7a680e8d9bdf3802e",
+   "attachments": [
+    {
+     "fileId": "1859892",
+     "associationId": "416042",
+     "attachmentType": "10",
+     "name": "中国铁路兰州局集团有限公司天水车站信创台式机批量采购用户需求书.docx",
+     "local": "data/rail_mall_files/8bf4121f57e4/01_中国铁路兰州局集团有限公司天水车站信创台式机批量采购用户需求书.docx",
+     "size": 386883
+    }
+   ]
+  },
+  "178b43c03c6644cdb7e9020784b97982": {
+   "title": "中国铁路兰州局集团有限公司银川供电段信创计算机（一体机）批量采购项目公告",
+   "projId": "92289414499c841d1011",
+   "bulletinUuid": "178b43c03c6644cdb7e9020784b97982",
+   "attachments": [
+    {
+     "fileId": "1859587",
+     "associationId": "415948",
+     "attachmentType": "10",
+     "name": "银川供电段第二批信创计算机-一体机采购上传.docx",
+     "local": "data/rail_mall_files/92289414499c/01_银川供电段第二批信创计算机-一体机采购上传.docx",
+     "size": 4190897
+    }
+   ]
+  },
+  "9eb09e690f61407d844f0fa8fb9a2e50": {
+   "title": "广州局集团公司广州铁路物资有限公司广州招标基地、长沙招标基地信创终端批量采购项目公告",
+   "projId": "a2ba3319565311ff1018",
+   "bulletinUuid": "9eb09e690f61407d844f0fa8fb9a2e50",
+   "attachments": [
+    {
+     "fileId": "1858309",
+     "associationId": "415766",
+     "attachmentType": "10",
+     "name": "国铁商城批量采购专区自动量化评分标准.docx",
+     "local": "data/rail_mall_files/a2ba33195653/01_国铁商城批量采购专区自动量化评分标准.docx",
+     "size": 37843
+    }
+   ]
+  },
+  "97bb283e79e14a928905b39b7de7aa25": {
+   "title": "兰州局集团有限公司兰州电务段笔记本电脑批量采购项目公告",
+   "projId": "98e5d54a8d0932451067",
+   "bulletinUuid": "97bb283e79e14a928905b39b7de7aa25",
+   "attachments": [
+    {
+     "fileId": "1858942",
+     "associationId": "415852",
+     "attachmentType": "10",
+     "name": "电商代理服务费收取办法.docx",
+     "local": "data/rail_mall_files/98e5d54a8d09/01_电商代理服务费收取办法.docx",
+     "size": 12659
+    },
+    {
+     "fileId": "1858943",
+     "associationId": "415852",
+     "attachmentType": "10",
+     "name": "异议模板要求.docx",
+     "local": "data/rail_mall_files/98e5d54a8d09/02_异议模板要求.docx",
+     "size": 14025
+    },
+    {
+     "fileId": "1858944",
+     "associationId": "415852",
+     "attachmentType": "10",
+     "name": "兰州电务段笔记本电脑国铁商城批量专区采购需求申请.docx",
+     "local": "data/rail_mall_files/98e5d54a8d09/03_兰州电务段笔记本电脑国铁商城批量专区采购需求申请.docx",
+     "size": 613186
+    }
+   ]
+  },
+  "fd80835230054d8d8d5da942e212cd57": {
+   "title": "兰州局集团有限公司兰州西机务段台式电脑批量采购项目公告",
+   "projId": "b2c2f03049f4fc8a1082",
+   "bulletinUuid": "fd80835230054d8d8d5da942e212cd57",
+   "attachments": [
+    {
+     "fileId": "1859034",
+     "associationId": "415867",
+     "attachmentType": "10",
+     "name": "电商代理服务费收取办法.docx",
+     "local": "data/rail_mall_files/b2c2f03049f4/01_电商代理服务费收取办法.docx",
+     "size": 12659
+    },
+    {
+     "fileId": "1859035",
+     "associationId": "415867",
+     "attachmentType": "10",
+     "name": "异议模板要求.docx",
+     "local": "data/rail_mall_files/b2c2f03049f4/02_异议模板要求.docx",
+     "size": 14025
+    },
+    {
+     "fileId": "1859036",
+     "associationId": "415867",
+     "attachmentType": "10",
+     "name": "兰州西机务段信息技术科150台台式计算机批量采购需求申请.docx",
+     "local": "data/rail_mall_files/b2c2f03049f4/03_兰州西机务段信息技术科150台台式计算机批量采购需求申请.docx",
+     "size": 421969
+    }
+   ]
+  },
+  "6b6b8f5d47f947a8a08b89ce94eb5858": {
+   "title": "兰州局集团有限公司银川电务段国产台式计算机批量采购项目公告",
+   "projId": "b1cf7c9d76b6ca2d1095",
+   "bulletinUuid": "6b6b8f5d47f947a8a08b89ce94eb5858",
+   "attachments": [
+    {
+     "fileId": "1859162",
+     "associationId": "415885",
+     "attachmentType": "10",
+     "name": "银川电务段国产台式计算机国铁商城批量采购用户需求书.docx",
+     "local": "data/rail_mall_files/b1cf7c9d76b6/01_银川电务段国产台式计算机国铁商城批量采购用户需求书.docx",
+     "size": 155710
+    },
+    {
+     "fileId": "1859163",
+     "associationId": "415885",
+     "attachmentType": "10",
+     "name": "电商代理服务费收取办法.docx",
+     "local": "data/rail_mall_files/b1cf7c9d76b6/02_电商代理服务费收取办法.docx",
+     "size": 12659
+    },
+    {
+     "fileId": "1859164",
+     "associationId": "415885",
+     "attachmentType": "10",
+     "name": "异议模板要求.docx",
+     "local": "data/rail_mall_files/b1cf7c9d76b6/03_异议模板要求.docx",
+     "size": 14025
+    }
+   ]
+  },
+  "c97eace5982a4e64b2ffa55cea4d36ef": {
+   "title": "兰州局集团有限公司银川铁路物流中心计算机终端批量采购项目公告",
+   "projId": "9cf1dcfb235ca3d31112",
+   "bulletinUuid": "c97eace5982a4e64b2ffa55cea4d36ef",
+   "attachments": [
+    {
+     "fileId": "1859405",
+     "associationId": "415907",
+     "attachmentType": "10",
+     "name": "电商代理服务费收取办法.docx",
+     "local": "data/rail_mall_files/9cf1dcfb235c/01_电商代理服务费收取办法.docx",
+     "size": 12659
+    },
+    {
+     "fileId": "1859406",
+     "associationId": "415907",
+     "attachmentType": "10",
+     "name": "异议模板要求.docx",
+     "local": "data/rail_mall_files/9cf1dcfb235c/02_异议模板要求.docx",
+     "size": 14025
+    },
+    {
+     "fileId": "1859407",
+     "associationId": "415907",
+     "attachmentType": "10",
+     "name": "银川铁路物流中心计算机国铁商城批量专区采购申请 - 副本.docx",
+     "local": "data/rail_mall_files/9cf1dcfb235c/03_银川铁路物流中心计算机国铁商城批量专区采购申请 - 副本.docx",
+     "size": 605961
+    }
+   ]
+  },
+  "35a1116561bd41e494e97659b3b0624b": {
+   "title": "兰州局集团有限公司信息技术所国产台式计算机整机批量采购项目公告",
+   "projId": "98fa4259d46796751116",
+   "bulletinUuid": "35a1116561bd41e494e97659b3b0624b",
+   "attachments": [
+    {
+     "fileId": "1859417",
+     "associationId": "415910",
+     "attachmentType": "10",
+     "name": "国产信创计算机国铁商城批量专区采购项目-清华同方、方正、紫光-用户需求书.docx",
+     "local": "data/rail_mall_files/98fa4259d467/01_国产信创计算机国铁商城批量专区采购项目-清华同方、方正、紫光-用户需求书.docx",
+     "size": 100029
+    },
+    {
+     "fileId": "1859418",
+     "associationId": "415910",
+     "attachmentType": "10",
+     "name": "电商代理服务费收取办法.docx",
+     "local": "data/rail_mall_files/98fa4259d467/02_电商代理服务费收取办法.docx",
+     "size": 12659
+    },
+    {
+     "fileId": "1859419",
+     "associationId": "415910",
+     "attachmentType": "10",
+     "name": "异议模板要求.docx",
+     "local": "data/rail_mall_files/98fa4259d467/03_异议模板要求.docx",
+     "size": 14025
+    }
+   ]
+  },
+  "b8933a3541394332a3b384be1fba7e54": {
+   "title": "兰州局集团有限公司武威房建公寓段计算机电脑批量采购项目公告",
+   "projId": "87dd5be0454d64771122",
+   "bulletinUuid": "b8933a3541394332a3b384be1fba7e54",
+   "attachments": [
+    {
+     "fileId": "1857271",
+     "associationId": "415670",
+     "attachmentType": "10",
+     "name": "武威房建公寓段2026年第四批成本项目信创计算机电脑采购.docx",
+     "local": "data/rail_mall_files/87dd5be0454d/01_武威房建公寓段2026年第四批成本项目信创计算机电脑采购.docx",
+     "size": 358624
+    },
+    {
+     "fileId": "1857272",
+     "associationId": "415670",
+     "attachmentType": "10",
+     "name": "电商代理服务费收取办法.docx",
+     "local": "data/rail_mall_files/87dd5be0454d/02_电商代理服务费收取办法.docx",
+     "size": 12659
+    },
+    {
+     "fileId": "1857273",
+     "associationId": "415670",
+     "attachmentType": "10",
+     "name": "异议模板要求.docx",
+     "local": "data/rail_mall_files/87dd5be0454d/03_异议模板要求.docx",
+     "size": 14025
+    }
+   ]
+  },
+  "1f9fa35062e24316b1c9f4e14321f62b": {
+   "title": "兰州局集团有限公司兰州客运段国产台式计算机整机批量采购项目公告",
+   "projId": "9ae5b9adb034a8e11084",
+   "bulletinUuid": "1f9fa35062e24316b1c9f4e14321f62b",
+   "attachments": [
+    {
+     "fileId": "1857018",
+     "associationId": "415209",
+     "attachmentType": "10",
+     "name": "电商代理服务费收取办法.docx",
+     "local": "data/rail_mall_files/9ae5b9adb034/01_电商代理服务费收取办法.docx",
+     "size": 12659
+    },
+    {
+     "fileId": "1857019",
+     "associationId": "415209",
+     "attachmentType": "10",
+     "name": "异议模板要求.docx",
+     "local": "data/rail_mall_files/9ae5b9adb034/02_异议模板要求.docx",
+     "size": 14025
+    },
+    {
+     "fileId": "1857020",
+     "associationId": "415209",
+     "attachmentType": "10",
+     "name": "兰州客运段国铁商城计算机批量专区采购需求书-2026.11.11修定后.docx",
+     "local": "data/rail_mall_files/9ae5b9adb034/03_兰州客运段国铁商城计算机批量专区采购需求书-2026.11.11修定后.docx",
+     "size": 136144
     }
    ]
   }

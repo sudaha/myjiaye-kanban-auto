@@ -2,13 +2,13 @@
   "date": "2026-11-24",
   "slot": "15:00",
   "items": {
-    "rail_mall": "skipped_no_ukey",
+    "rail_mall": "ok",
     "rail_public": "ok",
     "poly": "ok",
     "zycg_mkt": "none_new",
     "zycgmain": "ok",
     "win_news": "none_new"
   },
-  "finished_at": "15:11:57",
+  "finished_at": "16:36:24",
   "deployed": true
 }
