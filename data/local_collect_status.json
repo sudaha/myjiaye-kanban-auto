@@ -1,14 +1,15 @@
-{
-  "date": "2026-11-25",
-  "slot": "15:00",
+﻿{
+  "date": "2026-11-26",
+  "slot": "10:00",
   "items": {
-    "rail_mall": "skipped_no_ukey",
+    "rail_mall": "ok",
     "rail_public": "ok",
     "poly": "ok",
     "win_news": "none_new",
     "zycg_mkt": "none_new",
-    "zycgmain": "none_new"
+    "zycgmain": "ok"
   },
-  "finished_at": "15:02:34",
+  "finished_at": "10:45:00",
   "deployed": false
 }
+

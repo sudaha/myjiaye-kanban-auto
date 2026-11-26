@@ -1,8 +1,26 @@
 {
  "source": "zycg.gov.cn main site",
- "updated_at": "2026-11-25 10:14:02",
- "count": 125,
+ "updated_at": "2026-11-26 10:25:10",
+ "count": 127,
  "items": [
+  {
+   "id": "53474279-e8a9-11f1-9615-fa163ee0ead6",
+   "title": "国家广播电视总局无线电台管理局大湾区覆盖项目调频电视发射台台站运维系统信息化系统设备采购项目招标公告",
+   "date": "2026-11-25",
+   "seen_date": "2026-11-26",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/8b5ef4ba-849a-4e7d-aebb-60554d36332f.html",
+   "source": "zycg-main",
+   "buyer": "国家广播电视总局无线电台管理局"
+  },
+  {
+   "id": "2b2cd3fc-e8a2-11f1-9615-fa163ee0ead6",
+   "title": "四川大学华西医院服务器采购项目招标公告",
+   "date": "2026-11-25",
+   "seen_date": "2026-11-26",
+   "url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/4acfdd9f-eb7b-4125-9ef2-78d566f62cf9.html",
+   "source": "zycg-main",
+   "buyer": "四川大学华西医院(四川省国际医院)"
+  },
   {
    "buyer": "",
    "date": "2026-11-24 09:18:39",
