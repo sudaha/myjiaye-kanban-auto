@@ -2541,9 +2541,25 @@
     var box = $("recordsbox");
     if (!box) return;
     recEnsureDeals().then(function () {
-      var total = recState.items.length;
+      // 喜报同步：wins.json 中标记录（含 wins_manual 外部录入）合并进参与投标记录，
+      // 中标信息全设备可见；localStorage 参与记录优先，按规范化标题去重（2026-11-27）。
+      var merged = recState.items.slice();
+      var seenT = {};
+      merged.forEach(function (r) { seenT[normTitle(r.title)] = 1; });
+      (publicWins || []).forEach(function (w) {
+        if (!w || !w.id) return;
+        if (seenT[normTitle(w.title)]) return;
+        seenT[normTitle(w.title)] = 1;
+        merged.push({
+          id: "win_" + w.id, winSync: true, platform: "win",
+          title: w.title, buyer: w.buyer || "", category: "",
+          publish_date: w.date || "", manualResult: "win",
+          products: w.products || [], joinedAt: 0
+        });
+      });
+      var total = merged.length;
       var withResult = 0, wins = 0;
-      recState.items.forEach(function (r) {
+      merged.forEach(function (r) {
         var res = recResultOf(r);
         if (res === "win" || res === "lose") { withResult++; if (res === "win") wins++; }
       });
@@ -2570,7 +2586,7 @@
         return '<option value="' + esc(m) + '"' + (fMon === m ? " selected" : "") + ">" + esc(m) + "</option>";
       }).join("");
 
-      var list = recState.items.filter(function (r) {
+      var list = merged.filter(function (r) {
         if (fCat && r.category !== fCat) return false;
         if (fMon && String(r.publish_date || "").slice(0, 7) !== fMon) return false;
         if (fKw && (r.title + " " + r.buyer + " " + r.category).toLowerCase().indexOf(fKw.toLowerCase()) < 0) return false;
@@ -2604,7 +2620,7 @@
           var resBadge = res === "win" ? '<span class="rec-badge win">我方中标</span>'
             : res === "lose" ? '<span class="rec-badge lose">未中标</span>'
             : '<span class="rec-badge pending">待出结果</span>';
-          var platName = r.platform === "zycg" ? "央采" : (r.platform === "rail" ? "国铁" : "保利");
+          var platName = r.platform === "zycg" ? "央采" : (r.platform === "rail" ? "国铁" : (r.platform === "win" ? "喜报同步" : "保利"));
           var moneyTxt = r.budget_num != null ? "预算 " + money(r.budget_num) + " 元" : "";
 
           html += '<div class="rec-card" data-id="' + esc(r.id) + '">' +
@@ -2616,7 +2632,8 @@
               resBadge +
             "</div>" +
             '<div class="rec-title">' + esc(r.title) + "</div>" +
-            '<div class="rec-meta">采购方 ' + esc(r.buyer || "—") + " · 参与于 " + esc(new Date(r.joinedAt).toLocaleString("zh-CN")) + "</div>";
+            '<div class="rec-meta">采购方 ' + esc(r.buyer || "—") + " · " +
+              (r.winSync ? "喜报同步 " + esc(r.publish_date || "") : "参与于 " + esc(new Date(r.joinedAt).toLocaleString("zh-CN"))) + "</div>";
 
           // 中标详情（查漏补缺）
           if (ds.length) {
@@ -2650,16 +2667,21 @@
             html += "</div>";
           }
 
-          html += '<div class="rec-actions">' +
-            '<label class="rec-manual">手动标注结果：<select class="rec-result-sel" data-id="' + esc(r.id) + '">' +
-              '<option value="auto"' + (r.manualResult == null ? " selected" : "") + ">自动判定</option>" +
-              '<option value="win"' + (r.manualResult === "win" ? " selected" : "") + ">我方中标</option>" +
-              '<option value="lose"' + (r.manualResult === "lose" ? " selected" : "") + ">未中标</option>" +
-              '<option value="pending"' + (r.manualResult === "pending" ? " selected" : "") + ">待出结果</option>" +
-              "</select></label>" +
-            '<button type="button" class="rec-cancel" data-id="' + esc(r.id) + '">取消参与</button>' +
-            "</div>" +
-            "</div>";
+          if (r.winSync) {
+            // 喜报同步记录只读：不允许手动标注/取消（数据源是 wins.json，改动应走 wins_manual.json）
+            html += '<div class="rec-meta">该记录来自中标喜报同步（wins.json），只读展示；如需修改请更新 data/wins_manual.json。</div>';
+          } else {
+            html += '<div class="rec-actions">' +
+              '<label class="rec-manual">手动标注结果：<select class="rec-result-sel" data-id="' + esc(r.id) + '">' +
+                '<option value="auto"' + (r.manualResult == null ? " selected" : "") + ">自动判定</option>" +
+                '<option value="win"' + (r.manualResult === "win" ? " selected" : "") + ">我方中标</option>" +
+                '<option value="lose"' + (r.manualResult === "lose" ? " selected" : "") + ">未中标</option>" +
+                '<option value="pending"' + (r.manualResult === "pending" ? " selected" : "") + ">待出结果</option>" +
+                "</select></label>" +
+              '<button type="button" class="rec-cancel" data-id="' + esc(r.id) + '">取消参与</button>' +
+              "</div>";
+          }
+          html += "</div>";
         });
       }
 
