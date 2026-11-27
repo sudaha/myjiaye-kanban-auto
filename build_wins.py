@@ -45,6 +45,20 @@ def main():
     for w in wins:
         w["amount"] = round(w["amount"], 2)
         w["products"] = w["products"][:6]
+    # 手动/外部中标（国铁商城批采、其他平台等官方成交公告覆盖不到的来源）：
+    # 从 data/wins_manual.json 合并，避免每次导出被重建覆盖（2026-11-27 起）。
+    manual_file = os.path.join(BASE, "data", "wins_manual.json")
+    if os.path.isfile(manual_file):
+        try:
+            m = json.load(open(manual_file, encoding="utf-8"))
+            manual = m.get("wins") if isinstance(m, dict) else m
+            have = {w["id"] for w in wins}
+            for w in manual or []:
+                if w.get("id") and w["id"] not in have:
+                    wins.append(w)
+                    have.add(w["id"])
+        except Exception as e:
+            print("[warn] wins_manual 合并失败: %s" % e)
     wins.sort(key=lambda x: (x.get("date") or "", x.get("title") or ""), reverse=True)
     json.dump({"updated_at": dt.datetime.now().isoformat(timespec="seconds"),
                "companies": list(OUR_COMPANIES), "count": len(wins), "wins": wins},
