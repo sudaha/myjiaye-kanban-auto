@@ -273,6 +273,9 @@ def export_zycg(out):
             "category": d["category"], "brands": d["brands"], "is_end": d["is_end"],
             "enquiry_no": d["enquiry_no"], "pdf_url": d["pdf_url"],
             "pdf_path": rr["pdf_path"], "products": rr["products"],
+            # 详情弹层数据源是 detail/<id>.json（非 list.json），服务要求必须同步落盘
+            "service_req": d.get("service_req") or "",
+            "after_sales_req": d.get("after_sales_req") or "",
         })
     conn.close()
 
