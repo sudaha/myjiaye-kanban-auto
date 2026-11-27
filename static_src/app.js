@@ -88,26 +88,35 @@
       ? "选型助手 · 成交机型库" : m.name + " · 佳业采购雷达";
     document.querySelector(".brand .sub").textContent = m.sub;
     document.title = isPicker ? "选型助手 · 成交机型库" : m.name + " · 佳业采购雷达";
+    var winsStat = document.querySelector("#st-wins").parentNode;
     if (isPicker) {
       $("st-total-lab").textContent = "机型总数";
       $("st-active-lab").textContent = "有成交价";
       $("st-latest-lab").textContent = "最后更新";
+      winsStat.style.display = "";
+      $("st-wins-lab").textContent = "累计中标";
     } else if (isDocs) {
       $("st-total-lab").textContent = "单证类型";
       $("st-active-lab").textContent = "模板";
       $("st-latest-lab").textContent = "生成方式";
+      winsStat.style.display = "none"; // 单证视图与中标无关
     } else if (isRecords) {
       $("st-total-lab").textContent = "参与项目";
       $("st-active-lab").textContent = "我方中标";
       $("st-latest-lab").textContent = "中标率";
+      winsStat.style.display = "none"; // 该视图 st-active 已是「我方中标」，避免双口径混淆
     } else if (p === "bid") {
       $("st-total-lab").textContent = "IT 公告";
       $("st-active-lab").textContent = "覆盖天数";
       $("st-latest-lab").textContent = "最新日期";
+      winsStat.style.display = "";
+      $("st-wins-lab").textContent = "累计中标";
     } else {
       $("st-total-lab").textContent = "公告总数";
       $("st-active-lab").textContent = "进行中";
       $("st-latest-lab").textContent = "最新日期";
+      winsStat.style.display = "";
+      $("st-wins-lab").textContent = "累计中标";
     }
     state.loaded = false; state.items = []; state.page = 1; state.picked = {}; state.filters = {};
     state.availableDates = {}; state.dateMonth = null;
@@ -2417,8 +2426,13 @@
       publicWins = (d && d.wins) || [];
       checkWinRain(d);
       renderWinTicker();
-      return;
-    }).catch(function () { publicWins = []; renderWinTicker(); });
+      updateWinsStat();
+    }).catch(function () { publicWins = []; renderWinTicker(); updateWinsStat(); });
+  }
+  // 导航栏「累计中标」：以 wins.json 全量为准（含官方成交公告自动匹配 + wins_manual 外部录入）
+  function updateWinsStat() {
+    var el = $("st-wins");
+    if (el) el.textContent = publicWins.length;
   }
 
   // ---------- 参与投标记录 ----------
