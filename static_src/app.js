@@ -670,9 +670,17 @@
         metaIt("状态", '<span class="badge ' + (on ? "on" : "off") + '">' + (on ? "进行中" : "已截止") + "</span>") +
       "</div>" +
       ((d.products && d.products.length)
-        ? '<div class="d-sec">品目需求明细</div><div style="overflow-x:auto"><table class="items">' +
+      ? '<div class="d-sec">品目需求明细</div><div style="overflow-x:auto"><table class="items">' +
           "<thead><tr><th>#</th><th>品名</th><th>规格/需求</th><th>品牌</th><th>型号</th><th>数量</th></tr></thead>" +
           "<tbody>" + rows + "</tbody></table></div>"
+      : "") +
+      // 服务要求框架：询价通知书 PDF 第四部分原文（服务要求 + 售后服务要求），2026-11-27 上线。
+      // scope-box 已是 white-space:pre-wrap，保留 PDF 原文换行即可，无需 <br> 转换。
+      ((d.service_req || d.after_sales_req)
+        ? '<div class="d-sec">服务要求</div><div class="scope-box">' +
+          (d.service_req ? '<div class="sr-title">服务要求</div><div class="sr-text">' + esc(d.service_req) + "</div>" : "") +
+          (d.after_sales_req ? '<div class="sr-title" style="margin-top:10px">售后服务要求</div><div class="sr-text">' + esc(d.after_sales_req) + "</div>" : "") +
+          "</div>"
         : "") +
       (d.brands ? '<div class="d-sec">涉及品牌</div><div>' +
         d.brands.split(",").map(function (b) {

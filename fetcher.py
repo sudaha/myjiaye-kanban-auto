@@ -272,6 +272,19 @@ def run_fetch(db_file, pdf_dir, flag=0, seed_days=14, verbose=True):
                 continue
         d["products"] = prods
         d["products_json"] = json.dumps(prods, ensure_ascii=False)
+        # 服务要求/售后服务要求：从询价通知书 PDF「第四部分」提取，供详情弹层展示（2026-11-27 上线）
+        if pdf_local:
+            try:
+                import fitz
+                from pdf_requirements import extract_service_requirements
+                _doc = fitz.open(pdf_local)
+                _txt = "".join(pg.get_text() for pg in _doc)
+                _doc.close()
+                _sr = extract_service_requirements(_txt)
+                d["service_req"] = _sr["service_req"]
+                d["after_sales_req"] = _sr["after_sales_req"]
+            except Exception as e:  # noqa
+                print("  [warn] %s 服务要求提取失败: %s" % (nid, e))
         d["detail_fetched"] = 1
         # 公告日期 = 首次上架日（首次进入官网进行中集合被抓到的那天），稳定不变，供日历/日期筛选；
         # 官网列表上架日（每日刷新成当天）另存 meta mkt_list_latest，只用于表头"最新日期"

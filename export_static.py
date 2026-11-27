@@ -219,6 +219,9 @@ def export_zycg(out):
             "is_end": d["is_end"], "enquiry_no": d["enquiry_no"],
             "has_pdf": has_pdf,
             "pdf_path": ("pdf/zycg/" + local) if has_pdf else None,
+            # 服务要求/售后服务要求：PDF 第四部分原文，详情弹层展示（2026-11-27 上线）
+            "service_req": d.get("service_req") or "",
+            "after_sales_req": d.get("after_sales_req") or "",
         })
     # 2026-11-23 起：官网列表 = 当前进行中询价集合（发标日期分散）。
     # 进行中（is_end=0）全部展示，与官网口径一致；已结束沿用"最近 3 个发标日期"（2026-11-17 轮换规则）。

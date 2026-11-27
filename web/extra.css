@@ -516,3 +516,7 @@
 .win-fx { position: absolute; inset: 0; z-index: 1; }
 .win-rain-card { z-index: 2; }
 
+
+/* 询价详情弹层·服务要求框架（2026-11-27） */
+.sr-title { font-weight: 600; color: #1a3a6b; margin-bottom: 4px; }
+.sr-text { white-space: pre-wrap; word-break: break-word; }

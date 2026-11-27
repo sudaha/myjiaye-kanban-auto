@@ -30,6 +30,8 @@ CREATE TABLE IF NOT EXISTS announcements (
     products_json    TEXT,
     pdf_url          TEXT,
     pdf_local        TEXT,
+    service_req      TEXT,
+    after_sales_req  TEXT,
     detail_fetched   INTEGER DEFAULT 0,
     created_at       TEXT,
     updated_at       TEXT
@@ -54,6 +56,12 @@ def init_db(db_file):
     with _lock, connect(db_file) as conn:
         conn.executescript(SCHEMA)
         conn.commit()
+        # 旧库迁移：补齐新增列（CREATE TABLE IF NOT EXISTS 不会改已有表）
+        for col in ("service_req", "after_sales_req"):
+            cols = [r[1] for r in conn.execute("PRAGMA table_info(announcements)")]
+            if col not in cols:
+                conn.execute("ALTER TABLE announcements ADD COLUMN %s TEXT" % col)
+                conn.commit()
 
 
 def get_meta(db_file, key, default=None):
@@ -85,7 +93,8 @@ def upsert_announcement(db_file, a):
     cols = [
         "id", "enquiry_no", "title", "enquiry_name", "org_name", "purchase_company",
         "budget_amount", "end_time", "publish_date", "pub_date", "enquriy_state", "is_end",
-        "category", "brands", "products_json", "pdf_url", "pdf_local", "detail_fetched",
+        "category", "brands", "products_json", "pdf_url", "pdf_local",
+        "service_req", "after_sales_req", "detail_fetched",
         "created_at", "updated_at",
     ]
     now = a.get("updated_at") or _now()

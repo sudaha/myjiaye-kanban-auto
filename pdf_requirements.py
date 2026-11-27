@@ -233,3 +233,47 @@ def enrich_products_from_pdf(products, pdf_items):
             "complete": bool(p.get("requirements_complete")),
         })
     return enriched, audit
+
+
+SERVICE_REQ = "服务要求"
+AFTER_SALES = "售后服务要求"
+
+
+def _drop_page_numbers(lines):
+    """PDF 正文提取会把页码数字混入行序列，单独成行的 1~3 位纯数字是页码。"""
+    return [l for l in lines if not re.fullmatch(r"\d{1,3}", l.strip())]
+
+
+_CN_NUM = "[一二三四五六七八九十]+"
+_PART = "第" + _CN_NUM + "部分"
+
+
+def _section_after(full, header, stop_pattern):
+    """取「中文序号、★?header」独立成行标题之后的章节正文，到 stop_pattern 为止。
+    返回清理后的多行文本。注意：正文里常用「一、二、三、」做子项编号，
+    所以停止边界必须显式指定（如下一个已知章节标题或「第X部分」），
+    不能用任意中文序号行当边界，否则会截断正文。"""
+    pattern = r"^\s*" + _CN_NUM + r"、\s*★?\s*" + re.escape(header) + r"\s*$"
+    m = re.search(pattern, full, re.M)
+    if not m:
+        return ""
+    rest = full[m.end():]
+    stop = re.search(stop_pattern, rest, re.M)
+    body = rest[:stop.start()] if stop else rest
+    lines = _drop_page_numbers([x.strip() for x in body.split("\n") if x.strip()])
+    # 去掉行内多余空格（PDF 字距），保留换行结构供前端逐条展示
+    lines = [re.sub(r"(?<=[\u4e00-\u9fff])\s+(?=[\u4e00-\u9fff])", "", x) for x in lines]
+    return "\n".join(lines).strip()
+
+
+def extract_service_requirements(full):
+    """提取询价通知书第四部分的「服务要求」与「售后服务要求」原文。
+    模板固定（210/210 PDF 均为 二、★服务要求 / 三、★售后服务要求）：
+    服务要求止于售后服务要求标题；售后服务要求止于「第五部分成交合同模板」。"""
+    return {
+        "service_req": _section_after(
+            full, SERVICE_REQ,
+            r"^\s*" + _CN_NUM + r"、\s*★?\s*" + re.escape(AFTER_SALES) + r"\s*$|^" + _PART),
+        "after_sales_req": _section_after(
+            full, AFTER_SALES, r"^" + _PART),
+    }
