@@ -1021,11 +1021,19 @@
     }
     var btn = $("btn-zip");
     btn.disabled = true;
-    var out = [], okItems = [], i = 0, failed = 0, direct = 0;
+    var out = [], okItems = [], failedItems = [], i = 0, direct = 0, done = 0, active = 0;
+    var CONCURRENT = 4; // 并发取回：单项慢/卡不阻塞整批（同事端弱网或插件干扰时整批耗时约降为 1/4）
+    picked.forEach(function (it, idx) { it.__order = idx; });
+    function failedText() {
+      if (!failedItems.length) return "";
+      return "（失败 " + failedItems.length + " 份：" + failedItems.slice(0, 3).join("、") +
+        (failedItems.length > 3 ? " 等" : "") + "）";
+    }
     function finish() {
+      okItems.sort(function (a, b) { return a.__order - b.__order; });
       if (!out.length) {
         $("zip-progress").textContent = "打包失败：0 份成功" +
-          (direct ? "（已为 " + direct + " 份触发浏览器直接下载，请查看下载面板）" : (failed ? "（" + failed + " 份下载失败，请重试）" : ""));
+          (direct ? "（已为 " + direct + " 份触发浏览器直接下载，请查看下载面板）" : (failedText() || "请检查网络后重试"));
         btn.disabled = false;
         return;
       }
@@ -1038,57 +1046,56 @@
         (plat === "poly" ? "_项目附件.zip" : "_询价通知书PDF.zip");
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(function () { URL.revokeObjectURL(a.href); }, 5000);
-      $("zip-progress").textContent = "完成：" + okItems.length + " 个项目" +
-        (direct ? "（" + direct + " 份已改直接下载，见下载面板）" : "") +
-        (failed ? "（" + failed + " 份失败已跳过）" : "") + (noPdf ? "（另有 " + noPdf + " 项无 PDF）" : "");
+      $("zip-progress").textContent = "完成：" + okItems.length + " 个项目已打包" +
+        (direct ? "；另有 " + direct + " 份经浏览器直接下载（见下载面板，不在压缩包里）" : "") +
+        (failedItems.length ? "；" + failedText() + "，保持勾选点一次打包即可单独重试" : "") +
+        (noPdf ? "（另有 " + noPdf + " 项无 PDF）" : "");
       btn.disabled = false;
     }
-    function next() {
-      if (i >= picked.length) { finish(); return; }
-      var it = picked[i];
-      $("zip-progress").textContent = "打包中 " + (i + 1) + "/" + picked.length +
-        "：" + (it.title || "").slice(0, 16) + (failed ? "（已失败 " + failed + "）" : "");
+    function prog() {
+      $("zip-progress").textContent = "取回中 " + done + "/" + picked.length +
+        "（并发 " + active + "）" + failedText();
+    }
+    function runOne(it, cb) {
       if (plat === "poly") {
         getJSON("data/poly/detail/" + it.id + ".json").then(function (d) {
-          var html = polyProjectHtml(d);
-          out.push({ name: it.__zipName, data: new TextEncoder().encode(html) });
-          okItems.push(it); i++; next();
-        }).catch(function () { failed++; i++; next(); });
+          out.push({ name: it.__zipName, data: new TextEncoder().encode(polyProjectHtml(d)) });
+          okItems.push(it); cb();
+        }).catch(function () { failedItems.push((it.title || "").slice(0, 16)); cb(); });
         return;
       }
       var pdfUrl = it.pdf_path || "pdf/zycg/" + it.id + ".pdf";
-      var tip = "打包中 " + (i + 1) + "/" + picked.length + "：" + (it.title || "").slice(0, 16);
-      // 三通道兜底 fetch→XHR→fetch重试（扩展 patch fetch 挂起正文时可切换通道），
-      // 全失败则触发浏览器原生直接下载（独立于页面 JS 的下载通道），不阻塞其余条目打包
+      // 三通道兜底 fetch→XHR→fetch重试（兼容 patch 了 fetch 的扩展/安全软件）；
+      // 全失败则触发浏览器原生直接下载（独立于页面 JS 的下载通道），该份计入 direct 不进压缩包
       fetchPdfFetch(pdfUrl, 15000)
-        .catch(function () {
-          $("zip-progress").textContent = tip + "（fetch 受阻，切换 XHR 通道…）";
-          return fetchPdfXhr(pdfUrl, 15000);
-        })
-        .catch(function () {
-          $("zip-progress").textContent = tip + "（XHR 受阻，重试中…）";
-          return fetchPdfFetch(pdfUrl, 15000);
-        })
+        .catch(function () { return fetchPdfXhr(pdfUrl, 15000); })
+        .catch(function () { return fetchPdfFetch(pdfUrl, 20000); })
         .then(function (buf) {
-          out.push({
-            name: it.__zipName,
-            data: new Uint8Array(buf)
-          });
-          okItems.push(it);
-          i++; next();
+          out.push({ name: it.__zipName, data: new Uint8Array(buf) });
+          okItems.push(it); cb();
         })
         .catch(function () {
-          $("zip-progress").textContent = tip + "（改浏览器直接下载…）";
           try {
             var a2 = document.createElement("a");
             a2.href = pdfUrl; a2.download = it.__zipName.split("/").pop();
             document.body.appendChild(a2); a2.click(); a2.remove();
             direct++;
-          } catch (e2) { failed++; }
-          i++; next();
+          } catch (e2) {
+            failedItems.push((it.title || "").slice(0, 16));
+          }
+          cb();
         });
     }
-    next();
+    function pump() {
+      if (active === 0 && done >= picked.length) { finish(); return; }
+      while (active < CONCURRENT && i < picked.length) {
+        (function (it) {
+          active++;
+          runOne(it, function () { active--; done++; prog(); pump(); });
+        })(picked[i++]);
+      }
+    }
+    pump();
   }
 
   // ---------- 选型助手 ----------
