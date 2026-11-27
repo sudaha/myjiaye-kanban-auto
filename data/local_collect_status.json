@@ -1,16 +1,14 @@
-﻿{
-  "date": "2026-11-26",
-  "slot": "10:00",
-  "items": {
-    "rail_mall": "ok",
-    "rail_public": "ok",
-    "poly": "ok",
-    "win_news": "none_new",
-    "zycg_mkt": "none_new",
-    "zycgmain": "ok"
-  },
-  "finished_at": "10:52:30",
-  "deployed": true
+{
+ "date": "2026-11-27",
+ "slot": "10:00",
+ "items": {
+  "rail_mall": "skipped_no_ukey",
+  "rail_public": "ok",
+  "poly": "ok",
+  "win_news": "none_new",
+  "zycg_mkt": "ok",
+  "zycgmain": "none_new"
+ },
+ "finished_at": "10:42:09",
+ "deployed": true
 }
-
-
