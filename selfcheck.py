@@ -266,6 +266,12 @@ def main():
     wt = sum(1 for i in items if i.get("source") == "委托")
     add(OK, "央采上线: 共 %d 条（询价 %d / 委托 %d），进行中 %s，今日新增 %s" % (
         len(items), xj, wt, st.get("active"), st.get("new_count")))
+    # 服务要求覆盖率（2026-11-27 上线）：有 PDF 的询价公告必须已回填服务要求/售后服务要求
+    xj_pdf = [i for i in items if i.get("source") == "询价" and i.get("pdf_path")]
+    nosr = [i["id"] for i in xj_pdf if not (i.get("service_req") or i.get("after_sales_req"))]
+    add(FAIL if nosr else OK, "询价服务要求覆盖: " + (
+        "%d/%d 份有 PDF 但缺服务要求 %s" % (len(nosr), len(xj_pdf), nosr[:5]) if nosr
+        else "%d/%d 全量覆盖" % (len(xj_pdf), len(xj_pdf))))
 
     # ---------- ④ 下载功能健康 ----------
     sec("④ 下载功能健康（打包 zip 有效性 + PDF 齐全）")
