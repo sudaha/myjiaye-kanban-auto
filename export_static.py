@@ -125,30 +125,48 @@ def _load_weituo_items():
     except Exception:
         return []
     details = _load_weituo_details()
+    now_bj = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=8)).replace(tzinfo=None)
     out = []
     for it in d.get("items") or []:
         title = it.get("title") or ""
         if not title:
             continue
+        wt = details.get(it.get("id")) or {}
+        # 预算/截止/状态回填：来自公告正文解析缓存（2026-11-27 起 127 条全量正文解析）
+        budget_amount = wt.get("budget") or None
+        budget_num = wt.get("budget_num")
+        end_time = wt.get("deadline") or ""
+        # 状态口径：中标公告=已中标结束；招标/竞谈类按投标截止时间；无截止信息的保持进行中
+        if wt.get("notice_kind") == "中标":
+            is_end = 1
+        elif end_time:
+            try:
+                is_end = 1 if datetime.datetime.strptime(end_time[:16], "%Y-%m-%d %H:%M") < now_bj else 0
+            except ValueError:
+                is_end = 0
+        else:
+            is_end = 0
         out.append({
             "id": "wt-%s" % it.get("id", md5hex(it.get("url") or "")[:16]),
             "platform": "zycg", "source": "委托",
             "title": title,
             "org_name": it.get("buyer") or "",
             "purchase_company": it.get("buyer") or "",
-            "budget_amount": None, "budget_num": None,
-            "end_time": "", "publish_date": (it.get("date") or "").replace(".", "-"),
+            "budget_amount": budget_amount, "budget_num": budget_num,
+            "end_time": end_time, "publish_date": (it.get("date") or "").replace(".", "-"),
             # 单独委托日期筛选口径 = 公告发布日期（2026-11-20 用户最终确认）；
             # seen_date（采集日期）仅透传给详情弹层展示，不参与筛选/排序
             "pub_date": (it.get("date") or "").replace(".", "-"),
             "seen_date": (it.get("seen_date") or "").replace(".", "-"),
             "category": _weituo_category(title),
-            "brands": "", "is_end": 0,
-            "enquiry_no": "", "has_pdf": False, "pdf_path": None,
+            "brands": ",".join(wt.get("brands") or []),
+            "is_end": is_end,
+            "enquiry_no": wt.get("code") or "",
+            "has_pdf": False, "pdf_path": None,
             "url": it.get("url") or "",
-            "notice_type": it.get("notice_type") or "",
+            "notice_type": it.get("notice_type") or wt.get("notice_kind") or "",
             "is_new": False,
-            "wt_detail": details.get(it.get("id")),
+            "wt_detail": wt or None,
         })
     return out
 

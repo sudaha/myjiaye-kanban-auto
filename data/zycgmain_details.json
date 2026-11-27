@@ -1,18 +1,2971 @@
 {
-  "source": "zycg.gov.cn detail page cache",
-  "note": "单独委托公告要点站内缓存（官网正文快照），用于官网风控拦截打不开时在详情弹层内展示预算/品目/联系方式",
-  "updated_at": "2026-11-20 15:45:00",
-  "details": {
-    "a8d376cd-e479-11f1-9615-fa163ee0ead6": {
-      "code": "GC-HGX261507",
-      "budget": "207.00万元",
-      "max_price": "207万元",
-      "procurement": "入侵防御系统等",
-      "deadline": "2026-12-11 09:00",
-      "contacts": "采购人：国家统计局上海调查总队 021-53857327（上海市黄浦区威海路48号17-18层）；项目联系人：张雷 010-83084967、刘士伟 010-55602803",
-      "notes": "国e采电子招投标，无须报名，招标文件免费在线下载（获取期限5个工作日，届满后获取时间以届满日为准）；投标须提前办理数字证书与电子签章。合同履行：签订后20天内交货、30天内完成安装调试并具备验收条件。技术支持 010-55603940。",
-      "raw_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7514e10f-4838-4d04-a167-46df08874bd4.html",
-      "cached_at": "2026-11-20"
+ "source": "zycg.gov.cn detail page cache",
+ "note": "单独委托公告要点站内缓存（官网正文快照），含品目/预算/截止/联系方式；中标公告含中标标的品牌/型号/参数。用于详情弹层与卡片规格行。",
+ "updated_at": "2026-11-27 10:30:00",
+ "details": {
+  "a8d376cd-e479-11f1-9615-fa163ee0ead6": {
+   "code": "GC-HGX261507",
+   "budget": "207.000000万元",
+   "max_price": "207万元",
+   "procurement": "入侵防御系统等",
+   "deadline": "2026-12-11 09:00",
+   "contacts": "采购人：国家统计局上海调查总队 021-53857327；张雷 010-83084967   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "raw_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7514e10f-4838-4d04-a167-46df08874bd4.html",
+   "cached_at": "2026-11-27 10:30",
+   "notice_kind": "招标",
+   "budget_num": 2070000,
+   "item_names": [
+    "入侵防御系统等"
+   ],
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7514e10f-4838-4d04-a167-46df08874bd4.html"
+  },
+  "53474279-e8a9-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261270",
+   "budget": "1353.820000万元",
+   "budget_num": 13538200,
+   "max_price": "1353.82万元",
+   "item_names": [
+    "防病毒系统2",
+    "集中式存储",
+    "智能密码钥匙",
+    "个人证书",
+    "业务网无线网控制器",
+    "操作系统",
+    "虚拟化软件",
+    "数据平台服务器",
+    "日志审计系统",
+    "等保一体机",
+    "防病毒系统1",
+    "路由器",
+    "核心/出口防火墙",
+    "数据库审计系统",
+    "签名验签服务器",
+    "渲染服务器",
+    "千兆接入交换机2",
+    "VPN",
+    "虚拟化服务器",
+    "网闸",
+    "千兆接入交换机1",
+    "安全认证网关",
+    "存储及应用服务器",
+    "算力服务器",
+    "堡垒机",
+    "综合防火墙",
+    "数据库",
+    "万兆接入交换机",
+    "核心交换机"
+   ],
+   "procurement": "防病毒系统2、集中式存储、智能密码钥匙 等29项",
+   "deadline": "2026-12-16 09:00",
+   "contacts": "采购人：国家广播电视总局无线电台管理局 010-86098190；王震 010-55602563   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/8b5ef4ba-849a-4e7d-aebb-60554d36332f.html"
+  },
+  "2b2cd3fc-e8a2-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261220",
+   "budget": "2036.000000万元;第1包:1386.000000万元;第2包:650.000000万元",
+   "budget_num": 20360000,
+   "max_price": "第1包：1386万元；第2包：650万元",
+   "item_names": [
+    "第1包：服务器配置2",
+    "服务器配置1等"
+   ],
+   "procurement": "第1包：服务器配置2、服务器配置1等",
+   "deadline": "2026-12-18 09:00",
+   "contacts": "采购人：四川大学华西医院(四川省国际医院) 082-85421334；张雷 010-83084967   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/4acfdd9f-eb7b-4125-9ef2-78d566f62cf9.html"
+  },
+  "fb19051e-e7a4-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "其他",
+   "code": "GC-GGG261564B",
+   "item_names": [],
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/c29ece9b-147d-459e-b181-7aa99fa1eb37.html"
+  },
+  "425f38c0-e714-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261209",
+   "budget": "971.600000万元",
+   "budget_num": 9716000,
+   "max_price": "971.6万元",
+   "item_names": [
+    "存储设备",
+    "防火墙",
+    "汇聚交换机",
+    "带外接入交换机",
+    "IPsec VPN",
+    "业务接入交换机",
+    "存储光纤交换机",
+    "负载均衡"
+   ],
+   "procurement": "存储设备、防火墙、汇聚交换机 等8项",
+   "deadline": "2026-12-14 09:00",
+   "contacts": "采购人：国家税务总局 010-61986965；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/59226e4a-0a61-4ffa-8081-ba9f68ec5386.html"
+  },
+  "aa1a8cf7-e6e4-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261512",
+   "budget": "4038.020000万元",
+   "budget_num": 40380200,
+   "max_price": "4038.02万元",
+   "item_names": [
+    "服务器2",
+    "负载均衡",
+    "分布式存储",
+    "内网接入交换机",
+    "外网核心交换机",
+    "内网核心交换机",
+    "服务器1",
+    "集中式存储",
+    "内网FCSAN交换机"
+   ],
+   "procurement": "服务器2、负载均衡、分布式存储 等9项",
+   "deadline": "2026-12-14 09:00",
+   "contacts": "采购人：北京大学人民医院(北京大学第二临床医学院) 010-88317043；王震 010-55602563   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/33c3f283-af7e-481c-8ebc-1a63c472ee95.html"
+  },
+  "1d921e33-e6db-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261159",
+   "budget": "562.35万元",
+   "budget_num": 5623500,
+   "max_price": "562.35万元",
+   "item_names": [
+    "省级DPC支撑存储设备",
+    "计算型服务器",
+    "存储型服务器",
+    "省级CTS支撑存储设备"
+   ],
+   "procurement": "省级DPC支撑存储设备、计算型服务器、存储型服务器 等4项",
+   "deadline": "2026-12-15 09:00",
+   "contacts": "采购人：山西省气象信息中心(山西省气象档案馆) 0351-7326047；姜文涛 010-83084975   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/6810c81c-dfc7-434e-b6b7-c1c90e3d1f59.html"
+  },
+  "e491d979-e6df-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "其他",
+   "code": "GC-HGX261535",
+   "budget": "590.5万元",
+   "budget_num": 5905000,
+   "item_names": [],
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/f6f35b8d-c0b1-4b6f-a51b-b16a8c09c3dc.html"
+  },
+  "de01ab16-e6f3-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "中标",
+   "code": "GC-HGX261404",
+   "budget": "441.613700万元",
+   "budget_num": 4416137,
+   "item_names": [
+    "二类数据库集群服务器"
+   ],
+   "contacts": "经办人: 王震 010-55602563  负责人: 张雷  010-83084967",
+   "win_items": [
+    {
+     "name": "二类数据库集群服务器",
+     "brand": "欧瑞科斯",
+     "model": "ORA26122V3",
+     "qty": "9",
+     "price": "98000",
+     "desc": "配置2颗服务器级鲲鹏920处理器；单颗处理器为64核；主频为2.6GHz； 配置内存容量为320GB；频率为3200MT/s 配置2块480GB SSD企业级及4块2.4TB SAS硬盘； 配置4个GE网络接口； 配置2个2000W冗余电源模块； 支持4GPU扩展的机架式服务器； 符合财政部、工信部《通用服务器政府采购需求标准（2023年版）》中加“*”指标项的要求。"
     }
+   ],
+   "brands": [
+    "欧瑞科斯"
+   ],
+   "models": [
+    "ORA26122V3"
+   ],
+   "params_brief": "配置2颗服务器级鲲鹏920处理器；单颗处理器为64核；主频为2.6GHz； 配置内存容量为320GB；频率为3200MT/s 配置2块480GB SSD企业级及4块2.4TB SAS硬盘； 配置4个GE网络接口； 配置2个2000W冗余电源",
+   "procurement": "二类数据库集群服务器",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/91a1384a-9e4e-4714-90f5-ac7255382cfe.html"
+  },
+  "d2b9122b-e6de-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "其他",
+   "code": "GC-HGX261492",
+   "budget": "565.5万元",
+   "budget_num": 5655000,
+   "item_names": [],
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/8f993a32-d252-4092-b09c-0adb8bb9d462.html"
+  },
+  "96688b09-e6de-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "中标",
+   "code": "GC-HGD260619",
+   "item_names": [],
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/d22bfa58-1801-4b5b-8180-cf77cbd79742.html"
+  },
+  "862f265c-e6db-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "其他",
+   "code": "GC-HGX261435",
+   "budget": "760.000000万元",
+   "budget_num": 7600000,
+   "item_names": [],
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/269220ec-439f-4288-ad9b-33cace987378.html"
+  },
+  "1a0b64c8-e71b-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "中标",
+   "code": "GC-FGX261238W",
+   "budget": "4236.560000万元",
+   "budget_num": 42365600,
+   "item_names": [
+    "机房基础环境运维服务",
+    "基础硬件设备运维及网络设备升级服务",
+    "基础软件运维服务",
+    "大数据平台运维及升级改造服务",
+    "应用支撑平台运维及升级改造服务",
+    "在线政务服务平台应用运维及升级改造服务",
+    "数据安全治理及升级改造服务",
+    "裸光纤专线服务（直线距离 30 公里）",
+    "点对点专线服务（200M）",
+    "点对点专线服务（1G）",
+    "IDC 互联网接入服务（1G）",
+    "点对点专线服务（100M）",
+    "机房机柜运行服务",
+    "机房供电服务",
+    "数据运行服务",
+    "服务要求"
+   ],
+   "contacts": "经办人: 王震 010-55602563  负责人: 刘士伟  010-55602803",
+   "win_items": [
+    {
+     "name": "机房基础环境运维服务",
+     "brand": "/",
+     "model": "项",
+     "qty": "1",
+     "price": "408400",
+     "desc": "完全满足招标文件要求"
+    },
+    {
+     "name": "基础硬件设备运维及网络设备升级服务",
+     "brand": "/",
+     "model": "项",
+     "qty": "1",
+     "price": "7173200",
+     "desc": "完全满足招标文件要求"
+    },
+    {
+     "name": "基础软件运维服务",
+     "brand": "/",
+     "model": "项",
+     "qty": "1",
+     "price": "2194900",
+     "desc": "完全满足招标文件要求"
+    },
+    {
+     "name": "大数据平台运维及升级改造服务",
+     "brand": "/",
+     "model": "项",
+     "qty": "1",
+     "price": "2687400",
+     "desc": "完全满足招标文件要求"
+    },
+    {
+     "name": "应用支撑平台运维及升级改造服务",
+     "brand": "/",
+     "model": "项",
+     "qty": "1",
+     "price": "2231000",
+     "desc": "完全满足招标文件要求"
+    },
+    {
+     "name": "在线政务服务平台应用运维及升级改造服务",
+     "brand": "/",
+     "model": "项",
+     "qty": "1",
+     "price": "15790200",
+     "desc": "完全满足招标文件要求"
+    },
+    {
+     "name": "数据安全治理及升级改造服务",
+     "brand": "/",
+     "model": "项",
+     "qty": "1",
+     "price": "1922000",
+     "desc": "完全满足招标文件要求"
+    },
+    {
+     "name": "裸光纤专线服务（直线距离 30 公里）",
+     "brand": "/",
+     "model": "条/年",
+     "qty": "2",
+     "price": "280800",
+     "desc": "完全满足招标文件要求"
+    },
+    {
+     "name": "点对点专线服务（200M）",
+     "brand": "/",
+     "model": "条/年",
+     "qty": "7",
+     "price": "29957",
+     "desc": "完全满足招标文件要求"
+    },
+    {
+     "name": "点对点专线服务（1G）",
+     "brand": "/",
+     "model": "条/年",
+     "qty": "4",
+     "price": "402325",
+     "desc": "完全满足招标文件要求"
+    },
+    {
+     "name": "IDC 互联网接入服务（1G）",
+     "brand": "/",
+     "model": "条/年",
+     "qty": "1",
+     "price": "77800",
+     "desc": "完全满足招标文件要求"
+    },
+    {
+     "name": "点对点专线服务（100M）",
+     "brand": "/",
+     "model": "条/年",
+     "qty": "2",
+     "price": "37550",
+     "desc": "完全满足招标文件要求"
+    },
+    {
+     "name": "机房机柜运行服务",
+     "brand": "/",
+     "model": "架/年",
+     "qty": "42",
+     "price": "88457",
+     "desc": "完全满足招标文件要求"
+    },
+    {
+     "name": "机房供电服务",
+     "brand": "/",
+     "model": "项",
+     "qty": "2",
+     "price": "1094100",
+     "desc": "完全满足招标文件要求"
+    },
+    {
+     "name": "数据运行服务",
+     "brand": "/",
+     "model": "项",
+     "qty": "1",
+     "price": "1504000",
+     "desc": "完全满足招标文件要求"
+    },
+    {
+     "name": "服务要求",
+     "brand": "/",
+     "model": "项",
+     "qty": "1",
+     "price": "0",
+     "desc": "完全满足招标文件要求"
+    }
+   ],
+   "brands": [],
+   "models": [
+    "项",
+    "项",
+    "项",
+    "项",
+    "项"
+   ],
+   "params_brief": "完全满足招标文件要求",
+   "procurement": "机房基础环境运维服务、基础硬件设备运维及网络设备升级服务、基础软件运维服务 等16项",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/fedd0fe4-24dd-473a-8bfc-0221d3cfede2.html"
+  },
+  "9d637808-e4ae-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261023",
+   "budget": "200.000000万元",
+   "budget_num": 2000000,
+   "max_price": "198万元",
+   "item_names": [
+    "虚拟化软件",
+    "数据库软件",
+    "集成服务",
+    "服务器",
+    "终端办公软件授权"
+   ],
+   "procurement": "虚拟化软件、数据库软件、集成服务 等5项",
+   "deadline": "2026-12-14 09:00",
+   "contacts": "采购人：中山大学附属第一医院 020-87608345；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/63aebd0b-0491-412c-9a26-0dbc38e8155a.html"
+  },
+  "26bc76d6-e4ad-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261418",
+   "budget": "465.1万元",
+   "budget_num": 4651000,
+   "max_price": "465.1万元",
+   "item_names": [
+    "防火墙2",
+    "灾备一体机",
+    "灾备管理平台系统",
+    "机柜托管服务",
+    "灾备演练服务",
+    "防火墙1",
+    "交换机",
+    "灾备专线服务",
+    "机架式服务器"
+   ],
+   "procurement": "防火墙2、灾备一体机、灾备管理平台系统 等9项",
+   "deadline": "2026-12-14 09:00",
+   "contacts": "采购人：教育部教育考试院 010-82520033；姜文涛 010-83084975   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/6e0f9fdb-7f91-484d-8f1b-600ac0921ef8.html"
+  },
+  "95566681-e485-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261442",
+   "budget": "978.7798万元",
+   "budget_num": 9787798,
+   "max_price": "978.7798万元",
+   "item_names": [
+    "电池柜",
+    "大数据服务器",
+    "外网服务器交换机",
+    "网络柜",
+    "服务器机柜",
+    "WAF防火墙",
+    "三相PDU",
+    "万兆服务器交换机",
+    "内网核心交换机",
+    "一体化UPS",
+    "汇聚交换机",
+    "冷通道",
+    "GPU服务器",
+    "单相国标PDU",
+    "市电配电柜",
+    "蓄电池",
+    "加热加湿行级精密空调",
+    "数据中心防火墙",
+    "底座支撑架",
+    "微模块内部监控设备",
+    "动力环境监控设备",
+    "展示大屏",
+    "虚拟化服务器",
+    "SDN控制器",
+    "备份服务器"
+   ],
+   "procurement": "电池柜、大数据服务器、外网服务器交换机 等25项",
+   "deadline": "2026-12-14 09:00",
+   "contacts": "采购人：中南大学湘雅二医院 0731-85294099；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/e85e9ac7-7fc9-4400-9b66-22d60cf17d3a.html"
+  },
+  "a8751003-e483-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261433",
+   "budget": "900万元",
+   "budget_num": 9000000,
+   "max_price": "900万元",
+   "item_names": [
+    "汇聚交换机",
+    "管理交换机",
+    "高速交换机",
+    "存储服务器",
+    "管理登录服务器"
+   ],
+   "procurement": "汇聚交换机、管理交换机、高速交换机 等5项",
+   "deadline": "2026-12-14 09:00",
+   "contacts": "采购人：中国科学院文献情报中心 010-82627374；姜文涛 010-83084975   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/fa73f7a7-ef32-4b71-a6cd-adb789879a7a.html"
+  },
+  "e19f0ec0-e47e-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261054",
+   "budget": "410.000000万元",
+   "budget_num": 4100000,
+   "max_price": "410万元",
+   "item_names": [
+    "调度系统授权",
+    "存储"
+   ],
+   "procurement": "调度系统授权、存储",
+   "deadline": "2026-12-11 00:00",
+   "contacts": "采购人：中山大学附属第一医院 020-87608345；徐婧婧 010-83084953   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/f31ce172-25e5-4b91-b140-fa9a7db3a038.html"
+  },
+  "f9470d28-e4b0-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "中标",
+   "code": "GC-GGG260758B",
+   "item_names": [],
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/cfda0eaf-c360-409c-85ed-142822469f52.html"
+  },
+  "d68a6464-e4a0-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "中标",
+   "code": "GC-HGX261246",
+   "budget": "189.290000万元",
+   "budget_num": 1892900,
+   "item_names": [
+    "应用交付网关"
+   ],
+   "contacts": "经办人: 姜文涛 010-83084975  负责人: 张雷  010-83084967",
+   "win_items": [
+    {
+     "name": "应用交付网关",
+     "brand": "深信服",
+     "model": "AD-1000-B2200-H5",
+     "qty": "1",
+     "price": "236000",
+     "desc": "满足全部服务要求和标的基本概况"
+    }
+   ],
+   "brands": [
+    "深信服"
+   ],
+   "models": [
+    "AD-1000-B2200-H5"
+   ],
+   "params_brief": "满足全部服务要求和标的基本概况",
+   "procurement": "应用交付网关",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/b87c0c14-aec3-4429-820d-470a95c0537b.html"
+  },
+  "d51dba7c-e4a9-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "变更",
+   "code": "GC-HGX261154",
+   "item_names": [],
+   "contacts": "采购人：中华人民共和国人力资源和社会保障部 010-84233683；卢昀灿灿 010-55602722  王震 010-55602563",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/cbc7f08e-bc4b-4ccf-ae49-942b96e9b3bb.html"
+  },
+  "a6ae9127-e4ae-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "变更",
+   "code": "GC-HGX261507",
+   "item_names": [],
+   "contacts": "采购人：国家统计局上海调查总队 021-53857327；张雷 010-83084967  刘士伟 010-55602803",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/3174063e-6450-4afa-b839-413472b4d0a9.html"
+  },
+  "91d05da1-e4ae-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "变更",
+   "code": "GC-HGX261054",
+   "item_names": [],
+   "contacts": "采购人：中山大学附属第一医院 020-87608345；徐婧婧 010-83084953  张雷 010-83084967",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/084da060-dd92-4a7c-ae50-9585ea4ae03d.html"
+  },
+  "6f50b714-e48d-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "其他",
+   "code": "GC-HGX261267",
+   "budget": "697.4万元",
+   "budget_num": 6974000,
+   "item_names": [],
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/6e504e8f-acd0-4d2c-b320-4f494d3e0b2c.html"
+  },
+  "48b06672-e4af-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "中标",
+   "code": "GC-HGX261319",
+   "budget": "155.890000万元",
+   "budget_num": 1558900,
+   "item_names": [
+    "核心交换机",
+    "集中式存储"
+   ],
+   "contacts": "经办人: 徐婧婧 010-83084953  负责人: 王震  010-55602563",
+   "win_items": [
+    {
+     "name": "核心交换机",
+     "brand": "华为",
+     "model": "S8700-6",
+     "qty": "1",
+     "price": "96000.00",
+     "desc": "服务： 1.合同签订后30天内交货。 2.提供36个月原厂售后服务。 3.我司具备1小时内抵达现场处理的服务能力，承诺每周派遣2名工程师3天的驻场服务。 4.所有硬件信息系统验收之日起三年免费保修及设备漏洞修复、电话报修后1小时上门服务、4小时恢复业务、12小时内排除故障。 5.所有硬件过三年免费保修期后按原价维修（按投标货物价格数量表所列价格，更换零部件的按合同签订时的零部件价格），响应速度同保修期响应速度。 标的基本概况： 1.★性能指标：交换容量≥102Tbps，包转发率≥76000Mpps； 主控槽位与业务线卡槽位宽度相同，为全宽槽位，主控引擎≥2，整机业务板槽位数≥4，电源槽位≥6；"
+    },
+    {
+     "name": "集中式存储",
+     "brand": "华为",
+     "model": "Oceanstor 5310",
+     "qty": "1",
+     "price": "655000.00",
+     "desc": "服务： 1.合同签订后30天内交货。 2.提供36个月原厂售后服务。 3.我司具备1小时内抵达现场处理的服务能力，承诺每周派遣2名工程师3天的驻场服务。 4.所有硬件信息系统验收之日起三年免费保修及设备漏洞修复、电话报修后1小时上门服务、4小时恢复业务、12小时内排除故障。 5.所有硬件过三年免费保修期后按原价维修（按投标货物价格数量表所列价格，更换零部件的按合同签订时的零部件价格），响应速度同保修期响应速度。 标的基本概况：1.#安全性：所投产品的处理器需在中国信息安全测评中心发布的安全可靠测评结果公告清单中。 2.△体系架构：SAN 和 NAS 一体化，SAN 和 NAS 共享同一个存储池"
+    }
+   ],
+   "brands": [
+    "华为"
+   ],
+   "models": [
+    "S8700-6",
+    "Oceanstor 5310"
+   ],
+   "params_brief": "服务： 1.合同签订后30天内交货。 2.提供36个月原厂售后服务。 3.我司具备1小时内抵达现场处理的服务能力，承诺每周派遣2名工程师3天的驻场服务。 4.所有硬件信息系统验收之日起三年免费保修及设备漏洞修复、电话报修后1小时上门服务、4",
+   "procurement": "核心交换机、集中式存储",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/c8407aa1-4e2c-47e0-8c8e-5909ba80abff.html"
+  },
+  "09b584e2-e489-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "变更",
+   "code": "GC-HGX261462",
+   "item_names": [],
+   "contacts": "采购人：郑州警察学院 0371-60666155；徐婧婧 010-83084953  王震 010-55602563",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/90dae2d3-f2dc-4b34-8ad0-c48db6b7bc32.html"
+  },
+  "be626d52-e3e4-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261436",
+   "budget": "1403.350000万元",
+   "budget_num": 14033500,
+   "max_price": "1403.35万元",
+   "item_names": [
+    "超融合节点等"
+   ],
+   "procurement": "超融合节点等",
+   "deadline": "2026-12-11 09:00",
+   "contacts": "采购人：中国中医科学院广安门医院 010-88001171；张雷 010-83084967   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/58a9a7b1-fa77-4424-a7aa-2e1c617c1ce5.html"
+  },
+  "3aa75b2a-e3e2-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261444",
+   "budget": "2138.900000万元",
+   "budget_num": 21389000,
+   "max_price": "2138.9万元",
+   "item_names": [
+    "容器服务",
+    "天擎系统语言大模型节点",
+    "天擎系统加工流水线节点",
+    "语言模型平台",
+    "数字孪生渲染软件",
+    "天擎系统可视化框架节点"
+   ],
+   "procurement": "容器服务、天擎系统语言大模型节点、天擎系统加工流水线节点 等6项",
+   "deadline": "2026-12-11 09:00",
+   "contacts": "采购人：国家气象信息中心(中国气象局气象数据中心) 010-58994382；王震 010-55602563   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/b93e78fe-409d-47e6-b3f5-12250e61d147.html"
+  },
+  "256f69e9-e3e2-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261443",
+   "budget": "2040.400000万元",
+   "budget_num": 20404000,
+   "max_price": "2040.4万元",
+   "item_names": [
+    "网络服务器",
+    "盘阵存储",
+    "管理服务器",
+    "虚拟化软件",
+    "私网接入交换机",
+    "私网核心交换机",
+    "计算服务器",
+    "存储光纤交换机",
+    "虚拟化防护设备",
+    "虚拟化管理软件"
+   ],
+   "procurement": "网络服务器、盘阵存储、管理服务器 等10项",
+   "deadline": "2026-12-10 09:00",
+   "contacts": "采购人：国家气象信息中心(中国气象局气象数据中心) 010-68406674；王震 010-55602563   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7f045ed2-94ef-45fc-b4a9-de23b4fe29fc.html"
+  },
+  "06cb56f2-e3c4-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261489",
+   "budget": "299.450000万元",
+   "budget_num": 2994500,
+   "max_price": "299.45万元",
+   "item_names": [
+    "AI芯片软件平台标准和应用等"
+   ],
+   "procurement": "AI芯片软件平台标准和应用等",
+   "deadline": "2026-12-11 09:00",
+   "contacts": "采购人：中国电子产品可靠性与环境试验研究所((工业和信息化部电子第五研究所)(中国赛宝实验室)) 020-87234662；张雷 010-83084967   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7b0a132a-ada3-4da0-8294-a6e748bb59b1.html"
+  },
+  "3ba1c877-e3bc-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261216",
+   "budget": "563.100000万元",
+   "budget_num": 5631000,
+   "max_price": "563.1万元",
+   "item_names": [
+    "计算型服务器",
+    "存储型服务器",
+    "支撑存储设备"
+   ],
+   "procurement": "计算型服务器、存储型服务器、支撑存储设备",
+   "deadline": "2026-12-10 09:00",
+   "contacts": "采购人：上海市气象信息与技术支持中心(上海市气象档案馆) 021-54896169；刘士伟 010-55602803   侯凤成 010-83083527",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/d5f0fbe2-7c23-45b2-adef-f7ebbd6634ad.html"
+  },
+  "677f0258-e3b8-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261269",
+   "budget": "355.000000万元",
+   "budget_num": 3550000,
+   "max_price": "355万元",
+   "item_names": [
+    "业务支撑系统计算节点",
+    "业务网万兆以太网交换机",
+    "播出网万兆交换机",
+    "磁盘阵列",
+    "图形工作站",
+    "安全管理平台",
+    "业务网千兆以太网交换机",
+    "入侵检测系统",
+    "日志审计系统",
+    "基础支撑软件",
+    "终端检测响应系统",
+    "播出网千兆交换机"
+   ],
+   "procurement": "业务支撑系统计算节点、业务网万兆以太网交换机、播出网万兆交换机 等12项",
+   "deadline": "2026-12-10 09:00",
+   "contacts": "采购人：国家广播电视总局无线电台管理局 010-86098190；王震 010-55602563   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/bf8285ac-2455-4315-99fe-400549e095d9.html"
+  },
+  "60c4311a-e3c0-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "其他",
+   "code": "GC-HGX261547",
+   "budget": "152.600000万元",
+   "budget_num": 1526000,
+   "item_names": [],
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/a8c05413-6757-4059-a3ef-3333b2164981.html"
+  },
+  "2cb8946d-e3e2-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "中标",
+   "code": "GC-HGX261248",
+   "budget": "562.350000万元",
+   "budget_num": 5623500,
+   "item_names": [
+    "计算型服务器",
+    "存储型服务器"
+   ],
+   "contacts": "经办人: 徐婧婧 010-83084953  负责人: 王震  010-55602563",
+   "win_items": [
+    {
+     "name": "计算型服务器",
+     "brand": "航天联志",
+     "model": "联志Z2633-M1",
+     "qty": "22",
+     "price": "85500",
+     "desc": "2U 机架式；配置 2 颗 Hygon（海光）7380 处理器（主频 2.2GHz，32 核，64 线程），实配 256GB DDR4 ECC 内存（4×64GB）；配置 2 块 480GB SSD、3 块 1.92TB SSD；搭载 9460‑8i RAID 卡，4GB 缓存，带超级电容掉电保护模块；配置双口万兆网卡，满配多模光模块，共 4 个万兆光口；配置 2 个 550W 热插拔冗余电源、冗余风扇，支持热插拔；配备独立远程管理端口；提供 3 年原厂质保服务"
+    },
+    {
+     "name": "存储型服务器",
+     "brand": "航天联志",
+     "model": "联志Z2633- M1",
+     "qty": "14",
+     "price": "168500",
+     "desc": "2U 机架式；配置 2 颗 Hygon（海光）7380 处理器（主频 2.2GHz，32 核，64 线程），实配 384GB DDR4 ECC 内存（6×64GB）；配置 2 块 480GB SATA SSD、10 块 3.84TB SATA SSD；搭载 9460‑8i RAID 卡，4GB 缓存，带超级电容掉电保护模块；配置双口万兆网卡，满配多模光模块，共 4 个万兆光口；配置 2 个 550W 热插拔冗余电源、冗余风扇，支持热插拔；配备独立远程管理端口；提供 3 年原厂质保服务。"
+    }
+   ],
+   "brands": [
+    "航天联志"
+   ],
+   "models": [
+    "联志Z2633-M1",
+    "联志Z2633- M1"
+   ],
+   "params_brief": "2U 机架式；配置 2 颗 Hygon（海光）7380 处理器（主频 2.2GHz，32 核，64 线程），实配 256GB DDR4 ECC 内存（4×64GB）；配置 2 块 480GB SSD、3 块 1.92TB SSD；搭载 94",
+   "procurement": "计算型服务器、存储型服务器",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/fea0d81a-1a51-4f86-b3de-7999186a258f.html"
+  },
+  "137c9b48-e3e4-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "中标",
+   "code": "GC-HGX261264",
+   "budget": "231.600000万元",
+   "budget_num": 2316000,
+   "item_names": [
+    "超融合一体机"
+   ],
+   "contacts": "经办人: 张雷 010-83084967  负责人: 刘士伟  010-55602803",
+   "win_items": [
+    {
+     "name": "超融合一体机",
+     "brand": "H3C",
+     "model": "UIS 3060 G7",
+     "qty": "1",
+     "price": "790000",
+     "desc": "三年原厂质保/节能/环保"
+    }
+   ],
+   "brands": [
+    "H3C"
+   ],
+   "models": [
+    "UIS 3060 G7"
+   ],
+   "params_brief": "三年原厂质保/节能/环保",
+   "procurement": "超融合一体机",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/b5a7c46a-ee56-4fe9-8ce1-876afa21d179.html"
+  },
+  "7be45908-e2f2-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261384",
+   "budget": "562.350000万元",
+   "budget_num": 5623500,
+   "max_price": "562.35万元",
+   "item_names": [
+    "省级DPC支撑存储设备",
+    "计算型服务器",
+    "省级CTS支撑存储设备",
+    "存储型服务器"
+   ],
+   "procurement": "省级DPC支撑存储设备、计算型服务器、省级CTS支撑存储设备 等4项",
+   "deadline": "2026-12-09 09:00",
+   "contacts": "采购人：河北省气象信息中心 0311-67108969；卢昀灿灿 010-55602722   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/00d2688d-63fa-4d73-add2-bc4d5bc5fcb2.html"
+  },
+  "cfef7891-e2ea-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261506",
+   "budget": "1660.000000万元",
+   "budget_num": 16600000,
+   "max_price": "1660万元",
+   "item_names": [
+    "数据库一体机",
+    "服务器操作系统",
+    "GPU服务器1",
+    "全闪集中存储",
+    "服务器1",
+    "GPU服务器2",
+    "集中式数据库软件",
+    "服务器2"
+   ],
+   "procurement": "数据库一体机、服务器操作系统、GPU服务器1 等8项",
+   "deadline": "2026-12-09 09:00",
+   "contacts": "采购人：中国船级社 010-58112346；王震 010-55602563   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/57472335-10cc-4117-8d26-1e83eb35f6a6.html"
+  },
+  "97213eb5-e2e9-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "中标",
+   "code": "GC-HGX261227",
+   "budget": "25697.590000万元",
+   "budget_num": 256975900,
+   "item_names": [
+    "智算液冷集群"
+   ],
+   "contacts": "经办人: 王震 010-55602563  负责人: 刘士伟  010-55602803",
+   "win_items": [
+    {
+     "name": "智算液冷集群",
+     "brand": "华为",
+     "model": "Atlas 900 A3 SuperPoD",
+     "qty": "1",
+     "price": "84451120",
+     "desc": "计算柜：8个47U计算柜 计算节点：32个8U计算节点 CPU：单个计算节点4颗鲲鹏920V200 CPU，单颗CPU性能80核，单颗CPU主频3.0GHz，单个AI算力集群128颗CPU； AI处理器：单个计算节点8个昇腾910 AI处理器，单个AI处理器算力752 TFlops@FP16，单个AI处理器显存 HBM 128GB；单个AI算力集群256个昇腾910 AI处理器，单个AI算力集群算力192.512 PFlops@FP16，单个AI算力集群总显存HBM 32TB"
+    }
+   ],
+   "brands": [
+    "华为"
+   ],
+   "models": [
+    "Atlas 900 A3 SuperPoD"
+   ],
+   "params_brief": "计算柜：8个47U计算柜 计算节点：32个8U计算节点 CPU：单个计算节点4颗鲲鹏920V200 CPU，单颗CPU性能80核，单颗CPU主频3.0GHz，单个AI算力集群128颗CPU； AI处理器：单个计算节点8个昇腾910 AI处理",
+   "procurement": "智算液冷集群",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/8c2dea34-1557-4299-be24-15603bf5accb.html"
+  },
+  "4d7537e0-e318-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "中标",
+   "code": "GC-HGX261173",
+   "budget": "300.000000万元",
+   "budget_num": 3000000,
+   "item_names": [
+    "万兆交换机1"
+   ],
+   "contacts": "经办人: 张雷 010-83084967  负责人: 刘士伟  010-55602803",
+   "win_items": [
+    {
+     "name": "万兆交换机1",
+     "brand": "H3C",
+     "model": "S6526XE-32X4CC-EI",
+     "qty": "20",
+     "price": "11490",
+     "desc": "满足招标文件要求"
+    }
+   ],
+   "brands": [
+    "H3C"
+   ],
+   "models": [
+    "S6526XE-32X4CC-EI"
+   ],
+   "params_brief": "满足招标文件要求",
+   "procurement": "万兆交换机1",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/0671c489-53a3-4605-936a-d8f48b72291f.html"
+  },
+  "1d2251ba-e324-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "中标",
+   "code": "GC-HGX261116",
+   "budget": "250.000000万元",
+   "budget_num": 2500000,
+   "item_names": [
+    "GPU并行运算服务器"
+   ],
+   "contacts": "经办人: 姜文涛 010-83084975  负责人: 张雷  010-83084967",
+   "win_items": [
+    {
+     "name": "GPU并行运算服务器",
+     "brand": "中科可控",
+     "model": "X7850H0",
+     "qty": "",
+     "price": "",
+     "desc": ""
+    }
+   ],
+   "brands": [
+    "中科可控"
+   ],
+   "models": [
+    "X7850H0"
+   ],
+   "procurement": "GPU并行运算服务器",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/23ada574-e193-47a7-b1e3-680c51eba4c8.html"
+  },
+  "04089449-e32a-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "其他",
+   "code": "GC-HGX261518",
+   "budget": "156万元",
+   "budget_num": 1560000,
+   "item_names": [],
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/b509b1ae-dc5a-45a1-8db5-86ce4067a58c.html"
+  },
+  "78650714-e272-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261385",
+   "budget": "142万元",
+   "budget_num": 1420000,
+   "max_price": "142万元",
+   "item_names": [
+    "云主机服务器",
+    "重资产交付服务",
+    "关系型数据库服务器",
+    "表格存储服务器"
+   ],
+   "procurement": "云主机服务器、重资产交付服务、关系型数据库服务器 等4项",
+   "deadline": "2026-12-09 09:00",
+   "contacts": "采购人：国家医疗保障局医药价格和招标采购指导中心 010-89061198；姜文涛 010-83084975   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/60142f7a-e238-45d5-8c46-eb3e64aac6c2.html"
+  },
+  "84affca8-e26d-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261488",
+   "budget": "136.000000万元",
+   "budget_num": 1360000,
+   "max_price": "136万元",
+   "item_names": [
+    "数据库等"
+   ],
+   "procurement": "数据库等",
+   "deadline": "2026-12-11 09:00",
+   "contacts": "采购人：国家广播电视总局广播电视卫星直播管理中心 010-86096546；张雷 010-83084967   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/4fa8a1b5-d7e8-41e5-8177-5026cbaf7b5d.html"
+  },
+  "7a55699c-e259-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261310",
+   "budget": "144.500000万元",
+   "budget_num": 1445000,
+   "max_price": "144.5万元",
+   "item_names": [
+    "内网工作站"
+   ],
+   "procurement": "内网工作站",
+   "deadline": "2026-12-11 09:00",
+   "contacts": "采购人：吉林大学中日联谊医院 0431-84995171；张雷 010-83084967   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/9b4f6ad5-ddac-4a64-ba10-79e54652a58a.html"
+  },
+  "bfeb6a62-e234-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "中标",
+   "code": "GC-HGX261020",
+   "budget": "200.000000万元",
+   "budget_num": 2000000,
+   "item_names": [
+    "智能服务器"
+   ],
+   "contacts": "经办人: 徐婧婧 010-83084953  负责人: 王震  010-55602563",
+   "win_items": [
+    {
+     "name": "智能服务器",
+     "brand": "曙光",
+     "model": "X795H50",
+     "qty": "1",
+     "price": "1993000",
+     "desc": "1 台国产 GPU 服务器及相关配套设备"
+    }
+   ],
+   "brands": [
+    "曙光"
+   ],
+   "models": [
+    "X795H50"
+   ],
+   "params_brief": "1 台国产 GPU 服务器及相关配套设备",
+   "procurement": "智能服务器",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/be6ebfac-e459-40af-be9e-318a9122e05b.html"
+  },
+  "b3bd082b-e257-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "其他",
+   "code": "GC-HGX261417",
+   "budget": "495万元",
+   "budget_num": 4950000,
+   "item_names": [],
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7911bc5a-83e2-46b9-b780-882ba9d273f8.html"
+  },
+  "29d49f40-e262-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "其他",
+   "code": "GC-HGX261513",
+   "budget": "2213.800000万元",
+   "budget_num": 22138000,
+   "item_names": [],
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/18d4daa2-89f2-48a6-8fc5-7bdddf6f3f93.html"
+  },
+  "6663ff1c-e18e-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261413",
+   "budget": "370.000000万元",
+   "budget_num": 3700000,
+   "max_price": "370万元",
+   "item_names": [
+    "管理网接入交换机等"
+   ],
+   "procurement": "管理网接入交换机等",
+   "deadline": "2026-12-11 09:00",
+   "contacts": "采购人：中国科学院高能物理研究所 0769-88931057；张雷 010-83084967   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7502ea79-ca55-448f-9407-1edc526edbd1.html"
+  },
+  "a33818d1-e18c-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261328",
+   "budget": "1309.740000万元",
+   "budget_num": 13097400,
+   "max_price": "1309.74万元",
+   "item_names": [
+    "大数据组件服务器",
+    "带外管理交换机",
+    "边界防火墙",
+    "系统集成",
+    "虚拟化软件",
+    "数据处理和存储系统软件",
+    "接入交换机",
+    "汇聚交换机",
+    "通用计算服务器",
+    "GPU服务器",
+    "存储服务器",
+    "25G接入交换机",
+    "数据库服务器",
+    "操作系统软件",
+    "应用软件定制开发",
+    "通用业务软件（大数据处理功能软件）",
+    "入侵防御系统",
+    "数据库软件",
+    "安全软件"
+   ],
+   "procurement": "大数据组件服务器、带外管理交换机、边界防火墙 等19项",
+   "deadline": "2026-12-08 09:00",
+   "contacts": "采购人：国家广播电视总局信息中心 010-86096957；刘士伟 010-55602803   侯凤成 010-83083527",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/01b275e9-6710-4747-81b5-a8d8cb52c19c.html"
+  },
+  "23cb4ec6-e163-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261213",
+   "budget": "2800.000000万元",
+   "budget_num": 28000000,
+   "max_price": "2800万元",
+   "item_names": [
+    "存储网交换机",
+    "推理服务器",
+    "智能体平台",
+    "训练服务器",
+    "业务与带内管理交换机",
+    "算力调度服务器",
+    "智能体与知识库服务器",
+    "带外管理交换机",
+    "参数网交换机",
+    "混闪存储",
+    "知识库平台",
+    "全闪存储",
+    "边界防火墙",
+    "算力调度平台"
+   ],
+   "procurement": "存储网交换机、推理服务器、智能体平台 等14项",
+   "deadline": "2026-12-07 09:00",
+   "contacts": "采购人：中国疾病预防控制中心 010-58900140；徐婧婧 010-83084953   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/d1325108-9193-4ece-804d-c98ce7028144.html"
+  },
+  "15b7f5b0-e161-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261396",
+   "budget": "1270.000000万元",
+   "budget_num": 12700000,
+   "max_price": "1270万元",
+   "item_names": [
+    "超融合平台等"
+   ],
+   "procurement": "超融合平台等",
+   "deadline": "2026-12-09 09:00",
+   "contacts": "采购人：西安交通大学医学院第二附属医院 029-87679534；张雷 010-83084967   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/d4bd7f17-4cce-4fac-aa43-219afc842809.html"
+  },
+  "eee90be5-e16b-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "中标",
+   "code": "GC-HGX261254",
+   "budget": "414.120000万元",
+   "budget_num": 4141200,
+   "item_names": [
+    "万兆交换机"
+   ],
+   "contacts": "经办人: 卢昀灿灿 010-55602722  负责人: 王震  010-55602563",
+   "win_items": [
+    {
+     "name": "万兆交换机",
+     "brand": "锐捷",
+     "model": "RG-S6160-28VS8CQ-X",
+     "qty": "4",
+     "price": "32800",
+     "desc": "满足全部服务要求和标的基本概况"
+    }
+   ],
+   "brands": [
+    "锐捷"
+   ],
+   "models": [
+    "RG-S6160-28VS8CQ-X"
+   ],
+   "params_brief": "满足全部服务要求和标的基本概况",
+   "procurement": "万兆交换机",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/43c59109-e86f-40b9-8316-fc046d094dfa.html"
+  },
+  "eac419a4-e19a-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "中标",
+   "code": "GC-HGX261207",
+   "budget": "242.000000万元",
+   "budget_num": 2420000,
+   "item_names": [
+    "高性能推理服务器"
+   ],
+   "contacts": "经办人: 徐婧婧 010-83084953  负责人: 王震  010-55602563",
+   "win_items": [
+    {
+     "name": "高性能推理服务器",
+     "brand": "kunLun",
+     "model": "G5680 V2",
+     "qty": "1",
+     "price": "1399700",
+     "desc": "配置4个CPU，单颗核数48，主频2.6GHz。AI 训练单元：配置 8个AI 训练单元，单个AI 训练单元内存64GB HBM，单个AI 训练单元 FP16算力280 TFLOPS，单个AI训练单元 FP32算力75 TFLOPS AI 训练单元与现网设备AI算力单元完全兼容；内存：配置1024GB DDR4 内存。系统盘：配置2块 480G SSD硬盘。数据盘：配置4块 3.84TB NVME SSD硬盘。业务网卡：配置2 个25G光口（含光模块） ; 8个200G ROCE网口（含光模块）RAID卡：配置 RAID卡，支持 RAID 0，1，5， 6，10， 50，缓存4GB，支持超级电"
+    }
+   ],
+   "brands": [
+    "kunLun"
+   ],
+   "models": [
+    "G5680 V2"
+   ],
+   "params_brief": "配置4个CPU，单颗核数48，主频2.6GHz。AI 训练单元：配置 8个AI 训练单元，单个AI 训练单元内存64GB HBM，单个AI 训练单元 FP16算力280 TFLOPS，单个AI训练单元 FP32算力75 TFLOPS AI ",
+   "procurement": "高性能推理服务器",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/c31738e6-5bfd-47eb-ba1f-beef04e62d31.html"
+  },
+  "97f54ec0-e166-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "中标",
+   "code": "GC-HGX261217",
+   "budget": "483.310000万元",
+   "budget_num": 4833100,
+   "item_names": [
+    "汇聚交换机",
+    "接入交换机",
+    "POE 接入交换机"
+   ],
+   "contacts": "经办人: 卢昀灿灿 010-55602722  负责人: 王震  010-55602563",
+   "win_items": [
+    {
+     "name": "汇聚交换机",
+     "brand": "H3C",
+     "model": "H3C S6526XE-32X4CC-EI",
+     "qty": "14",
+     "price": "25000",
+     "desc": "单台配置：整机配置实配10 GE 光接口32个，40GE光接口4个，1条5米40G堆叠线缆，2个交流电源模块"
+    },
+    {
+     "name": "接入交换机",
+     "brand": "H3C",
+     "model": "H3C S5570S-54S-EI",
+     "qty": "83",
+     "price": "10000",
+     "desc": "单台配置：配置48个10/100/1000BASE-T电口, 6个10GE SFP+端口，冗余电源，1条万兆堆叠线缆"
+    },
+    {
+     "name": "POE 接入交换机",
+     "brand": "H3C",
+     "model": "H3C S5570S-54S-PWR-EI-A",
+     "qty": "39",
+     "price": "15000",
+     "desc": "单台配置：48个千兆电口（支持POE+），6个万兆光口，冗余电源（整机POE供电总功率1680W），1条万兆堆叠线缆"
+    }
+   ],
+   "brands": [
+    "H3C"
+   ],
+   "models": [
+    "H3C S6526XE-32X4CC-EI",
+    "H3C S5570S-54S-EI",
+    "H3C S5570S-54S-PWR-EI-A"
+   ],
+   "params_brief": "单台配置：整机配置实配10 GE 光接口32个，40GE光接口4个，1条5米40G堆叠线缆，2个交流电源模块",
+   "procurement": "汇聚交换机、接入交换机、POE 接入交换机",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/9fd839f9-6cb2-4d2d-a696-d29d0055984e.html"
+  },
+  "5a9d0e17-e14a-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "其他",
+   "code": "GC-HGX261270",
+   "budget": "1353.820000万元",
+   "budget_num": 13538200,
+   "item_names": [],
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/df63ab49-9565-4a88-8d23-9e70d576074b.html"
+  },
+  "8cf87149-df48-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261458",
+   "budget": "300.000000万元",
+   "budget_num": 3000000,
+   "max_price": "300万元",
+   "item_names": [
+    "汇聚交换机等"
+   ],
+   "procurement": "汇聚交换机等",
+   "deadline": "2026-12-07 09:00",
+   "contacts": "采购人：中国科学院高能物理研究所 010-88236011；张雷 010-83084967   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/5a9e9337-269f-424c-a638-e2036cc307fc.html"
+  },
+  "357d23c6-df41-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261462",
+   "budget": "335.094000万元",
+   "budget_num": 3350940,
+   "max_price": "335.094万元",
+   "item_names": [
+    "GPU并行运算服务器",
+    "统一存储设备",
+    "机架式服务器"
+   ],
+   "procurement": "GPU并行运算服务器、统一存储设备、机架式服务器",
+   "deadline": "2026-12-07 09:00",
+   "contacts": "采购人：郑州警察学院 0371-60666155；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/52849884-fd66-4f44-89bc-04641c8dd947.html"
+  },
+  "f87f2a96-df15-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261245",
+   "budget": "4102.000000万元",
+   "budget_num": 41020000,
+   "max_price": "4102万元",
+   "item_names": [
+    "机架式服务器-2",
+    "机架式服务器-4",
+    "机架式服务器-1",
+    "负载均衡设备",
+    "万兆接入交换机",
+    "核心交换机",
+    "机架式服务器-3",
+    "核心路由器",
+    "千兆接入交换机"
+   ],
+   "procurement": "机架式服务器-2、机架式服务器-4、机架式服务器-1 等9项",
+   "deadline": "2026-12-07 09:00",
+   "contacts": "采购人：中国互联网络信息中心 010-59116174；刘士伟 010-55602803   侯凤成 010-83083527",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/e675afcf-ed31-45de-8fa4-2ae2a50f4408.html"
+  },
+  "75684fd0-df05-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261346",
+   "budget": "345万元",
+   "budget_num": 3450000,
+   "max_price": "345万元",
+   "item_names": [
+    "机架式服务器"
+   ],
+   "procurement": "机架式服务器",
+   "deadline": "2026-12-07 09:00",
+   "contacts": "采购人：中国银行保险监督管理委员会安徽监管局 0551-65192620；姜文涛 010-83084975   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/99e58ab9-f150-4da5-a513-6b33a91e3ffc.html"
+  },
+  "a1e48061-df01-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261179",
+   "budget": "160.000000万元",
+   "budget_num": 1600000,
+   "max_price": "159万元",
+   "item_names": [
+    "集成服务",
+    "专用DNS设备",
+    "高性能汇聚交换机",
+    "备份软件",
+    "桌面管理与网络准入系统售后支持服务",
+    "防病毒软件授权",
+    "高性能接入交换机"
+   ],
+   "procurement": "集成服务、专用DNS设备、高性能汇聚交换机 等7项",
+   "deadline": "2026-12-04 09:00",
+   "contacts": "采购人：中山大学附属第一医院 020-87608345；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/70e96f2b-e9d7-477e-9750-d0056b3a37a9.html"
+  },
+  "6f1e9611-df00-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261439",
+   "budget": "275.000000万元",
+   "budget_num": 2750000,
+   "max_price": "275万元",
+   "item_names": [
+    "接入防火墙",
+    "区县三层网络交换机",
+    "万兆光纤交换机",
+    "出口防火墙",
+    "上网行为管理系统",
+    "网络回溯系统",
+    "应用防火墙",
+    "入侵防御系统",
+    "视频会议系统",
+    "零信任网关",
+    "分流器",
+    "数据防泄漏",
+    "区县接入防火墙",
+    "高性能数据交换机"
+   ],
+   "procurement": "接入防火墙、区县三层网络交换机、万兆光纤交换机 等14项",
+   "deadline": "2026-12-04 09:00",
+   "contacts": "采购人：国家统计局重庆调查总队 023-67637065；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/f7c40ce4-8988-413c-84ac-66b3f60684c9.html"
+  },
+  "4bc0a348-df00-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261382",
+   "budget": "1977.000000万元",
+   "budget_num": 19770000,
+   "max_price": "1977万元",
+   "item_names": [
+    "互联网分布式存储",
+    "内网分布式存储"
+   ],
+   "procurement": "互联网分布式存储、内网分布式存储",
+   "deadline": "2026-12-04 09:00",
+   "contacts": "采购人：国家气象信息中心(中国气象局气象数据中心) 010-58993440；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/674eaaa4-b0e9-4746-98ff-3c555d545192.html"
+  },
+  "2efa3c9c-df00-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261383",
+   "budget": "1192.000000万元",
+   "budget_num": 11920000,
+   "max_price": "1192万元",
+   "item_names": [
+    "数据分析服务器",
+    "应用服务器",
+    "AI-推理服务器-2",
+    "AI-推理服务器-1",
+    "万兆交换机",
+    "AI接入交换机",
+    "分布式数据库",
+    "服务器配套操作系统",
+    "数据库服务器",
+    "千兆交换机"
+   ],
+   "procurement": "数据分析服务器、应用服务器、AI-推理服务器-2 等10项",
+   "deadline": "2026-12-04 09:00",
+   "contacts": "采购人：国家工业信息安全发展研究中心(工业和信息化部电子第一研究所) 010-88686365；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/3dca9b45-ca69-4d73-8a88-02ea878ca932.html"
+  },
+  "f369cea3-deff-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261231",
+   "budget": "2195.880000万元",
+   "budget_num": 21958800,
+   "max_price": "2195.88万元",
+   "item_names": [
+    "加密防火墙",
+    "业务交换机2",
+    "系统软件4",
+    "WEB应用防火墙",
+    "系统软件1-2",
+    "服务器一超融合软件",
+    "系统软件1-1",
+    "防篡改",
+    "系统软件2-3",
+    "统一智能监控系统定制开发",
+    "核心防火墙",
+    "集成综合调测服务",
+    "应用负载均衡",
+    "链路负载均衡",
+    "核心交换机1",
+    "态势感知平台",
+    "区域隔离防火墙1-2",
+    "系统软件2-2",
+    "边界防火墙",
+    "存储",
+    "核心交换机2",
+    "业务交换机1-1",
+    "系统软件3",
+    "数据库审计",
+    "存储交换机1-1",
+    "服务器三",
+    "终端杀毒",
+    "入侵检测",
+    "业务交换机1-2",
+    "服务器二",
+    "日志审计",
+    "服务器四",
+    "BMC交换机",
+    "存储交换机1-2",
+    "带内交换机",
+    "服务器一",
+    "系统软件5",
+    "系统软件2-1",
+    "区域隔离防火墙1-1",
+    "网络审计"
+   ],
+   "procurement": "加密防火墙、业务交换机2、系统软件4 等40项",
+   "deadline": "2026-12-04 09:00",
+   "contacts": "采购人：中央国家机关住房资金管理中心 010-65993053；王震 010-55602563   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/a22249d0-37fc-4adf-be90-16677f1bbf47.html"
+  },
+  "29f78929-deff-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261496",
+   "budget": "562.350000万元",
+   "budget_num": 5623500,
+   "max_price": "562.35万元",
+   "item_names": [
+    "机架式服务器2等"
+   ],
+   "procurement": "机架式服务器2等",
+   "deadline": "2026-12-08 09:00",
+   "contacts": "采购人：天津市气象信息中心(天津市气象档案馆) 022-23333581；张雷 010-83084967   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/70ac2e62-2f1f-4947-8a50-624416038192.html"
+  },
+  "fa34f023-de68-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261459",
+   "budget": "400.000000万元",
+   "budget_num": 4000000,
+   "max_price": "400万元",
+   "item_names": [
+    "机架式服务器3等"
+   ],
+   "procurement": "机架式服务器3等",
+   "deadline": "2026-12-03 09:00",
+   "contacts": "采购人：中国科学院高能物理研究所 010-88236011；张雷 010-83084967   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/56ae310f-47f9-4e84-9f5c-74868bd5036d.html"
+  },
+  "965f9f94-de30-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261388X",
+   "budget": "299.45万元",
+   "budget_num": 2994500,
+   "max_price": "299.45万元",
+   "item_names": [
+    "AI芯片软硬件适配验证和研究平台"
+   ],
+   "procurement": "AI芯片软硬件适配验证和研究平台",
+   "deadline": "2026-12-04 09:00",
+   "contacts": "采购人：中国电子产品可靠性与环境试验研究所((工业和信息化部电子第五研究所)(中国赛宝实验室)) 020-87234662；张雷 010-83084967   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/739d6ef5-000c-411e-a52f-2300a0785371.html"
+  },
+  "6fa478f3-dd9a-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261154",
+   "budget": "136.500000万元",
+   "budget_num": 1365000,
+   "max_price": "136.5万元",
+   "item_names": [
+    "数字接口箱",
+    "设备机柜",
+    "无线话筒有源指向天线",
+    "数字功率放大器",
+    "中控主机",
+    "反显屏幕",
+    "LED全彩屏幕",
+    "有线会议话筒",
+    "智能供电柜系统",
+    "数字音频处理器",
+    "无线话筒天线分配放大器",
+    "高清摄像机",
+    "跳线盘（24路焊接型）",
+    "LED拼接处理器",
+    "辅材管线接插头",
+    "操作台",
+    "多点控制单元",
+    "会议全向麦克风",
+    "跳线盘（24路音频跳线盘）",
+    "时序电源",
+    "中控定制化程序",
+    "设备机柜",
+    "分体变频壁挂机",
+    "业务管理平台",
+    "音频系统集成安装",
+    "无线话筒",
+    "环绕功放",
+    "反显屏幕落地移动支架",
+    "反馈抑制器",
+    "LED控制器",
+    "摄像机控制键盘",
+    "电源管理器",
+    "LED屏安装结构支架",
+    "高清摄像机",
+    "线性阵列音箱",
+    "中控触摸屏",
+    "高清视频会议终端",
+    "数字音频矩阵处理器",
+    "返送功放"
+   ],
+   "procurement": "数字接口箱、设备机柜、无线话筒有源指向天线 等39项",
+   "deadline": "2026-12-02 09:00",
+   "contacts": "采购人：中华人民共和国人力资源和社会保障部 010-84233683；卢昀灿灿 010-55602722   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/e64d90c4-5738-4e25-86dd-6d234c8805d3.html"
+  },
+  "9cae2826-dd7b-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261483",
+   "budget": "479.700000万元",
+   "budget_num": 4797000,
+   "max_price": "479.7万元",
+   "item_names": [
+    "无线接入点2",
+    "无线控制器",
+    "管理分析系统授权",
+    "无线POE交换机",
+    "无线接入点1",
+    "室外光缆"
+   ],
+   "procurement": "无线接入点2、无线控制器、管理分析系统授权 等6项",
+   "deadline": "2026-12-02 09:00",
+   "contacts": "采购人：中国人民大学 010-62511204；王震 010-55602563   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/8e7bdae3-ee54-485c-8794-785bee24ae8e.html"
+  },
+  "ee882418-dd73-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261394",
+   "budget": "2584.500000万元",
+   "budget_num": 25845000,
+   "max_price": "2584.5万元",
+   "item_names": [
+    "微服务平台",
+    "计算型服务器",
+    "服务器操作系统",
+    "接口网关",
+    "数据湖"
+   ],
+   "procurement": "微服务平台、计算型服务器、服务器操作系统 等5项",
+   "deadline": "2026-12-02 09:00",
+   "contacts": "采购人：国家气象信息中心(中国气象局气象数据中心) 010-58993440；王震 010-55602563   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/41d51ad5-bd25-4069-893b-7c099eeb6c2d.html"
+  },
+  "6b1fed51-dd72-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261465",
+   "budget": "300万元",
+   "budget_num": 3000000,
+   "max_price": "300万元",
+   "item_names": [
+    "GPU服务器",
+    "安全隔离与信息交换系统",
+    "地理服务器1",
+    "存储服务器",
+    "应用服务器",
+    "移动图形工作站",
+    "运算服务器",
+    "万兆光纤交换机",
+    "台式图形工作站",
+    "机柜",
+    "防火墙",
+    "LED 显示屏",
+    "控制器",
+    "音响",
+    "地理服务器2",
+    "激光彩色双面打印机",
+    "负载均衡服务器"
+   ],
+   "procurement": "GPU服务器、安全隔离与信息交换系统、地理服务器1 等17项",
+   "deadline": "2026-12-02 09:00",
+   "contacts": "采购人：国家统计局吉林调查总队 0431-85891857；姜文涛 010-83084975   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/0778903e-8524-494f-b6c8-657d3cd6eb73.html"
+  },
+  "0ef7522a-dd69-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261431",
+   "budget": "185.000000万元",
+   "budget_num": 1850000,
+   "max_price": "185万元",
+   "item_names": [
+    "防火墙1",
+    "数据中心交换机",
+    "防火墙2",
+    "汇聚交换机1",
+    "负载均衡设备",
+    "汇聚交换机2"
+   ],
+   "procurement": "防火墙1、数据中心交换机、防火墙2 等6项",
+   "deadline": "2026-12-03 09:00",
+   "contacts": "采购人：中国人民银行山东省分行（国家外汇管理局山东省分局） 0531-86165683；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/2e7e3988-020f-46b0-96be-d3c23f0a450f.html"
+  },
+  "2dc9b95c-dcd8-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261298",
+   "budget": "422.000000万元",
+   "budget_num": 4220000,
+   "max_price": "422万元",
+   "item_names": [
+    "日志审计",
+    "存储",
+    "业务核心交换机",
+    "终端管理",
+    "数据库审计",
+    "图形工作站",
+    "潜伏威胁探针",
+    "业务汇聚交换机",
+    "管理核心交换机",
+    "业务接入交换机",
+    "网络安全态势感知软件",
+    "管理汇聚交换机",
+    "堡垒机",
+    "管理接入交换机",
+    "防火墙"
+   ],
+   "procurement": "日志审计、存储、业务核心交换机 等15项",
+   "deadline": "2026-12-01 09:00",
+   "contacts": "采购人：国家广播电视总局广播电视卫星直播管理中心 010-86096546；卢昀灿灿 010-55602722   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/9398b5e6-1291-4648-b315-00331d692b2b.html"
+  },
+  "5ea1bf55-dc1b-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX260935",
+   "budget": "1287.6万元",
+   "budget_num": 12876000,
+   "max_price": "1287.6万元",
+   "item_names": [
+    "对象存储扩容",
+    "高性能计算存储",
+    "存储服务器",
+    "NAS存储扩容",
+    "一体机内存扩容",
+    "刀片服务器系统"
+   ],
+   "procurement": "对象存储扩容、高性能计算存储、存储服务器 等6项",
+   "deadline": "2026-11-30 09:00",
+   "contacts": "采购人：吉林大学第一医院 0431-81879934；姜文涛 010-83084975   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/4aecae6e-c7b9-4564-8280-1917500de2bc.html"
+  },
+  "7b859460-dc1a-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX2610312",
+   "budget": "404.372万元 4．最高限价：404.372万元5．采购需求：密闭热通道,列间空调,蓄电池,一体化UPS,服务器机柜等产品6．合同履行期限：自合同签订之日起60天内完成安装调试并具备验收条件（具体服务起止日期可随合同签订时间相应顺延）7．本项目是否接受联合体投标：否 二、投标人的资格要求1.满足《中华人民共和国政府采购法》第二十二条规定2.落实政府采购政策需满足的资格要求：无3.本项目的特定资格要求：无三、获取招标文件1．时间：5个工作日2．地点：中央政府采购网（http://www.zycg.gov.cn）3．方式：在线下载 4．售价：免费 四、提交投标文件1．提交（上传）投标文件截止时间： 2026年12月1日09时00分（北京时间） 2．提交（上传）投标文件地点： 本项目采用电子采购系统（国e采）进行网上投标，请符合投标条件的投标人安装投标工具（新），编制完成后加密上传投标文件。 五、开标1.时间：2026年12月1日09时00分（北京时间）2.地点：项目通过网上开标大厅进行开标，请在开标当日登录国e采系统点击“网上开标”进入网上开标大厅，在规定时间内等待解密和唱标六、公告期限自本公告发布之日起5个工作日，公告期限届满后获取采购文件的，获取时间以公告期限届满之日为准。 七、其他补充事宜 （一）本项目采用电子采购系统（国e采）进行招投标，请在投标前详细阅读中央政府采购网首页&ldquo;通知公告&rdquo;栏目的《关于新版单独委托项目电子采购系统上线试运行的通知》及相关附件。 （二）供应商进行投标须提前办理数字证书和电子签章，办理方式和注意事项详见中央政府采购网首页&ldquo;注册指南&rdquo;专栏。已办理数字证书请确保证书还在有效期内，如已过期或即将过期，须联系 CA 服务机构进行证书更新。 （三）供应商可在中央政府采购网（www.zycg.gov.cn）采购公告栏查看并登录下载招标文件，或通过投标工具免费下载招标文件，本项目无须报名。 （四）供应商在投标过程中涉及系统平台操作的技术问题，可致电国采中心技术支持热线咨询，电话：010-55603940。 （五）本项目相关信息同时在“中国政府采购网”、“中央政府采购网”等媒体上发布。八、凡对本次招标提出询问，请按以下方式联系1．采购人信息 名  称：北京理工大学 地  址： 联系方式：010-68912384 2．采购执行机构信息 名  称：中央国家机关政府采购中心 地  址：北京市西城区西直门内大街西章胡同9号院 邮政编码：100035 联系方式：详见http://www.zycg.gov.cn/home/contactus 3．项目联系方式文件联系人及电话：姜文涛 010-83084975   张雷 010-83084967九、附件北京理工大学教育学院教育数据中心服务器采购项目招标文件中央国家机关政府采购中心2026年11月9日",
+   "budget_num": 4043720,
+   "max_price": "404.372万元5．采购需求：密闭热通道,列间空调,蓄电池,一体化UPS,服务器机柜等产品6．合同履行期限：自合同签订之日起60天内完成安装调试并具备验收条件（具体服务起止日期可随合同签订时间相应顺延）7．本项目是否接受联合体投标：否 二、投标人的资格要求1.满足《中华人民共和国政府采购法》第二十二条规定2.落实政府采购政策需满足的资格要求：无3.本项目的特定资格要求：无三、获取招标文件1．时间：5个工作日2．地点：中央政府采购网（http://www.zycg.gov.cn）3．方式：在线下载 4．售价：免费 四、提交投标文件1．提交（上传）投标文件截止时间： 2026年12月1日09时00分（北京时间） 2．提交（上传）投标文件地点： 本项目采用电子采购系统（国e采）进行网上投标，请符合投标条件的投标人安装投标工具（新），编制完成后加密上传投标文件。 五、开标1.时间：2026年12月1日09时00分（北京时间）2.地点：项目通过网上开标大厅进行开标，请在开标当日登录国e采系统点击“网上开标”进入网上开标大厅，在规定时间内等待解密和唱标六、公告期限自本公告发布之日起5个工作日，公告期限届满后获取采购文件的，获取时间以公告期限届满之日为准。 七、其他补充事宜 （一）本项目采用电子采购系统（国e采）进行招投标，请在投标前详细阅读中央政府采购网首页&ldquo;通知公告&rdquo;栏目的《关于新版单独委托项目电子采购系统上线试运行的通知》及相关附件。 （二）供应商进行投标须提前办理数字证书和电子签章，办理方式和注意事项详见中央政府采购网首页&ldquo;注册指南&rdquo;专栏。已办理数字证书请确保证书还在有效期内，如已过期或即将过期，须联系 CA 服务机构进行证书更新。 （三）供应商可在中央政府采购网（www.zycg.gov.cn）采购公告栏查看并登录下载招标文件，或通过投标工具免费下载招标文件，本项目无须报名。 （四）供应商在投标过程中涉及系统平台操作的技术问题，可致电国采中心技术支持热线咨询，电话：010-55603940。 （五）本项目相关信息同时在“中国政府采购网”、“中央政府采购网”等媒体上发布。八、凡对本次招标提出询问，请按以下方式联系1．采购人信息 名  称：北京理工大学 地  址： 联系方式：010-68912384 2．采购执行机构信息 名  称：中央国家机关政府采购中心 地  址：北京市西城区西直门内大街西章胡同9号院 邮政编码：100035 联系方式：详见http://www.zycg.gov.cn/home/contactus 3．项目联系方式文件联系人及电话：姜文涛 010-83084975   张雷 010-83084967九、附件北京理工大学教育学院教育数据中心服务器采购项目招标文件中央国家机关政府采购中心2026年11月9日",
+   "item_names": [],
+   "deadline": "2026-12-01 09:00",
+   "contacts": "姜文涛 010-83084975   张雷 010-83084967九、附件北京理工大学教育学院教育数据中心服务器采购项目招标文件中央国家机关政府采购中心2026年11月9日",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/85f1101b-a2a1-4404-932b-1e60e8e3ea56.html"
+  },
+  "4d8a68ea-d9a0-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261293",
+   "budget": "518.0972万元",
+   "budget_num": 5180972,
+   "max_price": "518.0972万元",
+   "item_names": [
+    "省级CTS支撑存储设备",
+    "存储型服务器",
+    "省级DPC支撑存储设备",
+    "省级天擎数据库服务器磁盘",
+    "计算型服务器"
+   ],
+   "procurement": "省级CTS支撑存储设备、存储型服务器、省级DPC支撑存储设备 等5项",
+   "deadline": "2026-11-30 09:00",
+   "contacts": "采购人：四川省气象数据中心(四川省气象探测中心、四川省气象档案馆) 028-87322164；姜文涛 010-83084975   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/4a35ba0e-1fc7-4b37-b654-278bc4fb1c52.html"
+  },
+  "f6a9a4ef-d98a-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261403",
+   "budget": "648.800000万元",
+   "budget_num": 6488000,
+   "max_price": "648.8万元",
+   "item_names": [
+    "SSD盘",
+    "机架式服务器2",
+    "机架式服务器1",
+    "全闪存阵列设备",
+    "操作系统"
+   ],
+   "procurement": "SSD盘、机架式服务器2、机架式服务器1 等5项",
+   "deadline": "2026-11-27 09:00",
+   "contacts": "采购人：山东省气象数据中心 0531-81603640；卢昀灿灿 010-55602722   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/79d74f3c-28c4-48d8-87bc-39136cea5b52.html"
+  },
+  "a7c52087-d97c-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261467",
+   "budget": "489.000000万元",
+   "budget_num": 4890000,
+   "max_price": "466.4万元",
+   "item_names": [
+    "储能大楼-WiFi7室外AP",
+    "储能大楼-WiFi7放装AP",
+    "储能大楼-48口千兆接入交换机",
+    "储能大楼-8口POE交换机",
+    "沙坪坝校区重建学生宿舍（第一批）-POE ONU设备",
+    "沙坪坝校区重建学生宿舍（第一批）-WiFi7放装AP",
+    "沙坪坝校区重建学生宿舍（第一批）-OLT设备",
+    "储能大楼-24口千兆接入交换机",
+    "储能大楼-无线控制器",
+    "储能大楼-WiFi7 面板AP",
+    "储能大楼-WiFi7高密AP",
+    "储能大楼-楼宇汇聚交换机",
+    "储能大楼-16口POE交换机",
+    "沙坪坝校区重建学生宿舍（第一批）-WiFi7 面板PON口AP",
+    "沙坪坝校区重建学生宿舍（第一批）-24口千兆接入交换机",
+    "沙坪坝校区重建学生宿舍（第一批）-WiFi7高密AP",
+    "储能大楼-WiFi7 面板光口AP"
+   ],
+   "procurement": "储能大楼-WiFi7室外AP、储能大楼-WiFi7放装AP、储能大楼-48口千兆接入交换机 等17项",
+   "deadline": "2026-11-27 09:00",
+   "contacts": "采购人：重庆大学 023-65106741；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/119468ce-b98a-47a7-b947-b629728f3895.html"
+  },
+  "5d17ae2d-d8e9-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261377",
+   "budget": "243.000000万元",
+   "budget_num": 2430000,
+   "max_price": "243万元",
+   "item_names": [
+    "超融合一体机等"
+   ],
+   "procurement": "超融合一体机等",
+   "deadline": "2026-12-02 09:00",
+   "contacts": "采购人：珠江水利委员会珠江水利科学研究院 020-87117194；张雷 010-83084967   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/c09df8d3-103b-4412-b8b7-ad823f2427ad.html"
+  },
+  "122e2e33-d8bf-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-FGX261390",
+   "budget": "599.280000万元",
+   "budget_num": 5992800,
+   "max_price": "599.28万元，每年最高限价金额：199.76万元，三年最高限价金额：599.28万元。",
+   "item_names": [
+    "新华通讯社智能化技术服务项目高性能GPU服务器云服务子项"
+   ],
+   "procurement": "新华通讯社智能化技术服务项目高性能GPU服务器云服务子项",
+   "deadline": "2026-11-26 09:00",
+   "contacts": "采购人：新华通讯社 010-63076313；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/0cc23cf3-71c3-4910-ba2b-26d3eacc443c.html"
+  },
+  "77bc6e4d-d82a-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261271",
+   "budget": "275.800000万元",
+   "budget_num": 2758000,
+   "max_price": "275.8万元",
+   "item_names": [
+    "SDP安全网关（零信任网关）",
+    "GPU并行运算服务器",
+    "手写数字签名系统",
+    "应用交付网关",
+    "存储"
+   ],
+   "procurement": "SDP安全网关（零信任网关）、GPU并行运算服务器、手写数字签名系统 等5项",
+   "deadline": "2026-11-26 09:00",
+   "contacts": "采购人：北京大学口腔医学院（北京大学口腔医院） 010-82196111；徐婧婧 010-83084953   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/48258dc4-5d10-4707-9dbd-6839790b7e78.html"
+  },
+  "b30a8dcb-d829-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261376",
+   "budget": "1397.550000万元",
+   "budget_num": 13975500,
+   "max_price": "1397.55万元",
+   "item_names": [
+    "核心交换机等"
+   ],
+   "procurement": "核心交换机等",
+   "deadline": "2026-11-27 09:00",
+   "contacts": "采购人：中国中医科学院广安门医院 010-88001171；张雷 010-83084967   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/d6ea298e-4a72-4ea2-9bc4-4a42e384f6e7.html"
+  },
+  "17b7edb7-d823-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261360",
+   "budget": "563.100000万元",
+   "budget_num": 5631000,
+   "max_price": "563.1万元",
+   "item_names": [
+    "存储型服务器",
+    "省级 CTS 支撑存储设备",
+    "省级 DPC 支撑存储设备",
+    "计算型服务器"
+   ],
+   "procurement": "存储型服务器、省级 CTS 支撑存储设备、省级 DPC 支撑存储设备 等4项",
+   "deadline": "2026-11-26 09:00",
+   "contacts": "采购人：浙江省气象数据中心（浙江省气象探测中心、浙江省气象档案馆） 0571-86783485；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/15aa09e1-c3d1-4f82-8357-3c30c627c591.html"
+  },
+  "7c078b0c-d822-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261325",
+   "budget": "671.800000万元",
+   "budget_num": 6718000,
+   "max_price": "671.8万元",
+   "item_names": [
+    "省级CTS支撑存储设备",
+    "机架式服务器1",
+    "服务器操作系统",
+    "省级天擎数据库服务器磁盘扩充",
+    "省级DPC支撑存储设备",
+    "机架式服务器2"
+   ],
+   "procurement": "省级CTS支撑存储设备、机架式服务器1、服务器操作系统 等6项",
+   "deadline": "2026-11-26 09:00",
+   "contacts": "采购人：安徽省气象数据中心(安徽省气象探测中心、安徽省气象档案馆) 0551-62290345；徐婧婧 010-83084953   侯凤成 010-83083527",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/f74b3269-b8e1-4bf0-bb44-9ac5ea5260e2.html"
+  },
+  "8737f883-d807-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261111",
+   "budget": "121.900000万元",
+   "budget_num": 1219000,
+   "max_price": "121.9万元",
+   "item_names": [
+    "机架式服务器",
+    "存储扩容",
+    "虚拟化软件"
+   ],
+   "procurement": "机架式服务器、存储扩容、虚拟化软件",
+   "deadline": "2026-11-27 09:00",
+   "contacts": "采购人：中华人民共和国深圳海关 0755-84394445；张雷 010-83084967   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/2be4d69d-603e-4d19-8e69-bd6729309162.html"
+  },
+  "ede763c8-d7fe-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX2608362",
+   "budget": "4778.000000万元 4．最高限价：4778万元5．采购需求：安全产品-API安全产品,硬件产品-烟雾探测器,硬件产品-配电列头柜,硬件产品-手机APP客户端,安全产品-水印溯源系统,硬件产品-硬盘录像机,安全产品-安全检测与响应管理平台探针,硬件产品-虚拟化基础平台服务器,安全产品-态势感知产品,安全产品-数据备份产品,安全产品-单向/双单向网络隔离设备,安全产品-区域边界隔离防火墙,安全产品-数据审查产品,安全产品-时间戳服务器,安全产品-密钥管理系统,硬件产品-业务接入交换机,软件产品-迁移工具,软件产品-超融合软件,硬件产品-声光报警器,安全产品-入侵防范系统,安全产品-网络流量安全分析（NTA）系统,安全产品-网站数据恢复产品,安全产品-蜜罐系统,硬件产品-短信告警模块,安全产品-网络准入设备（NAC）,硬件产品-微模块组件,硬件产品-数据中心智慧机柜(18kw36台、10kw32台),安全产品-数据分类分级管理产品,安全产品-签名验签服务器,安全产品-SSL VPN,硬件产品-桌面云管理服务器(GPU),安全产品-网络管理平台_管理控制+分析（软件）,硬件产品-桌面云备份存储,硬件产品-应用服务器,安全产品-数据脱敏产品,硬件产品-智慧模块化通道门楣,硬件产品-列间空调,硬件产品-智慧机房门禁一体机,硬件产品-桌面云管理服务器,硬件产品-微模块配套产品（运维及告警联动）,安全产品-信息系统安全管理平台,硬件产品-智慧模块化通道自动平移门,安全产品-沙箱,软件产品-桌面云虚拟化授权,软件产品-云桌面安全网关,硬件产品-红外传感器,安全产品-特权账号管理系统,安全产品-服务器密码机,软件产品虚拟专有云网络（VPC）,硬件产品-房间级空调,安全产品-安全检测与响应管理平台,安全产品-安全电子签章系统,硬件产品-业务接入交换机,安全产品-国密门禁系统,安全产品-互联网出口防火墙,安全产品-数据中心防火墙,软件产品-GPU虚拟化授权,硬件产品-存储接入交换机,安全产品-数据库审计1,硬件产品-空调动力B,硬件产品-硬盘,软件产品管理平台软件,安全产品-身份鉴别产品,安全产品-数据防泄漏,软件产品-云应用授权,安全产品-WAF防火墙,安全产品-上网行为管理,硬件产品-动环主机,安全产品-抗拒绝服务攻击产品,安全产品-日志分析管理系统,软件产品-云桌面终端授权,软件产品-微动环平台系统软件,硬件产品-空调动力A,安全产品-数据安全审计产品,硬件产品-摄像头,安全产品-宿舍区防火墙,安全产品-宿舍区上网行为管理,安全产品-统一端点安全管理系统,安全产品-安全流量审计分析平台,安全产品-数据库审计2,安全产品-运维安全管理系统,硬件产品-核心交换机,硬件产品-温湿度传感器,硬件产品-国密视频系统,硬件产品-触摸屏6．合同履行期限：合同签订后采购人书面通知进场之日起90日历天内完成全部设备供货、安装、调试工作，完成合同全部建设内容，并达到初验标准，完成初验验收；180日历天内完成终验。（具体服务起止日期可随合同签订时间相应顺延）7．本项目是否接受联合体投标：否 二、投标人的资格要求1.满足《中华人民共和国政府采购法》第二十二条规定2.落实政府采购政策需满足的资格要求：无3.本项目的特定资格要求：无三、获取招标文件1．时间：5个工作日2．地点：中央政府采购网（http://www.zycg.gov.cn）3．方式：在线下载 4．售价：免费 四、提交投标文件1．提交（上传）投标文件截止时间： 2026年11月26日09时00分（北京时间） 2．提交（上传）投标文件地点： 本项目采用电子采购系统（国e采）进行网上投标，请符合投标条件的投标人安装投标工具（新），编制完成后加密上传投标文件。 五、开标1.时间：2026年11月26日09时00分（北京时间）2.地点：项目通过网上开标大厅进行开标，请在开标当日登录国e采系统点击“网上开标”进入网上开标大厅，在规定时间内等待解密和唱标六、公告期限自本公告发布之日起5个工作日，公告期限届满后获取采购文件的，获取时间以公告期限届满之日为准。 七、其他补充事宜 （一）本项目采用电子采购系统（国e采）进行招投标，请在投标前详细阅读中央政府采购网首页&ldquo;通知公告&rdquo;栏目的《关于新版单独委托项目电子采购系统上线试运行的通知》及相关附件。 （二）供应商进行投标须提前办理数字证书和电子签章，办理方式和注意事项详见中央政府采购网首页&ldquo;注册指南&rdquo;专栏。已办理数字证书请确保证书还在有效期内，如已过期或即将过期，须联系 CA 服务机构进行证书更新。 （三）供应商可在中央政府采购网（www.zycg.gov.cn）采购公告栏查看并登录下载招标文件，或通过投标工具免费下载招标文件，本项目无须报名。 （四）供应商在投标过程中涉及系统平台操作的技术问题，可致电国采中心技术支持热线咨询，电话：010-55603940。 （五）本项目相关信息同时在“中国政府采购网”、“中央政府采购网”等媒体上发布。八、凡对本次招标提出询问，请按以下方式联系1．采购人信息 名  称：某单位2 地  址：上海市闵行区 联系方式：021-64220895 2．采购执行机构信息 名  称：中央国家机关政府采购中心 地  址：北京市西城区西直门内大街西章胡同9号院 邮政编码：100035 联系方式：详见http://www.zycg.gov.cn/home/contactus 3．项目联系方式文件联系人及电话：刘士伟 010-55602803   侯凤成 010-83083527九、附件某单位2园区信息化建设采购项目招标文件中央国家机关政府采购中心2026年11月4日",
+   "budget_num": 47780000,
+   "max_price": "4778万元5．采购需求：安全产品-API安全产品,硬件产品-烟雾探测器,硬件产品-配电列头柜,硬件产品-手机APP客户端,安全产品-水印溯源系统,硬件产品-硬盘录像机,安全产品-安全检测与响应管理平台探针,硬件产品-虚拟化基础平台服务器,安全产品-态势感知产品,安全产品-数据备份产品,安全产品-单向/双单向网络隔离设备,安全产品-区域边界隔离防火墙,安全产品-数据审查产品,安全产品-时间戳服务器,安全产品-密钥管理系统,硬件产品-业务接入交换机,软件产品-迁移工具,软件产品-超融合软件,硬件产品-声光报警器,安全产品-入侵防范系统,安全产品-网络流量安全分析（NTA）系统,安全产品-网站数据恢复产品,安全产品-蜜罐系统,硬件产品-短信告警模块,安全产品-网络准入设备（NAC）,硬件产品-微模块组件,硬件产品-数据中心智慧机柜(18kw36台、10kw32台),安全产品-数据分类分级管理产品,安全产品-签名验签服务器,安全产品-SSL VPN,硬件产品-桌面云管理服务器(GPU),安全产品-网络管理平台_管理控制+分析（软件）,硬件产品-桌面云备份存储,硬件产品-应用服务器,安全产品-数据脱敏产品,硬件产品-智慧模块化通道门楣,硬件产品-列间空调,硬件产品-智慧机房门禁一体机,硬件产品-桌面云管理服务器,硬件产品-微模块配套产品（运维及告警联动）,安全产品-信息系统安全管理平台,硬件产品-智慧模块化通道自动平移门,安全产品-沙箱,软件产品-桌面云虚拟化授权,软件产品-云桌面安全网关,硬件产品-红外传感器,安全产品-特权账号管理系统,安全产品-服务器密码机,软件产品虚拟专有云网络（VPC）,硬件产品-房间级空调,安全产品-安全检测与响应管理平台,安全产品-安全电子签章系统,硬件产品-业务接入交换机,安全产品-国密门禁系统,安全产品-互联网出口防火墙,安全产品-数据中心防火墙,软件产品-GPU虚拟化授权,硬件产品-存储接入交换机,安全产品-数据库审计1,硬件产品-空调动力B,硬件产品-硬盘,软件产品管理平台软件,安全产品-身份鉴别产品,安全产品-数据防泄漏,软件产品-云应用授权,安全产品-WAF防火墙,安全产品-上网行为管理,硬件产品-动环主机,安全产品-抗拒绝服务攻击产品,安全产品-日志分析管理系统,软件产品-云桌面终端授权,软件产品-微动环平台系统软件,硬件产品-空调动力A,安全产品-数据安全审计产品,硬件产品-摄像头,安全产品-宿舍区防火墙,安全产品-宿舍区上网行为管理,安全产品-统一端点安全管理系统,安全产品-安全流量审计分析平台,安全产品-数据库审计2,安全产品-运维安全管理系统,硬件产品-核心交换机,硬件产品-温湿度传感器,硬件产品-国密视频系统,硬件产品-触摸屏6．合同履行期限：合同签订后采购人书面通知进场之日起90日历天内完成全部设备供货、安装、调试工作，完成合同全部建设内容，并达到初验标准，完成初验验收；180日历天内完成终验。（具体服务起止日期可随合同签订时间相应顺延）7．本项目是否接受联合体投标：否 二、投标人的资格要求1.满足《中华人民共和国政府采购法》第二十二条规定2.落实政府采购政策需满足的资格要求：无3.本项目的特定资格要求：无三、获取招标文件1．时间：5个工作日2．地点：中央政府采购网（http://www.zycg.gov.cn）3．方式：在线下载 4．售价：免费 四、提交投标文件1．提交（上传）投标文件截止时间： 2026年11月26日09时00分（北京时间） 2．提交（上传）投标文件地点： 本项目采用电子采购系统（国e采）进行网上投标，请符合投标条件的投标人安装投标工具（新），编制完成后加密上传投标文件。 五、开标1.时间：2026年11月26日09时00分（北京时间）2.地点：项目通过网上开标大厅进行开标，请在开标当日登录国e采系统点击“网上开标”进入网上开标大厅，在规定时间内等待解密和唱标六、公告期限自本公告发布之日起5个工作日，公告期限届满后获取采购文件的，获取时间以公告期限届满之日为准。 七、其他补充事宜 （一）本项目采用电子采购系统（国e采）进行招投标，请在投标前详细阅读中央政府采购网首页&ldquo;通知公告&rdquo;栏目的《关于新版单独委托项目电子采购系统上线试运行的通知》及相关附件。 （二）供应商进行投标须提前办理数字证书和电子签章，办理方式和注意事项详见中央政府采购网首页&ldquo;注册指南&rdquo;专栏。已办理数字证书请确保证书还在有效期内，如已过期或即将过期，须联系 CA 服务机构进行证书更新。 （三）供应商可在中央政府采购网（www.zycg.gov.cn）采购公告栏查看并登录下载招标文件，或通过投标工具免费下载招标文件，本项目无须报名。 （四）供应商在投标过程中涉及系统平台操作的技术问题，可致电国采中心技术支持热线咨询，电话：010-55603940。 （五）本项目相关信息同时在“中国政府采购网”、“中央政府采购网”等媒体上发布。八、凡对本次招标提出询问，请按以下方式联系1．采购人信息 名  称：某单位2 地  址：上海市闵行区 联系方式：021-64220895 2．采购执行机构信息 名  称：中央国家机关政府采购中心 地  址：北京市西城区西直门内大街西章胡同9号院 邮政编码：100035 联系方式：详见http://www.zycg.gov.cn/home/contactus 3．项目联系方式文件联系人及电话：刘士伟 010-55602803   侯凤成 010-83083527九、附件某单位2园区信息化建设采购项目招标文件中央国家机关政府采购中心2026年11月4日",
+   "item_names": [],
+   "deadline": "2026-11-26 09:00",
+   "contacts": "刘士伟 010-55602803   侯凤成 010-83083527九、附件某单位2园区信息化建设采购项目招标文件中央国家机关政府采购中心2026年11月4日",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/b40b8ee8-80b1-450b-8c49-e67747090c00.html"
+  },
+  "0d6d06f0-d7fe-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261289",
+   "budget": "2554.080000万元",
+   "budget_num": 25540800,
+   "max_price": "2554.08万元",
+   "item_names": [
+    "素材及语料存储2后端互联交换机",
+    "素材中转存储",
+    "管理交换机",
+    "素材及语料存储1后端互联交换机",
+    "统一存储",
+    "统一存储管理交换机",
+    "DMZ存储1",
+    "统一存储后端互联交换机",
+    "素材及语料存储1",
+    "素材中转存储后端互联交换机",
+    "DMZ存储2管理交换机",
+    "素材及语料存储1管理交换机",
+    "迁移服务器",
+    "DMZ存储2",
+    "DMZ存储1后端互联交换机",
+    "DMZ存储1管理交换机",
+    "素材及语料存储2",
+    "DMZ存储2后端互联交换机",
+    "素材及语料存储2管理交换机",
+    "素材中转存储"
+   ],
+   "procurement": "素材及语料存储2后端互联交换机、素材中转存储、管理交换机 等20项",
+   "deadline": "2026-11-25 09:00",
+   "contacts": "采购人：中央广播电视总台 010-68507809；刘士伟 010-55602803   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7191d621-8075-4814-96e3-5a801392db06.html"
+  },
+  "a3e66b6d-d7f1-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-FGX261358",
+   "budget": "150.000000万元",
+   "budget_num": 1500000,
+   "max_price": "150万元",
+   "item_names": [
+    "北京理工大学新能源汽车国家监测与管理平台数据中心互联网接入服务采购"
+   ],
+   "procurement": "北京理工大学新能源汽车国家监测与管理平台数据中心互联网接入服务采购",
+   "deadline": "2026-11-25 09:00",
+   "contacts": "采购人：北京理工大学 010-68917981；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/d1c873c1-aed6-4099-b9b0-7ef7cbc69c64.html"
+  },
+  "cfaa4ed6-d75a-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261294",
+   "budget": "4000.000000万元",
+   "budget_num": 40000000,
+   "max_price": "4000万元",
+   "item_names": [
+    "交换机（配置四）",
+    "操作系统",
+    "服务器（配置一）",
+    "分布式存储（配置二）",
+    "分布式存储（配置一）",
+    "服务器（配置二）",
+    "交换机（配置五）",
+    "服务器（配置三）",
+    "交换机（配置一）",
+    "服务器硬盘（配置三）",
+    "服务器（配置四）",
+    "交换机（配置二）",
+    "服务器硬盘（配置四）",
+    "备份一体机",
+    "云平台软件",
+    "服务器内存（配置一）",
+    "分布式存储（配置三）",
+    "服务器硬盘（配置一）",
+    "服务器硬盘（配置二）",
+    "服务器（配置五）",
+    "防火墙",
+    "交换机（配置三）",
+    "交换机（配置六）"
+   ],
+   "procurement": "交换机（配置四）、操作系统、服务器（配置一） 等23项",
+   "deadline": "2026-11-26 09:00",
+   "contacts": "采购人：中国科学技术信息研究所 010-58882515；王震 010-55602563   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/3e7a1ea1-4128-4343-adbe-ba05afdb9d35.html"
+  },
+  "aee82378-d698-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261243",
+   "budget": "274.4万元",
+   "budget_num": 2744000,
+   "max_price": "274.4万元",
+   "item_names": [
+    "机架式服务器",
+    "防火墙",
+    "存储设备",
+    "备份一体机"
+   ],
+   "procurement": "机架式服务器、防火墙、存储设备 等4项",
+   "deadline": "2026-11-23 09:00",
+   "contacts": "采购人：北京大学人民医院(北京大学第二临床医学院) 010-88317043；刘士伟 010-55602803   侯凤成 010-83083527",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/2cedfdc3-cc82-4e8e-9b66-f917ab9bddc2.html"
+  },
+  "d28b06ae-d446-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261266",
+   "budget": "428.57万元",
+   "budget_num": 4285700,
+   "max_price": "428.57万元",
+   "item_names": [
+    "系统集成",
+    "24口POE交换机",
+    "驻场服务",
+    "安全托管服务",
+    "光口室外AP",
+    "48口接入交换机",
+    "48口汇聚交换机",
+    "网络接入与流量控制",
+    "Wifi7放装AP",
+    "服务器",
+    "超融合服务器",
+    "Wifi7高密AP",
+    "48口POE交换机",
+    "超融合互联交换机"
+   ],
+   "procurement": "系统集成、24口POE交换机、驻场服务 等14项",
+   "deadline": "2026-11-20 09:00",
+   "contacts": "采购人：中国矿业大学(北京) 010-62331952；姜文涛 010-83084975   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/b8ccb937-6095-42cd-9d69-7f50276a40c1.html"
+  },
+  "4249f11f-d443-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261272",
+   "budget": "134.600000万元",
+   "budget_num": 1346000,
+   "max_price": "134.6万元",
+   "item_names": [
+    "万兆交换机等"
+   ],
+   "procurement": "万兆交换机等",
+   "deadline": "2026-11-24 09:00",
+   "contacts": "采购人：民航总医院 010-85762244；张雷 010-83084967   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/f6c6c3b8-875b-4f5c-85eb-243a4c784825.html"
+  },
+  "4e149ad9-d277-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261404",
+   "budget": "441.613700万元",
+   "budget_num": 4416137,
+   "max_price": "428.41万元",
+   "item_names": [
+    "二类计算服务器",
+    "三类数据服务器",
+    "工控协议模糊测试工具",
+    "服务器操作系统",
+    "五类以太交换机",
+    "一类备份服务器",
+    "应用服务器",
+    "二类存储服务器",
+    "五类计算服务器",
+    "二类数据库集群服务器",
+    "二类高性能服务器",
+    "三类汇聚交换机",
+    "二类三层交换机",
+    "三类存储设备",
+    "负载均衡",
+    "五类存储服务器",
+    "三类大数据存储设备",
+    "五类管理终端"
+   ],
+   "procurement": "二类计算服务器、三类数据服务器、工控协议模糊测试工具 等18项",
+   "deadline": "2026-11-19 09:00",
+   "contacts": "采购人：某单位1 021-68699777；王震 010-55602563   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/35d9c43d-e968-495e-a1ef-2d527ae3892b.html"
+  },
+  "51cf3a55-d26d-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261246",
+   "budget": "189.29万元",
+   "budget_num": 1892900,
+   "max_price": "189.29万元",
+   "item_names": [
+    "态势感知配套安全服务",
+    "安全感知管理平台",
+    "防火墙",
+    "潜伏威胁探针系统",
+    "应用交付网关"
+   ],
+   "procurement": "态势感知配套安全服务、安全感知管理平台、防火墙 等5项",
+   "deadline": "2026-11-19 09:00",
+   "contacts": "采购人：中国人民大学附属小学 010-88862760；姜文涛 010-83084975   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/226ae870-4873-45b6-9a6f-6bb03fdda31e.html"
+  },
+  "97e7dff9-d26a-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261319",
+   "budget": "155.890000万元",
+   "budget_num": 1558900,
+   "max_price": "155.89万元",
+   "item_names": [
+    "汇聚交换机",
+    "万兆多模光模块",
+    "万兆单模光模块",
+    "48口接入交换机",
+    "下一代防火墙",
+    "通用服务器",
+    "认证服务器",
+    "无线AP",
+    "万兆光纤",
+    "核心交换机",
+    "服务器接入交换机",
+    "认证系统",
+    "集中式存储"
+   ],
+   "procurement": "汇聚交换机、万兆多模光模块、万兆单模光模块 等13项",
+   "deadline": "2026-11-18 09:00",
+   "contacts": "采购人：新华通讯社重庆分社 023-89187056；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/2e3f7c7a-7a88-4320-b4d3-06308916c44b.html"
+  },
+  "16574400-d1a0-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261264",
+   "budget": "231.600000万元",
+   "budget_num": 2316000,
+   "max_price": "231.6万元",
+   "item_names": [
+    "25G交换机等"
+   ],
+   "procurement": "25G交换机等",
+   "deadline": "2026-11-17 09:00",
+   "contacts": "采购人：国家统计局天津调查总队 022-27230716；张雷 010-83084967   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/4bcb9354-3015-4245-9929-154e8492b2c1.html"
+  },
+  "903ea72f-d115-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-FGX2613182",
+   "budget": "3000.000000万元 4．最高限价：3000万元，各分项服务的单价控制价分别为： CPU节点一：0.08元/核时；CPU节点二：0.1元/核时； CPU节点三：0.24元/核时；CPU节点四：0.09元/核时； 高性能并行数据存储HDD：650元/TB/年； 高性能并行数据存储NVME：3200元/TB/年； GPU节点一：3元/卡时； GPU节点二：5元/卡时； GPU节点三：13元/卡时。5．采购需求：云计算服务6．合同履行期限：合同期限为1年（具体服务起止日期可随合同签订时间相应顺延）7．本项目是否接受联合体投标：否 二、投标人的资格要求1.满足《中华人民共和国政府采购法》第二十二条规定2.落实政府采购政策需满足的资格要求：无3.本项目的特定资格要求：无三、获取招标文件1．时间：5个工作日2．地点：中央政府采购网（http://www.zycg.gov.cn）3．方式：在线下载 4．售价：免费 四、提交投标文件1．提交（上传）投标文件截止时间： 2026年11月18日09时00分（北京时间） 2．提交（上传）投标文件地点： 本项目采用电子采购系统（国e采）进行网上投标，请符合投标条件的投标人安装投标工具（新），编制完成后加密上传投标文件。 五、开标1.时间：2026年11月18日09时00分（北京时间）2.地点：项目通过网上开标大厅进行开标，请在开标当日登录国e采系统点击“网上开标”进入网上开标大厅，在规定时间内等待解密和唱标六、公告期限自本公告发布之日起5个工作日，公告期限届满后获取采购文件的，获取时间以公告期限届满之日为准。 七、其他补充事宜 （一）本项目采用电子采购系统（国e采）进行招投标，请在投标前详细阅读中央政府采购网首页&ldquo;通知公告&rdquo;栏目的《关于新版单独委托项目电子采购系统上线试运行的通知》及相关附件。 （二）供应商进行投标须提前办理数字证书和电子签章，办理方式和注意事项详见中央政府采购网首页&ldquo;注册指南&rdquo;专栏。已办理数字证书请确保证书还在有效期内，如已过期或即将过期，须联系 CA 服务机构进行证书更新。 （三）供应商可在中央政府采购网（www.zycg.gov.cn）采购公告栏查看并登录下载招标文件，或通过投标工具免费下载招标文件，本项目无须报名。 （四）供应商在投标过程中涉及系统平台操作的技术问题，可致电国采中心技术支持热线咨询，电话：010-55603940。 （五）本项目相关信息同时在“中国政府采购网”、“中央政府采购网”等媒体上发布。八、凡对本次招标提出询问，请按以下方式联系1．采购人信息 名  称：zrcgr23120801 地  址：海南省三亚市崖州区还金路8号 联系方式：0898-88849027 2．采购执行机构信息 名  称：中央国家机关政府采购中心 地  址：北京市西城区西直门内大街西章胡同9号院 邮政编码：100035 联系方式：详见http://www.zycg.gov.cn/home/contactus 3．项目联系方式文件联系人及电话：王震 010-55602563   张雷 010-83084967九、附件zrcgr23120801GPU及HPC云计算服务采购项目招标文件中央国家机关政府采购中心2026年10月26日",
+   "budget_num": 30000000,
+   "max_price": "3000万元，各分项服务的单价控制价分别为： CPU节点一：0.08元/核时；CPU节点二：0.1元/核时； CPU节点三：0.24元/核时；CPU节点四：0.09元/核时； 高性能并行数据存储HDD：650元/TB/年； 高性能并行数据存储NVME：3200元/TB/年； GPU节点一：3元/卡时； GPU节点二：5元/卡时； GPU节点三：13元/卡时。5．采购需求：云计算服务6．合同履行期限：合同期限为1年（具体服务起止日期可随合同签订时间相应顺延）7．本项目是否接受联合体投标：否 二、投标人的资格要求1.满足《中华人民共和国政府采购法》第二十二条规定2.落实政府采购政策需满足的资格要求：无3.本项目的特定资格要求：无三、获取招标文件1．时间：5个工作日2．地点：中央政府采购网（http://www.zycg.gov.cn）3．方式：在线下载 4．售价：免费 四、提交投标文件1．提交（上传）投标文件截止时间： 2026年11月18日09时00分（北京时间） 2．提交（上传）投标文件地点： 本项目采用电子采购系统（国e采）进行网上投标，请符合投标条件的投标人安装投标工具（新），编制完成后加密上传投标文件。 五、开标1.时间：2026年11月18日09时00分（北京时间）2.地点：项目通过网上开标大厅进行开标，请在开标当日登录国e采系统点击“网上开标”进入网上开标大厅，在规定时间内等待解密和唱标六、公告期限自本公告发布之日起5个工作日，公告期限届满后获取采购文件的，获取时间以公告期限届满之日为准。 七、其他补充事宜 （一）本项目采用电子采购系统（国e采）进行招投标，请在投标前详细阅读中央政府采购网首页&ldquo;通知公告&rdquo;栏目的《关于新版单独委托项目电子采购系统上线试运行的通知》及相关附件。 （二）供应商进行投标须提前办理数字证书和电子签章，办理方式和注意事项详见中央政府采购网首页&ldquo;注册指南&rdquo;专栏。已办理数字证书请确保证书还在有效期内，如已过期或即将过期，须联系 CA 服务机构进行证书更新。 （三）供应商可在中央政府采购网（www.zycg.gov.cn）采购公告栏查看并登录下载招标文件，或通过投标工具免费下载招标文件，本项目无须报名。 （四）供应商在投标过程中涉及系统平台操作的技术问题，可致电国采中心技术支持热线咨询，电话：010-55603940。 （五）本项目相关信息同时在“中国政府采购网”、“中央政府采购网”等媒体上发布。八、凡对本次招标提出询问，请按以下方式联系1．采购人信息 名  称：zrcgr23120801 地  址：海南省三亚市崖州区还金路8号 联系方式：0898-88849027 2．采购执行机构信息 名  称：中央国家机关政府采购中心 地  址：北京市西城区西直门内大街西章胡同9号院 邮政编码：100035 联系方式：详见http://www.zycg.gov.cn/home/contactus 3．项目联系方式文件联系人及电话：王震 010-55602563   张雷 010-83084967九、附件zrcgr23120801GPU及HPC云计算服务采购项目招标文件中央国家机关政府采购中心2026年10月26日",
+   "item_names": [],
+   "deadline": "2026-11-18 09:00",
+   "contacts": "王震 010-55602563   张雷 010-83084967九、附件zrcgr23120801GPU及HPC云计算服务采购项目招标文件中央国家机关政府采购中心2026年10月26日",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/9ed2c122-d743-4bfd-8ff9-9713ec3aacbf.html"
+  },
+  "c9d0287b-d10e-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-FGX261238W",
+   "budget": "4236.560000万元",
+   "budget_num": 42365600,
+   "max_price": "4236.56万元",
+   "item_names": [
+    "运维服务"
+   ],
+   "procurement": "运维服务",
+   "deadline": "2026-11-17 09:00",
+   "contacts": "采购人：工业和信息化部机关服务中心(工业和信息化部机关服务局) 010-68205004；王震 010-55602563   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/ab3282ea-2c73-4bbf-8f17-2b0d2eaf123e.html"
+  },
+  "3166f6d5-d0e7-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261277",
+   "budget": "500.000000万元",
+   "budget_num": 5000000,
+   "max_price": "500万元",
+   "item_names": [
+    "视频矩阵",
+    "检测设备",
+    "录播主机",
+    "录播资源管理服务器",
+    "控制单元管理组件",
+    "会议摄像机",
+    "网络交换机",
+    "干扰器",
+    "数字音频处理器",
+    "机柜",
+    "桌面麦克风",
+    "视频会议终端",
+    "多点控制单元（MCU）"
+   ],
+   "procurement": "视频矩阵、检测设备、录播主机 等13项",
+   "deadline": "2026-11-16 09:00",
+   "contacts": "采购人：中国科学技术信息研究所 010-58882515；王震 010-55602563   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/cffe59bd-07fd-4e75-8061-1ce662bc3624.html"
+  },
+  "0c3f73b3-d0de-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261248",
+   "budget": "562.350000万元",
+   "budget_num": 5623500,
+   "max_price": "562.35万元",
+   "item_names": [
+    "存储型服务器",
+    "计算型服务器",
+    "全闪存磁盘阵列1",
+    "全闪存磁盘阵列2"
+   ],
+   "procurement": "存储型服务器、计算型服务器、全闪存磁盘阵列1 等4项",
+   "deadline": "2026-11-16 09:00",
+   "contacts": "采购人：北京市气象数据中心(北京市气象档案馆) 010-56931399；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/1edffd60-e150-4667-849e-64dddc7e8208.html"
+  },
+  "ac8ce600-ceb0-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261254",
+   "budget": "414.120000万元",
+   "budget_num": 4141200,
+   "max_price": "414.12万元",
+   "item_names": [
+    "服务器1",
+    "显控设备",
+    "服务器2",
+    "移动工作站",
+    "万兆交换机",
+    "系统应用服务器",
+    "网络交换机1",
+    "网络交换机2",
+    "服务器3"
+   ],
+   "procurement": "服务器1、显控设备、服务器2 等9项",
+   "deadline": "2026-11-13 09:00",
+   "contacts": "采购人：国家无线电监测中心 010-68009077；卢昀灿灿 010-55602722   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/0c5ed9bd-22ce-49af-aef6-9196e9c1d5d1.html"
+  },
+  "b86115f1-ce6d-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261227",
+   "budget": "25697.590000万元;智算节点一:14966.620000万元;智算节点二:10730.970000万元",
+   "budget_num": 256975900,
+   "max_price": "智算节点一：14966.62万元；智算节点二：10730.97万元",
+   "item_names": [
+    "智算节点一：网络服务器",
+    "算力调度管理软件",
+    "25GE接入Leaf（计算接入",
+    "块存储接入",
+    "对象存储接入",
+    "文件service接入",
+    "外部接入）",
+    "智算液冷集群总线模块",
+    "通用计算节点服务器",
+    "部署管理及服务软件",
+    "高性能文件存储",
+    "高性能网络服务器",
+    "容器服务软件",
+    "训练服务软件",
+    "推理服务软件",
+    "精密配电列头柜",
+    "分布式块存储",
+    "管路",
+    "对象存储",
+    "网络节点接入Leaf",
+    "高性能接入 Leaf（文件存储业务接入",
+    "AI业务接入）",
+    "CDU",
+    "管理节点接入Leaf",
+    "BMC接入交换机",
+    "管理服务器",
+    "向量数据库管理服务器",
+    "高速网关交换机",
+    "Border Leaf交换机",
+    "智算液冷集群",
+    "核心交换机",
+    "云管软件",
+    "云安全软件",
+    "AI RoCE 网络交换机",
+    "云基础服务软件",
+    "大模型向量服务软件",
+    "文件存储Service服务器",
+    "向量数据库数据节点服务器",
+    "智算云主机服务软件",
+    "配电系统及暖通系统改造（材料）",
+    "智算节点二：云安全软件",
+    "大模型向量服务软件",
+    "推理服务软件",
+    "云平台综合接入交换机",
+    "容器服务软件",
+    "智算云主机软件",
+    "专有网络服务器",
+    "智算接入交换机",
+    "云平台NC接入交换机",
+    "负载均衡服务器-证书",
+    "云管软件",
+    "应用监控服务器",
+    "容器管理服务器",
+    "分流器",
+    "云基础管理服务器",
+    "云平台带外汇聚交换机",
+    "日志审计服务器",
+    "云基础服务软件",
+    "通算服务器",
+    "存管核心交换机",
+    "平台堡垒机服务器",
+    "块存储服务器",
+    "训练服务软件",
+    "内网高速连接服务器",
+    "云基础元数据服务器",
+    "带外核心交换机",
+    "智算带外汇聚交换机",
+    "云平台骨干网接入交换机",
+    "对象存储服务器",
+    "云平台核心交换机",
+    "算力调度管理软件",
+    "智算管理交换机",
+    "部署管理及服务软件",
+    "云平台专线接入交换机",
+    "漏洞扫描及流量监控服务器",
+    "智算专线接入交换机",
+    "存算接入交换机",
+    "云安全服务器",
+    "智算核心交换机",
+    "高性能存储服务器",
+    "向量库服务器",
+    "负载均衡服务器-4层",
+    "负载均衡服务器-7层",
+    "智算服务器"
+   ],
+   "procurement": "智算节点一：网络服务器、算力调度管理软件、25GE接入Leaf（计算接入 等84项",
+   "deadline": "2026-11-16 09:00",
+   "contacts": "采购人：中央广播电视总台 010-68507809；王震 010-55602563   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/fd5cb06b-4d7b-45cd-baef-a2bf81cf301f.html"
+  },
+  "9f044c1c-ce09-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "其他",
+   "code": "GC-HGD2606192",
+   "budget": "/4．最高限价：详见征集文件第五部分采购需求5．采购需求：多功能一体机框架协议采购，详见征集文件第五部分采购需求6．合同履行期限：从发布入围结果公告之日起1年7．本项目是否接受联合体响应：否二、响应人的资格要求1.符合《中华人民共和国政府采购法》第二十二条的规定，且必须为未被列入信用中国网站(www.creditchina.gov.cn)、中国政府采购网(www.ccgp.gov.cn)渠道信用记录失信被执行人、重大税收违法案件当事人名单、政府采购严重违法失信行为记录名单的响应人。2.单位负责人或法定代表人为同一人或者存在直接控股、管理关系的不同供应商，不得同时参加本项目同一配置包的响应。3.本项目的特定资格要求：具有本项目实施能力的多功能一体机制造商。不符合上述资格要求的响应人，其响应将被拒绝。三、获取征集文件1．时间：5个工作日2．地点：中央政府采购网（http://www.zycg.gov.cn）3．方式：在线下载4．售价：免费四、提交响应文件1．提交（上传）响应文件截止时间：2026年11月13日10时00分（北京时间）2．提交（上传）响应文件地点：本项目采用电子采购系统（国e采）进行网上响应，请符合响应条件的响应人安装投标工具（新），编制完成后加密上传响应文件。五、开标1.开标时间：2026年11月13日10时00分（北京时间）2.开标地点：项目通过网上开标大厅进行开标，请在开标当日登录国e采系统点击“网上开标”进入网上开标大厅，在规定时间内等待解密和唱标。六、公告期限自本公告发布之日起5个工作日，公告期限届满后获取采购文件的，获取时间以公告期限届满之日为准。七、其他补充事宜1.本项目采用电子采购系统（国e采）进行招投标，请在响应前详细阅读中央政府采购网首页“通知公告”栏目的《关于新版单独委托项目电子采购系统上线试运行的通知》及相关附件。2.供应商进行响应须提前办理数字证书和电子签章，办理方式和注意事项详见中央政府采购网首页“注册指南”专栏。已办理数字证书请确保证书还在有效期内，如已过期或即将过期，须联系 CA 服务机构进行证书更新。3.供应商可在中央政府采购网（www.zycg.gov.cn）采购公告栏查看并登录下载征集文件，或通过投标工具免费下载征集文件，本项目无须报名。4.供应商在响应过程中涉及系统平台操作的技术问题，可致电国采中心技术支持热线咨询，电话：010-55603940。5.本项目相关信息同时在“中国政府采购网”、“中央政府采购网”等媒体上发布。八、凡对本次招标提出询问，请按以下方式联系1．征集人信息名称及地址：1.中央国家机关政府采购中心（北京市西城区西章胡同9号院1号楼一层）        2.云南省政府采购和出让中心（昆明市高新区科发路269号交易大厦七楼）        3.吉林省公共资源交易中心（吉林省政府采购中心）（长春市人民大街 9999 号省政务服务中心六楼）        4.广西壮族自治区政府采购中心（南宁市青秀区星湖路 22 号）        5.河南省公共资源交易中心（郑州市金水区经二路12号）                           6.黑龙江省公共资源交易中心（黑龙江省政府采购中心）（哈尔滨市南岗区长江路130-6号）                           7.西藏自治区政府采购中心（拉萨市城关区江冲路15号）2．采购执行机构信息名  称：中央国家机关政府采购中心地  址：北京市西城区西直门内大街西章胡同9号院 邮政编码：100035 联系方式：详见http://www.zycg.gov.cn/home/contactus3．项目联系方式文件联系人及电话：徐研 010-55603254  葛浩 010-83084971九、附件中央国家机关2026年度多功能一体机框架协议联合征集采购项目征集文件中央国家机关政府采购中心2026年10月22日",
+   "budget_num": null,
+   "max_price": "详见征集文件第五部分采购需求5．采购需求：多功能一体机框架协议采购，详见征集文件第五部分采购需求6．合同履行期限：从发布入围结果公告之日起1年7．本项目是否接受联合体响应：否二、响应人的资格要求1.符合《中华人民共和国政府采购法》第二十二条的规定，且必须为未被列入信用中国网站(www.creditchina.gov.cn)、中国政府采购网(www.ccgp.gov.cn)渠道信用记录失信被执行人、重大税收违法案件当事人名单、政府采购严重违法失信行为记录名单的响应人。2.单位负责人或法定代表人为同一人或者存在直接控股、管理关系的不同供应商，不得同时参加本项目同一配置包的响应。3.本项目的特定资格要求：具有本项目实施能力的多功能一体机制造商。不符合上述资格要求的响应人，其响应将被拒绝。三、获取征集文件1．时间：5个工作日2．地点：中央政府采购网（http://www.zycg.gov.cn）3．方式：在线下载4．售价：免费四、提交响应文件1．提交（上传）响应文件截止时间：2026年11月13日10时00分（北京时间）2．提交（上传）响应文件地点：本项目采用电子采购系统（国e采）进行网上响应，请符合响应条件的响应人安装投标工具（新），编制完成后加密上传响应文件。五、开标1.开标时间：2026年11月13日10时00分（北京时间）2.开标地点：项目通过网上开标大厅进行开标，请在开标当日登录国e采系统点击“网上开标”进入网上开标大厅，在规定时间内等待解密和唱标。六、公告期限自本公告发布之日起5个工作日，公告期限届满后获取采购文件的，获取时间以公告期限届满之日为准。七、其他补充事宜1.本项目采用电子采购系统（国e采）进行招投标，请在响应前详细阅读中央政府采购网首页“通知公告”栏目的《关于新版单独委托项目电子采购系统上线试运行的通知》及相关附件。2.供应商进行响应须提前办理数字证书和电子签章，办理方式和注意事项详见中央政府采购网首页“注册指南”专栏。已办理数字证书请确保证书还在有效期内，如已过期或即将过期，须联系 CA 服务机构进行证书更新。3.供应商可在中央政府采购网（www.zycg.gov.cn）采购公告栏查看并登录下载征集文件，或通过投标工具免费下载征集文件，本项目无须报名。4.供应商在响应过程中涉及系统平台操作的技术问题，可致电国采中心技术支持热线咨询，电话：010-55603940。5.本项目相关信息同时在“中国政府采购网”、“中央政府采购网”等媒体上发布。八、凡对本次招标提出询问，请按以下方式联系1．征集人信息名称及地址：1.中央国家机关政府采购中心（北京市西城区西章胡同9号院1号楼一层）        2.云南省政府采购和出让中心（昆明市高新区科发路269号交易大厦七楼）        3.吉林省公共资源交易中心（吉林省政府采购中心）（长春市人民大街 9999 号省政务服务中心六楼）        4.广西壮族自治区政府采购中心（南宁市青秀区星湖路 22 号）        5.河南省公共资源交易中心（郑州市金水区经二路12号）                           6.黑龙江省公共资源交易中心（黑龙江省政府采购中心）（哈尔滨市南岗区长江路130-6号）                           7.西藏自治区政府采购中心（拉萨市城关区江冲路15号）2．采购执行机构信息名  称：中央国家机关政府采购中心地  址：北京市西城区西直门内大街西章胡同9号院 邮政编码：100035 联系方式：详见http://www.zycg.gov.cn/home/contactus3．项目联系方式文件联系人及电话：徐研 010-55603254  葛浩 010-83084971九、附件中央国家机关2026年度多功能一体机框架协议联合征集采购项目征集文件中央国家机关政府采购中心2026年10月22日",
+   "item_names": [],
+   "contacts": "徐研 010-55603254  葛浩 010-83084971九、附件中央国家机关2026年度多功能一体机框架协议联合征集采购项目征集文件中央国家机关政府采购中心2026年10月22日",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/09b4b804-b1b3-45ec-be3b-72380e6dd035.html"
+  },
+  "357d4b9b-cdbb-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261217",
+   "budget": "483.310000万元",
+   "budget_num": 4833100,
+   "max_price": "483.31万元",
+   "item_names": [
+    "汇聚交换机",
+    "物联网管理平台",
+    "POE接入交换机",
+    "10G单模模块",
+    "放装AP",
+    "面板AP",
+    "物联网模块",
+    "终端准入授权",
+    "接入交换机",
+    "高密AP",
+    "10G多模模块",
+    "无线控制器"
+   ],
+   "procurement": "汇聚交换机、物联网管理平台、POE接入交换机 等12项",
+   "deadline": "2026-11-12 09:00",
+   "contacts": "采购人：北京大学第一医院（北京大学第一临床医学院） 010-83576440；卢昀灿灿 010-55602722   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/7a0614e2-7f95-4d89-b330-6e4f6b8c7d49.html"
+  },
+  "874b72ba-cdb1-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261020",
+   "budget": "200.000000万元",
+   "budget_num": 2000000,
+   "max_price": "200万元",
+   "item_names": [
+    "智能服务器"
+   ],
+   "procurement": "智能服务器",
+   "deadline": "2026-11-12 09:00",
+   "contacts": "采购人：中华人民共和国重庆海关 023-67709517；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/99a03339-3532-48ae-9a90-fe4e796e11e1.html"
+  },
+  "68c46b3b-cd28-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261353",
+   "budget": "1556.000000万元",
+   "budget_num": 15560000,
+   "max_price": "1556万元",
+   "item_names": [
+    "ZS2026C-C型服务器",
+    "CD2026-B型服务器",
+    "CD2026-A型服务器",
+    "ZS2026C-D型服务器",
+    "400G高速交换机"
+   ],
+   "procurement": "ZS2026C-C型服务器、CD2026-B型服务器、CD2026-A型服务器 等5项",
+   "deadline": "2026-11-11 09:00",
+   "contacts": "采购人：新华通讯社 010-63072468；刘士伟 010-55602803   侯凤成 010-83083527",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/91051ab1-01ec-42be-a1fd-27a8c6674ae5.html"
+  },
+  "5c148b9b-cd04-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "其他",
+   "code": "GC-GGG261329B",
+   "item_names": [],
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/55594777-a984-45e8-a253-a631c97d33bf.html"
+  },
+  "8605de22-cc1e-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261173",
+   "budget": "300.000000万元",
+   "budget_num": 3000000,
+   "max_price": "300万元",
+   "item_names": [
+    "40G交换机等"
+   ],
+   "procurement": "40G交换机等",
+   "deadline": "2026-11-13 09:00",
+   "contacts": "采购人：中国科学院大学 010-69671908；张雷 010-83084967   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/ae0365db-00e8-42ab-ae53-9ceeaf164fe9.html"
+  },
+  "e8ff5c6c-cba1-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261160",
+   "budget": "690.9万元",
+   "budget_num": 6909000,
+   "max_price": "690万元",
+   "item_names": [
+    "认证网关",
+    "DDI设备（DHCP+DNS+IPAM）",
+    "校园网出口防火墙",
+    "数据中心出口防火墙",
+    "高密AP",
+    "POE交换机",
+    "放装AP",
+    "汇聚交换机",
+    "面板AP"
+   ],
+   "procurement": "认证网关、DDI设备（DHCP+DNS+IPAM）、校园网出口防火墙 等9项",
+   "deadline": "2026-11-10 09:00",
+   "contacts": "采购人：华南理工大学 020-87112962；姜文涛 010-83084975   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/6578dca6-6419-45b5-babb-83b9d2b27150.html"
+  },
+  "6321df8f-cba0-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261096",
+   "budget": "612万元",
+   "budget_num": 6120000,
+   "max_price": "612万元",
+   "item_names": [
+    "省级安全保障系统（虚拟化微隔离系统）",
+    "零信任控制中心",
+    "省级协同响应组件流量探针",
+    "省级统一身份认证系统",
+    "市县边缘节点工作站",
+    "省级安全保障系统（远程运维安全网关）",
+    "物联网安全网关",
+    "省级协同响应组件分析平台",
+    "省级安全保障系统（上网行为管理系统）",
+    "省级协同响应组件互联网流量监视探针",
+    "省级安全保障系统（系统补丁更新服务系统）",
+    "零信任代理网关"
+   ],
+   "procurement": "省级安全保障系统（虚拟化微隔离系统）、零信任控制中心、省级协同响应组件流量探针 等12项",
+   "deadline": "2026-11-10 09:00",
+   "contacts": "采购人：江苏省气候中心 025-52698057；姜文涛 010-83084975   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/cc06cf45-ea8d-4400-988e-a0651d1f1e8f.html"
+  },
+  "3a949b6e-cb9e-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261174",
+   "budget": "230.000000万元",
+   "budget_num": 2300000,
+   "max_price": "230万元",
+   "item_names": [
+    "云管平台",
+    "虚拟化平台"
+   ],
+   "procurement": "云管平台、虚拟化平台",
+   "deadline": "2026-11-09 09:00",
+   "contacts": "采购人：中国互联网络信息中心 010-59116174；刘士伟 010-55602803   侯凤成 010-83083527",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/cd337843-c504-4a95-a14f-34bf19774fdf.html"
+  },
+  "a9634c2b-cb93-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261116",
+   "budget": "250万元",
+   "budget_num": 2500000,
+   "max_price": "250万元",
+   "item_names": [
+    "GPU并行运算服务器"
+   ],
+   "procurement": "GPU并行运算服务器",
+   "deadline": "2026-11-10 09:00",
+   "contacts": "采购人：安徽省气象台 0551-62290289；姜文涛 010-83084975   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/1a929053-fbea-4bce-b9bb-2cba2701b6b7.html"
+  },
+  "b49f8474-c934-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-FGX261276",
+   "budget": "232.000000万元;第1包:66.400000万元;第2包:165.600000万元",
+   "budget_num": 2320000,
+   "max_price": "第1包：66.4万元；第2包：165.6万元",
+   "item_names": [
+    "第1包：12Gbps互联网专线",
+    "网络运维服务",
+    "100Mbps 5G专网",
+    "第2包：30Gbps互联网专线",
+    "网络运维服务",
+    "100Mbps 5G专网"
+   ],
+   "procurement": "第1包：12Gbps互联网专线、网络运维服务、100Mbps 5G专网 等6项",
+   "deadline": "2026-11-06 09:00",
+   "contacts": "采购人：中国农业大学 010-62738000；卢昀灿灿 010-55602722   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/8f9d54d4-6aed-4adb-8ed6-084d86592cbc.html"
+  },
+  "8292c2ad-c86a-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261199",
+   "budget": "1210.000000万元",
+   "budget_num": 12100000,
+   "max_price": "1210万元",
+   "item_names": [
+    "互联网区音视频共享存储",
+    "大数据云平台-数据库服务器",
+    "一体化指挥调度应用服务器",
+    "大数据云平台-加工处理服务器",
+    "操作系统",
+    "关系型数据库",
+    "互联网区应用服务器",
+    "内网区共享存储",
+    "互联网区网络交换机",
+    "互联网区操作系统",
+    "音视频系统管理软件",
+    "大数据云平台-数据库内部互联交换机"
+   ],
+   "procurement": "互联网区音视频共享存储、大数据云平台-数据库服务器、一体化指挥调度应用服务器 等12项",
+   "deadline": "2026-11-05 09:00",
+   "contacts": "采购人：江苏省气候中心 025-52698389；卢昀灿灿 010-55602722   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/986986ce-ed26-44db-916e-648bc65ac199.html"
+  },
+  "97d8ce92-c867-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261204",
+   "budget": "765.000000万元",
+   "budget_num": 7650000,
+   "max_price": "765万元",
+   "item_names": [
+    "GPU计算服务器",
+    "AI计算服务器I型",
+    "AI计算服务器II型"
+   ],
+   "procurement": "GPU计算服务器、AI计算服务器I型、AI计算服务器II型",
+   "deadline": "2026-11-06 09:00",
+   "contacts": "采购人：中国社会科学院大学(中国社会科学院研究生院) 010-81360229；王震 010-55602563   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/d6881da5-ce3b-4ff0-9d87-feecf3d02f56.html"
+  },
+  "1342a675-c83c-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261136",
+   "budget": "199.000000万元",
+   "budget_num": 1990000,
+   "max_price": "199万元",
+   "item_names": [
+    "应用服务器一",
+    "算力服务器",
+    "存储系统",
+    "网络防火墙",
+    "应用服务器二",
+    "网络交换机"
+   ],
+   "procurement": "应用服务器一、算力服务器、存储系统 等6项",
+   "deadline": "2026-11-05 09:00",
+   "contacts": "采购人：南京大学 0512-68768969；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/2afd2c14-aa18-4bcd-b3cb-ad222b202649.html"
+  },
+  "b50f3d16-c7a8-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261076",
+   "budget": "190.2万元",
+   "budget_num": 1902000,
+   "max_price": "184.3万元",
+   "item_names": [
+    "网络安全遥测探针",
+    "主机安全遥测探针",
+    "服务器",
+    "数据库审计设备",
+    "日志审计设备",
+    "支队综合安全防护网关",
+    "等级保护测评",
+    "运维审计设备",
+    "行为审计设备",
+    "终端安全遥测探针",
+    "下一代防火墙",
+    "脆弱性扫描设备",
+    "网络安全运营中心平台"
+   ],
+   "procurement": "网络安全遥测探针、主机安全遥测探针、服务器 等13项",
+   "deadline": "2026-11-05 09:00",
+   "contacts": "采购人：中华人民共和国吉林出入境边防检查总站(吉林省公安厅边境管理总队) 0431-89962621；姜文涛 010-83084975   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/977e4143-7b82-4115-bd80-7e96adf89af8.html"
+  },
+  "7d9a91ed-c7a8-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX260705",
+   "budget": "621.800000万元",
+   "budget_num": 6218000,
+   "max_price": "621.8万元",
+   "item_names": [
+    "信息服务区虚拟化平台备份数据管理服务器",
+    "信息服务区杀毒软件授权",
+    "信息服务区虚拟化平台备份万兆交换机",
+    "信息服务区虚拟化平台备份数据存储服务器",
+    "业务支撑区虚拟化平台备份万兆交换机",
+    "信息服务区虚拟化平台备份千兆网络交换机",
+    "业务支撑区虚拟化平台备份虚拟化平台服务器",
+    "信息服务区操作系统",
+    "信息服务区虚拟化平台备份数字KVM切换矩阵",
+    "信息服务区虚拟化平台软件",
+    "业务支撑区虚拟化平台备份数字KVM切换矩阵",
+    "业务支撑区虚拟化平台软件",
+    "信息服务区虚拟化平台备份虚拟化平台服务器",
+    "业务支撑区操作系统",
+    "业务支撑区杀毒软件授权"
+   ],
+   "procurement": "信息服务区虚拟化平台备份数据管理服务器、信息服务区杀毒软件授权、信息服务区虚拟化平台备份万兆交换机 等15项",
+   "deadline": "2026-11-05 09:00",
+   "contacts": "采购人：中国民用航空局空中交通管理局航空气象中心 010-57803802；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/add4c0fe-57ae-4033-a8f7-90339a973a2c.html"
+  },
+  "82967640-c77a-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261105",
+   "budget": "241.000000万元",
+   "budget_num": 2410000,
+   "max_price": "241万元",
+   "item_names": [
+    "GPU并行运算服务器",
+    "机架式服务器"
+   ],
+   "procurement": "GPU并行运算服务器、机架式服务器",
+   "deadline": "2026-11-04 09:00",
+   "contacts": "采购人：国家林业和草原局林草调查规划院 010-87999220；卢昀灿灿 010-55602722   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/bb08af72-5047-481b-9b6b-66f5017cb4a3.html"
+  },
+  "1bf81653-c777-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX260714",
+   "budget": "518.100000万元",
+   "budget_num": 5181000,
+   "max_price": "518.1万元",
+   "item_names": [
+    "省级CTS支撑存储设备",
+    "存储型服务器",
+    "计算型服务器",
+    "省级天擎数据库服务器磁盘扩充",
+    "省级DPC支撑存储设备"
+   ],
+   "procurement": "省级CTS支撑存储设备、存储型服务器、计算型服务器 等5项",
+   "deadline": "2026-11-04 09:00",
+   "contacts": "采购人：云南省气象局 0871-64189994；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/a8dcb27a-7c0c-4846-93e8-7876b07f55d5.html"
+  },
+  "c536a667-c76b-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261025",
+   "budget": "1040.200000万元",
+   "budget_num": 10402000,
+   "max_price": "1040.2万元",
+   "item_names": [
+    "省级天擎数据库服务器磁盘扩充",
+    "机架式服务器",
+    "负载均衡",
+    "机架式服务器",
+    "存储设备",
+    "服务器操作系统",
+    "存储设备"
+   ],
+   "procurement": "省级天擎数据库服务器磁盘扩充、机架式服务器、负载均衡 等7项",
+   "deadline": "2026-11-05 09:00",
+   "contacts": "采购人：湖北省气象数据中心（湖北省气象探测中心、湖北省气象档案馆） 027-67848019；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/fadc648f-e7d0-4b4a-b1c6-2eaaa23a7735.html"
+  },
+  "9a0d7481-c44b-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261049",
+   "budget": "648.800000万元",
+   "budget_num": 6488000,
+   "max_price": "648.8万元",
+   "item_names": [
+    "省级CTS支撑存储设备",
+    "机架式服务器2",
+    "服务器操作系统",
+    "机架式服务器1",
+    "省级DPC支撑存储设备",
+    "省级天擎数据库服务器硬盘扩充"
+   ],
+   "procurement": "省级CTS支撑存储设备、机架式服务器2、服务器操作系统 等6项",
+   "deadline": "2026-11-02 09:00",
+   "contacts": "采购人：江苏省气象信息中心(江苏省气象档案馆) 025-52698366；卢昀灿灿 010-55602722   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/4e4cdb19-5060-415a-a416-452e114121ce.html"
+  },
+  "2c33d36c-c44b-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261207",
+   "budget": "242.000000万元",
+   "budget_num": 2420000,
+   "max_price": "242万元",
+   "item_names": [
+    "列间空调",
+    "列间空调",
+    "高性能推理服务器"
+   ],
+   "procurement": "列间空调、列间空调、高性能推理服务器",
+   "deadline": "2026-11-02 09:00",
+   "contacts": "采购人：北京中医药大学东方医院 010-67652797；徐婧婧 010-83084953   王震 010-55602563",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/60ab1796-7684-430f-b9dd-58079ea73ee9.html"
+  },
+  "8fe22ff9-c38e-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX261005",
+   "budget": "390.000000万元",
+   "budget_num": 3900000,
+   "max_price": "390万元",
+   "item_names": [
+    "UPS输出配电柜",
+    "交换机",
+    "电缆",
+    "设备安装及调试",
+    "电池间精密空调",
+    "学习型智能遥控器",
+    "配电监控管理软件",
+    "多功能采集箱",
+    "灾备机房智能电量监测仪",
+    "嵌入式监控主机",
+    "弱电间智能电量监测仪",
+    "智能数显温湿度变送器",
+    "市电配电柜",
+    "空调配电柜",
+    "网络硬盘录像机（NVR）",
+    "开关量监测模块",
+    "DCIM管理平台",
+    "摄像头",
+    "柴发接驳柜",
+    "封闭通道",
+    "漏水监控管理软件",
+    "UPS蓄电池",
+    "边缘计算网关",
+    "电源分配单元PDU",
+    "消防监控管理软件",
+    "烟雾传感器",
+    "房间级精密空调",
+    "服务器机柜",
+    "配电间精密空调",
+    "UPS主机",
+    "智能化综合态势感知一体化管理平台",
+    "UPS监控管理软件",
+    "UPS输入配电柜",
+    "精密列头柜",
+    "列间精密空调",
+    "门禁监控管理软件",
+    "空调监控管理软件",
+    "漏水监测系统",
+    "温湿度监控管理软件",
+    "管线"
+   ],
+   "procurement": "UPS输出配电柜、交换机、电缆 等40项",
+   "deadline": "2026-10-30 09:00",
+   "contacts": "采购人：对外经济贸易大学 010-64494571；刘士伟 010-55602803   侯凤成 010-83083527",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/534767c8-1622-4dfe-a975-d70db67ab16e.html"
+  },
+  "83b222cf-c3b2-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX2611642",
+   "budget": "674.348268万元 4．最高限价：674.348268万元5．采购需求：HDMI延长器,外网接入交换机,电源管理器,会议室机柜,无线话筒,多功能一体机,编辑控制软件,嵌入天花式扬声器,数字音频处理器3,高清无缝插卡矩阵（机箱）,无纸化主机,专业功放,室内LED显示屏,楼宇信息化改造,数字签名板,操作台,安防接入交换机,无线会议话筒（一拖四）,高清云台摄像机1,互联网庭审终端,时序电源,时序电源控制器,互联融合接入授权,电脑,语音转写智能办公本,音柱,互联网法庭接入授权,65英寸会议平板一体机,电子锁,多媒体服务器,电源时序器,呼叫站,HDMI分配器,节目管理软件,融合程控交换机,中置音箱,投影仪,4K超高清双向音视频光端机,音柱装饰罩,内网接入交换机,投影幕布,一体式协作终端,机柜1,大屏幕显示设备,4路超高清光纤板输出硬件及嵌入式软件,多媒体音源一体机,会议记录客户端,身份信息识别产品,扩声音箱,4K超高清视频会议摄像机,功放,电容话筒,高清云台摄像机2,线材,综合安防管理平台软件授权-设备管理,无纸化流媒体服务器嵌入软件,硬盘,配置管理软件,4KHDMI网线延长器,综合安防管理平台软件授权-视频诊断,话筒天线,链路租用,数字调音台,解码器,控制室监听音箱,综合安防管理平台软件授权,安装支架,平板电脑,智能混音器,拼接屏及连接线,音频连接线,服务器,数字音频处理器5,天线分配器,数字音频处理器4,PDU,快球支架,无纸化会议终端客户端软件,机柜2,4K60HDMI无缝输出板卡,展示一体机,二分区解码功放,智能媒体主机2,配电柜,网络主机,门禁开关电源,高拍仪,高清庭审主机2,桌面接口盒,电子锁支架,视频控制器,网络摄像机,4路超高清光纤板输入硬件及嵌入式软件,电视安装支架,1分4HDMI分配放大器,无纸化流媒体主机,高清庭审主机1,多画面处理器,智能球型摄像机,系统集成费,光纤跳线,4路存储录播服务器单机,数字音频处理器1,智慧庭审系统（单法庭，含流媒体）,网络硬盘录像机,智能媒体主机1,综合安防管理平台软件,主扩声音箱,安装调试,电子桌牌,网络跳线,会议话筒（方管）,中置音箱功放,3W/6W吸顶扬声器,主音箱功放,交换机,智能无纸化会议管理服务器软件,液晶电视,壁挂机柜,无线领夹话筒,4K60HDMI无缝输入板卡,移动电视+落地支架,桌面显示器,面板,智能语音庭审系统,86英寸会议平板一体机,法官席分配器,平板支架,数字音频处理器2,噪声抑制器,云台相机,开门按钮,高清云台摄像机3,发射器,定压定阻功率放大器6．合同履行期限：合同签订后60天内完成安装调试并具备验收条件（具体服务起止日期可随合同签订时间相应顺延）7．本项目是否接受联合体投标：否 二、投标人的资格要求1.满足《中华人民共和国政府采购法》第二十二条规定2.落实政府采购政策需满足的资格要求：无3.本项目的特定资格要求：无三、获取招标文件1．时间：5个工作日2．地点：中央政府采购网（http://www.zycg.gov.cn）3．方式：在线下载 4．售价：免费 四、提交投标文件1．提交（上传）投标文件截止时间： 2026年10月30日09时00分（北京时间） 2．提交（上传）投标文件地点： 本项目采用电子采购系统（国e采）进行网上投标，请符合投标条件的投标人安装投标工具（新），编制完成后加密上传投标文件。 五、开标1.时间：2026年10月30日09时00分（北京时间）2.地点：项目通过网上开标大厅进行开标，请在开标当日登录国e采系统点击“网上开标”进入网上开标大厅，在规定时间内等待解密和唱标六、公告期限自本公告发布之日起5个工作日，公告期限届满后获取采购文件的，获取时间以公告期限届满之日为准。 七、其他补充事宜 （一）本项目采用电子采购系统（国e采）进行招投标，请在投标前详细阅读中央政府采购网首页&ldquo;通知公告&rdquo;栏目的《关于新版单独委托项目电子采购系统上线试运行的通知》及相关附件。 （二）供应商进行投标须提前办理数字证书和电子签章，办理方式和注意事项详见中央政府采购网首页&ldquo;注册指南&rdquo;专栏。已办理数字证书请确保证书还在有效期内，如已过期或即将过期，须联系 CA 服务机构进行证书更新。 （三）供应商可在中央政府采购网（www.zycg.gov.cn）采购公告栏查看并登录下载招标文件，或通过投标工具免费下载招标文件，本项目无须报名。 （四）供应商在投标过程中涉及系统平台操作的技术问题，可致电国采中心技术支持热线咨询，电话：010-55603940。 （五）本项目相关信息同时在“中国政府采购网”、“中央政府采购网”等媒体上发布。八、凡对本次招标提出询问，请按以下方式联系1．采购人信息 名  称：中华人民共和国最高人民法院 地  址：北京市东城区东交民巷27号 联系方式：010-67557342 2．采购执行机构信息 名  称：中央国家机关政府采购中心 地  址：北京市西城区西直门内大街西章胡同9号院 邮政编码：100035 联系方式：详见http://www.zycg.gov.cn/home/contactus 3．项目联系方式文件联系人及电话：刘士伟 010-55602803   侯凤成 010-83083527九、附件最高人民法院知识产权法庭搬迁信息化采购项目（二次）招标文件中央国家机关政府采购中心2026年10月9日",
+   "budget_num": 6743483,
+   "max_price": "674.348268万元5．采购需求：HDMI延长器,外网接入交换机,电源管理器,会议室机柜,无线话筒,多功能一体机,编辑控制软件,嵌入天花式扬声器,数字音频处理器3,高清无缝插卡矩阵（机箱）,无纸化主机,专业功放,室内LED显示屏,楼宇信息化改造,数字签名板,操作台,安防接入交换机,无线会议话筒（一拖四）,高清云台摄像机1,互联网庭审终端,时序电源,时序电源控制器,互联融合接入授权,电脑,语音转写智能办公本,音柱,互联网法庭接入授权,65英寸会议平板一体机,电子锁,多媒体服务器,电源时序器,呼叫站,HDMI分配器,节目管理软件,融合程控交换机,中置音箱,投影仪,4K超高清双向音视频光端机,音柱装饰罩,内网接入交换机,投影幕布,一体式协作终端,机柜1,大屏幕显示设备,4路超高清光纤板输出硬件及嵌入式软件,多媒体音源一体机,会议记录客户端,身份信息识别产品,扩声音箱,4K超高清视频会议摄像机,功放,电容话筒,高清云台摄像机2,线材,综合安防管理平台软件授权-设备管理,无纸化流媒体服务器嵌入软件,硬盘,配置管理软件,4KHDMI网线延长器,综合安防管理平台软件授权-视频诊断,话筒天线,链路租用,数字调音台,解码器,控制室监听音箱,综合安防管理平台软件授权,安装支架,平板电脑,智能混音器,拼接屏及连接线,音频连接线,服务器,数字音频处理器5,天线分配器,数字音频处理器4,PDU,快球支架,无纸化会议终端客户端软件,机柜2,4K60HDMI无缝输出板卡,展示一体机,二分区解码功放,智能媒体主机2,配电柜,网络主机,门禁开关电源,高拍仪,高清庭审主机2,桌面接口盒,电子锁支架,视频控制器,网络摄像机,4路超高清光纤板输入硬件及嵌入式软件,电视安装支架,1分4HDMI分配放大器,无纸化流媒体主机,高清庭审主机1,多画面处理器,智能球型摄像机,系统集成费,光纤跳线,4路存储录播服务器单机,数字音频处理器1,智慧庭审系统（单法庭，含流媒体）,网络硬盘录像机,智能媒体主机1,综合安防管理平台软件,主扩声音箱,安装调试,电子桌牌,网络跳线,会议话筒（方管）,中置音箱功放,3W/6W吸顶扬声器,主音箱功放,交换机,智能无纸化会议管理服务器软件,液晶电视,壁挂机柜,无线领夹话筒,4K60HDMI无缝输入板卡,移动电视+落地支架,桌面显示器,面板,智能语音庭审系统,86英寸会议平板一体机,法官席分配器,平板支架,数字音频处理器2,噪声抑制器,云台相机,开门按钮,高清云台摄像机3,发射器,定压定阻功率放大器6．合同履行期限：合同签订后60天内完成安装调试并具备验收条件（具体服务起止日期可随合同签订时间相应顺延）7．本项目是否接受联合体投标：否 二、投标人的资格要求1.满足《中华人民共和国政府采购法》第二十二条规定2.落实政府采购政策需满足的资格要求：无3.本项目的特定资格要求：无三、获取招标文件1．时间：5个工作日2．地点：中央政府采购网（http://www.zycg.gov.cn）3．方式：在线下载 4．售价：免费 四、提交投标文件1．提交（上传）投标文件截止时间： 2026年10月30日09时00分（北京时间） 2．提交（上传）投标文件地点： 本项目采用电子采购系统（国e采）进行网上投标，请符合投标条件的投标人安装投标工具（新），编制完成后加密上传投标文件。 五、开标1.时间：2026年10月30日09时00分（北京时间）2.地点：项目通过网上开标大厅进行开标，请在开标当日登录国e采系统点击“网上开标”进入网上开标大厅，在规定时间内等待解密和唱标六、公告期限自本公告发布之日起5个工作日，公告期限届满后获取采购文件的，获取时间以公告期限届满之日为准。 七、其他补充事宜 （一）本项目采用电子采购系统（国e采）进行招投标，请在投标前详细阅读中央政府采购网首页&ldquo;通知公告&rdquo;栏目的《关于新版单独委托项目电子采购系统上线试运行的通知》及相关附件。 （二）供应商进行投标须提前办理数字证书和电子签章，办理方式和注意事项详见中央政府采购网首页&ldquo;注册指南&rdquo;专栏。已办理数字证书请确保证书还在有效期内，如已过期或即将过期，须联系 CA 服务机构进行证书更新。 （三）供应商可在中央政府采购网（www.zycg.gov.cn）采购公告栏查看并登录下载招标文件，或通过投标工具免费下载招标文件，本项目无须报名。 （四）供应商在投标过程中涉及系统平台操作的技术问题，可致电国采中心技术支持热线咨询，电话：010-55603940。 （五）本项目相关信息同时在“中国政府采购网”、“中央政府采购网”等媒体上发布。八、凡对本次招标提出询问，请按以下方式联系1．采购人信息 名  称：中华人民共和国最高人民法院 地  址：北京市东城区东交民巷27号 联系方式：010-67557342 2．采购执行机构信息 名  称：中央国家机关政府采购中心 地  址：北京市西城区西直门内大街西章胡同9号院 邮政编码：100035 联系方式：详见http://www.zycg.gov.cn/home/contactus 3．项目联系方式文件联系人及电话：刘士伟 010-55602803   侯凤成 010-83083527九、附件最高人民法院知识产权法庭搬迁信息化采购项目（二次）招标文件中央国家机关政府采购中心2026年10月9日",
+   "item_names": [],
+   "deadline": "2026-10-30 09:00",
+   "contacts": "刘士伟 010-55602803   侯凤成 010-83083527九、附件最高人民法院知识产权法庭搬迁信息化采购项目（二次）招标文件中央国家机关政府采购中心2026年10月9日",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/48618d48-99ad-4e22-9da1-2545997e0faa.html"
+  },
+  "5f9bb31a-c3a9-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX260684",
+   "budget": "2000.000000万元",
+   "budget_num": 20000000,
+   "max_price": "2000万元",
+   "item_names": [
+    "存储交换机",
+    "计算型服务器",
+    "管理交换机",
+    "服务器操作系统",
+    "数据交换机",
+    "计算存储型服务器",
+    "分布式高速存储节点",
+    "分布式混合存储节点",
+    "虚拟化软件"
+   ],
+   "procurement": "存储交换机、计算型服务器、管理交换机 等9项",
+   "deadline": "2026-10-30 09:00",
+   "contacts": "采购人：云南省气象局 0871-64185874；王震 010-55602563   刘士伟 010-55602803",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/b1d5ffdd-4dbf-4b66-b488-1b57a395b84b.html"
+  },
+  "d7ac54d0-c2a5-11f1-9615-fa163ee0ead6": {
+   "notice_kind": "招标",
+   "code": "GC-HGX260992",
+   "budget": "1015.000000万元;第1包:535.300000万元;第2包:479.700000万元",
+   "budget_num": 10150000,
+   "max_price": "第1包：535.3万元；第2包：479.7万元",
+   "item_names": [
+    "第1包：有线POE交换机",
+    "光接入交换机",
+    "有线网管理分析系统授权",
+    "48口接入交换机",
+    "核心交换机",
+    "汇聚交换机",
+    "24口接入交换机",
+    "第2包：室外光缆",
+    "无线控制器",
+    "无线接入点1",
+    "无线接入点2",
+    "无线POE交换机",
+    "管理分析系统授权"
+   ],
+   "procurement": "第1包：有线POE交换机、光接入交换机、有线网管理分析系统授权 等13项",
+   "deadline": "2026-10-29 09:00",
+   "contacts": "采购人：中国人民大学 010-62511204；王震 010-55602563   张雷 010-83084967",
+   "notes": "国e采电子招投标，无须报名，招标文件免费在线下载；投标须提前办理数字证书与电子签章。技术支持 010-55603940。",
+   "cached_at": "2026-11-27 10:30",
+   "source_url": "https://www.zycg.gov.cn/freecms/site/zygjjgzfcgzx/ggxx/info/2026/035d09e6-e92c-43a0-a25f-6057e9950b0d.html"
   }
+ }
 }

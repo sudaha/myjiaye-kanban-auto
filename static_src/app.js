@@ -454,6 +454,20 @@
       if (it.spec_brief) sp.push('<span class="spec-brief" title="' + esc(it.spec_brief) + '">' + esc(it.spec_brief) + "</span>");
       if (sp.length) specLine = '<div class="spec-line">' + sp.join("") + "</div>";
     }
+    // 央采单独委托卡片：同规格速览（品目 / 品牌 / 型号 / 参数要求），数据来自公告正文解析缓存。
+    // 招标公告正文一般只含品目与预算截止；中标公告含中标标的的品牌/型号/参数。
+    if (plat === "zycg" && it.source === "委托" && it.wt_detail) {
+      var wd = it.wt_detail, sp2 = [];
+      if (wd.procurement) sp2.push('<span><b>品目</b>' + esc(wd.procurement) + "</span>");
+      if (wd.brands && wd.brands.length) {
+        var hit2 = FOCUS_BRANDS.filter(function (f) { return wd.brands.indexOf(f) >= 0; });
+        var tag2 = hit2.length ? '<i class="focus-hit">含我方重点品牌：' + esc(hit2.join("、")) + "</i>" : "";
+        sp2.push('<span class="limit"><b>品牌</b>' + esc(wd.brands.join("、")) + " " + tag2 + "</span>");
+      }
+      if (wd.models && wd.models.length) sp2.push('<span><b>型号</b>' + esc(wd.models.join("、")) + "</span>");
+      if (wd.params_brief) sp2.push('<span class="spec-brief" title="' + esc(wd.params_brief) + '">' + esc(wd.params_brief) + "</span>");
+      if (sp2.length) specLine = '<div class="spec-line">' + sp2.join("") + "</div>";
+    }
     var railSource = plat === "rail"
       ? (String(it.id || "").indexOf("mall_") === 0
           ? '<span class="tag rail-mall-tag">国铁商城批量采购专区</span>'
@@ -593,6 +607,23 @@
       ["联系方式", wt.contacts], ["投标要点", wt.notes]
     ].filter(function (r) { return r[1]; })
       .map(function (r) { return metaIt(r[0], esc(r[1])); }).join("") : "";
+    // 品目明细（正文解析的完整品目列表）与中标标的表（品牌/型号/数量/单价/参数）
+    var wtItems = "";
+    if (wt && wt.item_names && wt.item_names.length) {
+      wtItems = '<div class="d-sec">品目明细（' + wt.item_names.length + ' 项）</div><div>' +
+        wt.item_names.map(function (n) { return '<span class="tag" style="margin:0 6px 6px 0">' + esc(n) + "</span>"; }).join("") + "</div>";
+    }
+    var wtWins = "";
+    if (wt && wt.win_items && wt.win_items.length) {
+      var wrows = wt.win_items.map(function (w, i) {
+        return "<tr><td>" + (i + 1) + "</td><td>" + esc(w.name) + "</td><td>" + esc(w.brand || "—") +
+          "</td><td>" + esc(w.model || "—") + "</td><td>" + esc(w.qty || "") + " " +
+          (w.price ? "¥" + esc(w.price) : "") + "</td><td class=\"spec\"><div>" + esc(w.desc || "—") + "</div></td></tr>";
+      }).join("");
+      wtWins = '<div class="d-sec">中标标的信息（品牌 / 型号 / 参数）</div><div style="overflow-x:auto"><table class="items">' +
+        "<thead><tr><th>#</th><th>标的名称</th><th>品牌</th><th>规格型号</th><th>数量/单价</th><th>参数/服务要求</th></tr></thead>" +
+        "<tbody>" + wrows + "</tbody></table></div>";
+    }
     return '<div class="d-title">' + esc(d.title) + "</div>" +
       '<div class="d-meta">' +
         metaIt("采购人", esc(d.org_name || "—")) +
@@ -604,7 +635,7 @@
         metaIt("数据来源", esc(d.source === "委托" ? "央采主站·单独委托项目" : (d.source || "—"))) +
       "</div>" +
       (wt ? '<div class="d-sec">公告要点（站内缓存自官网正文' + (wt.cached_at ? " · " + wt.cached_at : "") + "）</div>" +
-        '<div class="d-meta">' + wtRows + "</div>" : "") +
+        '<div class="d-meta">' + wtRows + "</div>" + wtItems + wtWins : "") +
       '<div class="d-actions">' +
         '<button type="button" class="btn primary wt-open-orig" data-wt-url="' + esc(d.url) + '">打开原公告（查看预算 / 品目 / 联系方式）</button>' +
         '<button type="button" class="btn ghost wt-copy-link" data-wt-url="' + esc(d.url) + '">复制公告链接</button>' +
